@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Gera pcb.svg — BASE 220×160 com R1–R81 e C1–C71."""
 
+import os
+
 W, H = 220.0, 160.0
 seen_r, seen_c = set(), set()
 out = []
@@ -340,7 +342,7 @@ if missing_r or missing_c:
 if len(seen_r) != 81 or len(seen_c) != 71:
     raise SystemExit(f"contagem R={len(seen_r)} C={len(seen_c)}")
 
-path = "/Users/andreysenes/Guitar Pedal/voz-9/pcb.svg"
+path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "pcb.svg")
 with open(path, "w") as f:
     f.write("\n".join(out))
 print(f"ok {path}  R={len(seen_r)} C={len(seen_c)}")

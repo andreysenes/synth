@@ -1,0 +1,45 @@
+* VOZ-9 — base.cir (skeleton of fenolite-side blocks)
+* Full instrument = painel + this, joined only on j1_*…j9_*.
+* Block .cir files are the unit tests; this documents the BASE surface.
+
+.subckt base
++ j1_1 j1_2 j1_3 j1_4 j1_5 j1_6 j1_7 j1_8 j1_9 j1_10
++ j1_11 j1_12 j1_13 j1_14 j1_15 j1_16 j1_17 j1_18 j1_19 j1_20
++ j2_1 j2_2 j2_3 j2_4 j2_5 j2_6 j2_7 j2_8 j2_9 j2_10 j2_11 j2_12
++ j3_1 j3_2 j3_3 j3_4 j3_5 j3_6 j3_7 j3_8 j3_9 j3_10
++ j3_11 j3_12 j3_13 j3_14 j3_15 j3_16 j3_17 j3_18 j3_19 j3_20
++ j4_1 j4_2 j4_3 j4_4 j4_5 j4_6 j4_7 j4_8 j4_9 j4_10
++ j4_11 j4_12 j4_13 j4_14 j4_15 j4_16 j4_17 j4_18 j4_19 j4_20
++ j5_1 j5_2 j5_3 j5_4 j5_5 j5_6 j5_7 j5_8 j5_9 j5_10
++ j5_11 j5_12 j5_13 j5_14 j5_15 j5_16
++ j6_1 j6_2 j6_3 j6_4 j6_5 j6_6
++ j7_1 j7_2 j7_3 j7_4 j7_5 j7_6 j7_7 j7_8 j7_9 j7_10 j7_11 j7_12
++ j8_1 j8_2 j8_3 j8_4 j8_5 j8_6
++ j9_1 j9_2 j9_3 j9_4 j9_5 j9_6 j9_7 j9_8 j9_9 j9_10 j9_11 j9_12
++ V9 V5 VEE N4V5 N1V8
+
+* Power in from P4 (j6_3 tip, j6_4 gnd)
+Dprot j6_3 V9 DSS14
+Rj6g j6_4 0 1
+* LED
+Rled V9 j6_1 4.7k
+Dled j6_2 0 DLEDRED
+Rledk j6_2 0 1
+
+* Bias locals (caller may also use Xrails)
+R45a V9 N4V5 10k
+R45b N4V5 0 10k
+R18a V9 N1V8 22k
+R18b N1V8 0 5.6k
+
+* Csel caps on BASE (TREM switch on panel selects which)
+Csel_t j2_8 csel_g 220n
+Csel_f j2_9 csel_g 47u
+Rcsel_g csel_g 0 100Meg
+
+* Placeholder pulls so unused pins are not floating in full-chip sims
+Rnc1 j1_20 0 100Meg
+Rnc4 j4_19 0 100Meg
+Rnc5 j5_16 0 100Meg
+
+.ends base

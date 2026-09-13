@@ -1,0 +1,30 @@
+* VOZ-9 — 04_shape.cir
+* Ge clipper (1N34A stand-in for MP20) + SHAPE pot via J1
+
+* voz9_shape
+.include lib.inc
+.include painel_state.inc
+.include painel.cir
+
+Xrails V9 V5 VEE 4V5 1V8 rails
+
+* Drive into SHAPE pot: j1_8 CCW, j1_9 W, j1_10 CW
+Vin sig 0 SIN(4.5 2 1k)
+Rdrive sig j1_8 10
+* CW to 4V5 reference side of divider feel — SHAPE is series to clipper
+* Per esquema: SHAPE wiper -- 10k -- clip node -- MP20 to GND
+Rseries j1_9 clip 10k
+Dge clip 0 D1N34A
+Cout clip filt 100n
+Rfilt filt 0 100k
+* Tie unused pot end
+Rj1_10 j1_10 0 100Meg
+
+.control
+set noaskquit
+tran 10u 5m
+print V(sig) V(clip) V(filt)
+echo SHAPE_DONE
+quit
+.endc
+.end

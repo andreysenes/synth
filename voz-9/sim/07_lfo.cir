@@ -1,0 +1,50 @@
+* VOZ-9 — 07_lfo.cir
+* 2N5457 phase-shift LFO; Csel via J2 TREM (220n vs 47u)
+
+* voz9_lfo
+.include lib.inc
+.include painel_state.inc
+.include painel.cir
+
+Xrails V9 V5 VEE 4V5 1V8 rails
+
+Rd V9 drain 10k
+Jl drain gate source J5457
+Rs source 0 1k
+Cout drain lfo_out 1u
+Rlfo lfo_out 0 100k
+
+* Phase network: D -- 220n -- n1 -- 220n -- n2 -- Csel -- G
+C1 drain n1 220n
+R1 n1 0 10k
+C2 n1 n2 220n
+R2 n2 0 10k
+* Csel on BASE: 220n (trem) and 47u (flutter); panel SPDT j2_7 COM, j2_8 A, j2_9 B
+Csel_t j2_8 gate 220n
+Csel_f j2_9 gate 47u
+* Tie phase out to COM
+Rn2_com n2 j2_7 1
+
+* RATE pot: gate -- (4k7 + RATE) -- GND; RATE is j2_1–3
+Rseries gate j2_2 4.7k
+* Panel pot between j2_1 (CCW) j2_2 (W) j2_3 (CW)
+* Put CCW to GND, CW open/high-Z via Meg, W is series return
+Rj2_1 j2_1 0 1
+Rj2_3 j2_3 0 100Meg
+Rg_bias gate 0 1Meg
+
+* DEPTH / MODE not needed for free-run check
+Rdep_tie j2_5 0 100Meg
+
+.ic V(gate)=1.5 V(drain)=5
+
+.control
+set noaskquit
+tran 100u 500m uic
+print V(lfo_out) V(gate) V(drain)
+meas tran t1 WHEN V(lfo_out)=0 RISE=2
+meas tran t2 WHEN V(lfo_out)=0 RISE=3
+echo LFO_DONE
+quit
+.endc
+.end

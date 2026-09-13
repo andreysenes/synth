@@ -1,0 +1,33 @@
+* VOZ-9 — 01_fm.cir
+* J201 across timing cap: gate 0 → 1V8 raises pitch (FM)
+
+* voz9_fm
+.include lib.inc
+
+Xrails V9 V5 VEE 4V5 1V8 rails
+
+* Fixed mid pitch (no panel pot — 100k series)
+Rpit out_a node_t 110k
+Ct node_t 4V5 100n
+Rh1 out_a hin 100k
+Rh2 hin 4V5 100k
+Xa hin node_t out_a V9 0 TL072_HALF
+
+* J201 drain on timing node, source 4V5, gate = pitch_cv
+Jfm node_t pitch_cv 4V5 J201
+Rgate pitch_cv 4V5 100k
+
+* Gate sweep: step at 40 ms
+Vcv pitch_cv 0 PWL(0 0 40m 0 40.1m 1.8 100m 1.8)
+
+.control
+set noaskquit
+tran 5u 100m uic
+meas tran t_lo1 WHEN V(out_a)=4.5 RISE=2
+meas tran t_lo2 WHEN V(out_a)=4.5 RISE=3
+meas tran t_hi1 WHEN V(out_a)=4.5 RISE=8
+meas tran t_hi2 WHEN V(out_a)=4.5 RISE=9
+echo FM_DONE
+quit
+.endc
+.end

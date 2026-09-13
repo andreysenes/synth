@@ -1,0 +1,23 @@
+* VOZ-9 — 02_noise.cir
+* J201 #3 noise bias (DC operating point; thermal noise optional)
+
+* voz9_noise
+.include lib.inc
+
+Xrails V9 V5 VEE 4V5 1V8 rails
+
+Rd V9 dnode 10k
+Js dnode gnode snode J201
+Rs snode 0 1k
+Rg gnode 0 1Meg
+Cc dnode mixn 100n
+Rm mixn 0 100k
+
+.control
+set noaskquit
+op
+print V(dnode) V(snode) V(gnode)
+echo NOISE_DC_OK
+quit
+.endc
+.end

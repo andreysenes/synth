@@ -1,0 +1,94 @@
+* VOZ-9 — 08_echo.cir
+* Three fixed delays (PT2399 behavioral) + NAB loop + WET/F-BACK via J3
+* TIME position selects tau set: min | mid | max via .param time_set
+
+* voz9_echo
+.include lib.inc
+.include painel_state.inc
+.include painel.cir
+
+* time_set: 0=min, 1=mid, 2=max (override from run.sh / UI)
+.param time_set=1
+
+Xrails V9 V5 VEE 4V5 1V8 rails
+
+* Dry input (from VCA)
+Vin dry 0 SIN(0 0.2 400)
+
+* --- GRAVA NAB ---
+Rin dry star 10k
+* F-BACK pot: wet -- pot -- star (feedback into grava)
+* j3_10 CCW, j3_11 W, j3_12 CW
+Rwet_to_fb wet_out j3_12 1
+Rfb_wiper j3_11 star 1
+Rj3_10 j3_10 0 100Meg
+
+Cgrave star midg 220n
+Rlim midg inm_a 4.7k
+Rf_a out_grava inm_a 15k
+Cag inm_a out_grava 3.3n
+Xgrava 0 inm_a out_grava V9 VEE TL072_HALF
+Cac out_grava heads_in 100n
+
+* --- Three behavioral delays (transmission line / B-source approx) ---
+* Use lossless delay lines: Txxx in out  Z0=1k TD=...
+* Levels via series R and head switches H1/H2/H3
+
+* Delay times by time_set
+.param td1={30m*(time_set==0)+100m*(time_set==1)+160m*(time_set==2)}
+.param td2={100m*(time_set==0)+225m*(time_set==1)+375m*(time_set==2)}
+.param td3={240m*(time_set==0)+425m*(time_set==1)+585m*(time_set==2)}
+
+Rh1i heads_in h1_in 10k
+Rh2i heads_in h2_in 10k
+Rh3i heads_in h3_in 10k
+
+T1 h1_in 0 h1_d 0 Z0=10k TD={td1}
+T2 h2_in 0 h2_d 0 Z0=10k TD={td2}
+T3 h3_in 0 h3_d 0 Z0=10k TD={td3}
+
+Rterm1 h1_d 0 10k
+Rterm2 h2_d 0 10k
+Rterm3 h3_d 0 10k
+
+* Head switches: delay out -- COM -- ON -- mix
+Rh1a h1_d j3_4 1
+Rh1b j3_5 mix_h 10k
+Rh2a h2_d j3_6 1
+Rh2b j3_7 mix_h 10k
+Rh3a h3_d j3_8 1
+Rh3b j3_9 mix_h 10k
+
+* --- LÊ NAB ---
+Cinb mix_h midb 100n
+Rinb midb inm_b 15k
+Rf_b wet_out inm_b 15k
+Ccut inm_b wet_out 3.3n
+Rbass inm_b nb 10k
+Cbass nb wet_out 220n
+Xle 0 inm_b wet_out V9 VEE TL072_HALF
+Rlpf wet_out lpf 10k
+Clpf lpf 0 2.2n
+
+* Ge sat on wet
+Dsat wet_out 0 D1N34A
+
+* WET pot: dry CCW, wet CW, wiper → volume
+* j3_13 CCW, j3_14 W, j3_15 CW
+Rdry_w dry j3_13 1
+Rwet_w wet_out j3_15 1
+Rvol_in j3_14 j3_19 1
+* VOLUME pot j3_18–20
+Rj3_18 j3_18 0 1
+Rj3_20 j3_20 0 100Meg
+Rout j3_19 out 1
+Rload out 0 10k
+
+.control
+set noaskquit
+tran 100u 1.5
+print V(dry) V(wet_out) V(out) V(mix_h)
+echo ECHO_DONE td1={td1} td2={td2} td3={td3}
+quit
+.endc
+.end

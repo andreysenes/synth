@@ -1,0 +1,42 @@
+* VOZ-9 — 06_vca.cir
+* Series J201 VCA; DRONE/GATE via J1; GATE button via J6
+
+* voz9_vca
+.include lib.inc
+.include painel_state.inc
+.include painel.cir
+
+Xrails V9 V5 VEE 4V5 1V8 rails
+
+Vin audio 0 SIN(0 0.3 440)
+Cin audio drain 100n
+* JFET series: D=drain, G=env, S=source
+Jv drain env source J201
+Rs source 1V8 10k
+Cout source vca_out 1u
+Rout vca_out 0 100k
+
+* Envelope node
+Cenv env 0 47u
+Rdecay env 0 220k
+* GATE button: 1V8 -- diode -- env when j6_5–j6_6 closed
+* Panel switch shorts j6_5 to j6_6; BASE: j6_5←1V8 via diode path, j6_6=GND
+Dgate j6_5 env D4148
+Rfrom18 1V8 j6_5 100
+Rj6gnd j6_6 0 1
+
+* DRONE: when j1_18–j1_19 closed, tie env to 1V8
+Rdrone 1V8 j1_18 100
+* j1_19 connects to env when drone on
+Rdrone_to_env j1_19 env 100
+
+.control
+set noaskquit
+op
+print V(env) V(source) V(1V8)
+tran 50u 20m
+print V(vca_out) V(env)
+echo VCA_DONE
+quit
+.endc
+.end

@@ -1,0 +1,47 @@
+* VOZ-9 — 01_osc.cir
+* Relaxation OSC A (100n) + OSC B (10n); pitch pots and enables via J1
+
+* voz9_osc
+.include lib.inc
+.include painel_state.inc
+.include painel.cir
+
+Xrails V9 V5 VEE 4V5 1V8 rails
+
+* ===== OSC A =====
+* Timing: OUT -- 10k -- pot(j1_1..j1_2) -- node_ta -- 100n -- 4V5
+Rsa out_a j1_1 10k
+Cta j1_2 4V5 100n
+Rh1a out_a hin_a 100k
+Rh2a hin_a 4V5 100k
+Xa hin_a j1_2 out_a V9 0 TL072_HALF
+Ca out_a ac_a 1u
+* Enable switch on panel between j1_14 (COM) and j1_15 (ON)
+Ra_to_sw ac_a j1_14 1
+Rmix_a j1_15 mix 10k
+
+* ===== OSC B =====
+Rsb out_b j1_3 10k
+Ctb j1_4 4V5 10n
+Rh1b out_b hin_b 220k
+Rh2b hin_b 4V5 220k
+Xb hin_b j1_4 out_b V9 0 TL072_HALF
+Cb out_b ac_b 1u
+Rb_to_sw ac_b j1_16 1
+Rmix_b j1_17 mix 10k
+
+Rmix_load mix 0 100k
+
+.control
+set noaskquit
+tran 5u 80m uic
+echo --- OSC A / B snapshots ---
+print V(out_a) V(out_b) V(mix) V(j1_2) V(j1_4)
+meas tran ta1 WHEN V(out_a)=4.5 RISE=2
+meas tran ta2 WHEN V(out_a)=4.5 RISE=3
+meas tran tb1 WHEN V(out_b)=4.5 RISE=3
+meas tran tb2 WHEN V(out_b)=4.5 RISE=4
+echo OSC_DONE
+quit
+.endc
+.end

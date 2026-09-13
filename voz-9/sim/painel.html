@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<title>VOZ-9 — painel + áudio</title>
+<style>
+  :root { font-family: ui-sans-serif, system-ui, sans-serif; color: #e8e8e6; background: #141414; }
+  body { margin: 0; padding: 16px; max-width: 1120px; }
+  h1 { font-size: 1.15rem; font-weight: 600; margin: 0 0 6px; }
+  .hint { font-size: 12px; color: #888; margin: 0 0 12px; line-height: 1.45; }
+  .row { display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-start; }
+  .panel-wrap { background: #2a2a28; border-radius: 8px; padding: 8px; }
+  #panel { display: block; width: 660px; max-width: 100%; height: auto; touch-action: none; }
+  .side { flex: 1; min-width: 300px; }
+  .scope-box {
+    background: #0a0c0a; border: 1px solid #2a3a2a; border-radius: 8px;
+    padding: 8px; margin-bottom: 10px;
+  }
+  .scope-box h2 { font-size: 11px; margin: 0 0 6px; color: #6a8a6a; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+  #scope { display: block; width: 100%; height: 160px; background: #050705; border-radius: 4px; }
+  .transport { display: flex; gap: 8px; margin-bottom: 10px; }
+  .transport button { flex: 1; margin-top: 0; }
+  button {
+    padding: 10px 14px; background: #c44; color: #fff;
+    border: 0; border-radius: 6px; font-weight: 600; cursor: pointer;
+  }
+  button.secondary { background: #3a3a3a; }
+  button.playing { background: #2a7a3a; }
+  button:disabled { opacity: 0.45; cursor: not-allowed; }
+  label { display: block; font-size: 12px; margin: 8px 0 2px; color: #aaa; }
+  select, textarea { width: 100%; box-sizing: border-box; }
+  textarea {
+    height: 140px; font-family: ui-monospace, monospace; font-size: 11px;
+    background: #111; color: #9c9; border: 1px solid #333; border-radius: 6px; padding: 8px;
+  }
+  .meter { font-size: 11px; color: #6a8a6a; margin-top: 4px; font-variant-numeric: tabular-nums; }
+  .knob-hit { cursor: grab; }
+  .sw-hit, .jack-hit, .gate-hit { cursor: pointer; }
+  .jack-hit.picking circle { stroke: #fc6; stroke-width: 1.2; }
+  .patch-cable { fill: none; stroke-width: 1.6; stroke-linecap: round; cursor: pointer; opacity: 0.92; }
+  .patch-cable:hover { stroke-width: 2.2; opacity: 1; }
+  .lab { fill: #f2f2f0; font-size: 3.2px; text-anchor: middle; font-family: sans-serif; }
+  .sub { fill: #bbb; font-size: 2.6px; text-anchor: middle; font-family: sans-serif; }
+  .plugged { fill: #c44 !important; }
+  .xlr-box {
+    background: #1a1c1a; border: 1px solid #333; border-radius: 8px;
+    padding: 10px 12px; margin-bottom: 10px; font-size: 12px;
+  }
+  .xlr-box h2 { font-size: 11px; margin: 0 0 8px; color: #8a9a8a; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+  .xlr-row { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; margin: 6px 0; }
+  .xlr-row label { display: inline-flex; align-items: center; gap: 6px; margin: 0; color: #ccc; cursor: pointer; }
+  .xlr-row input[type="range"] { width: 120px; vertical-align: middle; }
+  .xlr-row select {
+    max-width: 100%; min-width: 160px; flex: 1;
+    background: #111; color: #ccc; border: 1px solid #444; border-radius: 4px;
+    padding: 4px 6px; font-size: 12px;
+  }
+  .xlr-row button.tiny {
+    padding: 4px 10px; font-size: 11px; width: auto; flex: 0; margin: 0;
+  }
+  .xlr-status { color: #6a8a6a; font-size: 11px; }
+  details { margin-top: 8px; }
+  details summary { cursor: pointer; color: #888; font-size: 12px; }
+</style>
+</head>
+<body>
+<h1>VOZ-9 — painel + áudio</h1>
+<p class="hint">
+  Clique <strong>Tocar</strong>. Em <strong>XLR IN</strong> escolha WAV ou a interface.
+  EQ <strong>pós-mix</strong>. <strong>SEND</strong> = PRE, pré-EQ.
+  <strong>OSC IN</strong> = mix osc ↔ XLR. Sem XLR, <strong>PRE</strong> = pré dos oscs.
+  OUT = stereo / scope. Patch: jack→jack; botão direito remove.
+</p>
+<div class="row">
+  <div class="panel-wrap">
+    <svg id="panel" viewBox="0 0 220 160" xmlns="http://www.w3.org/2000/svg">
+      <rect width="220" height="160" rx="2" fill="#9a9a98"/>
+      <rect x="4" y="4" width="212" height="152" rx="1.5" fill="#6e6e6c"/>
+      <g class="knob-hit" data-key="pitch_a" transform="translate(128,36)">
+        <circle r="15" fill="#1a1a1a"/><line class="ptr" x1="0" y1="0" x2="0" y2="-12" stroke="#eee" stroke-width="2"/>
+        <text class="lab" y="-21">OSC A</text>
+      </g>
+      <g class="knob-hit" data-key="amount" transform="translate(156,36)">
+        <circle r="9" fill="#1a1a1a"/><line class="ptr" x1="0" y1="0" x2="0" y2="-7" stroke="#eee" stroke-width="1.5"/>
+        <text class="lab" y="-13">AMOUNT</text>
+      </g>
+      <g class="knob-hit" data-key="pitch_b" transform="translate(184,36)">
+        <circle r="15" fill="#1a1a1a"/><line class="ptr" x1="0" y1="0" x2="0" y2="-12" stroke="#eee" stroke-width="2"/>
+        <text class="lab" y="-21">OSC B</text>
+      </g>
+      <g class="knob-hit" data-key="rate" transform="translate(18,74)">
+        <circle r="9" fill="#1a1a1a"/><line class="ptr" x1="0" y1="0" x2="0" y2="-7" stroke="#eee" stroke-width="1.5"/>
+        <text class="lab" y="-13">RATE</text>
+      </g>
+      <g class="knob-hit" data-key="pre" transform="translate(48,21)">
+        <circle r="9" fill="#1a1a1a"/><line class="ptr" x1="0" y1="0" x2="0" y2="-7" stroke="#eee" stroke-width="1.5"/>
+        <text class="lab" y="-13">PRE</text>
+      </g>
+      <g class="knob-hit" data-key="osc_in" transform="translate(72,21)">
+        <circle r="9" fill="#1a1a1a"/><line class="ptr" x1="0" y1="0" x2="0" y2="-7" stroke="#eee" stroke-width="1.5"/>
+        <text class="lab" y="-13">OSC IN</text>
+      </g>
+      <g class="knob-hit" data-key="depth" transform="translate(84,74)">
+        <circle r="9" fill="#1a1a1a"/><line class="ptr" x1="0" y1="0" x2="0" y2="-7" stroke="#eee" stroke-width="1.5"/>
+        <text class="lab" y="-13">DEPTH</text>
+      </g>
+      <g class="knob-hit" data-key="shape" transform="translate(148,76)">
+        <circle r="9" fill="#1a1a1a"/><line class="ptr" x1="0" y1="0" x2="0" y2="-7" stroke="#eee" stroke-width="1.5"/>
+        <text class="lab" y="-13">SHAPE</text>
+      </g>
+      <g class="knob-hit" data-key="cutoff" transform="translate(166,76)">
+        <circle r="9" fill="#1a1a1a"/><line class="ptr" x1="0" y1="0" x2="0" y2="-7" stroke="#eee" stroke-width="1.5"/>
+        <text class="lab" y="-13">CUTOFF</text>
+      </g>
+      <g class="knob-hit" data-key="time_u" transform="translate(26,112)">
+        <circle r="15" fill="#1a1a1a"/><line class="ptr" x1="0" y1="0" x2="0" y2="-12" stroke="#eee" stroke-width="2"/>
+        <text class="lab" y="-21">TIME</text>
+      </g>
+      <g class="knob-hit" data-key="wet" transform="translate(52,112)">
+        <circle r="9" fill="#1a1a1a"/><line class="ptr" x1="0" y1="0" x2="0" y2="-7" stroke="#eee" stroke-width="1.5"/>
+        <text class="lab" y="-13">WET</text>
+      </g>
+      <g class="knob-hit" data-key="fback" transform="translate(84,112)">
+        <circle r="15" fill="#1a1a1a"/><line class="ptr" x1="0" y1="0" x2="0" y2="-12" stroke="#eee" stroke-width="2"/>
+        <text class="lab" y="-21">F-BACK</text>
+      </g>
+      <g class="knob-hit" data-key="volume" transform="translate(198,112)">
+        <circle r="15" fill="#401010"/><line class="ptr" x1="0" y1="0" x2="0" y2="-12" stroke="#f88" stroke-width="2"/>
+        <text class="lab" y="-21">VOLUME</text>
+      </g>
+      <g class="sw-hit" data-key="sw_osc_a" data-kind="01" transform="translate(116,76)">
+        <rect x="-5" y="-8" width="10" height="16" rx="2" fill="#333"/><line class="lev" x1="0" y1="0" x2="0" y2="-6" stroke="#ccc" stroke-width="2"/>
+        <text class="lab" y="-13">A</text>
+      </g>
+      <g class="sw-hit" data-key="sw_osc_b" data-kind="01" transform="translate(130,76)">
+        <rect x="-5" y="-8" width="10" height="16" rx="2" fill="#333"/><line class="lev" x1="0" y1="0" x2="0" y2="-6" stroke="#ccc" stroke-width="2"/>
+        <text class="lab" y="-13">B</text>
+      </g>
+      <g class="sw-hit" data-key="sw_drone" data-kind="01" transform="translate(184,76)">
+        <rect x="-5" y="-8" width="10" height="16" rx="2" fill="#333"/><line class="lev" x1="0" y1="0" x2="0" y2="-6" stroke="#ccc" stroke-width="2"/>
+        <text class="lab" y="-13">DRONE</text>
+      </g>
+      <g class="sw-hit" data-key="sw_trem" data-kind="mode" transform="translate(40,74)">
+        <rect x="-5" y="-8" width="10" height="16" rx="2" fill="#333"/><line class="lev" x1="0" y1="0" x2="0" y2="0" stroke="#fc6" stroke-width="2"/>
+        <text class="lab" y="-13">TREM</text>
+      </g>
+      <g class="sw-hit" data-key="sw_mode" data-kind="mode" transform="translate(62,74)">
+        <rect x="-5" y="-8" width="10" height="16" rx="2" fill="#333"/><line class="lev" x1="0" y1="0" x2="0" y2="0" stroke="#fc6" stroke-width="2"/>
+        <text class="lab" y="-13">MODE</text>
+      </g>
+      <g class="sw-hit" data-key="sw_h1" data-kind="01" transform="translate(114,112)">
+        <rect x="-5" y="-8" width="10" height="16" rx="2" fill="#333"/><line class="lev" x1="0" y1="0" x2="0" y2="-6" stroke="#ccc" stroke-width="2"/>
+        <text class="lab" y="-13">H1</text>
+      </g>
+      <g class="sw-hit" data-key="sw_h2" data-kind="01" transform="translate(132,112)">
+        <rect x="-5" y="-8" width="10" height="16" rx="2" fill="#333"/><line class="lev" x1="0" y1="0" x2="0" y2="-6" stroke="#ccc" stroke-width="2"/>
+        <text class="lab" y="-13">H2</text>
+      </g>
+      <g class="sw-hit" data-key="sw_h3" data-kind="01" transform="translate(150,112)">
+        <rect x="-5" y="-8" width="10" height="16" rx="2" fill="#333"/><line class="lev" x1="0" y1="0" x2="0" y2="-6" stroke="#ccc" stroke-width="2"/>
+        <text class="lab" y="-13">H3</text>
+      </g>
+      <g class="sw-hit" data-key="sw_stack" data-kind="01" transform="translate(168,112)">
+        <rect x="-5" y="-8" width="10" height="16" rx="2" fill="#333"/><line class="lev" x1="0" y1="0" x2="0" y2="6" stroke="#ccc" stroke-width="2"/>
+        <text class="lab" y="-13">STACK</text>
+      </g>
+      <g class="gate-hit" data-key="sw_gate" transform="translate(198,76)">
+        <circle r="7" fill="#c22"/><text class="lab" y="-12">GATE</text>
+      </g>
+      
+      <g class="knob-hit" data-key="eq_low" transform="translate(18,50)">
+        <circle r="9" fill="#1a1a1a"/><line class="ptr" x1="0" y1="0" x2="0" y2="-7" stroke="#eee" stroke-width="1.5"/>
+        <text class="lab" y="-13">LOW</text>
+      </g>
+      <g class="knob-hit" data-key="eq_mid_f" transform="translate(40,50)">
+        <circle r="9" fill="#1a1a1a"/><line class="ptr" x1="0" y1="0" x2="0" y2="-7" stroke="#eee" stroke-width="1.5"/>
+        <text class="lab" y="-13">MID F</text>
+      </g>
+      <g class="knob-hit" data-key="eq_mid_g" transform="translate(62,50)">
+        <circle r="9" fill="#1a1a1a"/><line class="ptr" x1="0" y1="0" x2="0" y2="-7" stroke="#eee" stroke-width="1.5"/>
+        <text class="lab" y="-13">MID G</text>
+      </g>
+      <g class="knob-hit" data-key="eq_high" transform="translate(84,50)">
+        <circle r="9" fill="#1a1a1a"/><line class="ptr" x1="0" y1="0" x2="0" y2="-7" stroke="#eee" stroke-width="1.5"/>
+        <text class="lab" y="-13">HIGH</text>
+      </g>
+      <g id="patch-cables"></g>
+      <g class="jack-hit" data-key="jack_a" transform="translate(16,144)"><circle r="4" fill="#222"/><text class="sub" y="8">A</text></g>
+      <g class="jack-hit" data-key="jack_b" transform="translate(31,144)"><circle r="4" fill="#222"/><text class="sub" y="8">B</text></g>
+      <g class="jack-hit" data-key="jack_in" transform="translate(46,144)"><circle r="4" fill="#222"/><text class="sub" y="8">IN</text></g>
+      <g class="jack-hit" data-key="jack_filt" transform="translate(61,144)"><circle r="4" fill="#222"/><text class="sub" y="8">FILT</text></g>
+      <g class="jack-hit" data-key="jack_fcv" transform="translate(76,144)"><circle r="4" fill="#222"/><text class="sub" y="8">FCV</text></g>
+      <g class="jack-hit" data-key="jack_vcv" transform="translate(91,144)"><circle r="4" fill="#222"/><text class="sub" y="8">VCV</text></g>
+      <g class="jack-hit" data-key="jack_lfo" transform="translate(106,144)"><circle r="4" fill="#222"/><text class="sub" y="8">LFO</text></g>
+      <g class="jack-hit" data-key="jack_ecv" transform="translate(121,144)"><circle r="4" fill="#222"/><text class="sub" y="8">ECV</text></g>
+      <g class="jack-hit" data-key="jack_clk" transform="translate(136,144)"><circle r="4" fill="#222"/><text class="sub" y="8">CLK</text></g>
+      <g class="jack-hit" data-key="jack_send" transform="translate(151,144)"><circle r="4" fill="#222"/><text class="sub" y="8">SEND</text></g>
+      <g class="jack-hit" data-key="jack_rcv" transform="translate(166,144)"><circle r="4" fill="#222"/><text class="sub" y="8">RCV</text></g>
+    </svg>
+  </div>
+
+  <div class="side">
+    <div class="scope-box">
+      <h2>Osciloscópio — saída</h2>
+      <canvas id="scope" width="640" height="160"></canvas>
+      <div class="meter" id="meter">parado · clique Tocar</div>
+    </div>
+    <div class="transport">
+      <button id="btn-play" type="button">Tocar</button>
+      <button id="btn-stop" class="secondary" type="button" disabled>Parar</button>
+    </div>
+
+    <div class="xlr-box">
+      <h2>XLR / COMBO — entrada &amp; saída</h2>
+      <div class="xlr-row">
+        <label><input type="checkbox" id="xlr-in" checked/> XLR IN ativo</label>
+        <label><input type="checkbox" id="xlr-solo"/> Só entrada (muta OSC)</label>
+      </div>
+      <div class="xlr-row">
+        <label style="flex:1;min-width:180px">Fonte
+          <select id="xlr-source">
+            <option value="wav">WAV teste / arquivo</option>
+            <option value="interface">Interface de áudio</option>
+          </select>
+        </label>
+        <label>PRE <input type="range" id="xlr-level" min="0" max="100" value="55" title="Espelha o knob PRE"/></label>
+        <label>OSC IN <input type="range" id="osc-in-level" min="0" max="100" value="50" title="Mix: osc ← → XLR"/></label>
+      </div>
+      <div class="xlr-row">
+        <label>LOW <input type="range" id="eq-low" min="0" max="100" value="50" title="Shelf 100 Hz ±10 dB"/></label>
+        <label>MID F <input type="range" id="eq-mid-f" min="0" max="100" value="45" title="250 Hz–5 kHz"/></label>
+        <label>MID G <input type="range" id="eq-mid-g" min="0" max="100" value="50" title="Mid ±12 dB"/></label>
+        <label>HIGH <input type="range" id="eq-high" min="0" max="100" value="50" title="Shelf 10 kHz ±10 dB"/></label>
+      </div>
+      <div class="xlr-row" id="xlr-iface-row">
+        <label style="flex:1;min-width:220px">Entrada (USB)
+          <select id="xlr-device"><option value="">— Atualizar para listar —</option></select>
+        </label>
+        <button type="button" class="secondary tiny" id="xlr-refresh">Atualizar</button>
+      </div>
+      <div class="xlr-row" id="xlr-wav-row">
+        <label style="cursor:pointer">
+          Arquivo WAV <input type="file" id="xlr-file" accept="audio/*,.wav" style="font-size:11px;max-width:200px"/>
+        </label>
+      </div>
+      <div class="xlr-status" id="xlr-status">IN: twinkle.wav · OUT: alto-falantes / scope</div>
+    </div>
+
+    <details>
+      <summary>Export SPICE (painel_state.inc)</summary>
+      <label>Bloco ngspice</label>
+      <select id="block">
+        <option value="01_osc">01_osc</option>
+        <option value="07_lfo">07_lfo</option>
+        <option value="08_echo">08_echo</option>
+        <option value="harness_check">harness_check</option>
+        <option value="05_vcf">05_vcf</option>
+        <option value="06_vca">06_vca</option>
+      </select>
+      <button id="btn-copy" class="secondary" type="button" style="margin-top:8px;width:100%">Copiar .inc</button>
+      <p class="hint" style="margin-top:6px">Comando: <code id="cmd">./run.sh 01_osc</code></p>
+      <textarea id="out" readonly></textarea>
+    </details>
+  </div>
+</div>
+
+<script>
+const state = {
+  pitch_a: 0.35, pitch_b: 0.45, amount: 0.5, shape: 0.25, cutoff: 0.65,
+  rate: 0.35, depth: 0.25, pre: 0.55, osc_in: 0.5,
+  eq_low: 0.5, eq_mid_f: 0.45, eq_mid_g: 0.5, eq_high: 0.5,
+  time_u: 0.4, fback: 0.35, wet: 0.4, volume: 0.55,
+  sw_osc_a: 1, sw_osc_b: 1, sw_drone: 1, sw_trem: 0, sw_mode: 0,
+  sw_h1: 1, sw_h2: 1, sw_h3: 1, sw_stack: 0, sw_gate: 0,
+  jack_a: 0, jack_b: 0, jack_in: 0, jack_filt: 0, jack_fcv: 0, jack_vcv: 0,
+  jack_lfo: 0, jack_ecv: 0, jack_clk: 0, jack_send: 0, jack_rcv: 0,
+  xlr_in: 1, xlr_solo: 0, xlr_source: 'wav', xlr_deviceId: '',
+};
+
+const TEST_WAV_URL = './audio/twinkle.wav';
+
+/* ---------- audio engine (behavioral VOZ-9) ---------- */
+let ctx = null;
+let nodes = null;
+let scopeAnim = 0;
+let envLevel = 1;
+let extBuffer = null;
+let extSource = null;
+let extFileName = 'twinkle.wav';
+let micStream = null;
+let micNode = null;
+let micSplit = null;
+
+function logMap(u, lo, hi) {
+  const t = Math.min(1, Math.max(0, u));
+  return lo * Math.pow(hi / lo, t);
+}
+
+function linMap(u, lo, hi) {
+  return lo + (hi - lo) * Math.min(1, Math.max(0, u));
+}
+
+function makeNoiseBuffer(ac) {
+  const len = ac.sampleRate * 2;
+  const buf = ac.createBuffer(1, len, ac.sampleRate);
+  const d = buf.getChannelData(0);
+  for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+  return buf;
+}
+
+function buildGraph(ac) {
+  const oscA = ac.createOscillator();
+  oscA.type = 'square';
+  const oscB = ac.createOscillator();
+  oscB.type = 'square';
+  const gainA = ac.createGain();
+  const gainB = ac.createGain();
+  const noise = ac.createBufferSource();
+  noise.buffer = makeNoiseBuffer(ac);
+  noise.loop = true;
+  const noiseGain = ac.createGain();
+  noiseGain.gain.value = 0.04;
+
+  // EXT / COMBO / XLR IN — mono (interface ou WAV)
+  // extGain = PRE (SEND + envelope); xlrMix = OSC IN → mix
+  const extGain = ac.createGain();
+  extGain.gain.value = 0;
+  extGain.channelCount = 1;
+  extGain.channelCountMode = 'explicit';
+  extGain.channelInterpretation = 'speakers';
+  const xlrMix = ac.createGain();
+  xlrMix.gain.value = 0;
+
+  const mix = ac.createGain();
+  mix.gain.value = 1;
+  mix.channelCount = 1;
+  mix.channelCountMode = 'explicit';
+
+  // Waveshape: soft clip via WaveShaper driven by shape amount (pre-gain)
+  const shapePre = ac.createGain();
+  const shaper = ac.createWaveShaper();
+  function makeCurve(amt) {
+    const n = 2048;
+    const curve = new Float32Array(n);
+    const k = 1 + amt * 40;
+    for (let i = 0; i < n; i++) {
+      const x = (i * 2) / n - 1;
+      curve[i] = ((1 + k) * x) / (1 + k * Math.abs(x));
+    }
+    return curve;
+  }
+  shaper.curve = makeCurve(0.3);
+  shaper.oversample = '2x';
+
+  const vcf = ac.createBiquadFilter();
+  vcf.type = 'lowpass';
+  vcf.Q.value = 1.2;
+
+  // FILT jack: normal = shaper→VCF; plugged = external source replaces normal
+  const filtNorm = ac.createGain();
+  filtNorm.gain.value = 1;
+  const filtFromA = ac.createGain(); filtFromA.gain.value = 0;
+  const filtFromB = ac.createGain(); filtFromB.gain.value = 0;
+  const filtFromIn = ac.createGain(); filtFromIn.gain.value = 0;
+  const filtFromLfo = ac.createGain(); filtFromLfo.gain.value = 0;
+
+  const vca = ac.createGain();
+  vca.gain.value = 1;
+
+  // LFO
+  const lfo = ac.createOscillator();
+  lfo.type = 'sine';
+
+  // Tremolo: MODE center + LFO→VCV patch
+  const tremolo = ac.createGain();
+  tremolo.gain.value = 1;
+  const tremDepth = ac.createGain();
+  tremDepth.gain.value = 0;
+  const vcvPatch = ac.createGain();
+  vcvPatch.gain.value = 0;
+  const tremBias = ac.createConstantSource();
+  tremBias.offset.value = 1;
+  tremBias.connect(tremolo.gain);
+  lfo.connect(tremDepth);
+  tremDepth.connect(tremolo.gain);
+  lfo.connect(vcvPatch);
+  vcvPatch.connect(tremolo.gain);
+
+  // Pitch FM: lfo → osc frequency (MODE pitch)
+  const fmA = ac.createGain();
+  fmA.gain.value = 0;
+  const fmB = ac.createGain();
+  fmB.gain.value = 0;
+  lfo.connect(fmA);
+  lfo.connect(fmB);
+  fmA.connect(oscA.frequency);
+  fmB.connect(oscB.frequency);
+
+  // LFO → FCV (cutoff CV)
+  const fcvPatch = ac.createGain();
+  fcvPatch.gain.value = 0;
+  lfo.connect(fcvPatch);
+  fcvPatch.connect(vcf.frequency);
+
+  // Delay heads (3) + feedback with tape sat (MP20 stand-in)
+  const delays = [ac.createDelay(1.2), ac.createDelay(1.2), ac.createDelay(1.2)];
+  const headGains = delays.map(() => ac.createGain());
+  const fbGain = ac.createGain();
+  fbGain.gain.value = 0.2;
+  const wetGain = ac.createGain();
+  wetGain.gain.value = 0.35;
+  const dryGain = ac.createGain();
+  dryGain.gain.value = 0.65;
+  const echoIn = ac.createGain();
+  echoIn.gain.value = 1;
+  const echoMix = ac.createGain();
+  echoMix.gain.value = 1;
+  const nabLp = ac.createBiquadFilter();
+  nabLp.type = 'lowpass';
+  nabLp.frequency.value = 3400;
+  nabLp.Q.value = 0.65;
+
+  // Drive into sat — grit without slamming the loop into DC rails
+  const tapeDrive = ac.createGain();
+  tapeDrive.gain.value = 1.5;
+
+  // Mild asymmetric soft clip (even harmonics ≈ Ge), ~unity small-signal gain
+  function tapeCurve() {
+    const n = 2048;
+    const curve = new Float32Array(n);
+    const k = 1.85;
+    const bias = 0.08;
+    const slope0 = k / (Math.cosh(bias) ** 2);
+    for (let i = 0; i < n; i++) {
+      const x = (i * 2) / n - 1;
+      const y = Math.tanh(x * k + bias) - Math.tanh(bias);
+      curve[i] = (y / slope0) * 0.95;
+    }
+    return curve;
+  }
+  const tapeSat = ac.createWaveShaper();
+  tapeSat.curve = tapeCurve();
+  tapeSat.oversample = '4x';
+
+  const dcBlock = ac.createBiquadFilter();
+  dcBlock.type = 'highpass';
+  dcBlock.frequency.value = 55;
+  dcBlock.Q.value = 0.707;
+
+  const limiter = ac.createWaveShaper();
+  limiter.curve = (() => {
+    const n = 2048;
+    const c = new Float32Array(n);
+    for (let i = 0; i < n; i++) {
+      const x = (i * 2) / n - 1;
+      const a = Math.abs(x);
+      c[i] = a < 0.7 ? x : Math.sign(x) * (0.7 + 0.3 * Math.tanh((a - 0.7) * 4));
+    }
+    return c;
+  })();
+  limiter.oversample = '2x';
+
+  const timeMods = delays.map(() => {
+    const g = ac.createGain();
+    g.gain.value = 0;
+    lfo.connect(g);
+    return g;
+  });
+
+  // SEND/RCV insert gate (normalled closed)
+  const rcvGate = ac.createGain();
+  rcvGate.gain.value = 1;
+
+  oscA.connect(gainA);
+  oscB.connect(gainB);
+  noise.connect(noiseGain);
+  // EQ voz estilo Tascam 424 MKIII (pós-mix; SEND = PRE pré-EQ)
+  const eqLow = ac.createBiquadFilter();
+  eqLow.type = 'lowshelf';
+  eqLow.frequency.value = 100;
+  eqLow.gain.value = 0;
+  const eqMid = ac.createBiquadFilter();
+  eqMid.type = 'peaking';
+  eqMid.frequency.value = 1000;
+  eqMid.Q.value = 0.85;
+  eqMid.gain.value = 0;
+  const eqHigh = ac.createBiquadFilter();
+  eqHigh.type = 'highshelf';
+  eqHigh.frequency.value = 10000;
+  eqHigh.gain.value = 0;
+
+  gainA.connect(mix);
+  gainB.connect(mix);
+  noiseGain.connect(mix);
+  // PRE = extGain (SEND pré-EQ + ENV); OSC IN = xlrMix → mix
+  extGain.connect(xlrMix);
+  xlrMix.connect(mix);
+  const voiceAnalyser = ac.createAnalyser();
+  voiceAnalyser.fftSize = 1024;
+  voiceAnalyser.smoothingTimeConstant = 0.55;
+  extGain.connect(voiceAnalyser);
+  // EQ 424 depois do mix, antes do SHAPE (afeta oscs + voz)
+  mix.connect(eqLow);
+  eqLow.connect(eqMid);
+  eqMid.connect(eqHigh);
+  eqHigh.connect(shapePre);
+  shapePre.connect(shaper);
+  shaper.connect(filtNorm);
+  filtNorm.connect(vcf);
+  gainA.connect(filtFromA); filtFromA.connect(vcf);
+  gainB.connect(filtFromB); filtFromB.connect(vcf);
+  extGain.connect(filtFromIn); filtFromIn.connect(vcf);
+  lfo.connect(filtFromLfo); filtFromLfo.connect(vcf);
+  vcf.connect(vca);
+  vca.connect(tremolo);
+
+  tremolo.connect(dryGain);
+  tremolo.connect(echoIn);
+  delays.forEach((d, i) => {
+    echoIn.connect(d);
+    d.connect(headGains[i]);
+    headGains[i].connect(echoMix);
+    timeMods[i].connect(d.delayTime);
+  });
+  echoMix.connect(nabLp);
+  nabLp.connect(tapeDrive);
+  tapeDrive.connect(tapeSat);
+  tapeSat.connect(dcBlock);
+  dcBlock.connect(rcvGate);
+  rcvGate.connect(wetGain);
+  rcvGate.connect(fbGain);
+  fbGain.connect(echoIn);
+
+  const master = ac.createGain();
+  master.gain.value = 0.35;
+  master.channelCount = 1;
+  master.channelCountMode = 'explicit';
+  dryGain.connect(master);
+  wetGain.connect(master);
+  master.connect(limiter);
+
+  const analyser = ac.createAnalyser();
+  analyser.fftSize = 2048;
+  analyser.smoothingTimeConstant = 0.3;
+  limiter.connect(analyser);
+
+  // Saída sempre stereo: mono → L e R
+  const stereoOut = ac.createChannelMerger(2);
+  analyser.connect(stereoOut, 0, 0);
+  analyser.connect(stereoOut, 0, 1);
+  stereoOut.connect(ac.destination);
+
+  oscA.start();
+  oscB.start();
+  noise.start();
+  lfo.start();
+  tremBias.start();
+
+  return {
+    oscA, oscB, gainA, gainB, noiseGain, extGain, xlrMix, eqLow, eqMid, eqHigh, mix, shapePre, shaper, makeCurve,
+    vcf, vca, lfo, tremolo, tremDepth, vcvPatch, tremBias, fmA, fmB, fcvPatch,
+    filtNorm, filtFromA, filtFromB, filtFromIn, filtFromLfo,
+    delays, headGains, fbGain, wetGain, dryGain, echoIn, echoMix, nabLp, timeMods,
+    tapeDrive, tapeSat, dcBlock, rcvGate, limiter, master, analyser, stereoOut,
+    voiceAnalyser,
+  };
+}
+
+const voiceEnvBuf = new Float32Array(1024);
+
+function readVoiceEnvelope(n) {
+  if (!n?.voiceAnalyser) return 0;
+  const buf = voiceEnvBuf;
+  n.voiceAnalyser.getFloatTimeDomainData(buf);
+  let sum = 0;
+  for (let i = 0; i < buf.length; i++) sum += buf[i] * buf[i];
+  const rms = Math.sqrt(sum / buf.length);
+  // limiar de ruído + sensibilidade (~PRE a meio, fala normal → ~1)
+  const open = Math.min(1, Math.max(0, (rms - 0.006) / 0.09));
+  return open * open; // curva tipo A: fala fraca abre pouco
+}
+
+function headDelays(timeU, stack) {
+  // esquema TIME min/mid/max
+  const t1 = linMap(timeU, 0.035, 0.16);
+  const t2 = linMap(timeU, 0.09, 0.38);
+  const t3 = linMap(timeU, 0.22, 0.60);
+  if (stack) {
+    return [t1, t1 + t2, t1 + t2 + t3 * 0.55];
+  }
+  return [t1, t2, t3];
+}
+
+function hasPatch(a, b) {
+  return patches.some(p =>
+    (p.a === a && p.b === b) || (p.a === b && p.b === a)
+  );
+}
+
+function applyState() {
+  if (!nodes || !ctx) return;
+  const n = nodes;
+  const now = ctx.currentTime;
+
+  const fA = logMap(state.pitch_a, 12, 480);
+  const fB = logMap(state.pitch_b, 110, 4800);
+  n.oscA.frequency.setTargetAtTime(fA, now, 0.02);
+  n.oscB.frequency.setTargetAtTime(fB, now, 0.02);
+
+  // AMOUNT + mute: DRONE+GATE = mute OSC A/B (echo tails keep ringing)
+  // xlr_solo = só entrada COMBO/XLR (muta osciladores e noise)
+  const amt = state.amount;
+  const muteOsc = state.sw_drone > 0.5 && state.sw_gate > 0.5;
+  const soloIn = state.xlr_solo > 0.5;
+
+  // ENV: DRONE=aberto; GATE=botão e/ou envelope da fala (XLR)
+  const xlrLive = state.xlr_in > 0.5 && (
+    state.xlr_source === 'interface' ? !!micNode : !!extBuffer
+  );
+  // Envelope da fala (GATE): sensibilidade fixa — OSC IN é o mix de áudio, não o ENV
+  const voiceRaw = (xlrLive && state.sw_drone < 0.5) ? readVoiceEnvelope(n) : 0;
+  const voiceEnv = voiceRaw;
+
+  if (state.sw_drone > 0.5) {
+    envLevel = 1;
+  } else {
+    const gatePush = state.sw_gate > 0.5 ? 1 : 0;
+    const target = Math.max(gatePush, voiceEnv);
+    if (target > envLevel) {
+      envLevel = Math.min(1, envLevel * 0.35 + target * 0.65);
+    } else {
+      envLevel *= 0.92;
+      if (envLevel < 0.002) envLevel = 0;
+      if (voiceEnv > 0.02) envLevel = Math.max(envLevel, voiceEnv * 0.85);
+    }
+  }
+  // Com XLR: VCA aberto (mix OSC IN cuida do áudio); sem XLR: VCA = ENV
+  const vcaLevel = (state.sw_drone > 0.5 || xlrLive) ? 1 : envLevel;
+  n.vca.gain.setValueAtTime(vcaLevel, now);
+
+  const oscOpen = muteOsc ? 0 : (state.sw_drone > 0.5 ? 1 : envLevel);
+  const onA = !soloIn && state.sw_osc_a > 0.5 ? oscOpen : 0;
+  const onB = !soloIn && state.sw_osc_b > 0.5 ? oscOpen : 0;
+
+  // PRE = nível do mic (SEND pré-EQ); sem XLR = pré-amp dos oscs
+  const pre = Math.min(1, Math.max(0, state.pre));
+  const preAmt = pre * 0.85 + (pre > 0.85 ? (pre - 0.85) * 4 : 0);
+  // OSC IN = crossfade: 0 = só osc · 1 = só XLR (com XLR vivo)
+  const oscIn = Math.min(1, Math.max(0, state.osc_in));
+  const xlrAmt = xlrLive ? oscIn : 0;
+  const oscAmt = xlrLive ? (1 - oscIn) : 1;
+  n.extGain.gain.setTargetAtTime(xlrLive ? preAmt : 0, now, 0.03);
+  n.xlrMix.gain.setTargetAtTime(xlrAmt, now, 0.03);
+  const oscPre = xlrLive ? oscAmt : (preAmt / 0.85);
+  n.gainA.gain.setTargetAtTime(onA * (1 - amt) * 0.55 * oscPre, now, 0.015);
+  n.gainB.gain.setTargetAtTime(onB * amt * 0.45 * oscPre, now, 0.015);
+  n.noiseGain.gain.setTargetAtTime(soloIn ? 0 : 0.04 * oscOpen * oscPre, now, 0.03);
+
+  // EQ 424 pós-mix: LOW 100 Hz ±10 · MID 250–5k ±12 · HIGH 10 kHz ±10
+  if (n.eqLow) {
+    n.eqLow.gain.setTargetAtTime((state.eq_low - 0.5) * 20, now, 0.04);
+    n.eqHigh.gain.setTargetAtTime((state.eq_high - 0.5) * 20, now, 0.04);
+    n.eqMid.frequency.setTargetAtTime(logMap(state.eq_mid_f, 250, 5000), now, 0.04);
+    n.eqMid.gain.setTargetAtTime((state.eq_mid_g - 0.5) * 24, now, 0.04);
+  }
+
+  const shapeAmt = state.shape;
+  n.shapePre.gain.setTargetAtTime(0.4 + shapeAmt * 2.2, now, 0.03);
+  n.shaper.curve = n.makeCurve(0.15 + shapeAmt * 0.85);
+
+  // CUTOFF base + LFO→FCV patch
+  const fc = logMap(state.cutoff, 180, 9000);
+  n.vcf.frequency.setTargetAtTime(fc, now, 0.03);
+  // FCV patch aplicado depois (respeita TREM off)
+  n.fcvPatch.gain.setTargetAtTime(0, now, 0.05);
+
+  // TREM 3 pos: +1 tremolo · 0 off · −1 flutter (como MODE)
+  const tremPos = state.sw_trem;
+  const lfoFx = Math.abs(tremPos) > 0.5; // meio = efeito desligado
+  const rateHz = tremPos > 0.5
+    ? logMap(state.rate, 3, 55)
+    : logMap(state.rate, 0.3, 4);
+  n.lfo.frequency.setTargetAtTime(rateHz, now, 0.05);
+
+  const depth = lfoFx ? state.depth : 0;
+  const mode = state.sw_mode;
+  // pitch FM
+  const fmOn = mode < -0.5 ? depth : 0;
+  n.fmA.gain.setTargetAtTime(fmOn * fA * 0.15, now, 0.05);
+  n.fmB.gain.setTargetAtTime(fmOn * fB * 0.12, now, 0.05);
+  // tremolo on VCA (MODE center)
+  const tremOn = Math.abs(mode) < 0.5 ? depth * 0.45 : 0;
+  n.tremDepth.gain.setTargetAtTime(tremOn, now, 0.05);
+  // LFO → VCV / FCV patches só com TREM≠meio
+  const vcvMod = (lfoFx && hasPatch('jack_lfo', 'jack_vcv')) ? depth * 0.5 : 0;
+  n.vcvPatch.gain.setTargetAtTime(vcvMod, now, 0.05);
+  const fcvAmt = (lfoFx && hasPatch('jack_lfo', 'jack_fcv')) ? fc * (0.25 + state.depth * 0.55) : 0;
+  n.fcvPatch.gain.setTargetAtTime(fcvAmt, now, 0.05);
+  // time flutter: MODE time OR LFO→ECV / CLK→ECV
+  const ecvPatch = hasPatch('jack_lfo', 'jack_ecv') || hasPatch('jack_clk', 'jack_ecv');
+  const timeMod = (lfoFx && (mode > 0.5 || ecvPatch)) ? (lfoFx ? state.depth : 0) * 0.012 : 0;
+  n.timeMods.forEach(g => g.gain.setTargetAtTime(timeMod, now, 0.05));
+
+  // FILT break: any cable into FILT opens the normal and routes sources
+  const filtBreak = patches.some(p => p.a === 'jack_filt' || p.b === 'jack_filt');
+  n.filtNorm.gain.setTargetAtTime(filtBreak ? 0 : 1, now, 0.02);
+  n.filtFromA.gain.setTargetAtTime(hasPatch('jack_a', 'jack_filt') ? 0.85 : 0, now, 0.02);
+  n.filtFromB.gain.setTargetAtTime(hasPatch('jack_b', 'jack_filt') ? 0.75 : 0, now, 0.02);
+  n.filtFromIn.gain.setTargetAtTime(hasPatch('jack_in', 'jack_filt') ? 0.7 : 0, now, 0.02);
+  n.filtFromLfo.gain.setTargetAtTime(hasPatch('jack_lfo', 'jack_filt') ? 0.35 : 0, now, 0.02);
+
+  // SEND/RCV: open insert if RCV plugged without SEND↔RCV (echo wet/fb mute)
+  const rcvPlugged = patches.some(p => p.a === 'jack_rcv' || p.b === 'jack_rcv');
+  const sendRcv = hasPatch('jack_send', 'jack_rcv');
+  n.rcvGate.gain.setTargetAtTime(!rcvPlugged || sendRcv ? 1 : 0, now, 0.03);
+
+  // Delays — at F-BACK max, loop gain > 1 after sat → infinite sustain / howl
+  const ds = headDelays(state.time_u, state.sw_stack > 0.5);
+  n.delays.forEach((d, i) => {
+    d.delayTime.setTargetAtTime(Math.min(1.15, ds[i]), now, 0.08);
+  });
+  const hOn = [
+    state.sw_h1 > 0.5,
+    state.sw_h2 > 0.5,
+    state.sw_h3 > 0.5,
+  ];
+  const nHeads = Math.max(1, hOn.filter(Boolean).length);
+  const headLevel = 0.9 / Math.sqrt(nHeads);
+  const hGains = [
+    hOn[0] ? headLevel : 0,
+    hOn[1] ? headLevel * 0.95 : 0,
+    hOn[2] ? headLevel * 0.9 : 0,
+  ];
+
+  const headSum = hGains[0] + hGains[1] + hGains[2];
+  const fbKnob = Math.min(1, Math.max(0, state.fback));
+  // Map F-BACK → intended loop gain (only near max exceeds unity).
+  const pathAtten = Math.max(0.25, headSum * 0.92);
+  let loopTarget;
+  if (fbKnob < 0.88) {
+    loopTarget = (fbKnob / 0.88) * 0.88;
+  } else {
+    const u = (fbKnob - 0.88) / 0.12;
+    const howlBoost = 1 + 0.1 * (nHeads - 1);
+    loopTarget = 0.88 + Math.pow(u, 1.4) * 0.55 * howlBoost;
+  }
+  // tapeDrive sits IN the regen path — divide it out or mid-knob still howls
+  const tapeDrv = 1.1 + fbKnob * 1.8 + (fbKnob > 0.85 ? 0.4 : 0);
+  const fb = loopTarget / (pathAtten * Math.max(1, tapeDrv));
+  n.fbGain.gain.setTargetAtTime(fb, now, 0.02);
+  n.headGains[0].gain.setValueAtTime(hGains[0], now);
+  n.headGains[1].gain.setValueAtTime(hGains[1], now);
+  n.headGains[2].gain.setValueAtTime(hGains[2], now);
+  n.tapeDrive.gain.setTargetAtTime(tapeDrv, now, 0.03);
+
+  const wet = state.wet;
+  n.wetGain.gain.setValueAtTime(0.2 + wet * 0.95, now);
+  n.dryGain.gain.setValueAtTime(Math.max(0.05, 1 - wet * 0.7), now);
+
+  n.master.gain.setTargetAtTime(state.volume * 0.38, now, 0.03);
+}
+
+function toMonoBuffer(ac, buffer) {
+  if (buffer.numberOfChannels === 1) return buffer;
+  const len = buffer.length;
+  const out = ac.createBuffer(1, len, buffer.sampleRate);
+  const L = buffer.getChannelData(0);
+  const d = out.getChannelData(0);
+  d.set(L);
+  return out;
+}
+
+async function loadExtBufferFromUrl(ac, url) {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error('HTTP ' + res.status + ' ao carregar ' + url);
+  const arr = await res.arrayBuffer();
+  return toMonoBuffer(ac, await ac.decodeAudioData(arr.slice(0)));
+}
+
+async function loadExtBufferFromFile(ac, file) {
+  const arr = await file.arrayBuffer();
+  return toMonoBuffer(ac, await ac.decodeAudioData(arr.slice(0)));
+}
+
+function stopMicInput() {
+  if (micSplit) {
+    try { micSplit.disconnect(); } catch (_) {}
+    micSplit = null;
+  }
+  if (micNode) {
+    try { micNode.disconnect(); } catch (_) {}
+    micNode = null;
+  }
+  if (micStream) {
+    micStream.getTracks().forEach(t => t.stop());
+    micStream = null;
+  }
+}
+
+function stopExtSource() {
+  if (extSource) {
+    try { extSource.stop(); } catch (_) {}
+    try { extSource.disconnect(); } catch (_) {}
+    extSource = null;
+  }
+}
+
+function stopAllInputs() {
+  stopExtSource();
+  stopMicInput();
+}
+
+function startExtSource() {
+  if (!ctx || !nodes || !extBuffer) return;
+  stopExtSource();
+  extSource = ctx.createBufferSource();
+  extSource.buffer = extBuffer;
+  extSource.loop = true;
+  extSource.connect(nodes.extGain);
+  extSource.start();
+}
+
+async function ensureAudioPermission() {
+  if (!window.isSecureContext) {
+    throw new Error('Abra via http://localhost (file:// bloqueia o microfone)');
+  }
+  if (!navigator.mediaDevices?.getUserMedia) {
+    throw new Error('getUserMedia indisponível neste browser');
+  }
+  const stream = await navigator.mediaDevices.getUserMedia({
+    audio: {
+      echoCancellation: false,
+      noiseSuppression: false,
+      autoGainControl: false,
+    },
+    video: false,
+  });
+  stream.getTracks().forEach(t => t.stop());
+}
+
+function scoreInputDevice(d) {
+  const l = (d.label || '').toLowerCase();
+  let s = 0;
+  if (/usb audio|burr-brown|pcm290|ti /.test(l)) s += 20;
+  if (/behringer|focusrite|scarlett|presonus|motu|rme|ua-/.test(l)) s += 12;
+  if (/edifier|bluetooth|airpods|wh700|headphones/.test(l)) s -= 8;
+  if (/teams|virtual|zoom|cable/.test(l)) s -= 10;
+  if (/macbook|mac mini|built-in|interno|microfone/.test(l)) s -= 2;
+  return s;
+}
+
+async function listAudioInputs() {
+  const sel = document.getElementById('xlr-device');
+  if (!navigator.mediaDevices?.enumerateDevices) {
+    sel.innerHTML = '<option value="">API de mídia indisponível</option>';
+    return [];
+  }
+  const devices = await navigator.mediaDevices.enumerateDevices();
+  const inputs = devices.filter(d => d.kind === 'audioinput');
+  const prev = state.xlr_deviceId || sel.value;
+  sel.innerHTML = '';
+  if (!inputs.length) {
+    sel.innerHTML = '<option value="">Nenhuma entrada encontrada</option>';
+    return [];
+  }
+  const ranked = [...inputs].sort((a, b) => scoreInputDevice(b) - scoreInputDevice(a));
+  ranked.forEach((d, i) => {
+    const opt = document.createElement('option');
+    opt.value = d.deviceId;
+    const label = d.label || `Entrada ${i + 1}`;
+    opt.textContent = scoreInputDevice(d) >= 12 ? `★ ${label}` : label;
+    sel.appendChild(opt);
+  });
+  const preferred = ranked.find(d => scoreInputDevice(d) >= 12) || ranked[0];
+  if (prev && [...sel.options].some(o => o.value === prev)) {
+    sel.value = prev;
+  } else if (preferred) {
+    sel.value = preferred.deviceId;
+  }
+  state.xlr_deviceId = sel.value;
+  return ranked;
+}
+
+async function refreshAudioInputs() {
+  await ensureAudioPermission();
+  const list = await listAudioInputs();
+  updateXlrStatus(list.length ? `${list.length} entradas` : 'lista vazia');
+  return list;
+}
+
+async function startMicInput(deviceId) {
+  if (!ctx || !nodes) return;
+  stopMicInput();
+  const constraints = {
+    audio: {
+      ...(deviceId ? { deviceId: { ideal: deviceId } } : {}),
+      echoCancellation: false,
+      noiseSuppression: false,
+      autoGainControl: false,
+      channelCount: { ideal: 1 },
+    },
+    video: false,
+  };
+  micStream = await navigator.mediaDevices.getUserMedia(constraints);
+  micNode = ctx.createMediaStreamSource(micStream);
+  // Interface pode reportar 2 ch — usa só o canal 0 (mono)
+  micSplit = ctx.createChannelSplitter(2);
+  micNode.connect(micSplit);
+  micSplit.connect(nodes.extGain, 0);
+  await listAudioInputs();
+  const sel = document.getElementById('xlr-device');
+  const trackId = micStream.getAudioTracks()[0]?.getSettings?.().deviceId;
+  if (trackId && [...sel.options].some(o => o.value === trackId)) {
+    sel.value = trackId;
+    state.xlr_deviceId = trackId;
+  } else if (deviceId && [...sel.options].some(o => o.value === deviceId)) {
+    sel.value = deviceId;
+    state.xlr_deviceId = deviceId;
+  } else {
+    state.xlr_deviceId = sel.value;
+  }
+}
+
+function syncXlrSourceUi() {
+  const iface = state.xlr_source === 'interface';
+  document.getElementById('xlr-source').value = state.xlr_source;
+  // Entrada USB sempre visível; Arquivo só em modo WAV
+  const wavRow = document.getElementById('xlr-wav-row');
+  wavRow.hidden = iface;
+  wavRow.style.display = iface ? 'none' : 'flex';
+  const ifaceRow = document.getElementById('xlr-iface-row');
+  ifaceRow.hidden = false;
+  ifaceRow.style.display = 'flex';
+  document.getElementById('xlr-device').disabled = !iface;
+  document.getElementById('xlr-refresh').disabled = false;
+}
+
+async function applyXlrInputRouting() {
+  if (!ctx || !nodes || state.xlr_in < 0.5) {
+    stopAllInputs();
+    applyState();
+    updateXlrStatus();
+    return;
+  }
+  if (state.xlr_source === 'interface') {
+    stopExtSource();
+    try {
+      if (!state.xlr_deviceId) await refreshAudioInputs();
+      await startMicInput(state.xlr_deviceId || undefined);
+      updateXlrStatus('interface OK');
+    } catch (err) {
+      stopMicInput();
+      updateXlrStatus('erro interface: ' + err.message);
+    }
+  } else {
+    stopMicInput();
+    if (extBuffer) startExtSource();
+    updateXlrStatus(extBuffer ? 'WAV OK' : 'sem WAV');
+  }
+  applyState();
+}
+
+function updateXlrStatus(extra) {
+  const el = document.getElementById('xlr-status');
+  if (!el) return;
+  const on = state.xlr_in > 0.5 ? 'ligado' : 'mudo';
+  const solo = state.xlr_solo > 0.5 ? ' · só IN' : '';
+  let src;
+  if (state.xlr_source === 'interface') {
+    const sel = document.getElementById('xlr-device');
+    const label = sel?.selectedOptions?.[0]?.textContent || state.xlr_deviceId || 'interface';
+    src = label;
+  } else {
+    src = extFileName;
+  }
+  el.textContent = `IN: ${src} mono (${on}${solo}) · OUT: stereo L/R / scope` +
+    (extra ? ' · ' + extra : '');
+}
+
+async function startAudio() {
+  if (!ctx) {
+    ctx = new (window.AudioContext || window.webkitAudioContext)();
+    nodes = buildGraph(ctx);
+  }
+  if (ctx.state === 'suspended') await ctx.resume();
+
+  if (!extBuffer && state.xlr_source === 'wav') {
+    try {
+      extBuffer = await loadExtBufferFromUrl(ctx, TEST_WAV_URL);
+      extFileName = 'twinkle.wav';
+    } catch (err) {
+      updateXlrStatus('falha no WAV padrão — use Arquivo (' + err.message + ')');
+    }
+  }
+
+  await applyXlrInputRouting();
+
+  document.getElementById('btn-play').classList.add('playing');
+  document.getElementById('btn-play').textContent = 'Tocando…';
+  document.getElementById('btn-stop').disabled = false;
+  drawScope();
+}
+
+function stopAudio() {
+  stopAllInputs();
+  if (ctx) {
+    ctx.close();
+    ctx = null;
+    nodes = null;
+  }
+  cancelAnimationFrame(scopeAnim);
+  document.getElementById('btn-play').classList.remove('playing');
+  document.getElementById('btn-play').textContent = 'Tocar';
+  document.getElementById('btn-stop').disabled = true;
+  document.getElementById('meter').textContent = 'parado';
+  updateXlrStatus('parado');
+  const c = document.getElementById('scope');
+  const g = c.getContext('2d');
+  g.fillStyle = '#050705';
+  g.fillRect(0, 0, c.width, c.height);
+}
+
+function drawScope() {
+  if (!nodes || !ctx) return;
+  const analyser = nodes.analyser;
+  const canvas = document.getElementById('scope');
+  const g = canvas.getContext('2d');
+  const w = canvas.width;
+  const h = canvas.height;
+  const buf = new Float32Array(analyser.fftSize);
+  analyser.getFloatTimeDomainData(buf);
+
+  g.fillStyle = '#050705';
+  g.fillRect(0, 0, w, h);
+  // grid
+  g.strokeStyle = '#1a2a1a';
+  g.lineWidth = 1;
+  for (let i = 1; i < 4; i++) {
+    const y = (h * i) / 4;
+    g.beginPath(); g.moveTo(0, y); g.lineTo(w, y); g.stroke();
+  }
+  g.beginPath(); g.moveTo(0, h / 2); g.lineTo(w, h / 2); g.strokeStyle = '#2a4a2a'; g.stroke();
+
+  g.strokeStyle = '#5ecf6a';
+  g.lineWidth = 1.5;
+  g.beginPath();
+  const step = Math.max(1, Math.floor(buf.length / w));
+  for (let x = 0; x < w; x++) {
+    const v = buf[x * step] || 0;
+    const y = h / 2 - v * (h * 0.42);
+    if (x === 0) g.moveTo(x, y); else g.lineTo(x, y);
+  }
+  g.stroke();
+
+  // peak meter
+  let peak = 0;
+  for (let i = 0; i < buf.length; i++) {
+    const a = Math.abs(buf[i]);
+    if (Number.isFinite(a)) peak = Math.max(peak, a);
+  }
+  const pct = Math.min(200, peak * 100);
+  const fA = logMap(state.pitch_a, 12, 480).toFixed(0);
+  const fB = logMap(state.pitch_b, 110, 4800).toFixed(0);
+  const clip = peak > 0.98 ? ' · CLIP' : '';
+  const tremLabel = state.sw_trem > 0.5 ? 'TREM' : state.sw_trem < -0.5 ? 'FLUT' : 'LFO off';
+  const modeLabel =
+    state.sw_drone > 0.5
+      ? (state.sw_gate > 0.5 ? 'DRONE · MUTE' : 'DRONE')
+      : `GATE · ENV ${(envLevel * 100).toFixed(0)}%`;
+  const modeLabel2 = `${modeLabel} · ${tremLabel}`;
+  document.getElementById('meter').textContent =
+    `A ${fA} Hz · B ${fB} Hz · pico ${pct.toFixed(0)}%${clip} · ${modeLabel2}`;
+
+  applyState();
+  scopeAnim = requestAnimationFrame(drawScope);
+}
+
+/* ---------- panel UI ---------- */
+function angleFromU(u) { return -135 + 270 * u; }
+
+const PATCH_COLORS = ['#e85d4c', '#4ecdc4', '#f7b731', '#a55eea', '#45aaf2', '#26de81', '#fd9644'];
+/** Cabos de demonstração — cliques / botão direito ainda editam */
+let patches = [
+  { a: 'jack_lfo', b: 'jack_fcv', color: PATCH_COLORS[0] },   // LFO → FCV
+  { a: 'jack_lfo', b: 'jack_vcv', color: PATCH_COLORS[1] },   // LFO → VCV
+  { a: 'jack_send', b: 'jack_rcv', color: PATCH_COLORS[3] },  // SEND → RCV
+];
+let patchPick = null;
+
+function jackPos(key) {
+  const g = document.querySelector(`.jack-hit[data-key="${key}"]`);
+  if (!g) return null;
+  const m = /translate\(\s*([-\d.]+)\s*,\s*([-\d.]+)\s*\)/.exec(g.getAttribute('transform') || '');
+  return m ? { x: +m[1], y: +m[2] } : null;
+}
+
+function cablePath(a, b) {
+  const dx = b.x - a.x;
+  const sag = 10 + Math.min(28, Math.abs(dx) * 0.35);
+  const c1x = a.x + dx * 0.28;
+  const c2x = a.x + dx * 0.72;
+  return `M ${a.x} ${a.y} C ${c1x} ${a.y + sag}, ${c2x} ${b.y + sag}, ${b.x} ${b.y}`;
+}
+
+function drawPatches() {
+  const layer = document.getElementById('patch-cables');
+  if (!layer) return;
+  layer.replaceChildren();
+  patches.forEach((p, i) => {
+    const pa = jackPos(p.a);
+    const pb = jackPos(p.b);
+    if (!pa || !pb) return;
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('class', 'patch-cable');
+    path.setAttribute('d', cablePath(pa, pb));
+    path.setAttribute('stroke', p.color);
+    path.dataset.i = String(i);
+    layer.appendChild(path);
+  });
+}
+
+function render() {
+  document.querySelectorAll('.knob-hit').forEach(g => {
+    g.querySelector('.ptr').setAttribute('transform', `rotate(${angleFromU(state[g.dataset.key])})`);
+  });
+  document.querySelectorAll('.sw-hit').forEach(g => {
+    const lev = g.querySelector('.lev');
+    if (g.dataset.kind === 'mode') {
+      const v = state[g.dataset.key];
+      lev.setAttribute('y2', v < -0.5 ? -6 : v > 0.5 ? 6 : 0);
+    } else {
+      lev.setAttribute('y2', state[g.dataset.key] > 0.5 ? -6 : 6);
+    }
+  });
+  document.querySelectorAll('.jack-hit').forEach(g => {
+    const key = g.dataset.key;
+    const plugged = patches.some(p => p.a === key || p.b === key);
+    state[key] = plugged ? 1 : 0;
+    g.querySelector('circle').classList.toggle('plugged', plugged);
+    g.classList.toggle('picking', patchPick === key);
+  });
+  drawPatches();
+  syncPreSlider();
+  syncEqSliders();
+  const blk = document.getElementById('block');
+  if (blk) document.getElementById('cmd').textContent = `./run.sh ${blk.value}`;
+  const out = document.getElementById('out');
+  if (out) out.value = buildInc();
+  applyState();
+}
+
+function buildInc() {
+  const lines = ['* Generated by painel.html', ''];
+  ['pitch_a','pitch_b','amount','shape','cutoff','rate','depth','pre','osc_in','eq_low','eq_mid_f','eq_mid_g','eq_high','time_u','fback','wet','volume']
+    .forEach(k => lines.push(`.param ${k}=${state[k].toFixed(4)}`));
+  lines.push('');
+  ['sw_osc_a','sw_osc_b','sw_drone','sw_trem','sw_mode','sw_h1','sw_h2','sw_h3','sw_stack','sw_gate']
+    .forEach(k => lines.push(`.param ${k}=${state[k]}`));
+  lines.push(`.param sw_mode_p=${state.sw_mode < -0.5 ? 1 : 0}`);
+  lines.push(`.param sw_mode_t=${state.sw_mode > 0.5 ? 1 : 0}`);
+  lines.push(`.param sw_trem_t=${state.sw_trem > 0.5 ? 1 : 0}`);
+  lines.push(`.param sw_trem_f=${state.sw_trem < -0.5 ? 1 : 0}`);
+  lines.push('');
+  Object.keys(state).filter(k => k.startsWith('jack_')).forEach(k => lines.push(`.param ${k}=${state[k]}`));
+  return lines.join('\n') + '\n';
+}
+
+let drag = null;
+document.querySelectorAll('.knob-hit').forEach(g => {
+  g.addEventListener('pointerdown', e => {
+    drag = { key: g.dataset.key };
+    g.setPointerCapture(e.pointerId);
+  });
+  g.addEventListener('pointermove', e => {
+    if (!drag || drag.key !== g.dataset.key) return;
+    const rect = g.getBoundingClientRect();
+    let ang = Math.atan2(e.clientX - (rect.left + rect.width / 2), (rect.top + rect.height / 2) - e.clientY) * 180 / Math.PI;
+    ang = Math.max(-135, Math.min(135, ang));
+    state[drag.key] = (ang + 135) / 270;
+    render();
+  });
+  g.addEventListener('pointerup', () => { drag = null; });
+});
+
+document.querySelectorAll('.sw-hit').forEach(g => {
+  g.addEventListener('click', () => {
+    const k = g.dataset.key;
+    if (g.dataset.kind === 'mode') {
+      state[k] = state[k] < -0.5 ? 0 : state[k] > 0.5 ? -1 : 1;
+    } else {
+      state[k] = state[k] > 0.5 ? 0 : 1;
+    }
+    render();
+  });
+});
+
+document.querySelectorAll('.jack-hit').forEach(g => {
+  g.addEventListener('click', e => {
+    e.preventDefault();
+    const key = g.dataset.key;
+    if (!patchPick) {
+      patchPick = key;
+    } else if (patchPick === key) {
+      patchPick = null;
+    } else {
+      const [a, b] = patchPick < key ? [patchPick, key] : [key, patchPick];
+      const exists = patches.some(p => p.a === a && p.b === b);
+      if (!exists) {
+        patches.push({
+          a, b,
+          color: PATCH_COLORS[patches.length % PATCH_COLORS.length],
+        });
+      }
+      patchPick = null;
+    }
+    render();
+  });
+  g.addEventListener('contextmenu', e => {
+    e.preventDefault();
+    const key = g.dataset.key;
+    patches = patches.filter(p => p.a !== key && p.b !== key);
+    if (patchPick === key) patchPick = null;
+    render();
+  });
+});
+
+const patchLayer = document.getElementById('patch-cables');
+patchLayer.addEventListener('contextmenu', e => {
+  const cable = e.target.closest('.patch-cable');
+  if (!cable) return;
+  e.preventDefault();
+  const i = Number(cable.dataset.i);
+  if (!Number.isFinite(i)) return;
+  patches.splice(i, 1);
+  render();
+});
+
+const gate = document.querySelector('.gate-hit');
+gate.addEventListener('pointerdown', (e) => {
+  state.sw_gate = 1;
+  try { gate.setPointerCapture(e.pointerId); } catch (_) {}
+  render();
+});
+function releaseGate() {
+  if (!state.sw_gate) return;
+  state.sw_gate = 0;
+  render();
+}
+gate.addEventListener('pointerup', releaseGate);
+gate.addEventListener('pointercancel', releaseGate);
+gate.addEventListener('lostpointercapture', releaseGate);
+
+document.getElementById('btn-play').addEventListener('click', () => startAudio().catch(err => {
+  document.getElementById('meter').textContent = 'erro: ' + err.message;
+}));
+document.getElementById('btn-stop').addEventListener('click', stopAudio);
+
+document.getElementById('xlr-in').addEventListener('change', e => {
+  state.xlr_in = e.target.checked ? 1 : 0;
+  applyXlrInputRouting().catch(err => updateXlrStatus('erro: ' + err.message));
+});
+document.getElementById('xlr-solo').addEventListener('change', e => {
+  state.xlr_solo = e.target.checked ? 1 : 0;
+  applyState();
+  updateXlrStatus();
+});
+function onXlrLevel(e) {
+  state.pre = Number(e.target.value) / 100;
+  render();
+}
+document.getElementById('xlr-level').addEventListener('input', onXlrLevel);
+
+function syncPreSlider() {
+  const el = document.getElementById('xlr-level');
+  if (el) el.value = String(Math.round(state.pre * 100));
+  const o = document.getElementById('osc-in-level');
+  if (o) o.value = String(Math.round(state.osc_in * 100));
+}
+
+document.getElementById('osc-in-level').addEventListener('input', e => {
+  state.osc_in = Number(e.target.value) / 100;
+  render();
+});
+
+function syncEqSliders() {
+  const map = [
+    ['eq-low', 'eq_low'], ['eq-mid-f', 'eq_mid_f'],
+    ['eq-mid-g', 'eq_mid_g'], ['eq-high', 'eq_high'],
+  ];
+  for (const [id, key] of map) {
+    const el = document.getElementById(id);
+    if (el) el.value = String(Math.round(state[key] * 100));
+  }
+}
+[['eq-low', 'eq_low'], ['eq-mid-f', 'eq_mid_f'], ['eq-mid-g', 'eq_mid_g'], ['eq-high', 'eq_high']]
+  .forEach(([id, key]) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('input', e => {
+      state[key] = Number(e.target.value) / 100;
+      render();
+    });
+  });
+
+document.getElementById('xlr-source').addEventListener('change', async e => {
+  state.xlr_source = e.target.value;
+  syncXlrSourceUi();
+  try {
+    if (!ctx) {
+      ctx = new (window.AudioContext || window.webkitAudioContext)();
+      nodes = buildGraph(ctx);
+    }
+    if (ctx.state === 'suspended') await ctx.resume();
+    if (state.xlr_source === 'interface') {
+      await refreshAudioInputs();
+    }
+    await applyXlrInputRouting();
+    if (!document.getElementById('btn-play').classList.contains('playing')) {
+      document.getElementById('btn-play').classList.add('playing');
+      document.getElementById('btn-play').textContent = 'Tocando…';
+      document.getElementById('btn-stop').disabled = false;
+      drawScope();
+    }
+  } catch (err) {
+    updateXlrStatus('erro: ' + err.message);
+  }
+});
+
+document.getElementById('xlr-device').addEventListener('change', async e => {
+  state.xlr_deviceId = e.target.value;
+  if (state.xlr_source === 'interface' && state.xlr_in > 0.5) {
+    try {
+      if (!ctx) {
+        ctx = new (window.AudioContext || window.webkitAudioContext)();
+        nodes = buildGraph(ctx);
+      }
+      if (ctx.state === 'suspended') await ctx.resume();
+      await applyXlrInputRouting();
+    } catch (err) {
+      updateXlrStatus('erro: ' + err.message);
+    }
+  } else {
+    updateXlrStatus();
+  }
+});
+
+document.getElementById('xlr-refresh').addEventListener('click', async () => {
+  try {
+    if (!ctx) {
+      ctx = new (window.AudioContext || window.webkitAudioContext)();
+      nodes = buildGraph(ctx);
+    }
+    if (ctx.state === 'suspended') await ctx.resume();
+    await refreshAudioInputs();
+    if (state.xlr_in > 0.5 && state.xlr_source === 'interface') {
+      await applyXlrInputRouting();
+    }
+  } catch (err) {
+    updateXlrStatus('erro: ' + err.message);
+  }
+});
+
+document.getElementById('xlr-file').addEventListener('change', async e => {
+  const file = e.target.files && e.target.files[0];
+  if (!file) return;
+  try {
+    if (!ctx) {
+      ctx = new (window.AudioContext || window.webkitAudioContext)();
+      nodes = buildGraph(ctx);
+    }
+    extBuffer = await loadExtBufferFromFile(ctx, file);
+    extFileName = file.name;
+    state.xlr_source = 'wav';
+    document.getElementById('xlr-source').value = 'wav';
+    syncXlrSourceUi();
+    if (ctx.state === 'suspended') await ctx.resume();
+    await applyXlrInputRouting();
+    updateXlrStatus('arquivo OK');
+    if (!document.getElementById('btn-play').classList.contains('playing')) {
+      document.getElementById('btn-play').classList.add('playing');
+      document.getElementById('btn-play').textContent = 'Tocando…';
+      document.getElementById('btn-stop').disabled = false;
+      drawScope();
+    }
+  } catch (err) {
+    updateXlrStatus('erro: ' + err.message);
+  }
+});
+
+syncXlrSourceUi();
+updateXlrStatus('pronto');
+
+document.getElementById('block').addEventListener('change', render);
+document.getElementById('btn-copy').addEventListener('click', async () => {
+  await navigator.clipboard.writeText(buildInc());
+});
+
+render();
+</script>
+</body>
+</html>

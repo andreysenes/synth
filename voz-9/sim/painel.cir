@@ -1,0 +1,96 @@
+* VOZ-9 — flat panel netlist (not a subckt)
+* Requires global .params from painel_state.inc
+* Creates nodes j1_1…j8_6 and control nodes sw_*_c / jack_*_c
+
+* Control voltages from .param (0/1 or MODE/TREM -1/0/1)
+V_sw_osc_a sw_osc_a_c 0 DC {sw_osc_a}
+V_sw_osc_b sw_osc_b_c 0 DC {sw_osc_b}
+V_sw_drone sw_drone_c 0 DC {sw_drone}
+V_sw_trem_t sw_trem_t_c 0 DC {sw_trem_t}
+V_sw_trem_f sw_trem_f_c 0 DC {sw_trem_f}
+V_sw_mode_p sw_mode_p_c 0 DC {sw_mode_p}
+V_sw_mode_t sw_mode_t_c 0 DC {sw_mode_t}
+V_sw_h1 sw_h1_c 0 DC {sw_h1}
+V_sw_h2 sw_h2_c 0 DC {sw_h2}
+V_sw_h3 sw_h3_c 0 DC {sw_h3}
+V_sw_stack sw_stack_c 0 DC {sw_stack}
+V_sw_gate sw_gate_c 0 DC {sw_gate}
+
+V_jack_a    jack_a_c    0 DC {jack_a}
+V_jack_b    jack_b_c    0 DC {jack_b}
+V_jack_in   jack_in_c   0 DC {jack_in}
+V_jack_filt jack_filt_c 0 DC {jack_filt}
+V_jack_fcv  jack_fcv_c  0 DC {jack_fcv}
+V_jack_vcv  jack_vcv_c  0 DC {jack_vcv}
+V_jack_lfo  jack_lfo_c  0 DC {jack_lfo}
+V_jack_ecv  jack_ecv_c  0 DC {jack_ecv}
+V_jack_clk  jack_clk_c  0 DC {jack_clk}
+V_jack_send jack_send_c 0 DC {jack_send}
+V_jack_rcv  jack_rcv_c  0 DC {jack_rcv}
+
+* ===== J1 OSC =====
+Xpita j1_1 pitch_a_w j1_2 pot_log Rtot=500k u={pitch_a}
+Rpa_w pitch_a_w 0 100Meg
+Xpitb j1_3 pitch_b_w j1_4 pot_log Rtot=500k u={pitch_b}
+Rpb_w pitch_b_w 0 100Meg
+
+Xamt j1_5 j1_6 j1_7 pot_log Rtot=100k u={amount}
+Xshp j1_8 j1_9 j1_10 pot_lin Rtot=1k u={shape}
+Xcut j1_11 j1_12 j1_13 pot_log Rtot=100k u={cutoff}
+
+Xswa j1_14 j1_15 sw_osc_a_c sw_spst
+Xswb j1_16 j1_17 sw_osc_b_c sw_spst
+Xswd j1_18 j1_19 sw_drone_c sw_spst
+Rj1nc j1_20 0 100Meg
+
+* ===== J2 LFO =====
+Xrate j2_1 j2_2 j2_3 pot_antilog Rtot=100k u={rate}
+Xdep  j2_4 j2_5 j2_6 pot_lin Rtot=25k u={depth}
+Xtrem j2_7 j2_8 j2_9 sw_trem_t_c sw_trem_f_c sw_mode
+Xmode j2_10 j2_11 j2_12 sw_mode_p_c sw_mode_t_c sw_mode
+
+* ===== J3 DELAY =====
+Xtime j3_1 j3_2 j3_3 pot_lin Rtot=10k u={time_u}
+Xsh1 j3_4 j3_5 sw_h1_c sw_spst
+Xsh2 j3_6 j3_7 sw_h2_c sw_spst
+Xsh3 j3_8 j3_9 sw_h3_c sw_spst
+Xfb  j3_10 j3_11 j3_12 pot_lin Rtot=100k u={fback}
+Xwet j3_13 j3_14 j3_15 pot_log Rtot=100k u={wet}
+Xstk j3_16 j3_17 sw_stack_c sw_spst
+Xvol j3_18 j3_19 j3_20 pot_lin Rtot=2k u={volume}
+
+* ===== J4 PATCH A =====
+Xja  j4_1  j4_2  j4_3  jack_a_c    jack_sw
+Xjb  j4_4  j4_5  j4_6  jack_b_c    jack_sw
+Xjin j4_7  j4_8  j4_9  jack_in_c   jack_sw
+Xjf  j4_10 j4_11 j4_12 jack_filt_c jack_sw
+Xjfc j4_13 j4_14 j4_15 jack_fcv_c  jack_sw
+Xjvc j4_16 j4_17 j4_18 jack_vcv_c  jack_sw
+Rj4nc19 j4_19 0 100Meg
+Rj4nc20 j4_20 0 100Meg
+
+* ===== J5 PATCH B =====
+Xjlfo j5_1  j5_2  j5_3  jack_lfo_c  jack_sw
+Xjecv j5_4  j5_5  j5_6  jack_ecv_c  jack_sw
+Xjclk j5_7  j5_8  j5_9  jack_clk_c  jack_sw
+Xjsnd j5_10 j5_11 j5_12 jack_send_c jack_sw
+Xjrcv j5_13 j5_14 j5_15 jack_rcv_c  jack_sw
+Rj5nc j5_16 0 100Meg
+
+* ===== J6 CTRL =====
+Xgate j6_5 j6_6 sw_gate_c sw_spst
+Rj6p4 j6_3 j6_4 100Meg
+
+* ===== J7 combo IN + PRE + OSC IN =====
+Xpre j7_6 j7_7 j7_8 pot_log Rtot=100k u={pre}
+Xosc_in j7_9 j7_10 j7_11 pot_log Rtot=100k u={osc_in}
+Rj7nc12 j7_12 0 100Meg
+
+* ===== J8 =====
+Rj8nc j8_6 0 100Meg
+
+* ===== J9 EQ voz 424 (LOW · MID F · MID G · HIGH) =====
+Xeq_low   j9_1  j9_2  j9_3  pot_lin Rtot=100k u={eq_low}
+Xeq_mid_f j9_4  j9_5  j9_6  pot_lin Rtot=100k u={eq_mid_f}
+Xeq_mid_g j9_7  j9_8  j9_9  pot_lin Rtot=100k u={eq_mid_g}
+Xeq_high  j9_10 j9_11 j9_12 pot_lin Rtot=100k u={eq_high}

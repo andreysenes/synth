@@ -1,0 +1,42 @@
+
+Note: No compatibility mode selected!
+
+
+Circuit: * voz-9 — 08_pin6.cir
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+Warning: singular matrix:  check node j2_9
+
+Note: Starting dynamic gmin stepping
+Warning: singular matrix:  check node j2_11
+
+Warning: Dynamic gmin stepping failed
+Note: Starting true gmin stepping
+Warning: singular matrix:  check node j2_11
+
+Warning: singular matrix:  check node j2_11
+
+Warning: singular matrix:  check node j2_11
+
+Warning: singular matrix:  check node j2_11
+
+Warning: True gmin stepping failed
+Note: Starting source stepping
+Warning: source stepping failed
+Note: Transient op started
+Note: Transient op finished successfully
+
+No. of Data Rows : 1
+v(j3_2) = 8.330289e-04
+v(j3_3) = 4.999006e+00
+v(pin6_h1) = 4.857692e+00
+v(pin6_h2) = 3.705463e+00
+v(pin6_h3) = 2.476985e+00
+PIN6_TABLE
+TIME_min_approx_H1_30-50ms_H2_80-120_H3_200-280
+TIME_mid_approx_H1_100_H2_200-250_H3_400-450
+TIME_max_approx_H1_150-170_H2_350-400_H3_550-620
+PIN6_DONE
+ngspice-47 done

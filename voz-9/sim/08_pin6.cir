@@ -1,0 +1,49 @@
+* VOZ-9 — 08_pin6.cir
+* TIME pot + series resistors to H1/H2/H3 pin-6 nodes
+* Documents Vpin6 → delay mapping (behavioral, not digital PT2399)
+
+* voz9_pin6
+.include lib.inc
+.include painel_state.inc
+.include painel.cir
+
+Xrails V9 V5 VEE 4V5 1V8 rails
+
+* TIME 10kB: CCW=j3_1, W=j3_2, CW=j3_3
+* Per esquema: cursor -- GND; other end of pot network to pin6 resistors
+* Treat CW as V5 pull (PT2399 pin6 pull-up style ~5V world), CCW as open,
+* Wiper to GND through... actually: TIME wiper to GND, CW feeds resistors.
+Rj3_2 j3_2 0 1
+* CW (j3_3) is the hot end of the pot toward V5 sense
+Rpull j3_3 V5 1
+
+* Series to each head pin6
+R_h1 j3_3 pin6_h1 2k
+R_h2a j3_3 mid_h2 2k
+R_h2b mid_h2 pin6_h2 22k
+R_h3a j3_3 mid_h3 2k
+R_h3b mid_h3 pin6_h3 68k
+
+* Pin6 load (chip input ~)
+Rh1l pin6_h1 0 100k
+Rh2l pin6_h2 0 100k
+Rh3l pin6_h3 0 100k
+
+* LFO/ECV inject via 220k
+Rlfo0 lfo_bus pin6_h1 220k
+Rlfo1 lfo_bus pin6_h2 220k
+Rlfo2 lfo_bus pin6_h3 220k
+Vlfo lfo_bus 0 DC 0
+
+.control
+set noaskquit
+op
+print V(j3_2) V(j3_3) V(pin6_h1) V(pin6_h2) V(pin6_h3)
+echo PIN6_TABLE
+echo TIME_min_approx_H1_30-50ms_H2_80-120_H3_200-280
+echo TIME_mid_approx_H1_100_H2_200-250_H3_400-450
+echo TIME_max_approx_H1_150-170_H2_350-400_H3_550-620
+echo PIN6_DONE
+quit
+.endc
+.end

@@ -1,0 +1,49 @@
+* VOZ-9 — 08b_nab.cir
+* NAB GRAVA + LÊ (TL072 dual) AC Bode
+
+* voz9_nab
+.include lib.inc
+
+Xrails V9 V5 VEE 4V5 1V8 rails
+
+Vin in 0 AC 1
+
+* --- GRAVA (half A) ---
+* VCA -- 10k -- * -- 220n -- 4k7 -- -in
+*                    F-BACK also into *
+Rin in star 10k
+Rfb 0 star 100Meg
+Cgrave star midg 220n
+Rlim midg inm_a 4.7k
+Rf_a out_a inm_a 15k
+Cagudo inm_a out_a 3.3n
+* +in to GND (split supply)
+Xa 0 inm_a out_a V9 VEE TL072_HALF
+
+Cacou out_a to_heads 100n
+Rheads to_heads 0 3.33k
+
+* --- LÊ (half B): mix -- 100n -- 15k -- -in ---
+Vin2 mix 0 AC 1
+Cinb mix midb 100n
+Rinb midb inm_b 15k
+Rf_b out_b inm_b 15k
+Ccut inm_b out_b 3.3n
+Rbass inm_b nbass 10k
+Cbass nbass out_b 220n
+Xb 0 inm_b out_b V9 VEE TL072_HALF
+
+Clpf out_b 0 2.2n
+Rlpf out_b 0 10k
+
+.control
+set noaskquit
+ac dec 50 10 50k
+echo NAB_GRAVA_dB
+print db(V(out_a)/V(in))
+echo NAB_LE_dB
+print db(V(out_b)/V(mix))
+echo NAB_DONE
+quit
+.endc
+.end

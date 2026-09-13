@@ -1,0 +1,49 @@
+
+Note: No compatibility mode selected!
+
+
+Circuit: * voz-9 — harness_check.cir
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+Warning: singular matrix:  check node j3_16
+
+Note: Starting dynamic gmin stepping
+Warning: singular matrix:  check node j3_6
+
+Warning: Dynamic gmin stepping failed
+Note: Starting true gmin stepping
+Warning: singular matrix:  check node j3_6
+
+Warning: singular matrix:  check node j3_6
+
+Warning: singular matrix:  check node j3_6
+
+Warning: singular matrix:  check node j3_6
+
+Warning: True gmin stepping failed
+Note: Starting source stepping
+Warning: source stepping failed
+Note: Transient op started
+Note: Transient op finished successfully
+
+No. of Data Rows : 1
+--- CUTOFF gate (expect /Users/andreysenes midway between 0 and 1V8 for cutoff=0.5) ---
+v(gate) = 6.611467e-05
+v(1v8) = 8.703845e-05
+--- FILT (jack_filt=0: vcf_in /Users/andreysenes shape
+v(shape_out) = 2.000000e+00
+v(vcf_in) = 1.818164e+00
+v(j4_10) = 1.999981e+00
+v(j4_11) = 1.999982e+00
+--- MODE (sw_mode=0: pitch_bus and time_bus 0) ---
+v(pitch_bus) = 9.990007e-04
+v(time_bus) = 9.990007e-04
+v(j2_10) = 1.000000e+00
+--- H1 (sw_h1=1: mix gets signal) ---
+v(mix_h) = 9.090822e-01
+v(j3_4) = 9.999909e-01
+v(j3_5) = 9.999905e-01
+HARNESS_DONE
+ngspice-47 done

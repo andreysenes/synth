@@ -21,6 +21,9 @@ FP = "/usr/share/kicad/footprints"
 DEMO_PRO = "/usr/share/kicad/demos/pic_programmer/pic_programmer.kicad_pro"
 
 W, H = 300.0, 300.0
+# A4 (210×297) é menor que a placa. A folha precisa cobrir os 300 mm
+# e ainda deixar o carimbo (110×34 mm, canto inferior direito) fora do cobre.
+PAGE_W, PAGE_H = 430.0, 360.0
 
 FP_R = "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal"
 FP_C = "Capacitor_THT:C_Rect_L7.2mm_W2.5mm_P5.00mm"
@@ -906,6 +909,15 @@ def write_board(path):
         board.Add(fp)
 
     pcbnew.SaveBoard(path, board)
+    # O pcbnew grava A4. Troca pela folha que cabe a placa.
+    with open(path, encoding="utf-8") as fh:
+        text = fh.read()
+    old = '(paper "A4")'
+    new = f'(paper "User" {PAGE_W:.0f} {PAGE_H:.0f})'
+    if old not in text:
+        raise SystemExit("folha A4 não encontrada para substituir")
+    with open(path, "w", encoding="utf-8") as fh:
+        fh.write(text.replace(old, new, 1))
 
 
 def write_project(path):

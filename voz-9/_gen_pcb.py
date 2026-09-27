@@ -199,7 +199,7 @@ hdr2x(12, 80, 10, "J4", "PATCH A")
 hdr2x(12, 102, 8, "J5", "PATCH B")
 hdr2x(10, 126, 3, "J6", "CTRL")
 hdr2x(22, 126, 6, "J7", "IN+PRE")
-hdr2x(42, 126, 3, "J8", "OUT")
+hdr2x(42, 126, 4, "J8", "OUT")
 hdr2x(12, 142, 6, "J9", "EQ424")
 
 emit('  <path class="cu-w" d="M54,10 V150"/>')

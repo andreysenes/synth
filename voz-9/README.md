@@ -1,6 +1,6 @@
 # VOZ-9
 
-Synth de mesa semi-modular em 9 V. Dois osciladores batendo, waveshaper de germânio, filtro, VCA com decay e fita de **três heads** (3× PT2399: flutter + saturação + repeats escuros). Família Look Mum No Computer / Noise Toaster / Ciat-Lonbarde.
+Synth de mesa semi-modular em 9 V. Dois osciladores batendo, waveshaper de germânio, filtro, VCA com decay e fita de **três heads** (3× PT2399: flutter + saturação + repeats escuros), com um **VU analógico** na saída. Família Look Mum No Computer / Noise Toaster / Ciat-Lonbarde.
 
 A cadeia interna já toca sozinha. Os jacks só quebram ou desviam o fluxo.
 
@@ -11,7 +11,7 @@ A cadeia interna já toca sozinha. Os jacks só quebram ou desviam o fluxo.
                                                       │
                                                  EQ 424 → SHAPE → VCF → VCA
                                                       │
-                                                 NAB → FITA → WET → VOLUME → OUT
+                                                 NAB → FITA → WET → VOLUME → OUT → VU
 ```
 
 Sem XLR, **PRE** escala os oscs. **OSC IN** = mix osc ↔ mic (CCW = só drones, CW = só voz).
@@ -28,16 +28,16 @@ Leia `esquema.md` para montar. Caderno de estudo: `componentes.md`. Uma fenolite
 
 ```
  IN  PRE  OSC IN | LED 9V          OSC A  AMOUNT  OSC B
- LOW  MID F  MID G  HIGH           A  B  SHAPE  CUTOFF  DRONE  GATE
- RATE  TREM  MODE  DEPTH
+ LOW  MID F  MID G  HIGH                    VU  (saída)
+ RATE  TREM  MODE  DEPTH           A  B  SHAPE  CUTOFF  DRONE  GATE
  TIME  WET  F-BACK  H1  H2  H3  STACK     |  VOLUME
  A B IN FILT FCV VCV LFO ECV CLK SEND RCV |  OUT
 ```
 
 - **Esquerda:** entrada + EQ + LFO. XLR no canto superior esquerdo.
-- **Direita:** osciladores + A/B/SHAPE/CUTOFF/DRONE/GATE.
+- **Direita:** osciladores + A/B/SHAPE/CUTOFF/DRONE/GATE, com o **VU** acima.
 - **Delay:** TIME · WET · F-BACK · H1 · H2 · H3 · STACK.
-- **VOLUME** e **OUT** na célula direita.
+- **VOLUME** e **OUT** na célula direita; o **VU analógico** lê a saída (pós-VOLUME).
 
 Knobs: OSC A/B, TIME, F-BACK, VOLUME = **Ø30 mm**; o resto **Ø15 mm**. VOLUME = chicken-head vermelho.
 
@@ -133,7 +133,7 @@ Pinos P2: ponta = sinal, anel/sleeve = GND. CV é 0–9 V, sem 1 V/oitava. CLK: 
 
 ## O que comprar
 
-Tudo novo: `bom.md`. Um instrumento ~R$ **610** (varejo BR, set/2026, sem frete).
+Tudo novo: `bom.md`. Um instrumento ~R$ **667** (varejo BR, set/2026, sem frete; ~R$ 47 é o VU).
 
 J201: marque Vgs(off) nos 8. O mais “vivo” vai no VCF; um par parecido nos FM. MP20 por último — ferro baixo.
 

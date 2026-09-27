@@ -14,6 +14,10 @@
       <stop offset="0%" stop-color="#f0d48a"/>
       <stop offset="100%" stop-color="#8a6a20"/>
     </radialGradient>
+    <linearGradient id="vu-face" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f2dca0"/>
+      <stop offset="100%" stop-color="#d9b268"/>
+    </linearGradient>
     <radialGradient id="knob-body" cx="40%" cy="30%" r="70%">
       <stop offset="0%" stop-color="#3a3a3a"/>
       <stop offset="55%" stop-color="#161616"/>
@@ -287,6 +291,28 @@
     <use href="#ticks-lg"/>
     <g transform="rotate(52)"><use href="#knob-lg"/></g>
     <text class="lab" y="-21.4">OSC B</text>
+  </g>
+
+  <!-- VU de saída (pós-VOLUME) -->
+  <g transform="translate(150,61)">
+    <rect x="-18" y="-10.5" width="36" height="12" rx="1.6" fill="#2c2c2c"/>
+    <rect x="-16.5" y="-9" width="33" height="8.4" rx="1" fill="url(#vu-face)"/>
+    <path d="M -6.24,-5.62 A 8.4 8.4 0 0 1 6.24,-5.62" fill="none" stroke="#2a2a2a" stroke-width="0.35"/>
+    <path d="M 2.32,-8.07 A 8.4 8.4 0 0 1 6.24,-5.62" fill="none" stroke="#c0261c" stroke-width="0.6"/>
+    <g stroke="#2a2a2a" stroke-width="0.3" stroke-linecap="round">
+      <line x1="-6.24" y1="-5.62" x2="-5.35" y2="-4.82"/>
+      <line x1="-3.42" y1="-7.68" x2="-2.93" y2="-6.58"/>
+      <line x1="0" y1="-8.4" x2="0" y2="-7.2"/>
+    </g>
+    <g stroke="#c0261c" stroke-width="0.3" stroke-linecap="round">
+      <line x1="3.42" y1="-7.68" x2="2.93" y2="-6.58"/>
+      <line x1="6.24" y1="-5.62" x2="5.35" y2="-4.82"/>
+    </g>
+    <g transform="rotate(-30)">
+      <line x1="0" y1="0" x2="0" y2="-8" stroke="#171717" stroke-width="0.5"/>
+    </g>
+    <circle r="0.9" fill="#171717"/>
+    <text class="lab" y="-12">VU</text>
   </g>
 
   <!-- A B SHAPE CUTOFF DRONE GATE -->

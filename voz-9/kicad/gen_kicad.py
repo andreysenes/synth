@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Gera o projeto KiCad da BASE VOZ-9 (placa 300×140 mm).
 
-Cada bloco fica junto do conector que o alimenta de fio, na ordem do sinal.
-A fonte, o pré e o mix ocupam a faixa de cima. O miolo (MOD, NAB, fita)
-fica no meio. J1–J9 são pinos macho 1×N na borda de baixo.
+Cada função é um bloco curto com nome na seda: PRE, OSC, VCF, VCA,
+LFO, NAB, H1, H2, H3. Dentro do bloco as peças seguem o sinal, na
+mesma ordem e na mesma rotação, em vez de serem espalhadas por tamanho.
+J1–J9 são pinos macho 1×N na borda de baixo: o painel liga por cabo.
 O esquema agrupa os mesmos blocos, ainda sem fios.
 As trilhas não nascem aqui: `route.py` grava as nets e o cobre.
 Rodar este gerador de novo apaga o roteamento.
@@ -322,50 +323,6 @@ BOX = {
 }
 
 
-def rank(part):
-    """CI primeiro, depois o desacoplamento, resistores por último."""
-    fp = part["fp"]
-    if "DIP-16" in fp:
-        return 0
-    if "DIP-8" in fp:
-        return 1
-    if "TO-220" in fp:
-        return 2
-    if "TO-92" in fp:
-        return 3
-    if "Potentiometer" in fp:
-        return 4
-    if "Diode" in fp:
-        return 5
-    if "CP_Radial" in fp:
-        return 6
-    if "C_Rect" in fp:
-        return 7
-    if "R_Axial" in fp:
-        return 8
-    return 9
-
-
-def pack(items, x0, y0, x1, gap=3.4):
-    cursor_x = x0
-    cursor_y = y0
-    row_h = 0.0
-    for part in items:
-        left, top, right, bottom = BOX[part["fp"]]
-        width = right - left
-        height = bottom - top
-        if cursor_x > x0 and cursor_x + width > x1:
-            cursor_x = x0
-            cursor_y += row_h + gap
-            row_h = 0.0
-        part["x"] = cursor_x - left
-        part["y"] = cursor_y - top
-        part["rot"] = 0
-        cursor_x += width + gap
-        row_h = max(row_h, height)
-    return cursor_y + row_h
-
-
 def place_pins():
     """Duas fileiras de pinos na borda de baixo. Pino 1 à esquerda."""
     by_ref = {part["ref"]: part for part in parts}
@@ -393,33 +350,34 @@ def place_pins():
             x += (count - 1) * 2.54 + gap
 
 
-# Peças reagrupadas pelo fio que elas puxam, não pelo tamanho.
 # O nome do bloco é o mesmo no esquema e na seda da placa.
+# Cada lista segue o sinal, não o tamanho do corpo.
 FLOW = {
-    "FONTE": "D1 U4 U5 C56 C57 C58 R14 R17 R19 R20 R18 R55 C22 C64 C65 C66 C67".split(),
-    "OSC": "U2 Q1 Q2 R21 R22 R62 R63 R72 C21 C6 C19 C51 C52".split(),
-    "MIX": "Q3 Q6 D6 R23 R24 R25 R26 R27 R28 R29 R3 R4 R64 R65 R66 R80 R73 C26".split(),
-    "PRE": "U1 R12 R13 R57 R58 R6 R42 R44 C1 C2 C23 C24 C25 C59 C60 C61 C62 C63".split(),
+    "FONTE": "D1 U4 U5 C56 C57 C58 C22 R14 R17 R19 R20 C64 C65 R55 R18 C67 C66".split(),
+    "PRE": "U1 R12 R13 R57 R58 R6 R42 C59 C60 C1 C2 C25 C42 C41 C23 C24 C61 C62 C40".split(),
     "EQ": ["U9"],
-    "MOD": (
-        "Q4 Q5 Q7 D2 RV2 R30 R31 R32 R33 R34 R67 R68 R69 R61 R5 R15 R74 R81 "
-        "C43 C44 C45 C46 C47 C27 C28 C68 C71 C53 C54"
-    ).split(),
-    "NAB": "U3 R51 R52 R53 R54 R16 R45 R46 C4 C5 C48 C49 C50 C20 C29 C30".split(),
-    "FITA": (
-        "U6 U7 U8 RV1 D7 R35 R36 R37 R38 R39 R40 R41 R47 R48 R49 R50 R71 "
-        "R75 R76 R77 R78 C3 C7 C8 C9 C10 C11 C12 C13 C14 C15 C16 C17 C18 "
-        "C31 C32 C33 C34 C35 C36 C37 C38 C39 C40 C41 C42 C69 C70"
-    ).split(),
-    "CLK": "D3 D4 R59 R43 R70 R79 R11 R7 R8 R9 R10 R56 R60 C55".split(),
-    "OUT": ["R1", "R2"],
+    "OSC": "U2 Q1 R21 C21 R62 R63 C51 R65 Q2 R22 C6 R72 R73 C52 R66 C19".split(),
+    "NOISE": "Q3 R23 R3 R80 C26 R64".split(),
+    "MIX": "R24 R25 R26 C45 C30".split(),
+    "SHAPE": "Q6 R27 R4 R28 R29 D6 C28".split(),
+    "VCF": "Q4 R30 C47 R68 R67 R61 RV2 C50".split(),
+    "VCA": "Q5 R34 C54 C68 R74 R69 D2 C27 R50 D3".split(),
+    "LFO": "Q7 R31 R5 C43 R32 C44 R33 C46 C71 R15 R81 C53 R79".split(),
+    "NAB": "U3 R46 R51 C48 R16 R52 C4 C20 R53 C29 R54 C5 R45 C49".split(),
+    "H1": "U6 R35 R41 R38 R75 C31 C37 C34 C7 C10 C13 C16".split(),
+    "H2": "U7 R36 R47 R39 R76 C32 C38 C35 C8 C11 C14 C17 C69".split(),
+    "H3": "U8 R37 R48 R40 R77 C33 C39 C36 C9 C12 C15 C18 C70".split(),
+    "TEMPO": "R11 R7 R8 R56 R9 R10 R60".split(),
+    "CLK": "R59 D4 R43 C55 R78 R70".split(),
+    "FB": "D7 RV1 R49 C3 R71 C63".split(),
+    "OUT": "R44 R1 R2".split(),
 }
 
 HEADER_BLOCK = {
     "J1": "OSC",
-    "J2": "MOD",
+    "J2": "LFO",
     "J3": "FITA",
-    "J4": "MOD",
+    "J4": "PATCH",
     "J5": "CLK",
     "J6": "FONTE",
     "J7": "PRE",
@@ -427,23 +385,12 @@ HEADER_BLOCK = {
     "J9": "EQ",
 }
 
-# (x0, y0, x1, limite_y). Os pinos de cima estão em y=121,6.
-# A faixa de baixo para antes deles.
-ISLANDS = (
-    ("PRE", 14, 14, 122, 36),
-    ("EQ", 126, 14, 162, 40),
-    ("FONTE", 166, 14, 290, 46),
-    ("MOD", 14, 40, 104, 68),
-    ("FITA", 108, 46, 248, 90),
-    ("OSC", 14, 88, 84, 114),
-    ("NAB", 108, 89, 198, 114),
-    ("CLK", 202, 93, 272, 114),
-    ("MIX", 252, 42, 290, 92),
-    ("OUT", 262, 96, 290, 114),
-)
+# U9 fica à esquerda deste retângulo. A rede Baxandall ainda não tem peça.
+EQ_BAY = (0.0, 0.0, 0.0, 0.0)
 
-# U9 fica neste retângulo. A rede Baxandall ainda não tem peça.
-EQ_BAY = (126, 14, 162, 40)
+# Folga entre corpos. Os pinos de cima estão em y=121,6.
+GAP = 1.5
+ROW = 1.6
 
 
 def assign_flow():
@@ -468,40 +415,275 @@ def assign_flow():
         raise SystemExit(f"bloco cita ref ausente: {missing}")
 
 
-def place_blocks():
-    groups = {}
-    for part in parts:
-        if part["ref"][0] in "JH":
-            continue
-        groups.setdefault(part["block"], []).append(part)
-    for items in groups.values():
-        items.sort(key=rank)
+def _extent(fp, rot):
+    left, top, right, bottom = BOX[fp]
+    rad = math.radians(rot)
+    cos_r, sin_r = math.cos(rad), math.sin(rad)
+    xs, ys = [], []
+    for x, y in ((left, top), (right, top), (right, bottom), (left, bottom)):
+        xs.append(x * cos_r + y * sin_r)
+        ys.append(-x * sin_r + y * cos_r)
+    return min(xs), min(ys), max(xs), max(ys)
 
-    # O nome fica acima do bloco quando cabe. NAB e MIX encostam
-    # no bloco de cima, então o texto desce para o vão de 2 mm.
-    label_at = {
-        "NAB": (116, 88.0),
-        "MIX": (258, 40.4),
-    }
-    bottom = 0.0
-    for name, x0, y0, x1, limit in ISLANDS:
-        if name in label_at:
-            notes.append((name, label_at[name][0], label_at[name][1]))
-        else:
-            notes.append((name, x0, y0 - 3.2))
-        items = groups.pop(name)
-        island_bottom = y0
-        if items:
-            island_bottom = pack(items, x0, y0, x1, gap=2.2)
-        print(f"  {name:6} y {y0:.0f}→{island_bottom:.1f}  limite {limit:.0f}  x {x0:.0f}–{x1:.0f}")
-        if island_bottom > limit:
-            raise SystemExit(f"{name} desceu até {island_bottom:.1f}, limite {limit}")
-        bottom = max(bottom, island_bottom)
-    if groups:
-        raise SystemExit(f"blocos sem lugar: {sorted(groups)}")
-    # Vão entre o MOD e o OSC, longe da fita.
-    notes.append(("V9  GND  VEE  V5  4V5  1V8", 48, 76))
-    return bottom
+
+def _put(part, x, y, rot):
+    """(x, y) é o canto superior esquerdo do corpo já girado."""
+    minx, miny, maxx, maxy = _extent(part["fp"], rot)
+    part["x"] = x - minx
+    part["y"] = y - miny
+    part["rot"] = rot
+    return maxx - minx, maxy - miny
+
+
+def place_rows(spec, ox, oy, rot=0):
+    by_ref = {part["ref"]: part for part in parts}
+    y = oy
+    right = ox
+    bottom = oy
+    for row in spec:
+        x = ox
+        row_h = 0.0
+        for ref in row:
+            width, height = _put(by_ref[ref], x, y, rot)
+            x += width + GAP
+            row_h = max(row_h, height)
+        if row:
+            right = max(right, x - GAP)
+            bottom = y + row_h
+            y += row_h + ROW
+    return right, bottom
+
+
+def place_chip(ic_refs, rows, ox, oy):
+    """CI à esquerda, peças do sinal à direita, na ordem da lista."""
+    by_ref = {part["ref"]: part for part in parts}
+    y = oy
+    spine_r = ox
+    spine_b = oy
+    for ref in ic_refs:
+        width, height = _put(by_ref[ref], ox, y, 0)
+        spine_r = ox + width
+        y += height + ROW
+        spine_b = y - ROW
+    if rows:
+        right, bottom = place_rows(rows, spine_r + GAP, oy)
+    else:
+        right, bottom = spine_r, spine_b
+    return max(spine_r, right), max(spine_b, bottom)
+
+
+def place_head(ic_ref, resistors, caps, ox, oy):
+    """Um PT2399 com os resistores em pé, ao lado, e os caps embaixo deles.
+
+    H1, H2 e H3 usam a mesma ordem: série, laço, mix, tempo, depois os caps.
+    """
+    by_ref = {part["ref"]: part for part in parts}
+    width, height = _put(by_ref[ic_ref], ox, oy, 0)
+    rx, rb = place_rows([resistors], ox + width + GAP, oy, rot=90)
+    cx, cb = place_rows(caps, ox + width + GAP, rb + ROW, rot=0)
+    return max(ox + width, rx, cx), max(oy + height, cb)
+
+
+def place_blocks():
+    """Quatro faixas, cada função num retângulo com o nome na seda."""
+    global EQ_BAY
+    placed = []
+
+    def mark(name, x, y, right, bottom):
+        notes.append((name, x, y - 2.6))
+        placed.append(name)
+        print(f"  {name:6} x {x:.0f}–{right:.0f}  y {y:.0f}–{bottom:.0f}")
+        return right, bottom
+
+    # Faixa 1 — entrada e alimentação.
+    y = 14.0
+    x = 10.0
+    right, bottom = place_chip(
+        ["U1"],
+        [
+            ["R12", "R13", "R57", "R58"],
+            ["R6", "R42"],
+            ["C59", "C60", "C1", "C2", "C25", "C42", "C41"],
+            ["C23", "C24", "C61", "C62", "C40"],
+        ],
+        x,
+        y,
+    )
+    mark("PRE", x, y, right, bottom)
+    band1 = bottom
+    x = right + 4.0
+    right, bottom = place_chip(["U9"], [], x, y)
+    bay_x = right + 2.0
+    EQ_BAY = (bay_x, y, bay_x + 24.0, y + 14.0)
+    _, bottom = mark("EQ", x, y, EQ_BAY[2], max(bottom, EQ_BAY[3]))
+    band1 = max(band1, bottom)
+    x = EQ_BAY[2] + 4.0
+    right, bottom = place_chip(
+        ["U5"],
+        [
+            ["D1", "U4", "C56", "C57", "C58", "C22"],
+            ["R14", "R17", "R19", "R20", "R55", "R18"],
+            ["C64", "C65", "C66", "C67"],
+        ],
+        x,
+        y,
+    )
+    _, bottom = mark("FONTE", x, y, right, bottom)
+    band1 = max(band1, bottom)
+
+    # Faixa 2 — voz, da esquerda para a direita.
+    y = band1 + 6.0
+    x = 10.0
+    right, bottom = place_chip(
+        ["U2"],
+        [
+            ["Q1", "R21", "C21", "R62", "R63", "C51", "R65"],
+            ["Q2", "R22", "C6", "R72", "R73", "C52", "R66"],
+            ["C19"],
+        ],
+        x,
+        y,
+    )
+    _, bottom = mark("OSC", x, y, right, bottom)
+    band2 = bottom
+    x = right + 4.0
+    right, bottom = place_rows(
+        [
+            ["Q3", "R23", "R3"],
+            ["R80", "C26", "R64"],
+        ],
+        x,
+        y,
+    )
+    _, bottom = mark("NOISE", x, y, right, bottom)
+    band2 = max(band2, bottom)
+    x = right + 4.0
+    right, bottom = place_rows(
+        [
+            ["R24", "R25", "R26"],
+            ["C45", "C30"],
+        ],
+        x,
+        y,
+    )
+    _, bottom = mark("MIX", x, y, right, bottom)
+    band2 = max(band2, bottom)
+    x = right + 4.0
+    right, bottom = place_rows(
+        [
+            ["Q6", "R27", "R4", "R28"],
+            ["R29", "D6", "C28"],
+        ],
+        x,
+        y,
+    )
+    _, bottom = mark("SHAPE", x, y, right, bottom)
+    band2 = max(band2, bottom)
+    x = right + 4.0
+    right, bottom = place_rows(
+        [
+            ["Q4", "R30", "C47", "R68", "R67"],
+            ["R61", "RV2", "C50"],
+        ],
+        x,
+        y,
+    )
+    _, bottom = mark("VCF", x, y, right, bottom)
+    band2 = max(band2, bottom)
+
+    # Faixa 3 — fita. As três heads são cópias, na mesma rotação.
+    y = band2 + 6.0
+    x = 10.0
+    right, bottom = place_chip(
+        ["U3"],
+        [
+            ["R46", "R51", "C48", "R16"],
+            ["R52", "C4", "C20"],
+            ["R53", "C29", "R54", "C5"],
+            ["R45", "C49"],
+        ],
+        x,
+        y,
+    )
+    _, bottom = mark("NAB", x, y, right, bottom)
+    band3 = bottom
+    x = right + 4.0
+    for name, ic_ref, resistors, caps in (
+        ("H1", "U6", ["R35", "R41", "R38", "R75"], [["C31", "C37", "C34", "C7"], ["C10", "C13", "C16"]]),
+        ("H2", "U7", ["R36", "R47", "R39", "R76"], [["C32", "C38", "C35", "C8"], ["C11", "C14", "C17", "C69"]]),
+        ("H3", "U8", ["R37", "R48", "R40", "R77"], [["C33", "C39", "C36", "C9"], ["C12", "C15", "C18", "C70"]]),
+    ):
+        right, bottom = place_head(ic_ref, resistors, caps, x, y)
+        _, bottom = mark(name, x, y, right, bottom)
+        band3 = max(band3, bottom)
+        x = right + 3.0
+    right, bottom = place_rows(
+        [
+            ["D7", "RV1", "R49", "C3"],
+            ["R71", "C63"],
+        ],
+        x,
+        y,
+    )
+    _, bottom = mark("FB", x, y, right, bottom)
+    band3 = max(band3, bottom)
+
+    # Faixa 4 — LFO junto do J2. VCA fecha a voz, embaixo do VCF.
+    y = band3 + 5.5
+    x = 10.0
+    right, bottom = place_rows(
+        [
+            ["Q7", "R31", "R5", "C43", "R32", "C44", "R33"],
+            ["C46", "C71", "R15", "R81", "C53", "R79"],
+        ],
+        x,
+        y,
+    )
+    _, bottom = mark("LFO", x, y, right, bottom)
+    band4 = bottom
+    x = right + 4.0
+    right, bottom = place_rows(
+        [
+            ["R11", "R7", "R8", "R56"],
+            ["R9", "R10", "R60"],
+        ],
+        x,
+        y,
+    )
+    _, bottom = mark("TEMPO", x, y, right, bottom)
+    band4 = max(band4, bottom)
+    x = right + 4.0
+    right, bottom = place_rows(
+        [
+            ["R59", "D4", "R43"],
+            ["C55", "R78", "R70"],
+        ],
+        x,
+        y,
+    )
+    _, bottom = mark("CLK", x, y, right, bottom)
+    band4 = max(band4, bottom)
+    x = right + 4.0
+    right, bottom = place_rows([["R44", "R1", "R2"]], x, y)
+    _, bottom = mark("OUT", x, y, right, bottom)
+    band4 = max(band4, bottom)
+    x = right + 4.0
+    right, bottom = place_rows(
+        [
+            ["Q5", "R34", "C54", "C68", "R74"],
+            ["R69", "D2", "C27", "R50", "D3"],
+        ],
+        x,
+        y,
+    )
+    _, bottom = mark("VCA", x, y, right, bottom)
+    band4 = max(band4, bottom)
+
+    want = {ref for refs in FLOW.values() for ref in refs}
+    got = {part["ref"] for part in parts if part["ref"][0] not in "JH"}
+    if got != want:
+        raise SystemExit(f"placement difere do fluxo: {sorted(got ^ want)}")
+    return band4
 
 
 def part_box(part):
@@ -669,7 +851,11 @@ def sch_cell(part, pins):
 
 def write_schematic(path, embedded, meta):
     cells = []
-    order = ["FONTE", "OSC", "MIX", "PRE", "EQ", "MOD", "NAB", "FITA", "CLK", "OUT", "FUROS"]
+    order = [
+        "FONTE", "PRE", "EQ", "OSC", "NOISE", "MIX", "SHAPE", "VCF", "PATCH",
+        "VCA", "LFO", "NAB", "FITA", "H1", "H2", "H3", "TEMPO", "CLK", "FB",
+        "OUT", "FUROS",
+    ]
     by_block = {name: [p for p in parts if p["block"] == name] for name in order}
 
     row_top = 292.0
@@ -679,8 +865,8 @@ def write_schematic(path, embedded, meta):
         (
             20,
             row_top + 16,
-            "VOZ-9 BASE. Blocos na ordem do sinal, o mesmo agrupamento da placa. "
-            "J1–J9 à esquerda de cada bloco: pino 1×N na borda de baixo da PCB. "
+            "VOZ-9 BASE. Blocos curtos na ordem do sinal, o mesmo nome da seda. "
+            "J1–J9 à esquerda de cada grupo: pino 1×N na borda de baixo da PCB. "
             "Ainda sem fios. D1 ânodo para J6. D6/D7 = MP20. "
             "Q7 2N5457: conferir a pinagem do lote. U9: baía livre para a rede do EQ.",
         )
@@ -888,7 +1074,14 @@ def write_board(path):
         (bay_x0, bay_y1, bay_x0, bay_y0),
     ):
         add_seg(board, x1, y1, x2, y2, pcbnew.F_SilkS, 0.12)
-    add_text(board, "EQ 424", bay_x0 + 28, (bay_y0 + bay_y1) / 2, pcbnew.F_SilkS, 1.4)
+    add_text(
+        board,
+        "EQ 424",
+        (bay_x0 + bay_x1) / 2,
+        (bay_y0 + bay_y1) / 2,
+        pcbnew.F_SilkS,
+        1.3,
+    )
     for text, x, y in notes:
         add_text(board, text, x, y, pcbnew.F_SilkS, 1.15)
 

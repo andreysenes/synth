@@ -41,14 +41,13 @@ Furos em `painel.svg`. Nada de cobre atrás da chapa.
 **J1–J9** na borda inferior, duas fileiras de pinos. O circuito fica em cima do conector de cada bloco, na ordem do sinal. Gerador do KiCad: `kicad/gen_kicad.py`.
 
 ```
-faixa de cima    PRE (J7) · baía EQ (J9, só U9) · FONTE (U4 U5, J6 à direita)
-meio esquerda    MOD (VCF · VCA · LFO), em cima de J2
-miolo            FITA (U6–U8) em cima de J3
-coluna direita   MIX, e embaixo OUT (R1 R2) perto de J8
-junto dos pinos  OSC em cima de J1 · NAB · CLK perto de J5
+faixa de cima    PRE (J7) · EQ (J9, U9 e a baía 424) · FONTE (J6)
+voz, em ordem    OSC (J1) · NOISE · MIX · SHAPE · VCF (J4)
+fita             NAB · H1 · H2 · H3 (J3) · FB
+em cima dos pinos LFO (J2) · TEMPO · CLK (J5) · OUT (J8) · VCA debaixo do VCF
 ```
 
-O vão entre o MOD e o OSC marca o barramento (V9, GND, VEE, V5, 4V5, 1V8). Os blocos param antes dos pinos, para o fio do painel subir sem cruzar o vizinho.
+Cada bloco é curto: o CI ou o JFET à esquerda e os passivos ao lado, na ordem do sinal. H1, H2 e H3 são a mesma figura, com os resistores em pé. Os blocos param antes dos pinos, para o fio do painel subir sem cruzar o vizinho.
 
 - soquetes DIP: U1 5532, U2 osc, U3 NAB, U4 7660, U6–U8 PT2399, **U9 EQ voz** — **não soldar o chip**
 - 1N5817, 78M05 (sem soquete — TO-220)

@@ -1,6 +1,6 @@
 # VOZ-9 — simulação SPICE (placa + interface)
 
-Painel e BASE só se encontram nos cabos soldados nos pads **J1–J10** (`pcb.md`).
+Painel e BASE só se encontram nos cabos soldados nos pads **J1–J11** (`pcb.md`).
 O PT2399 vira atraso fixo; JFET/op-amp/NAB/EQ são analógicos.
 
 ## Instalar
@@ -11,7 +11,7 @@ cd voz-9/sim
 ./run.sh 00_fonte
 ```
 
-* Painel tocável (`painel.html`): Web Audio + osciloscópio + **VU de saída** (pós-VOLUME). Clique **Tocar**.
+* Painel tocável (`painel.html`): Web Audio + osciloscópio + **VU de saída** (pós-VOLUME) + LEDs A/B/RATE/REP/IN. Clique **Tocar**.
   Knobs/chaves alteram o som ao vivo. Export SPICE continua no painel (details).
 
 ## Layout
@@ -21,7 +21,7 @@ cd voz-9/sim
 | `lib.inc` | modelos + pots A/B/C + chaves + jack SW |
 | `models/` | J201, 5457, diodos, TL072/5532, trilhos |
 | `painel.cir` | chapa flat (pots, chaves, jacks) nos nós `j1_*`…`j8_*` |
-| `base.cir` | esqueleto fenolite (LED, Csel, P4) — subckt opcional |
+| `base.cir` | esqueleto fenolite (LED 9V, J10, Csel, P4) — subckt opcional |
 | `painel_state.inc` | `.param` dos knobs (UI escreve isto) |
 | `painel.html` | UI sobre o layout do `painel.svg` |
 | `jmap.inc` | documentação dos pinos J |
@@ -48,7 +48,8 @@ Ver `jmap.inc` e `pcb.md`. Exemplos:
 - **J2** LFO: RATE, DEPTH, TREM (−1 flutter / 0 off / +1 tremolo), MODE (−1 pitch / 0 / +1 time)  
 - **J3** DELAY: TIME, H1–H3, F-BACK, WET, STACK, VOLUME  
 - **J4** FILT usa **TIP·SW·GND** — cabo abre o normal do SHAPE→VCF  
-- **J6** GATE NA·GND, P4, LED  
+- **J6** GATE NA·GND, P4, LED 9V
+- **J10** LEDs A · B · RATE · REP · IN (A·K); 11–12 NC  
 - **J7** combo IN + **PRE** + **OSC IN**  
 - **J9** EQ voz 424: LOW · MID F · MID G · HIGH  
 
@@ -67,6 +68,7 @@ Ver `jmap.inc` e `pcb.md`. Exemplos:
 | `08b_nab` | AC Bode | GRAVA 50 µs + LÊ |
 | `08_pin6` | OP | tensões pin6 H1/H2/H3 |
 | `08_echo` | tran 1.5 s | 3 atrasos + laço + WET |
+| `09_leds` | tran 0,4 s | OSC acende no alto do quadrado; IN/RATE/REP via BC547; 40 mV fica escuro |
 | `harness_check` | OP | pinagem painel↔BASE |
 | `09_vco` | DC + tran | módulo VCO: 17,93 mV/V, C1/C2/C6 (`vco.md`) |
 

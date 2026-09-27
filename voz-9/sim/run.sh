@@ -3,7 +3,7 @@
 # Usage: ./run.sh [block]
 #   block = 00_fonte | 01_osc | 01_fm | 02_noise | 04_shape | 05_vcf |
 #           06_vca | 07_lfo | 08b_nab | 08_pin6 | 08_echo | harness_check |
-#           09_vco | all
+#           09_leds | 09_vco | all
 
 set -euo pipefail
 cd "$(dirname "$0")"
@@ -50,6 +50,7 @@ BLOCKS=(
   08b_nab
   08_pin6
   08_echo
+  09_leds
   harness_check
   09_vco
 )

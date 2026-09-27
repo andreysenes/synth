@@ -1,6 +1,7 @@
 * VOZ-9 — base.cir (skeleton of fenolite-side blocks)
-* Full instrument = painel + this, joined only on j1_*…j9_*.
+* Full instrument = painel + this, joined only on j1_*…j11_*.
 * Block .cir files are the unit tests; this documents the BASE surface.
+* Indicator LEDs: esquema.md §10 and 09_leds.cir (this skeleton holds the nets).
 
 .subckt base
 + j1_1 j1_2 j1_3 j1_4 j1_5 j1_6 j1_7 j1_8 j1_9 j1_10
@@ -14,9 +15,11 @@
 + j5_11 j5_12 j5_13 j5_14 j5_15 j5_16
 + j6_1 j6_2 j6_3 j6_4 j6_5 j6_6
 + j7_1 j7_2 j7_3 j7_4 j7_5 j7_6 j7_7 j7_8 j7_9 j7_10 j7_11 j7_12
-+ j8_1 j8_2 j8_3 j8_4 j8_5 j8_6
++ j8_1 j8_2 j8_3 j8_4 j8_5 j8_6 j8_7 j8_8
 + j9_1 j9_2 j9_3 j9_4 j9_5 j9_6 j9_7 j9_8 j9_9 j9_10 j9_11 j9_12
++ j11_1 j11_2 j11_3 j11_4 j11_5 j11_6 j11_7 j11_8 j11_9 j11_10 j11_11 j11_12
 + V9 V5 VEE N4V5 N1V8
+* J10 (VCO, 2×10) is not on this skeleton — see 09_vco.cir and jmap.inc.
 
 * Power in from P4 (j6_3 tip, j6_4 gnd)
 Dprot j6_3 V9 DSS14
@@ -41,5 +44,47 @@ Rcsel_g csel_g 0 100Meg
 Rnc1 j1_20 0 100Meg
 Rnc4 j4_19 0 100Meg
 Rnc5 j5_16 0 100Meg
+Rnc10a j11_11 0 100Meg
+Rnc10b j11_12 0 100Meg
+
+* Indicator LEDs (esquema §10). Quiet sources stand in for the live taps:
+* out_a / out_b = op-amp OUT, lfo_d = 2N5457 drain, nab_b = LÊ, pre_b = 5532 out_B.
+Vq_a out_a 0 DC 0
+Vq_b out_b 0 DC 0
+Vq_l lfo_d 0 DC 0
+Vq_n nab_b 0 DC 0
+Vq_p pre_b 0 DC 0
+
+R104 out_a j11_1 4.7k
+Dleda j11_1 j11_2 DLEDRED
+Rka j11_2 0 1
+
+R105 out_b j11_3 4.7k
+Dledb j11_3 j11_4 DLEDRED
+Rkb j11_4 0 1
+
+* RATE — Q12, AC-coupled so a stopped LFO stays dark
+C88 lfo_d n73 10u
+R111 n73 b12 10k
+R112 b12 0 220k
+R106 V9 j11_5 4.7k
+Dledr j11_5 j11_6 DLEDRED
+Q12 j11_6 b12 0 QBC547
+
+* REP — Q11, before WET
+C89 nab_b n74 100n
+R113 n74 b11 47k
+R114 b11 0 220k
+R107 V9 j11_7 4.7k
+Dledp j11_7 j11_8 DLEDRED
+Q11 j11_8 b11 0 QBC547
+
+* IN — Q10, before PRE
+C87 pre_b n72 100n
+R109 n72 b10 10k
+R110 b10 0 220k
+R108 V9 j11_9 4.7k
+Dledi j11_9 j11_10 DLEDRED
+Q10 j11_10 b10 0 QBC547
 
 .ends base

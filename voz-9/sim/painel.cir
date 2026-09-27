@@ -1,6 +1,6 @@
 * VOZ-9 — flat panel netlist (not a subckt)
 * Requires global .params from painel_state.inc
-* Creates nodes j1_1…j8_6 and control nodes sw_*_c / jack_*_c
+* Creates nodes j1_1…j8_8 and j11_* and control nodes sw_*_c / jack_*_c
 
 * Control voltages from .param (0/1 or MODE/TREM -1/0/1)
 V_sw_osc_a sw_osc_a_c 0 DC {sw_osc_a}
@@ -86,11 +86,18 @@ Xpre j7_6 j7_7 j7_8 pot_log Rtot=100k u={pre}
 Xosc_in j7_9 j7_10 j7_11 pot_log Rtot=100k u={osc_in}
 Rj7nc12 j7_12 0 100Meg
 
-* ===== J8 =====
-Rj8nc j8_6 0 100Meg
+* ===== J8 OUT 2x4 =====
+* pins 6–7 are V9 and VEE for the VU daughterboard; pin 8 is NC
+Rj8nc j8_8 0 100Meg
 
 * ===== J9 EQ voz 424 (LOW · MID F · MID G · HIGH) =====
 Xeq_low   j9_1  j9_2  j9_3  pot_lin Rtot=100k u={eq_low}
 Xeq_mid_f j9_4  j9_5  j9_6  pot_lin Rtot=100k u={eq_mid_f}
 Xeq_mid_g j9_7  j9_8  j9_9  pot_lin Rtot=100k u={eq_mid_g}
 Xeq_high  j9_10 j9_11 j9_12 pot_lin Rtot=100k u={eq_high}
+
+* ===== J11 LEDS =====
+* Anode/cathode pairs. The diodes, 4k7 and BC547 live on the BASE
+* (base.cir / 09_leds.cir). Panel pins are just the two legs.
+Rj10nc11 j11_11 0 100Meg
+Rj10nc12 j11_12 0 100Meg

@@ -27,7 +27,8 @@ Preços **estimados**, varejo Brasil, set/2026, **sem frete**. Pré vocal **sem 
 | 1 | NE5532 DIP-8 | pré de mic | 4,00 | **4,00** |
 | 1 | 1N5817 | proteção da fonte | 0,80 | **0,80** |
 | 6 | 1N4148 | GATE env + **fala→ENV** + CLK + **VU (2)** + folga | 0,20 | **1,20** |
-| 1 | LED 3 mm | piloto | 0,40 | **0,40** |
+| 6 | LED 3 mm vermelho | piloto + OSC A + OSC B + RATE + REP + IN | 0,40 | **2,40** |
+| 3 | BC547 | drivers dos LEDs IN, REP, RATE | 0,40 | **1,20** |
 | 1 | AS3340 ou V3340 DIP-16 | VCO cromático (mesma BASE) | 55,00 | **55,00** |
 | 1 | MC34063 DIP-8 | 9 V → 15 V do VCO | 3,00 | **3,00** |
 | 1 | 78L12 TO-92 | +12 V, pino 16 | 2,00 | **2,00** |
@@ -35,7 +36,7 @@ Preços **estimados**, varejo Brasil, set/2026, **sem frete**. Pré vocal **sem 
 | 1 | 79L05 TO-92 | −5 V, pino 3 | 2,00 | **2,00** |
 | 1 | 1N5819 | diodo do step-up | 1,00 | **1,00** |
 
-**169,40.** Sem segundo MAX1044 e sem segundo P4: o −9 V é o que o instrumento já gera. Sem 78L05 extra no lugar do 78M05 — o 78M05 continua sendo o regulador dos PT2399 (~75 mA). O 78L05 da tabela é só a referência quieta do AS3340. O TL072 do VU (U12, atrás do meter) faz o retificador de onda completa (`esquema.md` §9). MP20 difícil: AC128, OC75, ou 1N34A / 1N60 se for *só* o diodo.
+**172,60.** Sem segundo MAX1044 e sem segundo P4: o −9 V é o que o instrumento já gera. Sem 78L05 extra no lugar do 78M05 — o 78M05 continua sendo o regulador dos PT2399 (~75 mA). O 78L05 da tabela é só a referência quieta do AS3340. O TL072 do VU (U12, atrás do meter) faz o retificador de onda completa (`esquema.md` §9). BC547: face chata, pernas para baixo, **C B E**. 2N3904 serve e a pinagem é E B C. MP20 difícil: AC128, OC75, ou 1N34A / 1N60 se for *só* o diodo.
 
 J201: 6 no circuito; os 2 extra casam Vgs(off). O mais “vivo” (conduz com gate mais baixo) vai no VCF; um par parecido nos FM dos oscs.
 
@@ -105,9 +106,9 @@ J201: 6 no circuito; os 2 extra casam Vgs(off). O mais “vivo” (conduz com ga
 | 4 | cabo P2 curto | patch | 4,50 | **18,00** |
 | 2 | combo XLR+P10 **clone** | IN e OUT | 22,00 | **44,00** |
 | 1 | P4 (jack 9 V DC) | fonte, centro-negativo | 3,00 | **3,00** |
-| 1 | fio 24 AWG 10 m (várias cores) | cabos do painel, soldados nos pads **J1–J10** | 8,00 | **8,00** |
+| 1 | fio 24 AWG 10 m (várias cores) | cabos do painel, soldados nos pads **J1–J11** | 8,00 | **8,00** |
 
-**109.** Clone é fêmea nos dois furos. Confira o furo (~24 mm). Painel → BASE: fio direto no pad, sem fêmea, sem macho, sem crimp. **J7** = 2×6 (combo + PRE + **OSC IN**; pino 12 NC). **J8** = 2×4 (combo OUT + V9/VEE do VU). **J9** = EQ 424. **J10** = 2×10 (COARSE, FINE, PW, FM, SAW, TRI, PUL, CV).
+**109.** Clone é fêmea nos dois furos. Confira o furo (~24 mm). Painel → BASE: fio direto no pad, sem fêmea, sem macho, sem crimp. **J7** = 2×6 (combo + PRE + **OSC IN**; pino 12 NC). **J8** = 2×4 (combo OUT + V9/VEE do VU). **J9** = EQ 424. **J10** = 2×10 (COARSE, FINE, PW, FM, SAW, TRI, PUL, CV). **J11** = 2×6 (LEDs A, B, RATE, REP, IN; pinos 11–12 NC).
 
 ---
 
@@ -121,20 +122,20 @@ Lista do circuito **inteiro**. ~R$ 0,10–0,25 a unidade.
 | 1 k | 8 | noise S, LFO S, buffer S, 5532-B, H2 pin 6 (2×), H3 pin 6 (2×) |
 | 2 k | 1 | H1 pin 6 (anti-latch) |
 | 2k2 **1 %** | 2 | diferencial do 5532 |
-| 4k7 | 5 | LED, série do RATE, teto do shelf NAB GRAVA, **VU R/2 (onda completa)**, folga |
+| 4k7 | 10 | piloto, OSC A, OSC B, RATE, REP, IN, série do LFO, teto do shelf NAB GRAVA, **VU R/2**, folga |
 | 5k6 | 1 | divisor 1V8 |
-| 10 k | 39 | 4V5 (2), pitch (2), mix A/B (2), noise D, EXT, buffer (2), SHAPE, VCF, VCA S, LFO D, LFO fase (2), pin 16 ×3, mix H1–H3 (3), laço / teto WET, 5532-B, CLK, pad, NAB LÊ grave, VCA→GRAVA, **série fala→ENV**, **EQ Baxandall (2)**, **VU retificador (4)** |
+| 10 k | 41 | 4V5 (2), pitch (2), mix A/B (2), noise D, EXT, buffer (2), SHAPE, VCF, VCA S, LFO D, LFO fase (2), pin 16 ×3, mix H1–H3 (3), laço / teto WET, 5532-B, CLK, pad, NAB LÊ grave, VCA→GRAVA, **série fala→ENV**, **EQ Baxandall (2)**, **VU retificador (4)**, **base LED IN**, **base LED RATE** |
 | 15 k | 4 | NAB GRAVA (Zin + feedback) + NAB LÊ (Zin + feedback) |
 | 22 k | 2 | 1V8, H2 pin 6 |
 | 22 k **1 %** | 2 | diferencial do 5532 |
 | 3k3 | 1 | **EQ MID F** (série no pot) |
-| 47 k | 1 | CLK série |
+| 47 k | 2 | CLK série, **base LED REP** |
 | 68 k | 2 | H3 pin 6, ressonância VCF |
 | 100 k | 11 | histerese A (2), noise mix, FM A/B (2), FCV, VCF, VCV, CLK, **VU entrada→GND** |
-| 220 k | 8 | histerese B (2), decay GATE, pin 6 LFO/ECV (3), sangria CLK |
+| 220 k | 11 | histerese B (2), decay GATE, pin 6 LFO/ECV (3), sangria CLK, **pull-down BC547 (IN, RATE, REP)** |
 | 1 M | 2 | gate noise, gate LFO |
 
-Pacote do instrumento sem o VCO ~**16,00**. O VCO acrescenta o pacote abaixo (~**8,00**). Total de resistores ~**24**.
+Pacote do instrumento sem o VCO ~**17,00** (já com VU e LEDs). O VCO acrescenta o pacote abaixo (~**8,00**). Total de resistores ~**25**.
 
 ### VCO — filme ¼ W (mesma placa)
 
@@ -170,12 +171,12 @@ Pacote do instrumento sem o VCO ~**16,00**. O VCO acrescenta o pacote abaixo (~*
 | 10 n | filme / cerâmico | 13 | OSC B; LPF laço; filtros PT2399; **EQ MID** | 0,35 | **4,55** |
 | 22 n | filme | 1 | laço “fita gasta” (opcional no lugar do 10 n) | 0,50 | **0,50** |
 | 33 n | filme | 1 | **EQ LOW** shelf (~100 Hz) | 0,50 | **0,50** |
-| 100 n | cerâmico / filme | 30 | OSC A; acoplos; VCC PT2399; 5532; fala→ENV; **EQ in/out (2)**; **VU entrada + V9/VEE (3)** | 0,40 | **12,00** |
+| 100 n | cerâmico / filme | 32 | OSC A; acoplos; VCC PT2399; 5532; fala→ENV; **EQ in/out (2)**; **VU entrada + V9/VEE (3)**; **LEDs IN e REP** | 0,40 | **12,80** |
 | 220 n | filme | 8 | LFO fase (3); Csel tremolo; VCF; NAB grave GRAVA+LÊ (2); folga | 0,50 | **4,00** |
 | 1 µ | filme | 2 | saída OSC A e B | 1,50 | **3,00** |
 | 1 µ / 2µ2 | eletrolítico | 2 | saída LFO; saída VCA | 0,50 | **1,00** |
 | 4 µ7 | eletrolítico | 1 | detector CLK | 0,50 | **0,50** |
-| 10 µ / **25 V** | eletrolítico | 8 | MAX1044 (2); 78M05; V5 H2+H3 (2); XLR (2); 5532 ± | 0,60 | **4,80** |
+| 10 µ / **25 V** | eletrolítico | 9 | MAX1044 (2); 78M05; V5 H2+H3 (2); XLR (2); 5532 ±; **LED RATE** | 0,60 | **5,40** |
 | 47 µ / 16 V | eletrolítico | 9 | V9, VEE, 4V5, 1V8, envelope, H2, H3, Csel flutter, **VU (balística)** | 0,70 | **6,30** |
 | 470 p | cerâmico | 1 | Ct do MC34063 | 0,30 | **0,30** |
 | 1 n | C0G / filme 1 % | 1 | tempo do AS3340, pino 11 | 1,50 | **1,50** |
@@ -186,7 +187,7 @@ Pacote do instrumento sem o VCO ~**16,00**. O VCO acrescenta o pacote abaixo (~*
 | 100 µ / 25 V | eletrolítico | 1 | V15 | 1,00 | **1,00** |
 | 220 µH ≥ 500 mA | indutor | 1 | step-up | 4,00 | **4,00** |
 
-**57,75.** Polaridade: eletrolítico, listra = negativo. 25 V no XLR e no MAX1044. EQ voz: 33 n / 1 n / 10 n + 2× 100 n (`esquema.md` §3b). O 1 nF do pino 11 é C0G ou poliestireno — X7R aí desafina. O V15 e o −5 V são locais do VCO; o 47 µ de V9 e de VEE já está na linha de cima. VU: C90 100 n de acoplo + C91 47 µ de média + C92/C93 100 n nos trilhos (`esquema.md` §9).
+**59,15.** Polaridade: eletrolítico, listra = negativo. 25 V no XLR, no MAX1044 e no LED RATE (C88, + no dreno). EQ voz: 33 n / 1 n / 10 n + 2× 100 n (`esquema.md` §3b). O 1 nF do pino 11 é C0G ou poliestireno — X7R aí desafina. O V15 e o −5 V são locais do VCO; o 47 µ de V9 e de VEE já está na linha de cima. VU: C90 100 n de acoplo + C91 47 µ de média + C92/C93 100 n nos trilhos (`esquema.md` §9). LEDs IN e REP: C87 e C89 100 n (`esquema.md` §10).
 
 ---
 
@@ -208,15 +209,15 @@ Pacote do instrumento sem o VCO ~**16,00**. O VCO acrescenta o pacote abaixo (~*
 
 | Pacote | Soma |
 | --- | ---: |
-| Semicondutores | 169 |
+| Semicondutores | 173 |
 | Pots | 150 |
 | Knobs | 66 |
 | Chaves | 50 |
 | Conectores | 109 |
-| Resistores | 24 |
-| Capacitores | 58 |
+| Resistores | 25 |
+| Capacitores | 59 |
 | Placas / caixa | 170 |
-| **Um VOZ-9, tudo novo** | ~ **796** |
+| **Um VOZ-9, tudo novo** | ~ **802** |
 
 Fonte 9 V centro-negativo (~R$ 25–40) se ainda não tiver uma. Não entra na soma: a de pedal serve.
 

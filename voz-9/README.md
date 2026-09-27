@@ -18,24 +18,26 @@ Sem XLR, **PRE** escala os oscs. **OSC IN** = mix osc ↔ mic (CCW = só drones,
 
 O pré vocal está em `pre-vocal.md`. Mesmo papel do Echo Master, **sem transformador** (diferencial no NE5532 + pad no XLR).
 
-Leia `esquema.md` para montar. Caderno de estudo: `componentes.md`. Uma fenolite no piso; **dez** grupos de pads J1–J10 (cabo soldado direto) e CIs em soquete: `pcb.md`. Lista de compra: `bom.md`. Simulador: `sim/painel.html`.
+Leia `esquema.md` para montar. Caderno de estudo: `componentes.md`. Uma fenolite no piso; **onze** grupos de pads J1–J11 (cabo soldado direto) e CIs em soquete: `pcb.md`. Lista de compra: `bom.md`. Simulador: `sim/painel.html`.
 
-Teclado: o VCO cromático está na faixa de baixo do mesmo painel (`vco.md`). SAW, TRI e PUL escolhem a onda. O cabo dele solda no **J10**.
+Teclado: o VCO cromático está na faixa de baixo do mesmo painel (`vco.md`). SAW, TRI e PUL escolhem a onda. O cabo dele solda no **J10**. Os LEDs indicadores soldam no **J11**.
 
 ---
 
 ## Painel
 
-**Um módulo só**, caixa de mesa **retangular** (Noise Toaster / MFOS): faceplate paisagem **220 × 216 mm** em `painel.svg`. Caixa de madeira ~240 × 236 × 50 mm. Uma placa no fundo (`pcb.svg`); os cabos do faceplate soldam direto nos pads **J1–J10**. CIs em soquete.
+**Um módulo só**, caixa de mesa **retangular** (Noise Toaster / MFOS): faceplate paisagem **220 × 216 mm** em `painel.svg`. Caixa de madeira ~240 × 236 × 50 mm. Uma placa no fundo (`pcb.svg`); os cabos do faceplate soldam direto nos pads **J1–J11**. CIs em soquete.
 
 ```
- IN  PRE  OSC IN | LED 9V          OSC A  AMOUNT  OSC B
+ IN·LED  PRE  OSC IN | LED 9V     LED  OSC A  AMOUNT  OSC B  LED
  LOW  MID F  MID G  HIGH                    VU  (saída)
- RATE  TREM  MODE  DEPTH           A  B  SHAPE  CUTOFF  DRONE  GATE
- TIME  WET  F-BACK  H1  H2  H3  STACK     |  VOLUME
+ LED  RATE  TREM  MODE  DEPTH      A  B  SHAPE  CUTOFF  DRONE  GATE
+ TIME  WET  F-BACK  LED  H1  H2  H3  STACK     |  VOLUME
  A B IN FILT FCV VCV LFO ECV CLK SEND RCV |  OUT
  COARSE  FINE PW FM   SAW TRI PUL   CV
 ```
+
+LEDs 3 mm vermelho (`esquema.md` §10): **IN** (áudio antes do PRE), **9V** (piloto), **A** e **B** (frequência dos oscs), **RATE** (taxa do LFO), **REP** (repeats da fita, entre F-BACK e H1).
 
 - **Esquerda:** entrada + EQ + LFO. XLR no canto superior esquerdo.
 - **Direita:** osciladores + A/B/SHAPE/CUTOFF/DRONE/GATE, com o **VU** acima.
@@ -148,7 +150,7 @@ As três ondas off = o VCO sai do áudio. OSC A e OSC B off, DRONE/GATE em GATE,
 
 ## O que comprar
 
-Tudo novo: `bom.md`. Um instrumento ~R$ **796** (varejo BR, set/2026, sem frete). O VCO cromático e o VU (~R$ 47 o movimento) entram nessa soma; os cabos do painel soldam direto, sem conector 2,54 mm.
+Tudo novo: `bom.md`. Um instrumento ~R$ **802** (varejo BR, set/2026, sem frete). O VCO cromático, o VU (~R$ 47 o movimento) e os cinco LEDs indicadores entram nessa soma; os cabos do painel soldam direto, sem conector 2,54 mm.
 
 J201: marque Vgs(off) nos 8. O mais “vivo” vai no VCF; um par parecido nos FM. MP20 por último — ferro baixo.
 
@@ -156,12 +158,12 @@ J201: marque Vgs(off) nos 8. O mais “vivo” vai no VCF; um par parecido nos F
 
 ## Ordem de teste na protoboard
 
-1. Fonte: 9 V, −9 V (MAX1044), 5 V (78M05), 4V5, 1V8. LED acende.
-2. OSC A / OSC B / batimento.
+1. Fonte: 9 V, −9 V (MAX1044), 5 V (78M05), 4V5, 1V8. LED 9V acende.
+2. OSC A / OSC B / batimento. LEDs A e B na frequência.
 3. SHAPE, CUTOFF, GATE / DRONE.
-4. LFO + TREM (tremolo / off / flutter) + MODE.
-5. 5532 + PRE + OSC IN (mix) + EQ 424 (U9).
+4. LFO + TREM (tremolo / off / flutter) + MODE. LED RATE.
+5. 5532 + PRE + OSC IN (mix) + EQ 424 (U9). LED IN antes do PRE.
 6. TL072 NAB: VCA → GRAVA → H1 → LÊ.
-7. PT2399 H1, H2, H3. Jacks e normals por último.
+7. PT2399 H1, H2, H3. LED REP nos repeats. Jacks e normals por último.
 
 Detalhe: `esquema.md`. Placa: `pcb.md`.

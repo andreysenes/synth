@@ -1,0 +1,68 @@
+* VOZ-9 — 09_leds.cir
+* Indicator LEDs (esquema.md §10). All 3 mm red, 4k7 on the BASE.
+* OSC A/B: square straight into the LED.
+* IN / RATE / REP: BC547. Quiet audio must stay dark.
+*
+* Run from voz-9/sim/:  ngspice -b 09_leds.cir
+
+.include lib.inc
+
+V9 V9 0 DC 9
+
+* ===== OSC A — 10 Hz, 0–8 V, ~50% =====
+Vsq out_a 0 PULSE(0 8 1m 1u 1u 50m 100m)
+R104 out_a na 4.7k
+Vsa na leda DC 0
+Dleda leda 0 DLEDRED
+
+* ===== IN loud (~speech peak after the 5532) and IN quiet =====
+Vin pre_b 0 SIN(0 1.2 180)
+C87 pre_b n72 100n
+R109 n72 b10 10k
+R110 b10 0 220k
+R108 V9 nin 4.7k
+Vsin nin ledi DC 0
+Dledi ledi c10 DLEDRED
+Q10 c10 b10 0 QBC547
+
+Vinq pre_q 0 SIN(0 0.04 180)
+Cq pre_q nq 100n
+Rq1 nq bq 10k
+Rq2 bq 0 220k
+Rq3 V9 nqi 4.7k
+Vsqi nqi ledq DC 0
+Dledq ledq cq10 DLEDRED
+Qq cq10 bq 0 QBC547
+
+* ===== RATE — flutter, 0.4 Hz. 10µ passes it; 100n would not. =====
+Vlfo lfo_d 0 SIN(4 2.5 0.4)
+C88 lfo_d n73 10u
+R111 n73 b12 10k
+R112 b12 0 220k
+R106 V9 nr 4.7k
+Vsr nr ledr DC 0
+Dledr ledr c12 DLEDRED
+Q12 c12 b12 0 QBC547
+
+* ===== REP — wet audio before WET =====
+Vwet nab_b 0 SIN(0 1.5 400)
+C89 nab_b n74 100n
+R113 n74 b11 47k
+R114 b11 0 220k
+R107 V9 np 4.7k
+Vsp np ledp DC 0
+Dledp ledp c11 DLEDRED
+Q11 c11 b11 0 QBC547
+
+.control
+set noaskquit
+tran 200u 3
+meas tran i_osc MAX I(Vsa)
+meas tran i_in MAX I(Vsin)
+meas tran i_quiet MAX I(Vsqi)
+meas tran i_rate MAX I(Vsr) FROM=1 TO=3
+meas tran i_rep MAX I(Vsp)
+echo LEDS_DONE
+quit
+.endc
+.end

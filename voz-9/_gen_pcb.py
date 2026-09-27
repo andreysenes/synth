@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Gera pcb.svg — BASE 220×216 com R1–R103 e C1–C86."""
+"""Gera pcb.svg — BASE 220×216 com R1–R114 e C1–C89."""
 from pathlib import Path
 
 W, H = 220.0, 216.0
@@ -198,18 +198,19 @@ for x, y in ((4, 4), (216, 4), (4, 212), (216, 212)):
     emit(f'  <circle class="pad" cx="{x}" cy="{y}" r="2.1"/><circle class="hole" cx="{x}" cy="{y}" r="1.55"/>')
 
 # coluna de pads — fio do painel solda direto, sem conector.
-# J8 é 2×4 (combo OUT + V9/VEE do VU). J10 é o VCO.
-blk(6, 8, 46, 186, "PADS  CABO  J1–J10")
-pads2x(9, 16, 10, "J1", "OSC")
-pads2x(9, 36, 6, "J2", "LFO")
-pads2x(9, 54, 10, "J3", "DELAY")
-pads2x(9, 74, 10, "J4", "PATCH A")
-pads2x(9, 94, 8, "J5", "PATCH B")
-pads2x(9, 112, 3, "J6", "CTRL")
-pads2x(22, 112, 6, "J7", "IN+PRE")
-pads2x(9, 128, 4, "J8", "OUT")
-pads2x(9, 146, 6, "J9", "EQ424")
-pads2x(9, 164, 10, "J10", "VCO")
+# J8 é 2×4 (combo OUT + V9/VEE do VU). J10 é o VCO. J11 são os LEDs.
+blk(6, 8, 46, 168, "PADS  CABO  J1–J11")
+pads2x(9, 15, 10, "J1", "OSC")
+pads2x(9, 32, 6, "J2", "LFO")
+pads2x(9, 48, 10, "J3", "DELAY")
+pads2x(9, 66, 10, "J4", "PATCH A")
+pads2x(9, 84, 8, "J5", "PATCH B")
+pads2x(9, 100, 3, "J6", "CTRL")
+pads2x(22, 100, 6, "J7", "IN+PRE")
+pads2x(9, 116, 4, "J8", "OUT")
+pads2x(9, 132, 6, "J9", "EQ424")
+pads2x(9, 148, 10, "J10", "VCO")
+pads2x(9, 166, 6, "J11", "LEDS")
 
 emit('  <path class="cu-w" d="M54,10 V150"/>')
 emit('  <path class="cu" d="M56.6,10 V148"/>')
@@ -360,15 +361,27 @@ cline(64, 200, [("C72", "470p"), ("C73", "1n"), ("C74", "10n"), ("C75", "10n"), 
 cline(140, 200, [("C80", "1µ"), ("C81", "1µ"), ("C82", "1µ")])
 eline(172, 200, [("C83", "10µ"), ("C84", "10µ"), ("C85", "10µ"), ("C86", "100µ")], dx=10)
 
-emit('  <text class="lab" x="136" y="213.4">CIs só no soquete · pads J1–J10 furo 1,0 · pino 1 = quadrado · sem conector</text>')
+# Drivers dos LEDs indicadores. Refs depois do VCO (R104…, C87…).
+blk(6, 178, 46, 30, "LEDS  Q10 IN   Q11 REP   Q12 RATE")
+to92(12, 184, "Q10")
+to92(22, 184, "Q11")
+to92(32, 184, "Q12")
+cf(40, 185, "C87", "100n")
+ce(48, 186, "C88", "10µ")
+rline(14, 192, [("R104", "4k7"), ("R105", "4k7"), ("R106", "4k7"), ("R107", "4k7")], dx=9.2)
+rline(14, 197.2, [("R108", "4k7"), ("R109", "10k"), ("R110", "220k"), ("R111", "10k")], dx=9.2)
+rline(14, 202.4, [("R112", "220k"), ("R113", "47k"), ("R114", "220k")], dx=9.2)
+cf(44, 202.4, "C89", "100n")
+
+emit('  <text class="lab" x="136" y="213.4">CIs só no soquete · pads J1–J11 furo 1,0 · pino 1 = quadrado · sem conector</text>')
 emit("</svg>\n")
 
-missing_r = [f"R{i}" for i in range(1, 104) if f"R{i}" not in seen_r]
-missing_c = [f"C{i}" for i in range(1, 87) if f"C{i}" not in seen_c]
+missing_r = [f"R{i}" for i in range(1, 115) if f"R{i}" not in seen_r]
+missing_c = [f"C{i}" for i in range(1, 90) if f"C{i}" not in seen_c]
 extra_r = sorted(seen_r)
 if missing_r or missing_c:
     raise SystemExit(f"FALTANDO R={missing_r} C={missing_c}")
-if len(seen_r) != 103 or len(seen_c) != 86:
+if len(seen_r) != 114 or len(seen_c) != 89:
     raise SystemExit(f"contagem R={len(seen_r)} C={len(seen_c)}")
 
 path = Path(__file__).with_name("pcb.svg")

@@ -34,7 +34,8 @@ Passivos **0805 1 %** da biblioteca **Basic** (sem taxa extra de peça). CIs em 
 | 2N5457 | MMBF5457 | [C2830807](https://www.lcsc.com/product-detail/C2830807.html) |
 | 1N5817 | SS14 | [C2480](https://jlcpcb.com/partdetail/C2480) |
 | 1N4148 | 1N4148WS | [C2128](https://jlcpcb.com/partdetail/C2128) |
-| LED 3 mm | LED vermelho 0805 | [C84256](https://jlcpcb.com/partdetail/C84256) |
+| LED 3 mm ×6 | LED vermelho 0805 | [C84256](https://jlcpcb.com/partdetail/C84256) |
+| BC547 ×3 | MMBT3904 SOT-23 | [C20526](https://www.lcsc.com/product-detail/C20526.html) |
 | 47 µ / 16 V | 22 µ / **25 V** 0805 | [C45783](https://jlcpcb.com/partdetail/C45783) |
 | 2 n2 filme | 2,2 n C0G 0805 | [C28260](https://jlcpcb.com/partdetail/C28260) |
 | 3,3 n filme | 3,3 n X7R 0603 | [C1613](https://jlcpcb.com/partdetail/C1613) |
@@ -60,9 +61,10 @@ Passivos **0805 1 %** da biblioteca **Basic** (sem taxa extra de peça). CIs em 
 | 2 | combo XLR+P10 clone | |
 | 1 | P4 9 V | |
 | 4 | cabo P2 | |
-| 1 | fio 24 AWG 10 m | cabos do painel, soldados nos pads J1–J10 |
+| 1 | fio 24 AWG 10 m | cabos do painel, soldados nos pads J1–J11 |
 | 11 | soquete DIP | U1–U4, U6–U8, **U9–U12** — some se for SOP |
 | 1 | VU analógico (TN-73) | no painel; driver U12 atrás do meter |
+| 6 | LED 3 mm | piloto + A + B + RATE + REP + IN |
 | 1 | caixa + face 220×216 | |
 | 1 | fenolite 220×216 | ou encomenda FR4 na própria JLC, outro fluxo |
 
@@ -76,8 +78,9 @@ Inventados para o matching. Ainda não há netlist KiCad. Quando existir PCB FR4
 
 - **U1** 5532 · **U2** osc · **U3** NAB · **U4** ICL7660 · **U5** 78M05 · **U6–U8** PT2399 · **U9** EQ voz 424 · **U10** AS3340 · **U11** MC34063 · **U12** VU (atrás do meter)
 - **Q1–Q6** J201 no circuito · **Q8 Q9** folga · **Q7** LFO
-- **D1** proteção · **D2–D5** 4148 · **LED1** piloto
-- **R1…R103** e **C1…C86** na ordem da `bom.md` (+ passivos EQ em §3b, passivos do VCO em `vco.md`)
+- **D1** proteção · **D2–D7** 4148 (D6 D7 no VU) · **LED1** piloto · **LED2–LED6** OSC A, OSC B, RATE, REP, IN
+- **Q10–Q12** BC547 / MMBT3904 (drivers IN, REP, RATE)
+- **R1…R114** e **C1…C89** na BASE (`bom.md`, VCO em `vco.md`, LEDs em §10). R115–R120 e C90–C93 são do VU, atrás do meter.
 
 ---
 
@@ -85,7 +88,7 @@ Inventados para o matching. Ainda não há netlist KiCad. Quando existir PCB FR4
 
 **PCB Assembled Qty = 5.** O tool não cobra “um instrumento”: multiplica por 5 e ainda arredonda para o mínimo do feeder. Por isso 32× 10 k vira **170** peças, 8× 22 µ vira **40**, 3× PT2399 vira **15**.
 
-CSV atual: **ICL7660CSA C42421900** no lugar do MAX1044. Matching **36 / 37** — a linha *Not Matched* vazia é lixo do upload; ignore.
+CSV atual: **ICL7660CSA C42421900** no lugar do MAX1044. A cotação abaixo é de **13 set 2026**, antes dos LEDs indicadores. LED2–LED6 (mesmo C84256) e Q10–Q12 (C20526) entraram depois — não estão nestes dólares.
 
 | | USD |
 | --- | ---: |

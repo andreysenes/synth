@@ -1,10 +1,10 @@
 # VOZ-9 — uma placa no piso
 
-Uma fenolite no **fundo da caixa**. O painel (`painel.svg`) é só chapa. **Dez** grupos de pads J1–J10: o cabo do painel **solda direto** na BASE. Sem conector, sem fêmea, sem macho, sem crimp. CIs só em soquete. Sem FACE, sem flat, sem IDC.
+Uma fenolite no **fundo da caixa**. O painel (`painel.svg`) é só chapa. **Onze** grupos de pads J1–J11: o cabo do painel **solda direto** na BASE. Sem conector, sem fêmea, sem macho, sem crimp. CIs só em soquete. Sem FACE, sem flat, sem IDC.
 
 | Placa | Arquivo | Tamanho | Cobre | O que leva |
 | --- | --- | --- | --- | --- |
-| **BASE** | `pcb.svg` | **220 × 216 mm** | simples, solda = verso | fonte, oscs, JFETs, NAB, 5532, EQ voz, fita, **VCO**, R/C, pads dos cabos |
+| **BASE** | `pcb.svg` | **220 × 216 mm** | simples, solda = verso | fonte, oscs, JFETs, NAB, 5532, EQ voz, fita, **VCO**, **LEDs**, R/C, pads dos cabos |
 
 Imprimir o SVG em **escala 100 %**. Para transferência térmica, espelhar o cobre.
 
@@ -15,8 +15,8 @@ Imprimir o SVG em **escala 100 %**. Para transferência térmica, espelhar o cob
           └──────────────┬─────────────────┘
                          │ cabos 8–12 cm
           ┌──────────────┴─────────────────┐
-          │ pads J1–J10 · fonte oscs fita │
-          │   PCB 220×216 (R+C+CIs+VCO)   │
+          │ pads J1–J11 · fonte oscs fita │
+          │ PCB 220×216 (R+C+CIs+VCO) │
           └────────────────────────────────┘
             piso da caixa ~240×236×50
 ```
@@ -31,19 +31,20 @@ O painel parafusa na face 220 × 216. A placa parafusa no fundo (M3 nos quatro c
 
 Furos em `painel.svg`. Nada de cobre atrás da chapa.
 
-- 21 pots, 12 alavancas, GATE, LED, P4, 12× P2, 2× combo
+- 21 pots, 12 alavancas, GATE, **6× LED 3 mm**, P4, 12× P2, 2× combo
 - 100 p de RF **também no combo IN** (pino 2 e 3 → massa). Na placa: C1 e C2, no bloco U1.
 
 ### BASE (`pcb.svg`)
 
-Pads de cabo na coluna esquerda (**J1–J10**, dupla fila). Circuito à direita; o bloco do VCO fica na faixa de baixo. Gerador: `_gen_pcb.py`.
+Pads de cabo na coluna esquerda (**J1–J11**, dupla fila). Circuito à direita; o bloco do VCO fica na faixa de baixo. Os drivers dos LEDs (3× BC547, R104–R114, C87–C89) ficam no canto inferior esquerdo, abaixo do J11. Gerador: `_gen_pcb.py`.
 
 - soquetes DIP: U1 5532, U2 osc, U3 NAB, U4 7660, U6–U8 PT2399, **U9 EQ voz**, **U10 AS3340**, **U11 MC34063** — **não soldar o chip**
 - 1N5817, 78M05 (sem soquete — TO-220)
 - 6× J201, 2N5457, 2× MP20, 1N4148
 - Csel (220 n / 47 µ) e detector CLK
 - **2×** trimpot 100 k (RV1 F-BACK, RV2 res)
-- **J1–J10** pads para o fio do painel — furo 1,0 mm, passo 3,5 mm, pino 1 quadrado
+- **J1–J11** pads para o fio do painel — furo 1,0 mm, passo 3,5 mm, pino 1 quadrado
+- **Q10–Q12** BC547 (LEDs IN, REP, RATE)
 
 O **VU de saída** (U12 + R115–R120 + C90–C93 + D6/D7 + RV8) **não** entra na BASE — o U10 de lá é o AS3340. Mora numa ilhada atrás do meter e puxa TIP · GND · V9 · VEE dos pads **J8** (agora 2×4). Esquema: `esquema.md` §9.
 
@@ -65,6 +66,7 @@ Na placa: **pads em dupla fila**, passo **3,5 mm**, furo **1,0 mm**, ilha Ø **2
 | **J8** | 2×4 | 8 | combo OUT + alimenta o VU |
 | **J9** | 2×6 | 12 | EQ voz 424 |
 | **J10** | 2×10 | 20 | VCO cromático |
+| **J11** | 2×6 | 12 | LEDs indicadores (10 usados) |
 
 Pino **1** = pad quadrado, canto esquerdo de cima. A numeração corre a fila de cima e depois a de baixo — a mesma do SPICE / `jmap.inc`. Não troque os grupos. Marque cada maço.
 
@@ -144,7 +146,7 @@ CLK ponta → detector na BASE → mesmo nó do ECV. SEND = PRE (pré-EQ / pré-
 
 | Pino | Sinal |
 | ---: | --- |
-| 1–2 | LED A · K |
+| 1–2 | LED 9V A · K |
 | 3–4 | P4 TIP · GND |
 | 5–6 | GATE NA · GND |
 
@@ -198,6 +200,21 @@ Shelf 100 Hz / peaking 250 Hz–5 kHz / shelf 10 kHz — `esquema.md` §3b.
 
 SAW / TRI / PUL ligam cada onda no mix. Esquema: `vco.md`.
 
+### J11 LEDs — 2×6 (10 usados)
+
+Indicadores 3 mm vermelho. Série 4k7 e os BC547 ficam na BASE. K de cada LED vai ao GND na placa. O piloto de 9 V **não** entra aqui — continua no J6.
+
+| Pino | Sinal |
+| ---: | --- |
+| 1–2 | LED OSC A · K |
+| 3–4 | LED OSC B · K |
+| 5–6 | LED RATE · K |
+| 7–8 | LED REP · K |
+| 9–10 | LED IN · K |
+| 11–12 | NC |
+
+Esquema: `esquema.md` §10.
+
 ---
 
 ## Furos do painel (`painel.svg`)
@@ -209,7 +226,12 @@ Coordenadas em mm, origem no canto superior esquerdo.
 | COMBO IN | 20 | 21 | 24 |
 | PRE | 48 | 21 | 7,5 |
 | OSC IN | 72 | 21 | 7,5 |
-| LED | 96 | 21 | 3,2 |
+| LED 9V | 96 | 21 | 3,2 |
+| LED IN | 34 | 30 | 3,2 |
+| LED OSC A | 104 | 30 | 3,2 |
+| LED OSC B | 209 | 36 | 3,2 |
+| LED RATE | 18 | 89 | 3,2 |
+| LED REP | 107 | 99 | 3,2 |
 | P4 9 V | 110 | 21 | 8,0 |
 | COMBO OUT | 200 | 144 | 24 |
 | LOW | 18 | 50 | 7,5 |
@@ -264,6 +286,7 @@ Mesmos designators do `jlcpcb-bom.csv` + bloco EQ. Axial ¼ W, passo **7,62 mm**
 | U3 NAB | R51–R54 15k · R16 4k7 · R45 R46 10k | C4 C5 3n3 · C48–C50 220n · C20 C29 C30 100n |
 | **U9 EQ** | 2× 10k Baxandall · 3k3 MID F · 10k mid | 33n LOW · 1n HIGH · 10n MID · 2× 100n acoplo |
 | ENV | | C27 C28 100n · C68 C71 47µ · C53 C54 2µ2 |
+| **LEDS** | R104–R108 4k7 · R109 R111 10k · R113 47k · R110 R112 R114 220k | C87 C89 100n · C88 10µ · Q10–Q12 BC547 |
 | FITA | R35–R41 R47–R50 10k · R71 100k · R75–R78 220k | C3 2n2 · C7–C17 10n · C18 22n · C31–C42 100n · C69 C70 47µ |
 
 Trimpots na BASE: RV1 teto F-BACK, RV2 ressonância, RV3–RV7 do VCO (`vco.md`). RV8 (10 k) = calibração do VU, na ilhada atrás do meter (`esquema.md` §9).
@@ -276,9 +299,9 @@ O **VU** não aparece na tabela: U12 + R115–R120 + C90–C93 + D6/D7 + RV8 fic
 
 1. Imprime `pcb.svg` em laser, **100 %**, sem “ajustar à página”.
 2. Lado **COBRE**: espelha. Lado **SILK**: não espelha.
-3. Fenolite simples. Furos: **1,0 mm** nos pads J1–J10 e nos soquetes DIP, 0,8 mm nos R/C, 3,2 mm nos M3.
+3. Fenolite simples. Furos: **1,0 mm** nos pads J1–J11 e nos soquetes DIP, 0,8 mm nos R/C, 3,2 mm nos M3.
 4. Jumpers no lado dos componentes (tracejado no SVG).
-5. Solda **soquetes DIP** (incl. **U9**, **U10**, **U11**). Depois JFET/germânio. Os cabos do painel entram nos pads **por último**: estanha, enfia no furo, solda no verso. Um ponto de cola quente na borda da coluna segura o maço.
+5. Solda **soquetes DIP** (incl. **U9**, **U10**, **U11**, **U12**). Depois JFET/germânio e os BC547. Os cabos do painel entram nos pads **por último**: estanha, enfia no furo, solda no verso. Um ponto de cola quente na borda da coluna segura o maço.
 
 Antes de ligar 9 V: ohmímetro entre J6 pino 4 (P4-GND) e a malha do combo. Tem de ser contínuo. J6 pino 3 (P4-TIP) **não** pode achar GND.
 
@@ -286,13 +309,13 @@ Antes de ligar 9 V: ohmímetro entre J6 pino 4 (P4-GND) e a malha do combo. Tem 
 
 ## Ordem de teste
 
-1. Só a BASE, sem cabos de áudio: P4 → 9 V, −9 V, 5 V, 4V5, 1V8. LED no pad.
-2. Cabos dos pots. OSC A, OSC B, batimento. OSC IN no CCW.
+1. Só a BASE, sem cabos de áudio: P4 → 9 V, −9 V, 5 V, 4V5, 1V8. LED 9V no pad.
+2. Cabos dos pots. OSC A, OSC B, batimento. LEDs A e B piscam no grave. OSC IN no CCW.
 3. SHAPE, CUTOFF, GATE/DRONE.
-4. LFO. TREM (tremolo / off / flutter).
-5. 5532 + combo IN + PRE + OSC IN (mix). SM58, PRE a meio → SEND ~150–300 mV.
+4. LFO. TREM (tremolo / off / flutter). LED RATE acompanha; no centro apaga.
+5. 5532 + combo IN + PRE + OSC IN (mix). SM58, PRE a meio → SEND ~150–300 mV. LED IN acende na fala mesmo com PRE no zero.
 6. U9 EQ 424: LOW/HIGH/MID — meio = flat.
-7. TL072 NAB: VCA → GRAVA → H1 → LÊ. Sem o chip o eco some.
+7. TL072 NAB: VCA → GRAVA → H1 → LÊ. Sem o chip o eco some. LED REP pisca no slap; heads off = escuro.
 8. PT2399 os três. Combos e patch por último.
 
 Esquema: `esquema.md`. Pré: `pre-vocal.md`.

@@ -3,6 +3,7 @@
 
 .include models/jfet.mod
 .include models/diodes.mod
+.include models/npn.mod
 .include models/opamps.mod
 .include models/rails.mod
 

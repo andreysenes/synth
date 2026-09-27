@@ -4,7 +4,7 @@ Uma fenolite no **fundo da caixa**. O painel (`painel.svg`) é só chapa. **Nove
 
 | Placa | Arquivo | Tamanho | Cobre | O que leva |
 | --- | --- | --- | --- | --- |
-| **BASE** | `pcb.svg` | **220 × 160 mm** | simples, solda = verso | fonte, oscs, JFETs, NAB, 5532, EQ voz, fita, R/C, pads dos cabos |
+| **BASE** | `pcb.svg` / `kicad/` | **300 × 300 mm** | simples, solda = verso | fonte, oscs, JFETs, NAB, 5532, EQ voz, fita, R/C, pads dos cabos |
 
 Imprimir o SVG em **escala 100 %**. Para transferência térmica, espelhar o cobre.
 
@@ -13,15 +13,17 @@ Imprimir o SVG em **escala 100 %**. Para transferência térmica, espelhar o cob
           │  knobs / chaves / jacks / XLR  │
           │         (só furo + porca)      │
           └──────────────┬─────────────────┘
-                         │ cabos 8–12 cm
+                         │ cabos folgados
           ┌──────────────┴─────────────────┐
           │  J1–J9 fêmea · fonte oscs fita │
-          │     PCB 220×160  (R+C+CIs)     │
+          │        PCB 300×300 mm          │
           └────────────────────────────────┘
-            piso da caixa ~240×180×50
+            piso da caixa ≥ 300×300
 ```
 
-O painel parafusa na face 220 × 160. A placa parafusa no fundo (M3 nos quatro cantos). Cabos folgados, sem esticar.
+O painel continua **220 × 160 mm**. A BASE é **300 × 300 mm** — maior que a face. O piso da caixa tem de cobrir a placa. A placa parafusa no fundo (M3 nos quatro cantos). Cabos folgados, sem esticar.
+
+O miolo (chicotes + circuito) é o desenho de 220 × 160, centrado. Projeto para editar: `kicad/voz-9.kicad_pro`.
 
 ---
 
@@ -218,7 +220,7 @@ Coordenadas em mm, origem no canto superior esquerdo.
 
 Knobs: OSC A/B, TIME, F-BACK, VOLUME = Ø30 mm. AMOUNT, SHAPE, CUTOFF, RATE, PRE, OSC IN, DEPTH, WET, LOW, MID F, MID G, HIGH = Ø15 mm.
 
-Parafusos da **BASE**: M3 em (4, 4), (216, 4), (4, 156), (216, 156).
+Parafusos da **BASE**: M3 a 6 mm dos cantos da placa 300 × 300 — (6, 6), (294, 6), (6, 294), (294, 294). Origem no canto, como no SVG.
 
 ---
 

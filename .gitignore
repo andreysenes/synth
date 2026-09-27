@@ -1,2 +1,8 @@
 .DS_Store
 .cursor/
+
+# KiCad
+*.kicad_prl
+fp-info-cache
+~*.lck
+*-backups/

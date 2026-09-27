@@ -24,7 +24,7 @@ Leia `esquema.md` para montar. Caderno de estudo: `componentes.md`. Uma fenolite
 
 ## Painel
 
-**Um módulo só**, caixa de mesa **retangular** (Noise Toaster / MFOS): faceplate paisagem **220 × 160 mm** em `painel.svg`. Caixa de madeira ~240 × 180 × 50 mm. Uma placa no fundo (`pcb.svg`); **9 chicotes** J1–J9 (fêmea na BASE, macho no painel). CIs em soquete.
+**Um módulo só**, caixa de mesa **retangular** (Noise Toaster / MFOS): faceplate paisagem **220 × 160 mm** em `painel.svg`. A placa do fundo é **300 × 300 mm** (`pcb.svg`, KiCad em `kicad/`); o piso da caixa tem de cobrir essa placa. **9 chicotes** J1–J9 (fêmea na BASE, macho no painel). CIs em soquete.
 
 ```
  IN  PRE  OSC IN | LED 9V          OSC A  AMOUNT  OSC B

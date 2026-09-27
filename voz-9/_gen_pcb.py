@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
-"""Gera pcb.svg — BASE 220×160 com R1–R81 e C1–C71."""
+"""Gera pcb.svg — BASE 300×300 mm com R1–R81 e C1–C71."""
 
-W, H = 220.0, 160.0
+import os
+
+W, H = 300.0, 300.0
+# Miolo do desenho antigo (220×160) centrado na placa 300×300.
+OX, OY = (W - 220.0) / 2.0, (H - 160.0) / 2.0
 seen_r, seen_c = set(), set()
 out = []
 
@@ -183,11 +187,13 @@ emit(f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 -4 {W+8} {H+8}" wid
 
 emit(f'  <rect class="brd" x="0" y="0" width="{W}" height="{H}"/>')
 emit(f'  <rect class="gnd" x="2" y="2" width="{W-4}" height="{H-4}" rx="1"/>')
-emit('  <text class="silk" x="136" y="6.0">VOZ-9  BASE</text>')
-emit('  <text class="silk-s" x="136" y="8.3">220×160 · CIs em soquete · J 2×N fêmea · macho no painel</text>')
-for x, y in ((4, 4), (216, 4), (4, 156), (216, 156)):
+emit('  <text class="silk" x="150" y="8.0">VOZ-9  BASE  300×300</text>')
+emit('  <text class="silk-s" x="150" y="11.2">miolo 220×160 centrado · CIs em soquete · J 2×N fêmea · macho no painel</text>')
+inset = 6.0
+for x, y in ((inset, inset), (W - inset, inset), (inset, H - inset), (W - inset, H - inset)):
     emit(f'  <circle class="pad" cx="{x}" cy="{y}" r="2.1"/><circle class="hole" cx="{x}" cy="{y}" r="1.55"/>')
 
+emit(f'  <g id="miolo" transform="translate({OX},{OY})">')
 # coluna chicotes — fêmea 2×N no tamanho de cada grupo
 blk(6, 8, 46, 146, "CHICOTES  FÊMEA  2×N")
 hdr2x(12, 16, 10, "J1", "OSC")
@@ -329,7 +335,8 @@ cline(124, 151.8, [
 ce(190, 151.8, "C69", "47µ")
 ce(202, 151.8, "C70", "47µ")
 
-emit('  <text class="lab" x="136" y="157.6">CIs só no soquete · J1–J8 fêmea 2×N 2,54 · macho no painel · pino 1 = quadrado</text>')
+emit('  <text class="lab" x="136" y="157.6">CIs só no soquete · J1–J9 fêmea 2×N 2,54 · macho no painel · pino 1 = quadrado</text>')
+emit("  </g>")
 emit("</svg>\n")
 
 missing_r = [f"R{i}" for i in range(1, 82) if f"R{i}" not in seen_r]
@@ -340,7 +347,7 @@ if missing_r or missing_c:
 if len(seen_r) != 81 or len(seen_c) != 71:
     raise SystemExit(f"contagem R={len(seen_r)} C={len(seen_c)}")
 
-path = "/Users/andreysenes/Guitar Pedal/voz-9/pcb.svg"
+path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "pcb.svg")
 with open(path, "w") as f:
     f.write("\n".join(out))
 print(f"ok {path}  R={len(seen_r)} C={len(seen_c)}")

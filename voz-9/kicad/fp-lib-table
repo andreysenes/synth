@@ -1,0 +1,4 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "voz9")(type "KiCad")(uri "${KIPRJMOD}/voz9.pretty")(options "")(descr "Conectores J1–J9, numeração em linha"))
+)

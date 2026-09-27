@@ -156,10 +156,10 @@ Lista do circuito **inteiro**. ~R$ 0,10–0,25 a unidade. Pacote fechado ~**16,0
 
 | Qtd | Peça | Por quê | Unit. | Sub |
 | --- | --- | --- | ---: | ---: |
-| 1 | fenolite simples 250×200 mm | PCB BASE (cortar 220×160) | 12,00 | **12,00** |
+| 1 | fenolite simples 300×300 mm | PCB BASE | 12,00 | **12,00** |
 | 5 | soquete DIP-8 | U1 5532 · U2 osc · U3 NAB · U4 7660 · **U9 EQ voz** | 1,50 | **7,50** |
 | 3 | soquete DIP-16 | PT2399 H1, H2 e H3 | 1,50 | **4,50** |
-| 1 | caixa madeira ~240×180×50 mm + face 220×160 | mesa estilo Toaster | 80,00 | **80,00** |
+| 1 | caixa com piso ≥ 300×300 mm + face 220×160 | mesa estilo Toaster; a BASE é maior que a face | 80,00 | **80,00** |
 
 **104,00.** Uma placa no piso. CIs nos soquetes. Sem FACE, sem IDC, sem flat. O pré é o NE5532 em diferencial; a saída XLR é pad + quase-balanceado (`pre-vocal.md`).
 

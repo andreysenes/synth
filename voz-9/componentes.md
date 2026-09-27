@@ -496,6 +496,26 @@ Pinagem: `pcb.md`.
 
 ---
 
+## Medição — o VU de saída
+
+### VU analógico — o olho da saída
+
+**Ideia.** Um **VU** é um microamperímetro de bobina móvel: uma agulha presa a uma bobina que gira num ímã quando passa corrente. Ele mede **corrente contínua**, não áudio. Para “ver” o som, primeiro a gente **retifica** (transforma o sobe-e-desce em só-sobe) e faz a **média** com um capacitor. Por norma o VU é lento de propósito: sobe rápido, desce devagar — mostra o *volume percebido*, não o pico instantâneo (isso é trabalho de um LED de clip).
+
+O movimento sozinho precisa de ~1 V e alguns mA no fundo de escala; a saída de pedal nem sempre chega lá, e ligar o meter direto ainda *carregaria* o áudio. Por isso existe o **driver**: um op-amp que copia o sinal sem puxá-lo e entrega corrente ao ponteiro.
+
+**No VOZ-9.** Tap **depois do VOLUME** (mesmo ponto do combo OUT). **U10 (TL072, ±9 V)** faz um **retificador de precisão de onda completa**: uma metade retifica meia onda (D6/D7 no laço — a queda do diodo some no feedback), a outra soma cru + meia onda e fecha a onda completa. **RV3 10 k** calibra o 0 VU; **C73 47 µ** faz a média/balística. A BASE está cheia, então essa plaquinha mora **atrás do meter**; sinal e alimentação (TIP · GND · V9 · VEE) sobem pelo **J8**, que vira **2×4**. Detalhe: `esquema.md` §9.
+
+**Banco.** Tocando, VOLUME a meio: a agulha deve subir com o som e cair devagar no silêncio. Toca no trecho mais alto que você usa e abre **RV3** até parar no início do vermelho (0 VU). Agulha colada no fim = RV3 aberto demais ou ganho alto; agulha morta = U10 fora do soquete, meter invertido (troca os 2 fios) ou C73 seco. O instrumento **toca igual sem o U10** — só perde a indicação.
+
+**Em geral.** Mesa de gravação, amplificador valvulado, compressor 1176/LA-2A. Primos: “VU” de LED (barra), medidor de pico (PPM, balística rápida). O da foto do projeto é um **TN-73** (movimento simples ~ nível de linha).
+
+**Datasheet.** Não tem folha de verdade (peça mecânica). O que importa: **corrente de fundo de escala** (ex. 200 µA–1 mA) e a **resistência interna** — quanto menor a corrente, maior o resistor de série (RV3 + fixo) para não bater o batente.
+
+**Não faça.** Ligar o meter direto na saída sem o driver (carrega o áudio e mal se mexe). Inverter os 2 fios (agulha bate no batente esquerdo). Confundir com medidor de pico: o VU é lento *por norma*.
+
+---
+
 ## Passivos — o que não é “só um R”
 
 ### Resistores que merecem nome
@@ -552,6 +572,7 @@ Cobre = verso. Sem furo metalizado: quando uma trilha precisa “mudar de lado�
 | Voz no SM58 | combo IN XLR, NE5532, PRE, sem phantom |
 | Nível da voz | PRE (não o VOLUME) |
 | Eco com “ar” de gravador | TL072 + 3,3 n |
+| Ver o nível que sai | VU de saída + VOLUME (U10, §9) |
 | Só 5 V / só −9 V / não explodir | 78M05 / MAX1044 / 1N5817 |
 
 ---
@@ -562,6 +583,7 @@ Cobre = verso. Sem furo metalizado: quando uma trilha precisa “mudar de lado�
 | --- | --- |
 | Combo clone | Medir pinos; Neutrik só como mapa |
 | MP20 pintado | Folha soviética; tratar como AC128 |
+| VU analógico | Mecânico; ver corrente de fundo de escala + R interna |
 | Knob, caixa, cabo P2 | Mecânica |
 
 ---

@@ -1,27 +1,27 @@
 # VOZ-9 — uma placa no piso
 
-Uma fenolite no **fundo da caixa**. O painel (`painel.svg`) é só chapa. **Nove** chicotes 2×N (2,54 mm): **fêmea na BASE**, **macho no painel**. CIs só em soquete. Sem FACE, sem flat, sem IDC.
+Uma fenolite no **fundo da caixa**. O painel (`painel.svg`) é só chapa. **Dez** chicotes 2×N (2,54 mm): **fêmea na BASE**, **macho no painel**. CIs só em soquete. Sem FACE, sem flat, sem IDC.
 
 | Placa | Arquivo | Tamanho | Cobre | O que leva |
 | --- | --- | --- | --- | --- |
-| **BASE** | `pcb.svg` | **220 × 160 mm** | simples, solda = verso | fonte, oscs, JFETs, NAB, 5532, EQ voz, fita, R/C, pads dos cabos |
+| **BASE** | `pcb.svg` | **220 × 216 mm** | simples, solda = verso | fonte, oscs, JFETs, NAB, 5532, EQ voz, fita, **VCO**, R/C, pads dos cabos |
 
 Imprimir o SVG em **escala 100 %**. Para transferência térmica, espelhar o cobre.
 
 ```
-          ┌──────── painel 220×160 ────────┐
+          ┌──────── painel 220×216 ────────┐
           │  knobs / chaves / jacks / XLR  │
-          │         (só furo + porca)      │
+          │    faixa de baixo = VCO        │
           └──────────────┬─────────────────┘
                          │ cabos 8–12 cm
           ┌──────────────┴─────────────────┐
-          │  J1–J9 fêmea · fonte oscs fita │
-          │     PCB 220×160  (R+C+CIs)     │
+          │  J1–J10 fêmea · fonte oscs fita│
+          │     PCB 220×216 (R+C+CIs+VCO)  │
           └────────────────────────────────┘
-            piso da caixa ~240×180×50
+            piso da caixa ~240×236×50
 ```
 
-O painel parafusa na face 220 × 160. A placa parafusa no fundo (M3 nos quatro cantos). Cabos folgados, sem esticar.
+O painel parafusa na face 220 × 216. A placa parafusa no fundo (M3 nos quatro cantos). Cabos folgados, sem esticar.
 
 ---
 
@@ -31,19 +31,19 @@ O painel parafusa na face 220 × 160. A placa parafusa no fundo (M3 nos quatro c
 
 Furos em `painel.svg`. Nada de cobre atrás da chapa.
 
-- 17 pots, 9 alavancas, GATE, LED, P4, 11× P2, 2× combo
+- 21 pots, 12 alavancas, GATE, LED, P4, 12× P2, 2× combo
 - 100 p de RF **também no combo IN** (pino 2 e 3 → massa). Na placa: C1 e C2, no bloco U1.
 
 ### BASE (`pcb.svg`)
 
-Chicotes na coluna esquerda (**J1–J9**, fêmea 2×N). Circuito à direita. Gerador: `_gen_pcb.py`.
+Chicotes na coluna esquerda (**J1–J10**, fêmea 2×N). Circuito à direita; o bloco do VCO fica na faixa de baixo. Gerador: `_gen_pcb.py`.
 
-- soquetes DIP: U1 5532, U2 osc, U3 NAB, U4 7660, U6–U8 PT2399, **U9 EQ voz** — **não soldar o chip**
+- soquetes DIP: U1 5532, U2 osc, U3 NAB, U4 7660, U6–U8 PT2399, **U9 EQ voz**, **U10 AS3340**, **U11 MC34063** — **não soldar o chip**
 - 1N5817, 78M05 (sem soquete — TO-220)
 - 6× J201, 2N5457, 2× MP20, 1N4148
 - Csel (220 n / 47 µ) e detector CLK
 - **2×** trimpot 100 k (RV1 F-BACK, RV2 res)
-- **J1–J9** fêmea 2,54 mm 2×N — macho vem do painel
+- **J1–J10** fêmea 2,54 mm 2×N — macho vem do painel
 
 ---
 
@@ -62,6 +62,7 @@ Família: housing **dupla fila, passo 2,54 mm**. Fêmea na BASE, macho no painel
 | **J7** | 2×6 | 12 | combo IN + PRE + OSC IN |
 | **J8** | 2×3 | 6 | combo OUT |
 | **J9** | 2×6 | 12 | EQ voz 424 |
+| **J10** | 2×10 | 20 | VCO cromático |
 
 Pino **1** = pad quadrado + lingueta. Não cruze os machos. Marque cada housing.
 
@@ -176,6 +177,21 @@ P4: centro-negativo. **Confira no jack.** 1N5817 na BASE, no pino 3 (TIP).
 
 Shelf 100 Hz / peaking 250 Hz–5 kHz / shelf 10 kHz — `esquema.md` §3b.
 
+### J10 VCO — 2×10
+
+| Pino | Sinal |
+| ---: | --- |
+| 1–3 | COARSE GND · W · +5 |
+| 4–6 | FINE −5 · W · +5 |
+| 7–9 | PW GND · W · +5 |
+| 10–12 | FM GND · W · LFO |
+| 13–14 | SAW COM · ON |
+| 15–16 | TRI COM · ON |
+| 17–18 | PUL COM · ON |
+| 19–20 | CV TIP · GND |
+
+SAW / TRI / PUL ligam cada onda no mix. Esquema: `vco.md`.
+
 ---
 
 ## Furos do painel (`painel.svg`)
@@ -214,11 +230,15 @@ Coordenadas em mm, origem no canto superior esquerdo.
 | STACK | 168 | 112 | 6,0 |
 | VOLUME | 198 | 112 | 7,5 |
 | A … RCV (11 jacks) | 16 + n×15 | 144 | 6,0 |
-| parafusos M3 (painel) | 6 / 214 | 6 / 154 | 3,2 |
+| COARSE | 32 | 190 | 7,5 |
+| FINE / PW / FM | 66 / 90 / 114 | 190 | 7,5 |
+| SAW / TRI / PUL | 138 / 156 / 174 | 190 | 6,0 |
+| CV | 198 | 190 | 6,0 |
+| parafusos M3 (painel) | 6 / 214 | 6 / 210 | 3,2 |
 
 Knobs: OSC A/B, TIME, F-BACK, VOLUME = Ø30 mm. AMOUNT, SHAPE, CUTOFF, RATE, PRE, OSC IN, DEPTH, WET, LOW, MID F, MID G, HIGH = Ø15 mm.
 
-Parafusos da **BASE**: M3 em (4, 4), (216, 4), (4, 156), (216, 156).
+Parafusos da **BASE**: M3 em (4, 4), (216, 4), (4, 212), (216, 212). Face 220 × 216.
 
 ---
 
@@ -247,9 +267,9 @@ Trimpots: RV1 teto F-BACK, RV2 ressonância. (PRE no painel substitui o antigo R
 
 1. Imprime `pcb.svg` em laser, **100 %**, sem “ajustar à página”.
 2. Lado **COBRE**: espelha. Lado **SILK**: não espelha.
-3. Fenolite simples. Furos: 0,8 mm nos J1–J9 e R/C, 1,0 mm nos soquetes DIP, 3,2 mm nos M3.
+3. Fenolite simples. Furos: 0,8 mm nos J1–J10 e R/C, 1,0 mm nos soquetes DIP, 3,2 mm nos M3.
 4. Jumpers no lado dos componentes (tracejado no SVG).
-5. Solda **soquetes DIP** (incl. **U9**) e **fêmeas J1–J9**. Depois JFET/germânio. CIs e chicotes macho **por último**.
+5. Solda **soquetes DIP** (incl. **U9**, **U10**, **U11**) e **fêmeas J1–J10**. Depois JFET/germânio. CIs e chicotes macho **por último**.
 
 Antes de ligar 9 V: ohmímetro entre J6 pino 4 (P4-GND) e a malha do combo. Tem de ser contínuo. J6 pino 3 (P4-TIP) **não** pode achar GND.
 
@@ -268,4 +288,4 @@ Antes de ligar 9 V: ohmímetro entre J6 pino 4 (P4-GND) e a malha do combo. Tem 
 
 Esquema: `esquema.md`. Pré: `pre-vocal.md`.
 
-O VCO cromático não mora nesta placa. É outra caixa, 160 × 110 mm: `vco.md`.
+O VCO cromático mora nesta mesma placa, faixa de baixo, chicote **J10**. Ondas: `vco.md`.

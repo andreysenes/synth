@@ -1,35 +1,33 @@
 # VOZ-9 — VCO cromático
 
-Outro módulo. O VOZ-9 continua sendo o filtro + o espaço + o germânio. OSC A e OSC B continuam pots de relaxação, sem 1 V/oitava. O teclado não entra neles.
+Mesma caixa, mesmo `painel.svg`, mesma fenolite. OSC A e OSC B continuam pots de relaxação, sem 1 V/oitava. O teclado não entra neles.
 
-Este módulo é um **AS3340** (Alfa; o Coolaudio **V3340** tem os mesmos pinos). O par casado e a compensação de temperatura estão no die — é isso que segura a oitava quando a caixa esquenta. Dois 2N3904 colados não fazem esse serviço.
+O cromático é um **AS3340** (Alfa; o Coolaudio **V3340** tem os mesmos pinos) na BASE. O par casado e a compensação de temperatura estão no die. Dois 2N3904 colados não fazem esse serviço.
 
-Caixa à parte, face **160 × 110 mm** (`vco-painel.svg`). Uma fenolite no piso, dois chicotes. Lista: `vco-bom.md`. Não entra na conta dos ~R$ 610 do instrumento.
-
----
-
-## Como liga no VOZ-9
-
-A mesma fonte **9 V centro-negativo** pode alimentar os dois P4 em paralelo (fonte de pedal ≥ 300 mA). Este P4 não aceita 12 V.
-
-```
-teclado CV (0–5 V, 1 V/oitava) ──► VCO  CV
-teclado GATE                    ──► VOZ-9  VCV
-VCO  SAW  (ou TRI, ou PULSE)    ──► VOZ-9  IN
-```
-
-No VOZ-9: **OSC A** e **OSC B** off, **DRONE/GATE** em **GATE**, **OSC IN** no CCW. O áudio do VCO cai no IN, passa pelo EQ, pelo germânio (SHAPE), pelo VCF e pela fita. **FILT** pula o germânio — só se for de propósito.
-
-O GATE do teclado não entra neste módulo. Vibrato: jack **LFO** do VOZ-9 → **FM** daqui (TREM fora do centro).
+A face cresce para **220 × 216 mm**: a faixa de baixo do `painel.svg` é o VCO. Chicote **J10**. Lista na `bom.md` (detalhe em `vco-bom.md`).
 
 ---
 
-## Painel
+## No instrumento
 
 ```
- LED  9V                         COARSE
- FINE        PW         FM
- CV   FM    SAW   TRI   PULSE
+teclado CV (0–5 V, 1 V/oitava) ──► jack CV
+teclado GATE                    ──► jack VCV
+SAW / TRI / PUL (chaves)        ──► mix  (EQ → SHAPE → VCF → fita)
+```
+
+Cada chave liga aquela onda no mix, no mesmo ponto dos osciladores. As três off: o VCO some do áudio e ficam os drones. Uma on: essa onda. Mais de uma: elas somam. O som passa pelo germânio, pelo filtro e pela fita. **OSC IN** no CCW, **DRONE/GATE** em **GATE** para o teclado abrir o VCA.
+
+**FM** é o LFO interno (TREM fora do centro), não um jack. Vibrato no cromático sem cabo.
+
+---
+
+## Painel (`painel.svg`)
+
+Faixa de baixo, y = 190:
+
+```
+ COARSE   FINE  PW  FM    SAW  TRI  PUL    CV
 ```
 
 | Knob | Pot | O que faz |
@@ -37,22 +35,21 @@ O GATE do teclado não entra neste módulo. Vibrato: jack **LFO** do VOZ-9 → *
 | **COARSE** | 100 kB | 0–5 V no pino 15, via 100 k 1 %. Curso = **5 oitavas**. CCW = 0 V (não transpõe o teclado) |
 | **FINE** | 100 kB | Entre +5 V e −5 V, via 1M5. Meio ≈ 0. Uns **±4 semitons** |
 | **PW** | 100 kB | Largura do pulso, 0–5 V no pino 5. Meio ≈ quadrado |
-| **FM** | 100 kA | Quanto do jack FM entra no pino 15 (expo). CCW = parado |
+| **FM** | 100 kA | Quanto do LFO entra no pino 15 (expo). CCW = parado |
+| **SAW / TRI / PUL** | 3× SPDT ON–ON | Cada uma liga essa onda no mix. As três off = VCO fora do áudio |
 
-COARSE é linear de propósito: volt linear = oitava linear. Os 500 kA do VOZ-9 são outra coisa.
+COARSE é linear de propósito: volt linear = oitava linear. Os 500 kA de OSC A/B são outra coisa.
 
-Furos em `vco-painel.svg`, mm, origem no canto superior esquerdo.
+Furos no `painel.svg`, mm, origem no canto superior esquerdo. A faixa nova fica abaixo dos jacks.
 
 | Peça | X | Y | Furo |
 | --- | ---: | ---: | --- |
-| LED | 16 | 20 | 3,2 |
-| P4 9 V | 36 | 20 | 8,0 |
-| COARSE | 122 | 32 | 7,5 |
-| FINE | 28 | 68 | 7,5 |
-| PW | 62 | 68 | 7,5 |
-| FM (pot) | 96 | 68 | 7,5 |
-| CV / FM / SAW / TRI / PULSE | 18 / 44 / 80 / 108 / 136 | 94 | 6,0 |
-| parafusos M3 | 6 / 154 | 6 / 104 | 3,2 |
+| COARSE | 32 | 190 | 7,5 |
+| FINE | 66 | 190 | 7,5 |
+| PW | 90 | 190 | 7,5 |
+| FM | 114 | 190 | 7,5 |
+| SAW / TRI / PUL | 138 / 156 / 174 | 190 | 6,0 |
+| CV | 198 | 190 | 6,0 |
 
 Trimpots **na placa**, multiturn, chave de fenda — não são knob:
 
@@ -69,6 +66,8 @@ Trimpots **na placa**, multiturn, chave de fenda — não são knob:
 ## Por que a fonte é maior que 9 V
 
 O AS3340 quer **+10 V a +18 V** no pino 16 e **−5 V** no pino 3 (folha: −4,5 V a −6 V direto, sem resistor). Nove volts no pino 16 fica fora da folha. Ripple nesse pino vira desafinação: o pino 9 é o limiar do triângulo, um terço do VCC.
+
+O **9 V** e o **−9 V** são os da fonte do instrumento (U4). Aqui entram o MC34063, o 78L12, o 78L05 e o 79L05. Não há segundo P4.
 
 ```
 9 V ── 1N5817 ──● V9 ── 47µ ── GND
@@ -117,7 +116,9 @@ V15 ── 12k + 1k2 ──●── pin 5
 
 78L12: entrada no V15, saída = **V12**. 10 µ + 100 n dos dois lados. É esse 12 V quieto que alimenta o pino 16, não o nó do indutor.
 
-### MAX1044 — o −9 V, pinos da folha Maxim
+### MAX1044 — o −9 V que a BASE já tem
+
+Este é o **U4** do instrumento, não um segundo charge pump. O VCO só acrescenta o 79L05 em cima desse VEE.
 
 ```
 8 = V9
@@ -214,28 +215,36 @@ V12 ── 180k ── RANGE 100k ─┘
 pino 7 wiper  ── 2M2 ── pino 15     (HF; comece com o cursor no GND)
 ```
 
-COARSE: pontas em **+5** e **GND**. FINE: pontas em **+5** e **−5** (meio = 0 V). FM do jack passa por **1 µF** antes do pot; ponta CW do pot é o cap, CCW é GND, cursor vai ao 100 k.
+COARSE: pontas em **+5** e **GND**. FINE: pontas em **+5** e **−5** (meio = 0 V). FM: CCW = GND, CW = LFO (na BASE), cursor vai ao 100 k.
 
 PW: pot de **+5** a GND, cursor ── 1 k ── pino 5.
 
-### Saídas
+### Ondas — SAW, TRI, PUL
 
-Pino 4 é emissor aberto.
+Pino 4 é emissor aberto. Cada chave é SPDT ON–ON, no painel, e corta o áudio depois do 1 µ, como OSC A/B. Off = aquela onda sai do mix. O chip continua alimentado.
 
 ```
-pino 8  ── 1k ── 1µ ── SAW
-pino 10 ── 1k ── 1µ ── TRI
+pino 8  ── 1k ── 1µ ── [SAW] ── 10k ── mix
+pino 10 ── 1k ── 1µ ── [TRI] ── 10k ── mix
 pino 4  ── 10k ── GND
-         └── 1k ── 1µ ── PULSE
+         └── 1k ── 1µ ── [PUL] ── 10k ── mix
 ```
 
-Em +12 V a serra vai a ~0–8 V e o triângulo a ~0–4 V (dois terços e um terço do VCC, como na folha em +15 V). O 1 µ tira o contínuo. O IN do VOZ-9 aguenta.
+| SAW | TRI | PUL | O que se ouve |
+| --- | --- | --- | --- |
+| off | off | off | VCO fora. Ficam OSC A/B, noise, voz |
+| on | off | off | serra |
+| off | on | off | triângulo |
+| off | off | on | pulso (largura = PW) |
+| on | on | off | serra + triângulo |
+
+Em +12 V a serra vai a ~0–8 V e o triângulo a ~0–4 V. O 1 µ tira o contínuo antes do mix.
 
 ---
 
 ## Afinação
 
-Afinador ou outro instrumento estável. COARSE no CCW, FINE no meio, FM no CCW, nada no jack FM. Os 100 k de CV e de COARSE têm de estar em 0 V nos passos 2 e 4 — COARSE no fim do curso, jack CV em curto com a luva (ou sem cabo).
+Afinador ou outro instrumento estável. COARSE no CCW, FINE no meio, FM no CCW (LFO fora do pino 15). Os 100 k de CV e de COARSE têm de estar em 0 V nos passos 2 e 4 — COARSE no fim do curso, jack CV em curto com a luva (ou sem cabo).
 
 1. **TEMP** — 0,0 mV entre TP e pino 2. (Já feito, não repetir.)
 2. **JP1 fechado** (pino 14 em GND). **REF** até **C6 = 1046 Hz**. Abre o JP1 e guarda.
@@ -251,38 +260,20 @@ O +5 do 78L05 tem folga de alguns por cento. Isso mexe no curso do COARSE, não 
 
 ## Placa
 
-Fenolite **160 × 110 mm**, simples, no fundo da caixa (~180 × 130 × 50 mm). Painel só fura. **Fêmea na placa, macho no painel.** CIs em soquete: U1 MC34063, U2 MAX1044, **U3 AS3340**. 78L12, 78L05, 79L05 sem soquete.
+A mesma BASE, agora **220 × 216 mm** (`pcb.svg`). O bloco VCO fica na faixa de baixo, ao lado do **J10**. Soquetes: **U10** AS3340, **U11** MC34063. 78L12, 78L05 e 79L05 sem soquete. O −9 V é o MAX1044 que o instrumento já tem; o 79L05 tira os −5 V do pino 3.
 
-| J | Tamanho | Grupo |
-| --- | --- | --- |
-| **J1** | 2×8 | pots, LED, P4 |
-| **J2** | 2×6 | jacks |
-
-Pino 1 = pad quadrado. Não cruza os machos.
-
-### J1 — 2×8
+### J10 — 2×10
 
 | Pino | Sinal |
 | ---: | --- |
 | 1–3 | COARSE GND · W · +5 |
 | 4–6 | FINE −5 · W · +5 |
 | 7–9 | PW GND · W · +5 |
-| 10–12 | FM GND · W · CW (depois do 1 µ) |
-| 13–14 | LED A · K |
-| 15–16 | P4 TIP · GND |
-
-P4 centro-negativo, igual ao VOZ-9. 1N5817 na placa, no TIP.
-
-### J2 — 2×6
-
-| Pino | Jack |
-| ---: | --- |
-| 1–2 | CV TIP · GND |
-| 3–4 | FM TIP · GND |
-| 5–6 | SAW TIP · GND |
-| 7–8 | TRI TIP · GND |
-| 9–10 | PULSE TIP · GND |
-| 11–12 | NC |
+| 10–12 | FM GND · W · LFO |
+| 13–14 | SAW COM · ON |
+| 15–16 | TRI COM · ON |
+| 17–18 | PUL COM · ON |
+| 19–20 | CV TIP · GND |
 
 ---
 
@@ -291,6 +282,6 @@ P4 centro-negativo, igual ao VOZ-9. 1N5817 na placa, no TIP.
 1. Fonte, sem o AS3340: 15 V, 12 V, 5 V, −9 V, −5 V. LED aceso.
 2. Chip no soquete. Serra no afinador, COARSE no meio, sem CV: tem nota.
 3. TEMP, REF, RANGE, SCALE, como acima.
-4. Cabo SAW → IN do VOZ-9, GATE do teclado → VCV. Uma oitava no teclado = uma oitava no filtro.
+4. Liga **SAW** (TRI e PUL off). GATE do teclado no VCV. Uma oitava no teclado = uma oitava no filtro. TRI e PUL trocam o timbre; as três juntas somam.
 
-Esquema do instrumento: `esquema.md`. Compra deste módulo: `vco-bom.md`.
+Esquema do instrumento: `esquema.md`. Compra: `bom.md` (o recorte do que o VCO acrescenta está em `vco-bom.md`, já somado no total).

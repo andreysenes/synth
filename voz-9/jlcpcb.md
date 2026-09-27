@@ -52,19 +52,19 @@ Passivos **0805 1 %** da biblioteca **Basic** (sem taxa extra de peça). CIs em 
 | Qtd | Peça | Por quê |
 | ---: | --- | --- |
 | 2 | MP20 / AC128 | germânio — LCSC não tem. 1N60P da JLC é Schottky, não Ge |
-| 17 | pots 16 mm incl. PRE + OSC IN + EQ 424 | painel, não SMT |
-| 2 | trimpot 100 k | |
-| 17 | knobs + capa GATE | |
-| 9 | chaves MTS + GATE | |
-| 11 | jack P2 3,5 mm | |
+| 21 | pots 16 mm incl. PRE + OSC IN + EQ 424 + COARSE/FINE/PW/FM | painel, não SMT |
+| 7 | trimpots (2× 100 k + TEMP, REF, RANGE, SCALE, HF) | VCO na mesma BASE |
+| 21 | knobs + capa GATE | |
+| 12 | chaves MTS + GATE | inclui SAW / TRI / PUL |
+| 12 | jack P2 3,5 mm | + CV |
 | 2 | combo XLR+P10 clone | |
 | 1 | P4 9 V | |
 | 4 | cabo P2 | |
 | 1 | fio 24 AWG 10 m | chicotes painel → BASE |
-| 9 | fêmea/macho 2×N (3 / 6 / 8 / 10) | J1–J9, passo 2,54 mm |
-| 8 | soquete DIP | U1–U4, U6–U8, **U9** — some se for SOP |
-| 1 | caixa + face 220×160 | |
-| 1 | fenolite 220×160 | ou encomenda FR4 na própria JLC, outro fluxo |
+| 10 | fêmea/macho 2×N (3 / 6 / 8 / 10) | J1–J10, passo 2,54 mm |
+| 10 | soquete DIP | U1–U4, U6–U8, **U9–U11** — some se for SOP |
+| 1 | caixa + face 220×216 | |
+| 1 | fenolite 220×216 | ou encomenda FR4 na própria JLC, outro fluxo |
 
 Essas linhas **não** estão no CSV de propósito: o tool marcaria unmatched e sujaria o preço.
 
@@ -74,10 +74,10 @@ Essas linhas **não** estão no CSV de propósito: o tool marcaria unmatched e s
 
 Inventados para o matching. Ainda não há netlist KiCad. Quando existir PCB FR4, estes refs têm de bater com o CPL.
 
-- **U1** 5532 · **U2** osc · **U3** NAB · **U4** ICL7660 · **U5** 78M05 · **U6–U8** PT2399 · **U9** EQ voz 424
+- **U1** 5532 · **U2** osc · **U3** NAB · **U4** ICL7660 · **U5** 78M05 · **U6–U8** PT2399 · **U9** EQ voz 424 · **U10** AS3340 · **U11** MC34063
 - **Q1–Q6** J201 no circuito · **Q8 Q9** folga · **Q7** LFO
 - **D1** proteção · **D2–D5** 4148 · **LED1** piloto
-- **R1…R81** e **C1…C71** na ordem da `bom.md` (+ passivos EQ em §3b)
+- **R1…R103** e **C1…C86** na ordem da `bom.md` (+ passivos EQ em §3b, passivos do VCO em `vco.md`)
 
 ---
 

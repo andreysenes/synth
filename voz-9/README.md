@@ -18,15 +18,15 @@ Sem XLR, **PRE** escala os oscs. **OSC IN** = mix osc ↔ mic (CCW = só drones,
 
 O pré vocal está em `pre-vocal.md`. Mesmo papel do Echo Master, **sem transformador** (diferencial no NE5532 + pad no XLR).
 
-Leia `esquema.md` para montar. Caderno de estudo: `componentes.md`. Uma fenolite no piso; **nove** chicotes 2×N e CIs em soquete: `pcb.md`. Lista de compra: `bom.md`. Simulador: `sim/painel.html`.
+Leia `esquema.md` para montar. Caderno de estudo: `componentes.md`. Uma fenolite no piso; **dez** chicotes 2×N e CIs em soquete: `pcb.md`. Lista de compra: `bom.md`. Simulador: `sim/painel.html`.
 
-Teclado: o VCO cromático é outro módulo (`vco.md`). Este aqui continua filtro + espaço + germânio.
+Teclado: o VCO cromático está na faixa de baixo do mesmo painel (`vco.md`). SAW, TRI e PUL escolhem a onda.
 
 ---
 
 ## Painel
 
-**Um módulo só**, caixa de mesa **retangular** (Noise Toaster / MFOS): faceplate paisagem **220 × 160 mm** em `painel.svg`. Caixa de madeira ~240 × 180 × 50 mm. Uma placa no fundo (`pcb.svg`); **9 chicotes** J1–J9 (fêmea na BASE, macho no painel). CIs em soquete.
+**Um módulo só**, caixa de mesa **retangular** (Noise Toaster / MFOS): faceplate paisagem **220 × 216 mm** em `painel.svg`. Caixa de madeira ~240 × 236 × 50 mm. Uma placa no fundo (`pcb.svg`); **10 chicotes** J1–J10 (fêmea na BASE, macho no painel). CIs em soquete.
 
 ```
  IN  PRE  OSC IN | LED 9V          OSC A  AMOUNT  OSC B
@@ -34,6 +34,7 @@ Teclado: o VCO cromático é outro módulo (`vco.md`). Este aqui continua filtro
  RATE  TREM  MODE  DEPTH
  TIME  WET  F-BACK  H1  H2  H3  STACK     |  VOLUME
  A B IN FILT FCV VCV LFO ECV CLK SEND RCV |  OUT
+ COARSE  FINE PW FM   SAW TRI PUL   CV
 ```
 
 - **Esquerda:** entrada + EQ + LFO. XLR no canto superior esquerdo.
@@ -133,21 +134,21 @@ Pinos P2: ponta = sinal, anel/sleeve = GND. CV é 0–9 V, sem 1 V/oitava. CLK: 
 
 ### Com teclado
 
-OSC A/B não são 1 V/oitava. O cromático é outro módulo (`vco.md`, lista `vco-bom.md`): AS3340, face 160 × 110.
+OSC A/B não são 1 V/oitava. O cromático está na mesma face (`vco.md`): AS3340, chaves **SAW / TRI / PUL**.
 
 ```
-teclado CV   →  VCO CV
+teclado CV   →  CV
 teclado GATE →  VCV
-VCO SAW      →  IN
+SAW ou TRI ou PUL on  →  mix → germânio → filtro → fita
 ```
 
-OSC A e OSC B off, DRONE/GATE em GATE. O IN ainda passa pelo germânio, pelo filtro e pela fita.
+As três ondas off = o VCO sai do áudio. OSC A e OSC B off, DRONE/GATE em GATE, quando for só o teclado.
 
 ---
 
 ## O que comprar
 
-Tudo novo: `bom.md`. Um instrumento ~R$ **610** (varejo BR, set/2026, sem frete).
+Tudo novo: `bom.md`. Um instrumento ~R$ **792** (varejo BR, set/2026, sem frete). O VCO cromático entra nessa soma.
 
 J201: marque Vgs(off) nos 8. O mais “vivo” vai no VCF; um par parecido nos FM. MP20 por último — ferro baixo.
 

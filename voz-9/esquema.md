@@ -4,7 +4,7 @@ Alimentação simples, 9 V centro-negativo. Referência de áudio em 4,5 V. O MA
 
 Quantidades e compra: `bom.md`. Tudo novo — um instrumento = uma lista.
 
-Uma fenolite no piso da caixa (220 × 160 mm): `pcb.md`. O painel só fura; **nove** chicotes 2×N J1–J9 (fêmea na BASE, macho no painel). CIs em soquete. **Um módulo** retangular de mesa.
+Uma fenolite no piso da caixa (220 × 216 mm): `pcb.md`. O painel só fura; **dez** chicotes 2×N J1–J10 (fêmea na BASE, macho no painel). CIs em soquete. **Um módulo** retangular de mesa. O VCO cromático é a faixa de baixo do mesmo painel (`vco.md`).
 
 ---
 
@@ -619,4 +619,4 @@ Os outros P2 são só ponta + terra. Sem chave.
 
 PITCH A/B são pots grandes, não CV expo. FCV e ECV são “molhar o parâmetro”, não afinar. VCV é gate / envelope, não velocity.
 
-O teclado não entra nestes pots. Este instrumento continua sendo o filtro + o espaço + o germânio. O VCO cromático é outro módulo: `vco.md`. O áudio dele entra no **IN** (passa pelo SHAPE). O GATE do teclado entra no **VCV**.
+O teclado não entra nestes pots. O VCO cromático está na mesma placa e no mesmo `painel.svg` (`vco.md`): **SAW / TRI / PUL** escolhem a onda, o áudio cai no mix (passa pelo SHAPE) e o GATE do teclado entra no **VCV**.

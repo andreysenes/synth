@@ -1,6 +1,6 @@
 # VOZ-9 — simulação SPICE (placa + interface)
 
-Painel e BASE só se encontram nos chicotes **J1–J9** (`pcb.md`).  
+Painel e BASE só se encontram nos chicotes **J1–J10** (`pcb.md`).  
 O PT2399 vira atraso fixo; JFET/op-amp/NAB/EQ são analógicos.
 
 ## Instalar
@@ -27,7 +27,7 @@ cd voz-9/sim
 | `jmap.inc` | documentação dos pinos J |
 | `00_…` / `08_…` | testes por bloco |
 | `harness_check.cir` | CUTOFF / FILT / MODE / H1 |
-| `09_vco.cir` | lei 1 V/oitava do módulo VCO (`models/vco_expo.mod`) |
+| `09_vco.cir` | lei 1 V/oitava do VCO na mesma BASE (`models/vco_expo.mod`) |
 | `run.sh` | batch ngspice → `out/*.log` |
 
 ## Tapers (Brasil / Alpha)

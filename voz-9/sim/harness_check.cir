@@ -1,0 +1,54 @@
+* VOZ-9 — harness_check.cir
+* Panel + partial BASE: CUTOFF sense, FILT normals, MODE center, H1 off
+
+* voz9_harness
+.include lib.inc
+.include painel_state.inc
+.include painel.cir
+
+Xrails V9 V5 VEE 4V5 1V8 rails
+
+* --- CUTOFF: CCW→1V8, CW→0, W→gate ---
+Rccw j1_11 1V8 1
+Rcw  j1_13 0 1
+Rgate j1_12 gate 1
+Rgl gate 0 100Meg
+
+* --- FILT jack chain: shape_out -- SW(j4_11) -- tip(j4_10) -- VCF in ---
+* When unplugged, tip↔sw; when plugged, open
+Vshape shape_out 0 DC 2
+Rshape shape_out j4_11 1
+Rvcf_in j4_10 vcf_in 10k
+Rvcf_l vcf_in 0 100k
+Rj4g j4_12 0 1
+
+* --- MODE: DEPTH wiper j2_5 to COM j2_10; pitch j2_11; time j2_12 ---
+Vdepth depth_src 0 DC 1
+Rd depth_src j2_5 1
+Rcom j2_5 j2_10 1
+Rpitch_bus j2_11 pitch_bus 1
+Rtime_bus j2_12 time_bus 1
+Rpb pitch_bus 0 100k
+Rtb time_bus 0 100k
+
+* --- H1 switch: audio_h1 -- COM j3_4 -- ON j3_5 -- mix ---
+Vh1 audio_h1 0 DC 1
+Rh1a audio_h1 j3_4 1
+Rh1b j3_5 mix_h 10k
+Rmix mix_h 0 100k
+
+.control
+set noaskquit
+op
+echo --- CUTOFF gate (expect ~ midway between 0 and 1V8 for cutoff=0.5) ---
+print V(gate) V(1V8)
+echo --- FILT (jack_filt=0: vcf_in ~ shape; =1: open) ---
+print V(shape_out) V(vcf_in) V(j4_10) V(j4_11)
+echo --- MODE (sw_mode=0: pitch_bus and time_bus ~0) ---
+print V(pitch_bus) V(time_bus) V(j2_10)
+echo --- H1 (sw_h1=1: mix gets signal) ---
+print V(mix_h) V(j3_4) V(j3_5)
+echo HARNESS_DONE
+quit
+.endc
+.end

@@ -1,0 +1,43 @@
+
+Note: No compatibility mode selected!
+
+
+Circuit: * voz-9 — 05_vcf.cir
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+Warning: singular matrix:  check node j3_5
+
+Note: Starting dynamic gmin stepping
+Warning: singular matrix:  check node j3_16
+
+Warning: Dynamic gmin stepping failed
+Note: Starting true gmin stepping
+Warning: singular matrix:  check node j2_9
+
+Warning: singular matrix:  check node j2_9
+
+Warning: singular matrix:  check node j2_9
+
+Warning: singular matrix:  check node j2_9
+
+Warning: True gmin stepping failed
+Note: Starting source stepping
+Warning: source stepping failed
+Note: Transient op started
+Note: Transient op finished successfully
+doAnalyses: matrix is singular
+
+ac simulation(s) aborted
+VCF_AC_DONE
+Warning from checkvalid: vector node_f is not available or has zero length.
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 1
+v(gate) = 9.509849e-01
+v(1v8) = 1.251950e+00
+v(node_f) = 1.160952e+00
+ngspice-47 done

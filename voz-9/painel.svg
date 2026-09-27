@@ -1,0 +1,462 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 216" width="220mm" height="216mm">
+  <defs>
+    <radialGradient id="alum" cx="38%" cy="32%" r="70%">
+      <stop offset="0%" stop-color="#f4f4f2"/>
+      <stop offset="45%" stop-color="#c8c8c6"/>
+      <stop offset="100%" stop-color="#8e8e8c"/>
+    </radialGradient>
+    <radialGradient id="led-red" cx="38%" cy="32%" r="70%">
+      <stop offset="0%" stop-color="#ff8a7a"/>
+      <stop offset="40%" stop-color="#e02020"/>
+      <stop offset="100%" stop-color="#6a0000"/>
+    </radialGradient>
+    <radialGradient id="gold" cx="40%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#f0d48a"/>
+      <stop offset="100%" stop-color="#8a6a20"/>
+    </radialGradient>
+    <linearGradient id="vu-face" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f2dca0"/>
+      <stop offset="100%" stop-color="#d9b268"/>
+    </linearGradient>
+    <radialGradient id="knob-body" cx="40%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#3a3a3a"/>
+      <stop offset="55%" stop-color="#161616"/>
+      <stop offset="100%" stop-color="#0a0a0a"/>
+    </radialGradient>
+    <radialGradient id="btn-cap" cx="40%" cy="28%" r="70%">
+      <stop offset="0%" stop-color="#ff5a4a"/>
+      <stop offset="55%" stop-color="#d3141c"/>
+      <stop offset="100%" stop-color="#7a0c10"/>
+    </radialGradient>
+
+    <g id="ticks-lg">
+      <g fill="none" stroke="#f2f2f0" stroke-width="0.32" stroke-linecap="round">
+        <line transform="rotate(-135)" x1="0" y1="-17.4" x2="0" y2="-20.2"/>
+        <line transform="rotate(-108)" x1="0" y1="-17.4" x2="0" y2="-19.2"/>
+        <line transform="rotate(-81)" x1="0" y1="-17.4" x2="0" y2="-19.2"/>
+        <line transform="rotate(-54)" x1="0" y1="-17.4" x2="0" y2="-19.2"/>
+        <line transform="rotate(-27)" x1="0" y1="-17.4" x2="0" y2="-19.2"/>
+        <line transform="rotate(0)" x1="0" y1="-17.4" x2="0" y2="-20.2"/>
+        <line transform="rotate(27)" x1="0" y1="-17.4" x2="0" y2="-19.2"/>
+        <line transform="rotate(54)" x1="0" y1="-17.4" x2="0" y2="-19.2"/>
+        <line transform="rotate(81)" x1="0" y1="-17.4" x2="0" y2="-19.2"/>
+        <line transform="rotate(108)" x1="0" y1="-17.4" x2="0" y2="-19.2"/>
+        <line transform="rotate(135)" x1="0" y1="-17.4" x2="0" y2="-20.2"/>
+      </g>
+      <text x="-15.4" y="14.2" class="tickn">0</text>
+      <text x="15.4" y="14.2" class="tickn">10</text>
+    </g>
+    <g id="ticks-sm">
+      <g fill="none" stroke="#f2f2f0" stroke-width="0.24" stroke-linecap="round">
+        <line transform="rotate(-135)" x1="0" y1="-9.2" x2="0" y2="-11.2"/>
+        <line transform="rotate(-108)" x1="0" y1="-9.2" x2="0" y2="-10.5"/>
+        <line transform="rotate(-81)" x1="0" y1="-9.2" x2="0" y2="-10.5"/>
+        <line transform="rotate(-54)" x1="0" y1="-9.2" x2="0" y2="-10.5"/>
+        <line transform="rotate(-27)" x1="0" y1="-9.2" x2="0" y2="-10.5"/>
+        <line transform="rotate(0)" x1="0" y1="-9.2" x2="0" y2="-11.2"/>
+        <line transform="rotate(27)" x1="0" y1="-9.2" x2="0" y2="-10.5"/>
+        <line transform="rotate(54)" x1="0" y1="-9.2" x2="0" y2="-10.5"/>
+        <line transform="rotate(81)" x1="0" y1="-9.2" x2="0" y2="-10.5"/>
+        <line transform="rotate(108)" x1="0" y1="-9.2" x2="0" y2="-10.5"/>
+        <line transform="rotate(135)" x1="0" y1="-9.2" x2="0" y2="-11.2"/>
+      </g>
+      <text x="-8.4" y="8.2" class="tickn">0</text>
+      <text x="8.4" y="8.2" class="tickn">10</text>
+    </g>
+
+    <!-- Ø30 mm — OSC A/B, TIME, F-BACK -->
+    <g id="knob-lg">
+      <circle cy="0.55" r="15.1" fill="#000" opacity="0.18"/>
+      <circle r="15" fill="#0c0c0c" stroke="#4a4a4a" stroke-width="0.35"/>
+      <circle r="13.1" fill="url(#knob-body)"/>
+      <g fill="#2c2c2c">
+        <circle cx="0" cy="-12.3" r="3.25"/>
+        <circle cx="8.7" cy="-8.7" r="3.25"/>
+        <circle cx="12.3" cy="0" r="3.25"/>
+        <circle cx="8.7" cy="8.7" r="3.25"/>
+        <circle cx="0" cy="12.3" r="3.25"/>
+        <circle cx="-8.7" cy="8.7" r="3.25"/>
+        <circle cx="-12.3" cy="0" r="3.25"/>
+        <circle cx="-8.7" cy="-8.7" r="3.25"/>
+      </g>
+      <circle r="9.6" fill="#141414"/>
+      <circle r="7.3" fill="url(#alum)"/>
+      <circle r="7.3" fill="none" stroke="#9a9a98" stroke-width="0.18"/>
+      <circle r="0.35" fill="#6a6a68"/>
+      <circle cx="0" cy="11" r="0.8" fill="#f2f2f0"/>
+    </g>
+
+    <!-- Ø15 mm — AMOUNT, SHAPE, CUTOFF, RATE, PRE, OSC IN, DEPTH, WET, EQ 424 -->
+    <g id="knob-sm">
+      <circle cy="0.3" r="7.55" fill="#000" opacity="0.18"/>
+      <circle r="7.5" fill="#0c0c0c" stroke="#4a4a4a" stroke-width="0.3"/>
+      <circle r="6.5" fill="url(#knob-body)"/>
+      <g fill="#2c2c2c">
+        <circle cx="0" cy="-6.15" r="1.65"/>
+        <circle cx="4.35" cy="-4.35" r="1.65"/>
+        <circle cx="6.15" cy="0" r="1.65"/>
+        <circle cx="4.35" cy="4.35" r="1.65"/>
+        <circle cx="0" cy="6.15" r="1.65"/>
+        <circle cx="-4.35" cy="4.35" r="1.65"/>
+        <circle cx="-6.15" cy="0" r="1.65"/>
+        <circle cx="-4.35" cy="-4.35" r="1.65"/>
+      </g>
+      <circle r="4.8" fill="#141414"/>
+      <circle r="3.65" fill="url(#alum)"/>
+      <circle r="0.22" fill="#6a6a68"/>
+      <circle cx="0" cy="5.5" r="0.42" fill="#f2f2f0"/>
+    </g>
+
+    <g id="knob-red">
+      <circle cy="0.3" r="7.55" fill="#000" opacity="0.18"/>
+      <circle r="7.5" fill="#9a1014"/>
+      <path d="M -1.5,-2.8 C -3.2,-0.8 -3.5,2.8 -2.1,6.4 C -0.8,8.2 0.8,8.2 2.1,6.4 C 3.5,2.8 3.2,-0.8 1.5,-2.8 C 0.8,-4.3 -0.8,-4.3 -1.5,-2.8 Z" fill="#d3141c"/>
+      <circle r="4.15" fill="#c41218"/>
+      <rect x="-0.38" y="1.4" width="0.76" height="5.5" rx="0.3" fill="#f7f4ea"/>
+      <circle r="2.9" fill="url(#alum)"/>
+      <circle r="0.2" fill="#6a6a68"/>
+    </g>
+
+    <g id="knob-red-lg">
+      <circle cy="0.55" r="15.1" fill="#000" opacity="0.18"/>
+      <circle r="15" fill="#9a1014"/>
+      <path d="M -3,-5.6 C -6.4,-1.6 -7,5.6 -4.2,12.8 C -1.6,16.2 1.6,16.2 4.2,12.8 C 7,5.6 6.4,-1.6 3,-5.6 C 1.6,-8.6 -1.6,-8.6 -3,-5.6 Z" fill="#d3141c"/>
+      <circle r="8.3" fill="#c41218"/>
+      <rect x="-0.7" y="2.8" width="1.4" height="11" rx="0.5" fill="#f7f4ea"/>
+      <circle r="5.8" fill="url(#alum)"/>
+      <circle r="0.3" fill="#6a6a68"/>
+    </g>
+
+    <g id="spdt">
+      <polygon points="0,-4.3 3.72,-2.15 3.72,2.15 0,4.3 -3.72,2.15 -3.72,-2.15" fill="#b8b8b6"/>
+      <polygon points="0,-3.7 3.2,-1.85 3.2,1.85 0,3.7 -3.2,1.85 -3.2,-1.85" fill="#d8d8d6"/>
+      <circle r="2.4" fill="#8a8a88"/>
+      <circle r="1.55" fill="#5a5a58"/>
+      <rect x="-1.05" y="-11.2" width="2.1" height="11.4" rx="1.05" fill="#d4d4d2"/>
+      <rect x="-0.55" y="-10.6" width="0.7" height="8.4" rx="0.35" fill="#f4f4f2" opacity="0.7"/>
+    </g>
+    <g id="spdt-dn"><g transform="rotate(180)"><use href="#spdt"/></g></g>
+    <g id="spdt-mid">
+      <polygon points="0,-4.3 3.72,-2.15 3.72,2.15 0,4.3 -3.72,2.15 -3.72,-2.15" fill="#b8b8b6"/>
+      <polygon points="0,-3.7 3.2,-1.85 3.2,1.85 0,3.7 -3.2,1.85 -3.2,-1.85" fill="#d8d8d6"/>
+      <circle r="2.4" fill="#8a8a88"/>
+      <circle r="1.55" fill="#5a5a58"/>
+      <rect x="0" y="-1.05" width="11.2" height="2.1" rx="1.05" fill="#d4d4d2"/>
+      <rect x="1.4" y="-0.55" width="8.4" height="0.7" rx="0.35" fill="#f4f4f2" opacity="0.7"/>
+    </g>
+
+    <g id="gate">
+      <polygon points="0,-4.1 3.55,-2.05 3.55,2.05 0,4.1 -3.55,2.05 -3.55,-2.05" fill="#c4c4c2"/>
+      <circle r="3.2" fill="#9a9a98"/>
+      <circle r="4.35" fill="url(#btn-cap)"/>
+      <circle cx="-1.1" cy="-1.3" r="1.3" fill="#fff" opacity="0.18"/>
+    </g>
+
+    <g id="led">
+      <circle r="2.15" fill="#4a1010"/>
+      <circle r="1.55" fill="url(#led-red)"/>
+      <circle cx="-0.45" cy="-0.5" r="0.45" fill="#fff" opacity="0.45"/>
+    </g>
+
+    <g id="jack">
+      <polygon points="0,-4.4 3.81,-2.2 3.81,2.2 0,4.4 -3.81,2.2 -3.81,-2.2" fill="#c8c8c6"/>
+      <circle r="3.7" fill="#1a1a1a"/>
+      <circle r="2.55" fill="#111"/>
+      <circle r="1.55" fill="url(#gold)"/>
+      <circle r="1.05" fill="#1a1208"/>
+    </g>
+
+    <g id="combo">
+      <circle r="13.2" fill="#2c2c2c"/>
+      <circle r="12.4" fill="#3a3a3a"/>
+      <circle r="10.2" fill="#111"/>
+      <circle r="9.4" fill="#1a1a1a"/>
+      <circle r="3.25" fill="#0a0a0a"/>
+      <circle cx="-3.55" cy="-2.15" r="1.15" fill="#3a3a3a"/>
+      <circle cx="3.55" cy="-2.15" r="1.15" fill="#3a3a3a"/>
+      <circle cx="0" cy="4.85" r="1.15" fill="#3a3a3a"/>
+      <path d="M -1.3,8.6 L 0,9.6 L 1.3,8.6" fill="none" stroke="#3a3a3a" stroke-width="0.45"/>
+    </g>
+
+    <g id="p4">
+      <circle r="6.3" fill="#2c2c2c"/>
+      <circle r="5.5" fill="#3a3a3a"/>
+      <circle r="3.5" fill="#111"/>
+      <circle r="1.55" fill="#c8c8c6"/>
+      <circle r="0.75" fill="#1a1a1a"/>
+    </g>
+  </defs>
+
+  <style>
+    .panel { fill: #111111; }
+    .lab { fill: #f4f4f2; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 2.5px; font-weight: 600; text-anchor: middle; }
+    .sub { fill: #f4f4f2; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 2.1px; text-anchor: middle; }
+    .tickn { fill: #f4f4f2; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 1.7px; text-anchor: middle; }
+    .rule { fill: none; stroke: #f4f4f2; stroke-width: 0.3; stroke-linecap: square; stroke-linejoin: miter; }
+  </style>
+
+  <rect class="panel" width="220" height="216"/>
+
+  <g class="rules">
+    <path class="rule" d="M 8,8 H 214 V 92 H 100 V 8"/>
+    <path class="rule" d="M 8,8 V 132"/>
+    <path class="rule" d="M 100,8 V 92"/>
+    <path class="rule" d="M 8,92 H 214"/>
+    <path class="rule" d="M 214,92 V 208"/>
+    <path class="rule" d="M 8,132 H 182"/>
+    <path class="rule" d="M 8,132 V 208 H 214"/>
+    <path class="rule" d="M 8,168 H 214"/>
+    <path class="rule" d="M 8,34 H 100"/>
+    <path class="rule" d="M 8,62 H 100"/>
+    <path class="rule" d="M 86,8 V 34"/>
+    <path class="rule" d="M 182,92 V 168"/>
+  </g>
+
+  <!-- topo esquerdo: XLR (canto) · PRE · OSC IN | LED · 9V (centro) -->
+  <g transform="translate(20,21)">
+    <use href="#combo"/>
+    <text class="lab" y="-15.6">IN</text>
+  </g>
+  <g transform="translate(48,21)">
+    <use href="#ticks-sm"/>
+    <g transform="rotate(-18)"><use href="#knob-sm"/></g>
+    <text class="lab" y="-11.2">PRE</text>
+  </g>
+  <g transform="translate(72,21)">
+    <use href="#ticks-sm"/>
+    <g transform="rotate(8)"><use href="#knob-sm"/></g>
+    <text class="lab" y="-11.2">OSC IN</text>
+  </g>
+  <g transform="translate(96,21)">
+    <use href="#led"/>
+  </g>
+  <!-- IN: áudio antes do PRE -->
+  <g transform="translate(34,30)">
+    <use href="#led"/>
+  </g>
+  <!-- frequência OSC A / OSC B -->
+  <g transform="translate(104,30)">
+    <use href="#led"/>
+    <text class="sub" y="4.7">A</text>
+  </g>
+  <g transform="translate(209,36)">
+    <use href="#led"/>
+    <text class="sub" y="4.7">B</text>
+  </g>
+  <!-- RATE: debaixo do knob -->
+  <g transform="translate(18,89)">
+    <use href="#led"/>
+  </g>
+  <!-- REP: repeats, entre F-BACK e H1 -->
+  <g transform="translate(107,99)">
+    <use href="#led"/>
+    <text class="sub" y="4.8">REP</text>
+  </g>
+  <g transform="translate(110,21)">
+    <use href="#p4"/>
+    <text class="lab" y="-8.4">9V</text>
+  </g>
+
+  <!-- EQ 424 (esquerda) -->
+  <g transform="translate(18,50)">
+    <use href="#ticks-sm"/>
+    <g transform="rotate(-40)"><use href="#knob-sm"/></g>
+    <text class="lab" y="-13.2">LOW</text>
+  </g>
+  <g transform="translate(40,50)">
+    <use href="#ticks-sm"/>
+    <g transform="rotate(15)"><use href="#knob-sm"/></g>
+    <text class="lab" y="-13.2">MID F</text>
+  </g>
+  <g transform="translate(62,50)">
+    <use href="#ticks-sm"/>
+    <g transform="rotate(-25)"><use href="#knob-sm"/></g>
+    <text class="lab" y="-13.2">MID G</text>
+  </g>
+  <g transform="translate(84,50)">
+    <use href="#ticks-sm"/>
+    <g transform="rotate(30)"><use href="#knob-sm"/></g>
+    <text class="lab" y="-13.2">HIGH</text>
+  </g>
+
+  <!-- RATE → TREM → MODE → DEPTH (mesmo X do EQ) -->
+  <g transform="translate(18,74)">
+    <use href="#ticks-sm"/>
+    <g transform="rotate(-58)"><use href="#knob-sm"/></g>
+    <text class="lab" y="-13.2">RATE</text>
+  </g>
+  <g transform="translate(40,74)">
+    <use href="#spdt-mid"/>
+    <text class="lab" y="-13.4">TREM</text>
+  </g>
+  <g transform="translate(62,74)">
+    <use href="#spdt-mid"/>
+    <text class="lab" y="-13.4">MODE</text>
+  </g>
+  <g transform="translate(84,74)">
+    <use href="#ticks-sm"/>
+    <g transform="rotate(12)"><use href="#knob-sm"/></g>
+    <text class="lab" y="-13.2">DEPTH</text>
+  </g>
+
+  <!-- oscs (direita): OSC A · AMOUNT · OSC B -->
+  <g transform="translate(128,36)">
+    <use href="#ticks-lg"/>
+    <g transform="rotate(-38)"><use href="#knob-lg"/></g>
+    <text class="lab" y="-21.4">OSC A</text>
+  </g>
+  <g transform="translate(156,36)">
+    <use href="#ticks-sm"/>
+    <g transform="rotate(18)"><use href="#knob-sm"/></g>
+    <text class="lab" y="-13.2">AMOUNT</text>
+  </g>
+  <g transform="translate(184,36)">
+    <use href="#ticks-lg"/>
+    <g transform="rotate(52)"><use href="#knob-lg"/></g>
+    <text class="lab" y="-21.4">OSC B</text>
+  </g>
+
+  <!-- VU de saída (pós-VOLUME) -->
+  <g transform="translate(150,61)">
+    <rect x="-18" y="-10.5" width="36" height="12" rx="1.6" fill="#2c2c2c"/>
+    <rect x="-16.5" y="-9" width="33" height="8.4" rx="1" fill="url(#vu-face)"/>
+    <path d="M -6.24,-5.62 A 8.4 8.4 0 0 1 6.24,-5.62" fill="none" stroke="#2a2a2a" stroke-width="0.35"/>
+    <path d="M 2.32,-8.07 A 8.4 8.4 0 0 1 6.24,-5.62" fill="none" stroke="#c0261c" stroke-width="0.6"/>
+    <g stroke="#2a2a2a" stroke-width="0.3" stroke-linecap="round">
+      <line x1="-6.24" y1="-5.62" x2="-5.35" y2="-4.82"/>
+      <line x1="-3.42" y1="-7.68" x2="-2.93" y2="-6.58"/>
+      <line x1="0" y1="-8.4" x2="0" y2="-7.2"/>
+    </g>
+    <g stroke="#c0261c" stroke-width="0.3" stroke-linecap="round">
+      <line x1="3.42" y1="-7.68" x2="2.93" y2="-6.58"/>
+      <line x1="6.24" y1="-5.62" x2="5.35" y2="-4.82"/>
+    </g>
+    <g transform="rotate(-30)">
+      <line x1="0" y1="0" x2="0" y2="-8" stroke="#171717" stroke-width="0.5"/>
+    </g>
+    <circle r="0.9" fill="#171717"/>
+    <text class="lab" y="-12">VU</text>
+  </g>
+
+  <!-- A B SHAPE CUTOFF DRONE GATE -->
+  <g transform="translate(116,76)">
+    <use href="#spdt"/>
+    <text class="lab" y="-13.4">A</text>
+  </g>
+  <g transform="translate(130,76)">
+    <use href="#spdt"/>
+    <text class="lab" y="-13.4">B</text>
+  </g>
+  <g transform="translate(148,76)">
+    <use href="#ticks-sm"/>
+    <g transform="rotate(-8)"><use href="#knob-sm"/></g>
+    <text class="lab" y="-13.2">SHAPE</text>
+  </g>
+  <g transform="translate(166,76)">
+    <use href="#ticks-sm"/>
+    <g transform="rotate(28)"><use href="#knob-sm"/></g>
+    <text class="lab" y="-13.2">CUTOFF</text>
+  </g>
+  <g transform="translate(184,76)">
+    <use href="#spdt"/>
+    <text class="lab" y="-13.4">DRONE</text>
+  </g>
+  <g transform="translate(198,76)">
+    <use href="#gate"/>
+    <text class="lab" y="-12.2">GATE</text>
+  </g>
+
+  <!-- fita: TIME · WET · F-BACK · H1 H2 H3 · STACK | VOLUME -->
+  <g transform="translate(26,112)">
+    <use href="#ticks-lg"/>
+    <g transform="rotate(-22)"><use href="#knob-lg"/></g>
+    <text class="lab" y="-21.4">TIME</text>
+  </g>
+  <g transform="translate(52,112)">
+    <use href="#ticks-sm"/>
+    <g transform="rotate(-28)"><use href="#knob-sm"/></g>
+    <text class="lab" y="-13.2">WET</text>
+  </g>
+  <g transform="translate(84,112)">
+    <use href="#ticks-lg"/>
+    <g transform="rotate(42)"><use href="#knob-lg"/></g>
+    <text class="lab" y="-21.4">F-BACK</text>
+  </g>
+  <g transform="translate(114,112)">
+    <use href="#spdt"/>
+    <text class="lab" y="-13.4">H1</text>
+  </g>
+  <g transform="translate(132,112)">
+    <use href="#spdt-dn"/>
+    <text class="lab" y="-13.4">H2</text>
+  </g>
+  <g transform="translate(150,112)">
+    <use href="#spdt"/>
+    <text class="lab" y="-13.4">H3</text>
+  </g>
+  <g transform="translate(168,112)">
+    <use href="#spdt-dn"/>
+    <text class="lab" y="-13.4">STACK</text>
+  </g>
+  <g transform="translate(198,112)">
+    <use href="#ticks-lg"/>
+    <g transform="rotate(16)"><use href="#knob-red-lg"/></g>
+    <text class="lab" y="-21.4">VOLUME</text>
+  </g>
+
+
+
+  <g transform="translate(16,144)"><use href="#jack"/><text class="sub" y="7.2">A</text></g>
+  <g transform="translate(31,144)"><use href="#jack"/><text class="sub" y="7.2">B</text></g>
+  <g transform="translate(46,144)"><use href="#jack"/><text class="sub" y="7.2">IN</text></g>
+  <g transform="translate(61,144)"><use href="#jack"/><text class="sub" y="7.2">FILT</text></g>
+  <g transform="translate(76,144)"><use href="#jack"/><text class="sub" y="7.2">FCV</text></g>
+  <g transform="translate(91,144)"><use href="#jack"/><text class="sub" y="7.2">VCV</text></g>
+  <g transform="translate(106,144)"><use href="#jack"/><text class="sub" y="7.2">LFO</text></g>
+  <g transform="translate(121,144)"><use href="#jack"/><text class="sub" y="7.2">ECV</text></g>
+  <g transform="translate(136,144)"><use href="#jack"/><text class="sub" y="7.2">CLK</text></g>
+  <g transform="translate(151,144)"><use href="#jack"/><text class="sub" y="7.2">SEND</text></g>
+  <g transform="translate(166,144)"><use href="#jack"/><text class="sub" y="7.2">RCV</text></g>
+  <g transform="translate(200,144)">
+    <use href="#combo"/>
+    <text class="lab" x="-17" y="1">OUT</text>
+  </g>
+
+  <!-- VCO cromático: COARSE · FINE · PW · FM · SAW TRI PUL · CV -->
+  <g transform="translate(32,190)">
+    <use href="#ticks-lg"/>
+    <g transform="rotate(-24)"><use href="#knob-lg"/></g>
+    <text class="lab" y="-21.4">COARSE</text>
+  </g>
+  <g transform="translate(66,190)">
+    <use href="#ticks-sm"/>
+    <g transform="rotate(6)"><use href="#knob-sm"/></g>
+    <text class="lab" y="-13.2">FINE</text>
+  </g>
+  <g transform="translate(90,190)">
+    <use href="#ticks-sm"/>
+    <g transform="rotate(-12)"><use href="#knob-sm"/></g>
+    <text class="lab" y="-13.2">PW</text>
+  </g>
+  <g transform="translate(114,190)">
+    <use href="#ticks-sm"/>
+    <g transform="rotate(-40)"><use href="#knob-sm"/></g>
+    <text class="lab" y="-13.2">FM</text>
+  </g>
+  <g transform="translate(138,190)">
+    <use href="#spdt"/>
+    <text class="lab" y="-13.4">SAW</text>
+  </g>
+  <g transform="translate(156,190)">
+    <use href="#spdt"/>
+    <text class="lab" y="-13.4">TRI</text>
+  </g>
+  <g transform="translate(174,190)">
+    <use href="#spdt-dn"/>
+    <text class="lab" y="-13.4">PUL</text>
+  </g>
+  <g transform="translate(198,190)">
+    <use href="#jack"/>
+    <text class="sub" y="7.6">CV</text>
+  </g>
+</svg>

@@ -1,0 +1,27 @@
+* VOZ-9 — 00_fonte.cir
+* Proves V9, V5, VEE, 4V5, 1V8, LED drop
+* Run from voz-9/sim/:  ngspice -b 00_fonte.cir
+
+* voz9_fonte
+.include lib.inc
+
+Xrails V9 V5 VEE 4V5 1V8 rails
+
+* LED via J6 (4k7 on BASE in real board — model here)
+Rled V9 led_a 4.7k
+Dled led_a 0 DLEDRED
+
+* Polarity diode path
+Dprot vin V9 DSS14
+Vpsu vin 0 DC 9
+
+.control
+set noaskquit
+op
+print V(V9) V(V5) V(VEE) V(4V5) V(1V8) V(led_a)
+echo SOURCE_OK
+tran 10u 5m
+print V(V9) V(4V5) V(1V8)
+quit
+.endc
+.end

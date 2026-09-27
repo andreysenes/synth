@@ -1,0 +1,38 @@
+* VOZ-9 — 05_vcf.cir
+* One-pole LPF; J201 shunt to 1V8; CUTOFF pot via J1
+* Clockwise (u→1) should pull gate toward 0 → pinch-off → filter opens
+
+* voz9_vcf
+.include lib.inc
+.include painel_state.inc
+.include painel.cir
+
+Xrails V9 V5 VEE 4V5 1V8 rails
+
+Vin audio 0 AC 1 SIN(0 0.5 1k)
+Rin audio node_f 10k
+Cf node_f 0 220n
+* J201 shunt: D=node_f, S=1V8, G=cutoff wiper network
+Jv node_f gate 1V8 J201
+* CUTOFF pot: CCW=j1_11 → 1V8, CW=j1_13 → 0, W=j1_12 = gate
+* Sense classical: clockwise = more open = gate toward 0
+Rccw_tie j1_11 1V8 1
+Rcw_tie j1_13 0 1
+Rgate j1_12 gate 1
+Rfcv gate 0 100Meg
+
+Cout node_f vcf_out 100n
+Rout vcf_out 0 100k
+
+.control
+set noaskquit
+* AC sweep at current cutoff
+ac dec 40 10 50k
+echo VCF_AC_DONE
+print V(node_f)
+* Also OP at gate
+op
+print V(gate) V(1V8) V(node_f)
+quit
+.endc
+.end

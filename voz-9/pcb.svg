@@ -1,0 +1,775 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 -4 228.0 224.0" width="228.0mm" height="224.0mm">
+  <style>
+    .brd { fill: #c4a05a; stroke: #5a3d14; stroke-width: 0.35; }
+    .gnd { fill: #8b5a2b; opacity: 0.18; }
+    .blk { fill: none; stroke: #6b3f12; stroke-width: 0.2; stroke-dasharray: 1 0.7; }
+    .cu { fill: none; stroke: #b87333; stroke-width: 0.7; stroke-linecap: round; }
+    .cu-w { fill: none; stroke: #b87333; stroke-width: 1.2; }
+    .pad { fill: #d4922a; stroke: #6b3f12; stroke-width: 0.12; }
+    .hole { fill: #1a1a1a; }
+    .silk { fill: #3a2410; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 2.1px; text-anchor: middle; }
+    .silk-s { fill: #3a2410; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 1.25px; text-anchor: middle; }
+    .lab { fill: #3a2410; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 1.02px; text-anchor: middle; }
+    .el { fill: none; stroke: #6b3f12; stroke-width: 0.18; }
+  </style>
+  <defs>
+    <g id="dip8">
+      <rect fill="#c4a05a" stroke="#6b3f12" stroke-width="0.2" x="-5" y="-6" width="10" height="14"/>
+      <circle class="pad" cx="-3.81" cy="-3.81" r="0.58"/><circle class="hole" cx="-3.81" cy="-3.81" r="0.3"/>
+      <circle class="pad" cx="-3.81" cy="-1.27" r="0.58"/><circle class="hole" cx="-3.81" cy="-1.27" r="0.3"/>
+      <circle class="pad" cx="-3.81" cy="1.27" r="0.58"/><circle class="hole" cx="-3.81" cy="1.27" r="0.3"/>
+      <circle class="pad" cx="-3.81" cy="3.81" r="0.58"/><circle class="hole" cx="-3.81" cy="3.81" r="0.3"/>
+      <circle class="pad" cx="3.81" cy="-3.81" r="0.58"/><circle class="hole" cx="3.81" cy="-3.81" r="0.3"/>
+      <circle class="pad" cx="3.81" cy="-1.27" r="0.58"/><circle class="hole" cx="3.81" cy="-1.27" r="0.3"/>
+      <circle class="pad" cx="3.81" cy="1.27" r="0.58"/><circle class="hole" cx="3.81" cy="1.27" r="0.3"/>
+      <circle class="pad" cx="3.81" cy="3.81" r="0.58"/><circle class="hole" cx="3.81" cy="3.81" r="0.3"/>
+    </g>
+    <g id="dip16">
+      <rect fill="#c4a05a" stroke="#6b3f12" stroke-width="0.2" x="-6" y="-11.4" width="12" height="24.8"/>
+      <circle class="pad" cx="-3.81" cy="-8.89" r="0.52"/><circle class="hole" cx="-3.81" cy="-8.89" r="0.28"/>
+      <circle class="pad" cx="-3.81" cy="-6.35" r="0.52"/><circle class="hole" cx="-3.81" cy="-6.35" r="0.28"/>
+      <circle class="pad" cx="-3.81" cy="-3.81" r="0.52"/><circle class="hole" cx="-3.81" cy="-3.81" r="0.28"/>
+      <circle class="pad" cx="-3.81" cy="-1.27" r="0.52"/><circle class="hole" cx="-3.81" cy="-1.27" r="0.28"/>
+      <circle class="pad" cx="-3.81" cy="1.27" r="0.52"/><circle class="hole" cx="-3.81" cy="1.27" r="0.28"/>
+      <circle class="pad" cx="-3.81" cy="3.81" r="0.52"/><circle class="hole" cx="-3.81" cy="3.81" r="0.28"/>
+      <circle class="pad" cx="-3.81" cy="6.35" r="0.52"/><circle class="hole" cx="-3.81" cy="6.35" r="0.28"/>
+      <circle class="pad" cx="-3.81" cy="8.89" r="0.52"/><circle class="hole" cx="-3.81" cy="8.89" r="0.28"/>
+      <circle class="pad" cx="3.81" cy="-8.89" r="0.52"/><circle class="hole" cx="3.81" cy="-8.89" r="0.28"/>
+      <circle class="pad" cx="3.81" cy="-6.35" r="0.52"/><circle class="hole" cx="3.81" cy="-6.35" r="0.28"/>
+      <circle class="pad" cx="3.81" cy="-3.81" r="0.52"/><circle class="hole" cx="3.81" cy="-3.81" r="0.28"/>
+      <circle class="pad" cx="3.81" cy="-1.27" r="0.52"/><circle class="hole" cx="3.81" cy="-1.27" r="0.28"/>
+      <circle class="pad" cx="3.81" cy="1.27" r="0.52"/><circle class="hole" cx="3.81" cy="1.27" r="0.28"/>
+      <circle class="pad" cx="3.81" cy="3.81" r="0.52"/><circle class="hole" cx="3.81" cy="3.81" r="0.28"/>
+      <circle class="pad" cx="3.81" cy="6.35" r="0.52"/><circle class="hole" cx="3.81" cy="6.35" r="0.28"/>
+      <circle class="pad" cx="3.81" cy="8.89" r="0.52"/><circle class="hole" cx="3.81" cy="8.89" r="0.28"/>
+    </g>
+    <g id="to92">
+      <circle class="pad" cx="-1.3" cy="-1.9" r="0.52"/><circle class="hole" cx="-1.3" cy="-1.9" r="0.28"/>
+      <circle class="pad" cx="0" cy="0" r="0.52"/><circle class="hole" cx="0" cy="0" r="0.28"/>
+      <circle class="pad" cx="1.3" cy="-1.9" r="0.52"/><circle class="hole" cx="1.3" cy="-1.9" r="0.28"/>
+    </g>
+    <g id="wp">
+      <circle class="pad" r="0.68"/><circle class="hole" r="0.38"/>
+    </g>
+    <g id="rth">
+      <rect fill="#c4a05a" stroke="#6b3f12" stroke-width="0.14" x="-2.7" y="-1.0" width="5.4" height="2.0" rx="0.25"/>
+      <circle class="pad" cx="-3.81" cy="0" r="0.52"/><circle class="hole" cx="-3.81" cy="0" r="0.26"/>
+      <circle class="pad" cx="3.81" cy="0" r="0.52"/><circle class="hole" cx="3.81" cy="0" r="0.26"/>
+    </g>
+    <g id="cth">
+      <rect fill="#c4a05a" stroke="#6b3f12" stroke-width="0.14" x="-1.5" y="-1.1" width="3.0" height="2.2"/>
+      <circle class="pad" cx="-2.54" cy="0" r="0.48"/><circle class="hole" cx="-2.54" cy="0" r="0.25"/>
+      <circle class="pad" cx="2.54" cy="0" r="0.48"/><circle class="hole" cx="2.54" cy="0" r="0.25"/>
+    </g>
+    <g id="cel">
+      <circle class="el" r="2.25"/>
+      <circle class="pad" cx="-1.27" cy="0" r="0.48"/><circle class="hole" cx="-1.27" cy="0" r="0.25"/>
+      <circle class="pad" cx="1.27" cy="0" r="0.48"/><circle class="hole" cx="1.27" cy="0" r="0.25"/>
+      <text x="-1.27" y="-2.7" class="lab">+</text>
+    </g>
+  </defs>
+
+  <rect class="brd" x="0" y="0" width="220.0" height="216.0"/>
+  <rect class="gnd" x="2" y="2" width="216.0" height="212.0" rx="1"/>
+  <text class="silk" x="136" y="6.0">VOZ-9  BASE</text>
+  <text class="silk-s" x="136" y="8.3">220×216 · CIs em soquete · cabos do painel soldados nos pads</text>
+  <circle class="pad" cx="4" cy="4" r="2.1"/><circle class="hole" cx="4" cy="4" r="1.55"/>
+  <circle class="pad" cx="216" cy="4" r="2.1"/><circle class="hole" cx="216" cy="4" r="1.55"/>
+  <circle class="pad" cx="4" cy="212" r="2.1"/><circle class="hole" cx="4" cy="212" r="1.55"/>
+  <circle class="pad" cx="216" cy="212" r="2.1"/><circle class="hole" cx="216" cy="212" r="1.55"/>
+  <rect class="blk" x="6" y="8" width="46" height="168"/>
+  <text class="silk-s" x="7.5" y="10.5" style="text-anchor:start">PADS  CABO  J1–J11</text>
+  <rect class="pad" x="7.80" y="13.80" width="2.40" height="2.40"/>
+  <circle class="hole" cx="9.00" cy="15.00" r="0.5"/>
+  <circle class="pad" cx="9.00" cy="18.50" r="1.2"/>
+  <circle class="hole" cx="9.00" cy="18.50" r="0.5"/>
+  <circle class="pad" cx="12.50" cy="15.00" r="1.2"/>
+  <circle class="hole" cx="12.50" cy="15.00" r="0.5"/>
+  <circle class="pad" cx="12.50" cy="18.50" r="1.2"/>
+  <circle class="hole" cx="12.50" cy="18.50" r="0.5"/>
+  <circle class="pad" cx="16.00" cy="15.00" r="1.2"/>
+  <circle class="hole" cx="16.00" cy="15.00" r="0.5"/>
+  <circle class="pad" cx="16.00" cy="18.50" r="1.2"/>
+  <circle class="hole" cx="16.00" cy="18.50" r="0.5"/>
+  <circle class="pad" cx="19.50" cy="15.00" r="1.2"/>
+  <circle class="hole" cx="19.50" cy="15.00" r="0.5"/>
+  <circle class="pad" cx="19.50" cy="18.50" r="1.2"/>
+  <circle class="hole" cx="19.50" cy="18.50" r="0.5"/>
+  <circle class="pad" cx="23.00" cy="15.00" r="1.2"/>
+  <circle class="hole" cx="23.00" cy="15.00" r="0.5"/>
+  <circle class="pad" cx="23.00" cy="18.50" r="1.2"/>
+  <circle class="hole" cx="23.00" cy="18.50" r="0.5"/>
+  <circle class="pad" cx="26.50" cy="15.00" r="1.2"/>
+  <circle class="hole" cx="26.50" cy="15.00" r="0.5"/>
+  <circle class="pad" cx="26.50" cy="18.50" r="1.2"/>
+  <circle class="hole" cx="26.50" cy="18.50" r="0.5"/>
+  <circle class="pad" cx="30.00" cy="15.00" r="1.2"/>
+  <circle class="hole" cx="30.00" cy="15.00" r="0.5"/>
+  <circle class="pad" cx="30.00" cy="18.50" r="1.2"/>
+  <circle class="hole" cx="30.00" cy="18.50" r="0.5"/>
+  <circle class="pad" cx="33.50" cy="15.00" r="1.2"/>
+  <circle class="hole" cx="33.50" cy="15.00" r="0.5"/>
+  <circle class="pad" cx="33.50" cy="18.50" r="1.2"/>
+  <circle class="hole" cx="33.50" cy="18.50" r="0.5"/>
+  <circle class="pad" cx="37.00" cy="15.00" r="1.2"/>
+  <circle class="hole" cx="37.00" cy="15.00" r="0.5"/>
+  <circle class="pad" cx="37.00" cy="18.50" r="1.2"/>
+  <circle class="hole" cx="37.00" cy="18.50" r="0.5"/>
+  <circle class="pad" cx="40.50" cy="15.00" r="1.2"/>
+  <circle class="hole" cx="40.50" cy="15.00" r="0.5"/>
+  <circle class="pad" cx="40.50" cy="18.50" r="1.2"/>
+  <circle class="hole" cx="40.50" cy="18.50" r="0.5"/>
+  <text class="lab" x="9.00" y="13.25">1</text>
+  <text class="lab" x="40.50" y="13.25">10</text>
+  <text class="lab" x="9.00" y="21.15">11</text>
+  <text class="lab" x="40.50" y="21.15">20</text>
+  <text class="silk-s" x="24.75" y="22.85">J1 OSC</text>
+  <rect class="pad" x="7.80" y="30.80" width="2.40" height="2.40"/>
+  <circle class="hole" cx="9.00" cy="32.00" r="0.5"/>
+  <circle class="pad" cx="9.00" cy="35.50" r="1.2"/>
+  <circle class="hole" cx="9.00" cy="35.50" r="0.5"/>
+  <circle class="pad" cx="12.50" cy="32.00" r="1.2"/>
+  <circle class="hole" cx="12.50" cy="32.00" r="0.5"/>
+  <circle class="pad" cx="12.50" cy="35.50" r="1.2"/>
+  <circle class="hole" cx="12.50" cy="35.50" r="0.5"/>
+  <circle class="pad" cx="16.00" cy="32.00" r="1.2"/>
+  <circle class="hole" cx="16.00" cy="32.00" r="0.5"/>
+  <circle class="pad" cx="16.00" cy="35.50" r="1.2"/>
+  <circle class="hole" cx="16.00" cy="35.50" r="0.5"/>
+  <circle class="pad" cx="19.50" cy="32.00" r="1.2"/>
+  <circle class="hole" cx="19.50" cy="32.00" r="0.5"/>
+  <circle class="pad" cx="19.50" cy="35.50" r="1.2"/>
+  <circle class="hole" cx="19.50" cy="35.50" r="0.5"/>
+  <circle class="pad" cx="23.00" cy="32.00" r="1.2"/>
+  <circle class="hole" cx="23.00" cy="32.00" r="0.5"/>
+  <circle class="pad" cx="23.00" cy="35.50" r="1.2"/>
+  <circle class="hole" cx="23.00" cy="35.50" r="0.5"/>
+  <circle class="pad" cx="26.50" cy="32.00" r="1.2"/>
+  <circle class="hole" cx="26.50" cy="32.00" r="0.5"/>
+  <circle class="pad" cx="26.50" cy="35.50" r="1.2"/>
+  <circle class="hole" cx="26.50" cy="35.50" r="0.5"/>
+  <text class="lab" x="9.00" y="30.25">1</text>
+  <text class="lab" x="26.50" y="30.25">6</text>
+  <text class="lab" x="9.00" y="38.15">7</text>
+  <text class="lab" x="26.50" y="38.15">12</text>
+  <text class="silk-s" x="17.75" y="39.85">J2 LFO</text>
+  <rect class="pad" x="7.80" y="46.80" width="2.40" height="2.40"/>
+  <circle class="hole" cx="9.00" cy="48.00" r="0.5"/>
+  <circle class="pad" cx="9.00" cy="51.50" r="1.2"/>
+  <circle class="hole" cx="9.00" cy="51.50" r="0.5"/>
+  <circle class="pad" cx="12.50" cy="48.00" r="1.2"/>
+  <circle class="hole" cx="12.50" cy="48.00" r="0.5"/>
+  <circle class="pad" cx="12.50" cy="51.50" r="1.2"/>
+  <circle class="hole" cx="12.50" cy="51.50" r="0.5"/>
+  <circle class="pad" cx="16.00" cy="48.00" r="1.2"/>
+  <circle class="hole" cx="16.00" cy="48.00" r="0.5"/>
+  <circle class="pad" cx="16.00" cy="51.50" r="1.2"/>
+  <circle class="hole" cx="16.00" cy="51.50" r="0.5"/>
+  <circle class="pad" cx="19.50" cy="48.00" r="1.2"/>
+  <circle class="hole" cx="19.50" cy="48.00" r="0.5"/>
+  <circle class="pad" cx="19.50" cy="51.50" r="1.2"/>
+  <circle class="hole" cx="19.50" cy="51.50" r="0.5"/>
+  <circle class="pad" cx="23.00" cy="48.00" r="1.2"/>
+  <circle class="hole" cx="23.00" cy="48.00" r="0.5"/>
+  <circle class="pad" cx="23.00" cy="51.50" r="1.2"/>
+  <circle class="hole" cx="23.00" cy="51.50" r="0.5"/>
+  <circle class="pad" cx="26.50" cy="48.00" r="1.2"/>
+  <circle class="hole" cx="26.50" cy="48.00" r="0.5"/>
+  <circle class="pad" cx="26.50" cy="51.50" r="1.2"/>
+  <circle class="hole" cx="26.50" cy="51.50" r="0.5"/>
+  <circle class="pad" cx="30.00" cy="48.00" r="1.2"/>
+  <circle class="hole" cx="30.00" cy="48.00" r="0.5"/>
+  <circle class="pad" cx="30.00" cy="51.50" r="1.2"/>
+  <circle class="hole" cx="30.00" cy="51.50" r="0.5"/>
+  <circle class="pad" cx="33.50" cy="48.00" r="1.2"/>
+  <circle class="hole" cx="33.50" cy="48.00" r="0.5"/>
+  <circle class="pad" cx="33.50" cy="51.50" r="1.2"/>
+  <circle class="hole" cx="33.50" cy="51.50" r="0.5"/>
+  <circle class="pad" cx="37.00" cy="48.00" r="1.2"/>
+  <circle class="hole" cx="37.00" cy="48.00" r="0.5"/>
+  <circle class="pad" cx="37.00" cy="51.50" r="1.2"/>
+  <circle class="hole" cx="37.00" cy="51.50" r="0.5"/>
+  <circle class="pad" cx="40.50" cy="48.00" r="1.2"/>
+  <circle class="hole" cx="40.50" cy="48.00" r="0.5"/>
+  <circle class="pad" cx="40.50" cy="51.50" r="1.2"/>
+  <circle class="hole" cx="40.50" cy="51.50" r="0.5"/>
+  <text class="lab" x="9.00" y="46.25">1</text>
+  <text class="lab" x="40.50" y="46.25">10</text>
+  <text class="lab" x="9.00" y="54.15">11</text>
+  <text class="lab" x="40.50" y="54.15">20</text>
+  <text class="silk-s" x="24.75" y="55.85">J3 DELAY</text>
+  <rect class="pad" x="7.80" y="64.80" width="2.40" height="2.40"/>
+  <circle class="hole" cx="9.00" cy="66.00" r="0.5"/>
+  <circle class="pad" cx="9.00" cy="69.50" r="1.2"/>
+  <circle class="hole" cx="9.00" cy="69.50" r="0.5"/>
+  <circle class="pad" cx="12.50" cy="66.00" r="1.2"/>
+  <circle class="hole" cx="12.50" cy="66.00" r="0.5"/>
+  <circle class="pad" cx="12.50" cy="69.50" r="1.2"/>
+  <circle class="hole" cx="12.50" cy="69.50" r="0.5"/>
+  <circle class="pad" cx="16.00" cy="66.00" r="1.2"/>
+  <circle class="hole" cx="16.00" cy="66.00" r="0.5"/>
+  <circle class="pad" cx="16.00" cy="69.50" r="1.2"/>
+  <circle class="hole" cx="16.00" cy="69.50" r="0.5"/>
+  <circle class="pad" cx="19.50" cy="66.00" r="1.2"/>
+  <circle class="hole" cx="19.50" cy="66.00" r="0.5"/>
+  <circle class="pad" cx="19.50" cy="69.50" r="1.2"/>
+  <circle class="hole" cx="19.50" cy="69.50" r="0.5"/>
+  <circle class="pad" cx="23.00" cy="66.00" r="1.2"/>
+  <circle class="hole" cx="23.00" cy="66.00" r="0.5"/>
+  <circle class="pad" cx="23.00" cy="69.50" r="1.2"/>
+  <circle class="hole" cx="23.00" cy="69.50" r="0.5"/>
+  <circle class="pad" cx="26.50" cy="66.00" r="1.2"/>
+  <circle class="hole" cx="26.50" cy="66.00" r="0.5"/>
+  <circle class="pad" cx="26.50" cy="69.50" r="1.2"/>
+  <circle class="hole" cx="26.50" cy="69.50" r="0.5"/>
+  <circle class="pad" cx="30.00" cy="66.00" r="1.2"/>
+  <circle class="hole" cx="30.00" cy="66.00" r="0.5"/>
+  <circle class="pad" cx="30.00" cy="69.50" r="1.2"/>
+  <circle class="hole" cx="30.00" cy="69.50" r="0.5"/>
+  <circle class="pad" cx="33.50" cy="66.00" r="1.2"/>
+  <circle class="hole" cx="33.50" cy="66.00" r="0.5"/>
+  <circle class="pad" cx="33.50" cy="69.50" r="1.2"/>
+  <circle class="hole" cx="33.50" cy="69.50" r="0.5"/>
+  <circle class="pad" cx="37.00" cy="66.00" r="1.2"/>
+  <circle class="hole" cx="37.00" cy="66.00" r="0.5"/>
+  <circle class="pad" cx="37.00" cy="69.50" r="1.2"/>
+  <circle class="hole" cx="37.00" cy="69.50" r="0.5"/>
+  <circle class="pad" cx="40.50" cy="66.00" r="1.2"/>
+  <circle class="hole" cx="40.50" cy="66.00" r="0.5"/>
+  <circle class="pad" cx="40.50" cy="69.50" r="1.2"/>
+  <circle class="hole" cx="40.50" cy="69.50" r="0.5"/>
+  <text class="lab" x="9.00" y="64.25">1</text>
+  <text class="lab" x="40.50" y="64.25">10</text>
+  <text class="lab" x="9.00" y="72.15">11</text>
+  <text class="lab" x="40.50" y="72.15">20</text>
+  <text class="silk-s" x="24.75" y="73.85">J4 PATCH A</text>
+  <rect class="pad" x="7.80" y="82.80" width="2.40" height="2.40"/>
+  <circle class="hole" cx="9.00" cy="84.00" r="0.5"/>
+  <circle class="pad" cx="9.00" cy="87.50" r="1.2"/>
+  <circle class="hole" cx="9.00" cy="87.50" r="0.5"/>
+  <circle class="pad" cx="12.50" cy="84.00" r="1.2"/>
+  <circle class="hole" cx="12.50" cy="84.00" r="0.5"/>
+  <circle class="pad" cx="12.50" cy="87.50" r="1.2"/>
+  <circle class="hole" cx="12.50" cy="87.50" r="0.5"/>
+  <circle class="pad" cx="16.00" cy="84.00" r="1.2"/>
+  <circle class="hole" cx="16.00" cy="84.00" r="0.5"/>
+  <circle class="pad" cx="16.00" cy="87.50" r="1.2"/>
+  <circle class="hole" cx="16.00" cy="87.50" r="0.5"/>
+  <circle class="pad" cx="19.50" cy="84.00" r="1.2"/>
+  <circle class="hole" cx="19.50" cy="84.00" r="0.5"/>
+  <circle class="pad" cx="19.50" cy="87.50" r="1.2"/>
+  <circle class="hole" cx="19.50" cy="87.50" r="0.5"/>
+  <circle class="pad" cx="23.00" cy="84.00" r="1.2"/>
+  <circle class="hole" cx="23.00" cy="84.00" r="0.5"/>
+  <circle class="pad" cx="23.00" cy="87.50" r="1.2"/>
+  <circle class="hole" cx="23.00" cy="87.50" r="0.5"/>
+  <circle class="pad" cx="26.50" cy="84.00" r="1.2"/>
+  <circle class="hole" cx="26.50" cy="84.00" r="0.5"/>
+  <circle class="pad" cx="26.50" cy="87.50" r="1.2"/>
+  <circle class="hole" cx="26.50" cy="87.50" r="0.5"/>
+  <circle class="pad" cx="30.00" cy="84.00" r="1.2"/>
+  <circle class="hole" cx="30.00" cy="84.00" r="0.5"/>
+  <circle class="pad" cx="30.00" cy="87.50" r="1.2"/>
+  <circle class="hole" cx="30.00" cy="87.50" r="0.5"/>
+  <circle class="pad" cx="33.50" cy="84.00" r="1.2"/>
+  <circle class="hole" cx="33.50" cy="84.00" r="0.5"/>
+  <circle class="pad" cx="33.50" cy="87.50" r="1.2"/>
+  <circle class="hole" cx="33.50" cy="87.50" r="0.5"/>
+  <text class="lab" x="9.00" y="82.25">1</text>
+  <text class="lab" x="33.50" y="82.25">8</text>
+  <text class="lab" x="9.00" y="90.15">9</text>
+  <text class="lab" x="33.50" y="90.15">16</text>
+  <text class="silk-s" x="21.25" y="91.85">J5 PATCH B</text>
+  <rect class="pad" x="7.80" y="98.80" width="2.40" height="2.40"/>
+  <circle class="hole" cx="9.00" cy="100.00" r="0.5"/>
+  <circle class="pad" cx="9.00" cy="103.50" r="1.2"/>
+  <circle class="hole" cx="9.00" cy="103.50" r="0.5"/>
+  <circle class="pad" cx="12.50" cy="100.00" r="1.2"/>
+  <circle class="hole" cx="12.50" cy="100.00" r="0.5"/>
+  <circle class="pad" cx="12.50" cy="103.50" r="1.2"/>
+  <circle class="hole" cx="12.50" cy="103.50" r="0.5"/>
+  <circle class="pad" cx="16.00" cy="100.00" r="1.2"/>
+  <circle class="hole" cx="16.00" cy="100.00" r="0.5"/>
+  <circle class="pad" cx="16.00" cy="103.50" r="1.2"/>
+  <circle class="hole" cx="16.00" cy="103.50" r="0.5"/>
+  <text class="lab" x="9.00" y="98.25">1</text>
+  <text class="lab" x="16.00" y="98.25">3</text>
+  <text class="lab" x="9.00" y="106.15">4</text>
+  <text class="lab" x="16.00" y="106.15">6</text>
+  <text class="silk-s" x="12.50" y="107.85">J6 CTRL</text>
+  <rect class="pad" x="20.80" y="98.80" width="2.40" height="2.40"/>
+  <circle class="hole" cx="22.00" cy="100.00" r="0.5"/>
+  <circle class="pad" cx="22.00" cy="103.50" r="1.2"/>
+  <circle class="hole" cx="22.00" cy="103.50" r="0.5"/>
+  <circle class="pad" cx="25.50" cy="100.00" r="1.2"/>
+  <circle class="hole" cx="25.50" cy="100.00" r="0.5"/>
+  <circle class="pad" cx="25.50" cy="103.50" r="1.2"/>
+  <circle class="hole" cx="25.50" cy="103.50" r="0.5"/>
+  <circle class="pad" cx="29.00" cy="100.00" r="1.2"/>
+  <circle class="hole" cx="29.00" cy="100.00" r="0.5"/>
+  <circle class="pad" cx="29.00" cy="103.50" r="1.2"/>
+  <circle class="hole" cx="29.00" cy="103.50" r="0.5"/>
+  <circle class="pad" cx="32.50" cy="100.00" r="1.2"/>
+  <circle class="hole" cx="32.50" cy="100.00" r="0.5"/>
+  <circle class="pad" cx="32.50" cy="103.50" r="1.2"/>
+  <circle class="hole" cx="32.50" cy="103.50" r="0.5"/>
+  <circle class="pad" cx="36.00" cy="100.00" r="1.2"/>
+  <circle class="hole" cx="36.00" cy="100.00" r="0.5"/>
+  <circle class="pad" cx="36.00" cy="103.50" r="1.2"/>
+  <circle class="hole" cx="36.00" cy="103.50" r="0.5"/>
+  <circle class="pad" cx="39.50" cy="100.00" r="1.2"/>
+  <circle class="hole" cx="39.50" cy="100.00" r="0.5"/>
+  <circle class="pad" cx="39.50" cy="103.50" r="1.2"/>
+  <circle class="hole" cx="39.50" cy="103.50" r="0.5"/>
+  <text class="lab" x="22.00" y="98.25">1</text>
+  <text class="lab" x="39.50" y="98.25">6</text>
+  <text class="lab" x="22.00" y="106.15">7</text>
+  <text class="lab" x="39.50" y="106.15">12</text>
+  <text class="silk-s" x="30.75" y="107.85">J7 IN+PRE</text>
+  <rect class="pad" x="7.80" y="114.80" width="2.40" height="2.40"/>
+  <circle class="hole" cx="9.00" cy="116.00" r="0.5"/>
+  <circle class="pad" cx="9.00" cy="119.50" r="1.2"/>
+  <circle class="hole" cx="9.00" cy="119.50" r="0.5"/>
+  <circle class="pad" cx="12.50" cy="116.00" r="1.2"/>
+  <circle class="hole" cx="12.50" cy="116.00" r="0.5"/>
+  <circle class="pad" cx="12.50" cy="119.50" r="1.2"/>
+  <circle class="hole" cx="12.50" cy="119.50" r="0.5"/>
+  <circle class="pad" cx="16.00" cy="116.00" r="1.2"/>
+  <circle class="hole" cx="16.00" cy="116.00" r="0.5"/>
+  <circle class="pad" cx="16.00" cy="119.50" r="1.2"/>
+  <circle class="hole" cx="16.00" cy="119.50" r="0.5"/>
+  <circle class="pad" cx="19.50" cy="116.00" r="1.2"/>
+  <circle class="hole" cx="19.50" cy="116.00" r="0.5"/>
+  <circle class="pad" cx="19.50" cy="119.50" r="1.2"/>
+  <circle class="hole" cx="19.50" cy="119.50" r="0.5"/>
+  <text class="lab" x="9.00" y="114.25">1</text>
+  <text class="lab" x="19.50" y="114.25">4</text>
+  <text class="lab" x="9.00" y="122.15">5</text>
+  <text class="lab" x="19.50" y="122.15">8</text>
+  <text class="silk-s" x="14.25" y="123.85">J8 OUT</text>
+  <rect class="pad" x="7.80" y="130.80" width="2.40" height="2.40"/>
+  <circle class="hole" cx="9.00" cy="132.00" r="0.5"/>
+  <circle class="pad" cx="9.00" cy="135.50" r="1.2"/>
+  <circle class="hole" cx="9.00" cy="135.50" r="0.5"/>
+  <circle class="pad" cx="12.50" cy="132.00" r="1.2"/>
+  <circle class="hole" cx="12.50" cy="132.00" r="0.5"/>
+  <circle class="pad" cx="12.50" cy="135.50" r="1.2"/>
+  <circle class="hole" cx="12.50" cy="135.50" r="0.5"/>
+  <circle class="pad" cx="16.00" cy="132.00" r="1.2"/>
+  <circle class="hole" cx="16.00" cy="132.00" r="0.5"/>
+  <circle class="pad" cx="16.00" cy="135.50" r="1.2"/>
+  <circle class="hole" cx="16.00" cy="135.50" r="0.5"/>
+  <circle class="pad" cx="19.50" cy="132.00" r="1.2"/>
+  <circle class="hole" cx="19.50" cy="132.00" r="0.5"/>
+  <circle class="pad" cx="19.50" cy="135.50" r="1.2"/>
+  <circle class="hole" cx="19.50" cy="135.50" r="0.5"/>
+  <circle class="pad" cx="23.00" cy="132.00" r="1.2"/>
+  <circle class="hole" cx="23.00" cy="132.00" r="0.5"/>
+  <circle class="pad" cx="23.00" cy="135.50" r="1.2"/>
+  <circle class="hole" cx="23.00" cy="135.50" r="0.5"/>
+  <circle class="pad" cx="26.50" cy="132.00" r="1.2"/>
+  <circle class="hole" cx="26.50" cy="132.00" r="0.5"/>
+  <circle class="pad" cx="26.50" cy="135.50" r="1.2"/>
+  <circle class="hole" cx="26.50" cy="135.50" r="0.5"/>
+  <text class="lab" x="9.00" y="130.25">1</text>
+  <text class="lab" x="26.50" y="130.25">6</text>
+  <text class="lab" x="9.00" y="138.15">7</text>
+  <text class="lab" x="26.50" y="138.15">12</text>
+  <text class="silk-s" x="17.75" y="139.85">J9 EQ424</text>
+  <rect class="pad" x="7.80" y="146.80" width="2.40" height="2.40"/>
+  <circle class="hole" cx="9.00" cy="148.00" r="0.5"/>
+  <circle class="pad" cx="9.00" cy="151.50" r="1.2"/>
+  <circle class="hole" cx="9.00" cy="151.50" r="0.5"/>
+  <circle class="pad" cx="12.50" cy="148.00" r="1.2"/>
+  <circle class="hole" cx="12.50" cy="148.00" r="0.5"/>
+  <circle class="pad" cx="12.50" cy="151.50" r="1.2"/>
+  <circle class="hole" cx="12.50" cy="151.50" r="0.5"/>
+  <circle class="pad" cx="16.00" cy="148.00" r="1.2"/>
+  <circle class="hole" cx="16.00" cy="148.00" r="0.5"/>
+  <circle class="pad" cx="16.00" cy="151.50" r="1.2"/>
+  <circle class="hole" cx="16.00" cy="151.50" r="0.5"/>
+  <circle class="pad" cx="19.50" cy="148.00" r="1.2"/>
+  <circle class="hole" cx="19.50" cy="148.00" r="0.5"/>
+  <circle class="pad" cx="19.50" cy="151.50" r="1.2"/>
+  <circle class="hole" cx="19.50" cy="151.50" r="0.5"/>
+  <circle class="pad" cx="23.00" cy="148.00" r="1.2"/>
+  <circle class="hole" cx="23.00" cy="148.00" r="0.5"/>
+  <circle class="pad" cx="23.00" cy="151.50" r="1.2"/>
+  <circle class="hole" cx="23.00" cy="151.50" r="0.5"/>
+  <circle class="pad" cx="26.50" cy="148.00" r="1.2"/>
+  <circle class="hole" cx="26.50" cy="148.00" r="0.5"/>
+  <circle class="pad" cx="26.50" cy="151.50" r="1.2"/>
+  <circle class="hole" cx="26.50" cy="151.50" r="0.5"/>
+  <circle class="pad" cx="30.00" cy="148.00" r="1.2"/>
+  <circle class="hole" cx="30.00" cy="148.00" r="0.5"/>
+  <circle class="pad" cx="30.00" cy="151.50" r="1.2"/>
+  <circle class="hole" cx="30.00" cy="151.50" r="0.5"/>
+  <circle class="pad" cx="33.50" cy="148.00" r="1.2"/>
+  <circle class="hole" cx="33.50" cy="148.00" r="0.5"/>
+  <circle class="pad" cx="33.50" cy="151.50" r="1.2"/>
+  <circle class="hole" cx="33.50" cy="151.50" r="0.5"/>
+  <circle class="pad" cx="37.00" cy="148.00" r="1.2"/>
+  <circle class="hole" cx="37.00" cy="148.00" r="0.5"/>
+  <circle class="pad" cx="37.00" cy="151.50" r="1.2"/>
+  <circle class="hole" cx="37.00" cy="151.50" r="0.5"/>
+  <circle class="pad" cx="40.50" cy="148.00" r="1.2"/>
+  <circle class="hole" cx="40.50" cy="148.00" r="0.5"/>
+  <circle class="pad" cx="40.50" cy="151.50" r="1.2"/>
+  <circle class="hole" cx="40.50" cy="151.50" r="0.5"/>
+  <text class="lab" x="9.00" y="146.25">1</text>
+  <text class="lab" x="40.50" y="146.25">10</text>
+  <text class="lab" x="9.00" y="154.15">11</text>
+  <text class="lab" x="40.50" y="154.15">20</text>
+  <text class="silk-s" x="24.75" y="155.85">J10 VCO</text>
+  <rect class="pad" x="7.80" y="164.80" width="2.40" height="2.40"/>
+  <circle class="hole" cx="9.00" cy="166.00" r="0.5"/>
+  <circle class="pad" cx="9.00" cy="169.50" r="1.2"/>
+  <circle class="hole" cx="9.00" cy="169.50" r="0.5"/>
+  <circle class="pad" cx="12.50" cy="166.00" r="1.2"/>
+  <circle class="hole" cx="12.50" cy="166.00" r="0.5"/>
+  <circle class="pad" cx="12.50" cy="169.50" r="1.2"/>
+  <circle class="hole" cx="12.50" cy="169.50" r="0.5"/>
+  <circle class="pad" cx="16.00" cy="166.00" r="1.2"/>
+  <circle class="hole" cx="16.00" cy="166.00" r="0.5"/>
+  <circle class="pad" cx="16.00" cy="169.50" r="1.2"/>
+  <circle class="hole" cx="16.00" cy="169.50" r="0.5"/>
+  <circle class="pad" cx="19.50" cy="166.00" r="1.2"/>
+  <circle class="hole" cx="19.50" cy="166.00" r="0.5"/>
+  <circle class="pad" cx="19.50" cy="169.50" r="1.2"/>
+  <circle class="hole" cx="19.50" cy="169.50" r="0.5"/>
+  <circle class="pad" cx="23.00" cy="166.00" r="1.2"/>
+  <circle class="hole" cx="23.00" cy="166.00" r="0.5"/>
+  <circle class="pad" cx="23.00" cy="169.50" r="1.2"/>
+  <circle class="hole" cx="23.00" cy="169.50" r="0.5"/>
+  <circle class="pad" cx="26.50" cy="166.00" r="1.2"/>
+  <circle class="hole" cx="26.50" cy="166.00" r="0.5"/>
+  <circle class="pad" cx="26.50" cy="169.50" r="1.2"/>
+  <circle class="hole" cx="26.50" cy="169.50" r="0.5"/>
+  <text class="lab" x="9.00" y="164.25">1</text>
+  <text class="lab" x="26.50" y="164.25">6</text>
+  <text class="lab" x="9.00" y="172.15">7</text>
+  <text class="lab" x="26.50" y="172.15">12</text>
+  <text class="silk-s" x="17.75" y="173.85">J11 LEDS</text>
+  <path class="cu-w" d="M54,10 V150"/>
+  <path class="cu" d="M56.6,10 V148"/>
+  <path class="cu" d="M214,10 V148"/>
+  <text class="lab" x="54" y="11.8">GND</text>
+  <text class="lab" x="56.6" y="11.8">V9</text>
+  <text class="lab" x="214" y="11.8">4V5</text>
+  <rect class="blk" x="58" y="10" width="62" height="46"/>
+  <text class="silk-s" x="59.5" y="12.5" style="text-anchor:start">FONTE</text>
+  <g transform="translate(64,21)">
+    <rect fill="#c4a05a" stroke="#6b3f12" stroke-width="0.2" x="-2" y="-2.8" width="4" height="7.6"/>
+    <circle class="pad" cx="0" cy="-1.4" r="0.55"/><circle class="hole" cx="0" cy="-1.4" r="0.28"/>
+    <circle class="pad" cx="0" cy="1.4" r="0.55"/><circle class="hole" cx="0" cy="1.4" r="0.28"/>
+    <circle class="pad" cx="0" cy="3.8" r="0.55"/><circle class="hole" cx="0" cy="3.8" r="0.28"/>
+    <text class="lab" y="6.3">D1</text></g>
+  <g transform="translate(80,22)"><use href="#dip8"/><text class="lab" y="8.5">U4 SKT</text></g>
+  <g transform="translate(100,19)">
+    <rect fill="#c4a05a" stroke="#6b3f12" stroke-width="0.2" x="-2.8" y="-3" width="5.6" height="9.2"/>
+    <circle class="pad" cx="-1.5" cy="4.6" r="0.5"/><circle class="hole" cx="-1.5" cy="4.6" r="0.26"/>
+    <circle class="pad" cx="0" cy="4.6" r="0.5"/><circle class="hole" cx="0" cy="4.6" r="0.26"/>
+    <circle class="pad" cx="1.5" cy="4.6" r="0.5"/><circle class="hole" cx="1.5" cy="4.6" r="0.26"/>
+    <text class="lab" y="-3.5">U5 78M05</text></g>
+  <g transform="translate(114.0,20.0)"><use href="#cel"/><text class="lab" y="4.0">C56 10µ</text></g>
+  <g transform="translate(114.0,29.0)"><use href="#cel"/><text class="lab" y="4.0">C57 10µ</text></g>
+  <g transform="translate(114.0,38.0)"><use href="#cel"/><text class="lab" y="4.0">C58 10µ</text></g>
+  <g transform="translate(64.0,35.0)"><use href="#rth"/><text class="lab" y="2.55">R14 4k7</text></g>
+  <g transform="translate(75.2,35.0)"><use href="#rth"/><text class="lab" y="2.55">R17 4k7</text></g>
+  <g transform="translate(86.4,35.0)"><use href="#rth"/><text class="lab" y="2.55">R19 10k</text></g>
+  <g transform="translate(97.6,35.0)"><use href="#rth"/><text class="lab" y="2.55">R20 10k</text></g>
+  <g transform="translate(64.0,41.5)"><use href="#rth"/><text class="lab" y="2.55">R18 5k6</text></g>
+  <g transform="translate(75.2,41.5)"><use href="#rth"/><text class="lab" y="2.55">R55 22k</text></g>
+  <g transform="translate(90.0,41.5)"><use href="#cth"/><text class="lab" y="2.65">C22 100n</text></g>
+  <g transform="translate(64.0,51.0)"><use href="#cel"/><text class="lab" y="4.0">C64 47µ</text></g>
+  <g transform="translate(76.0,51.0)"><use href="#cel"/><text class="lab" y="4.0">C65 47µ</text></g>
+  <g transform="translate(88.0,51.0)"><use href="#cel"/><text class="lab" y="4.0">C66 47µ</text></g>
+  <g transform="translate(100.0,51.0)"><use href="#cel"/><text class="lab" y="4.0">C67 47µ</text></g>
+  <rect class="blk" x="122" y="10" width="54" height="40"/>
+  <text class="silk-s" x="123.5" y="12.5" style="text-anchor:start">U1 NE5532</text>
+  <g transform="translate(130,22)"><use href="#dip8"/><text class="lab" y="8.5">U1 SKT</text></g>
+  <g transform="translate(144.0,16.0)"><use href="#rth"/><text class="lab" y="2.55">R12 2k2</text></g>
+  <g transform="translate(154.2,16.0)"><use href="#rth"/><text class="lab" y="2.55">R13 2k2</text></g>
+  <g transform="translate(164.4,16.0)"><use href="#rth"/><text class="lab" y="2.55">R57 22k</text></g>
+  <g transform="translate(144.0,22.4)"><use href="#rth"/><text class="lab" y="2.55">R58 22k</text></g>
+  <g transform="translate(154.2,22.4)"><use href="#rth"/><text class="lab" y="2.55">R6 1k</text></g>
+  <g transform="translate(164.4,22.4)"><use href="#rth"/><text class="lab" y="2.55">R42 10k</text></g>
+  <g transform="translate(144.0,28.8)"><use href="#rth"/><text class="lab" y="2.55">R1 220</text></g>
+  <g transform="translate(154.2,28.8)"><use href="#rth"/><text class="lab" y="2.55">R2 220</text></g>
+  <g transform="translate(164.4,28.8)"><use href="#rth"/><text class="lab" y="2.55">R44 10k</text></g>
+  <g transform="translate(128.0,36.0)"><use href="#cth"/><text class="lab" y="2.65">C1 100p</text></g>
+  <g transform="translate(136.3,36.0)"><use href="#cth"/><text class="lab" y="2.65">C2 100p</text></g>
+  <g transform="translate(144.6,36.0)"><use href="#cth"/><text class="lab" y="2.65">C23 100n</text></g>
+  <g transform="translate(152.9,36.0)"><use href="#cth"/><text class="lab" y="2.65">C24 100n</text></g>
+  <g transform="translate(161.2,36.0)"><use href="#cth"/><text class="lab" y="2.65">C25 100n</text></g>
+  <g transform="translate(128.0,45.0)"><use href="#cel"/><text class="lab" y="4.0">C59 10µ</text></g>
+  <g transform="translate(137.4,45.0)"><use href="#cel"/><text class="lab" y="4.0">C60 10µ</text></g>
+  <g transform="translate(146.8,45.0)"><use href="#cel"/><text class="lab" y="4.0">C61 10µ</text></g>
+  <g transform="translate(156.2,45.0)"><use href="#cel"/><text class="lab" y="4.0">C62 10µ</text></g>
+  <g transform="translate(165.6,45.0)"><use href="#cel"/><text class="lab" y="4.0">C63 10µ</text></g>
+  <g transform="translate(156,45)"><use href="#dip8"/><text class="lab" y="8.5">U9 EQ</text></g>
+  <rect class="blk" x="178" y="10" width="36" height="40"/>
+  <text class="silk-s" x="179.5" y="12.5" style="text-anchor:start">U2 OSC</text>
+  <g transform="translate(186,21)"><use href="#dip8"/><text class="lab" y="8.5">U2 SKT</text></g>
+  <g transform="translate(200.0,16.0)"><use href="#rth"/><text class="lab" y="2.55">R21 10k</text></g>
+  <g transform="translate(200.0,22.4)"><use href="#rth"/><text class="lab" y="2.55">R22 10k</text></g>
+  <g transform="translate(200.0,28.8)"><use href="#rth"/><text class="lab" y="2.55">R62 100k</text></g>
+  <g transform="translate(200.0,35.2)"><use href="#rth"/><text class="lab" y="2.55">R63 100k</text></g>
+  <g transform="translate(186.0,35.2)"><use href="#rth"/><text class="lab" y="2.55">R72 220k</text></g>
+  <g transform="translate(186.0,42.0)"><use href="#cth"/><text class="lab" y="2.65">C21 100n</text></g>
+  <g transform="translate(200.0,42.0)"><use href="#cth"/><text class="lab" y="2.65">C6 10n</text></g>
+  <g transform="translate(186.0,47.2)"><use href="#cth"/><text class="lab" y="2.65">C19 100n</text></g>
+  <rect class="blk" x="58" y="58" width="62" height="32"/>
+  <text class="silk-s" x="59.5" y="60.5" style="text-anchor:start">MIX  SHAPE  FM</text>
+  <g transform="translate(64,65)"><use href="#to92"/><text class="lab" y="4.5">Q1</text></g>
+  <g transform="translate(76,65)"><use href="#to92"/><text class="lab" y="4.5">Q2</text></g>
+  <g transform="translate(88,65)"><use href="#to92"/><text class="lab" y="4.5">Q3</text></g>
+  <g transform="translate(100,65)"><use href="#to92"/><text class="lab" y="4.5">Q6</text></g>
+  <g transform="translate(112,65)">
+    <circle class="pad" cx="-1.1" cy="0" r="0.5"/><circle class="hole" cx="-1.1" cy="0" r="0.26"/>
+    <circle class="pad" cx="1.1" cy="0" r="0.5"/><circle class="hole" cx="1.1" cy="0" r="0.26"/>
+    <text class="lab" y="3.4">MP20-1</text></g>
+  <g transform="translate(64.0,73.0)"><use href="#rth"/><text class="lab" y="2.55">R23 10k</text></g>
+  <g transform="translate(74.2,73.0)"><use href="#rth"/><text class="lab" y="2.55">R24 10k</text></g>
+  <g transform="translate(84.4,73.0)"><use href="#rth"/><text class="lab" y="2.55">R25 10k</text></g>
+  <g transform="translate(94.6,73.0)"><use href="#rth"/><text class="lab" y="2.55">R3 1k</text></g>
+  <g transform="translate(104.8,73.0)"><use href="#rth"/><text class="lab" y="2.55">R64 100k</text></g>
+  <g transform="translate(115.0,73.0)"><use href="#rth"/><text class="lab" y="2.55">R80 1M</text></g>
+  <g transform="translate(64.0,79.0)"><use href="#rth"/><text class="lab" y="2.55">R26 10k</text></g>
+  <g transform="translate(74.2,79.0)"><use href="#rth"/><text class="lab" y="2.55">R29 10k</text></g>
+  <g transform="translate(84.4,79.0)"><use href="#rth"/><text class="lab" y="2.55">R27 10k</text></g>
+  <g transform="translate(94.6,79.0)"><use href="#rth"/><text class="lab" y="2.55">R28 10k</text></g>
+  <g transform="translate(104.8,79.0)"><use href="#rth"/><text class="lab" y="2.55">R4 1k</text></g>
+  <g transform="translate(115.0,79.0)"><use href="#rth"/><text class="lab" y="2.55">R65 100k</text></g>
+  <g transform="translate(64.0,85.0)"><use href="#rth"/><text class="lab" y="2.55">R66 100k</text></g>
+  <g transform="translate(74.2,85.0)"><use href="#rth"/><text class="lab" y="2.55">R73 220k</text></g>
+  <g transform="translate(90.0,85.0)"><use href="#cth"/><text class="lab" y="2.65">C26 100n</text></g>
+  <g transform="translate(98.3,85.0)"><use href="#cth"/><text class="lab" y="2.65">C51 1µ</text></g>
+  <g transform="translate(106.6,85.0)"><use href="#cth"/><text class="lab" y="2.65">C52 1µ</text></g>
+  <rect class="blk" x="122" y="52" width="54" height="38"/>
+  <text class="silk-s" x="123.5" y="54.5" style="text-anchor:start">VCF  VCA  LFO</text>
+  <g transform="translate(128,60)"><use href="#to92"/><text class="lab" y="4.5">Q4</text></g>
+  <g transform="translate(140,60)"><use href="#to92"/><text class="lab" y="4.5">Q5</text></g>
+  <g transform="translate(152,60)"><use href="#to92"/><text class="lab" y="4.5">Q7</text></g>
+  <g transform="translate(164,60)"><use href="#to92"/><text class="lab" y="4.5">D2</text></g>
+  <g transform="translate(128.0,68.0)"><use href="#rth"/><text class="lab" y="2.55">R30 10k</text></g>
+  <g transform="translate(138.2,68.0)"><use href="#rth"/><text class="lab" y="2.55">R67 100k</text></g>
+  <g transform="translate(148.4,68.0)"><use href="#rth"/><text class="lab" y="2.55">R61 68k</text></g>
+  <g transform="translate(158.6,68.0)"><use href="#rth"/><text class="lab" y="2.55">R31 10k</text></g>
+  <g transform="translate(168.8,68.0)"><use href="#rth"/><text class="lab" y="2.55">R69 100k</text></g>
+  <g transform="translate(128.0,74.4)"><use href="#rth"/><text class="lab" y="2.55">R74 220k</text></g>
+  <g transform="translate(138.2,74.4)"><use href="#rth"/><text class="lab" y="2.55">R68 100k</text></g>
+  <g transform="translate(148.4,74.4)"><use href="#rth"/><text class="lab" y="2.55">R5 1k</text></g>
+  <g transform="translate(158.6,74.4)"><use href="#rth"/><text class="lab" y="2.55">R32 10k</text></g>
+  <g transform="translate(168.8,74.4)"><use href="#rth"/><text class="lab" y="2.55">R33 10k</text></g>
+  <g transform="translate(128.0,80.8)"><use href="#rth"/><text class="lab" y="2.55">R34 10k</text></g>
+  <g transform="translate(138.2,80.8)"><use href="#rth"/><text class="lab" y="2.55">R15 4k7</text></g>
+  <g transform="translate(148.4,80.8)"><use href="#rth"/><text class="lab" y="2.55">R81 1M</text></g>
+  <g transform="translate(128.0,86.8)"><use href="#cth"/><text class="lab" y="2.65">C43 220n</text></g>
+  <g transform="translate(136.3,86.8)"><use href="#cth"/><text class="lab" y="2.65">C44 220n</text></g>
+  <g transform="translate(144.6,86.8)"><use href="#cth"/><text class="lab" y="2.65">C45 220n</text></g>
+  <g transform="translate(152.9,86.8)"><use href="#cth"/><text class="lab" y="2.65">C46 220n</text></g>
+  <g transform="translate(161.2,86.8)"><use href="#cth"/><text class="lab" y="2.65">C47 220n</text></g>
+  <rect class="blk" x="178" y="52" width="36" height="38"/>
+  <text class="silk-s" x="179.5" y="54.5" style="text-anchor:start">CLK  TIME</text>
+  <g transform="translate(184,60)"><use href="#to92"/><text class="lab" y="4.5">D3</text></g>
+  <g transform="translate(196,60)"><use href="#to92"/><text class="lab" y="4.5">D4</text></g>
+  <g transform="translate(208.0,60.0)"><use href="#rth"/><text class="lab" y="2.55">R59 47k</text></g>
+  <g transform="translate(184.0,68.0)"><use href="#rth"/><text class="lab" y="2.55">R43 10k</text></g>
+  <g transform="translate(194.2,68.0)"><use href="#rth"/><text class="lab" y="2.55">R70 100k</text></g>
+  <g transform="translate(204.4,68.0)"><use href="#rth"/><text class="lab" y="2.55">R79 220k</text></g>
+  <g transform="translate(184.0,74.4)"><use href="#rth"/><text class="lab" y="2.55">R11 2k</text></g>
+  <g transform="translate(194.2,74.4)"><use href="#rth"/><text class="lab" y="2.55">R7 1k</text></g>
+  <g transform="translate(204.4,74.4)"><use href="#rth"/><text class="lab" y="2.55">R8 1k</text></g>
+  <g transform="translate(184.0,80.8)"><use href="#rth"/><text class="lab" y="2.55">R56 22k</text></g>
+  <g transform="translate(194.2,80.8)"><use href="#rth"/><text class="lab" y="2.55">R9 1k</text></g>
+  <g transform="translate(204.4,80.8)"><use href="#rth"/><text class="lab" y="2.55">R10 1k</text></g>
+  <g transform="translate(186.0,87.0)"><use href="#cel"/><text class="lab" y="4.0">C55 4µ7</text></g>
+  <g transform="translate(202.0,87.0)"><use href="#rth"/><text class="lab" y="2.55">R60 68k</text></g>
+  <rect class="blk" x="58" y="92" width="62" height="26"/>
+  <text class="silk-s" x="59.5" y="94.5" style="text-anchor:start">U3 NAB</text>
+  <g transform="translate(66,104)"><use href="#dip8"/><text class="lab" y="8.5">U3 SKT</text></g>
+  <g transform="translate(80.0,98.0)"><use href="#rth"/><text class="lab" y="2.55">R51 15k</text></g>
+  <g transform="translate(90.2,98.0)"><use href="#rth"/><text class="lab" y="2.55">R52 15k</text></g>
+  <g transform="translate(100.4,98.0)"><use href="#rth"/><text class="lab" y="2.55">R53 15k</text></g>
+  <g transform="translate(110.6,98.0)"><use href="#rth"/><text class="lab" y="2.55">R54 15k</text></g>
+  <g transform="translate(120.8,98.0)"><use href="#rth"/><text class="lab" y="2.55">R16 4k7</text></g>
+  <g transform="translate(80.0,104.4)"><use href="#rth"/><text class="lab" y="2.55">R45 10k</text></g>
+  <g transform="translate(90.2,104.4)"><use href="#rth"/><text class="lab" y="2.55">R46 10k</text></g>
+  <g transform="translate(80.0,111.0)"><use href="#cth"/><text class="lab" y="2.65">C4 3n3</text></g>
+  <g transform="translate(88.3,111.0)"><use href="#cth"/><text class="lab" y="2.65">C5 3n3</text></g>
+  <g transform="translate(96.6,111.0)"><use href="#cth"/><text class="lab" y="2.65">C48 220n</text></g>
+  <g transform="translate(104.9,111.0)"><use href="#cth"/><text class="lab" y="2.65">C49 220n</text></g>
+  <g transform="translate(113.2,111.0)"><use href="#cth"/><text class="lab" y="2.65">C20 100n</text></g>
+  <g transform="translate(121.5,111.0)"><use href="#cth"/><text class="lab" y="2.65">C29 100n</text></g>
+  <g transform="translate(80.0,116.5)"><use href="#cth"/><text class="lab" y="2.65">C30 100n</text></g>
+  <g transform="translate(90.0,116.5)"><use href="#cth"/><text class="lab" y="2.65">C50 220n</text></g>
+  <rect class="blk" x="122" y="92" width="54" height="26"/>
+  <text class="silk-s" x="123.5" y="94.5" style="text-anchor:start">ENV  SAÍDA</text>
+  <g transform="translate(128.0,98.0)"><use href="#cth"/><text class="lab" y="2.65">C27 100n</text></g>
+  <g transform="translate(136.3,98.0)"><use href="#cth"/><text class="lab" y="2.65">C28 100n</text></g>
+  <g transform="translate(128.0,108.0)"><use href="#cel"/><text class="lab" y="4.0">C68 47µ</text></g>
+  <g transform="translate(137.4,108.0)"><use href="#cel"/><text class="lab" y="4.0">C53 2µ2</text></g>
+  <g transform="translate(146.8,108.0)"><use href="#cel"/><text class="lab" y="4.0">C54 2µ2</text></g>
+  <g transform="translate(156.2,108.0)"><use href="#cel"/><text class="lab" y="4.0">C71 47µ</text></g>
+  <g transform="translate(168,108)">
+    <rect fill="#c4a05a" stroke="#6b3f12" stroke-width="0.2" x="-3.2" y="-3.4" width="6.4" height="6.4"/>
+    <circle class="pad" cx="-1.27" cy="1.3" r="0.5"/><circle class="hole" cx="-1.27" cy="1.3" r="0.26"/>
+    <circle class="pad" cx="0" cy="-1.3" r="0.5"/><circle class="hole" cx="0" cy="-1.3" r="0.26"/>
+    <circle class="pad" cx="1.27" cy="1.3" r="0.5"/><circle class="hole" cx="1.27" cy="1.3" r="0.26"/>
+    <text class="lab" y="5.8">RV1</text></g>
+  <rect class="blk" x="178" y="92" width="36" height="26"/>
+  <text class="silk-s" x="179.5" y="94.5" style="text-anchor:start">TRIM  Ge</text>
+  <g transform="translate(186,104)">
+    <rect fill="#c4a05a" stroke="#6b3f12" stroke-width="0.2" x="-3.2" y="-3.4" width="6.4" height="6.4"/>
+    <circle class="pad" cx="-1.27" cy="1.3" r="0.5"/><circle class="hole" cx="-1.27" cy="1.3" r="0.26"/>
+    <circle class="pad" cx="0" cy="-1.3" r="0.5"/><circle class="hole" cx="0" cy="-1.3" r="0.26"/>
+    <circle class="pad" cx="1.27" cy="1.3" r="0.5"/><circle class="hole" cx="1.27" cy="1.3" r="0.26"/>
+    <text class="lab" y="5.8">RV2</text></g>
+  <g transform="translate(202,104)">
+    <circle class="pad" cx="-1.1" cy="0" r="0.5"/><circle class="hole" cx="-1.1" cy="0" r="0.26"/>
+    <circle class="pad" cx="1.1" cy="0" r="0.5"/><circle class="hole" cx="1.1" cy="0" r="0.26"/>
+    <text class="lab" y="3.4">MP20-2</text></g>
+  <rect class="blk" x="58" y="120" width="156" height="34"/>
+  <text class="silk-s" x="59.5" y="122.5" style="text-anchor:start">FITA   U6 H1    U7 H2    U8 H3</text>
+  <g transform="translate(68,136)"><use href="#dip16"/><text class="lab" y="14">U6 SKT</text></g>
+  <g transform="translate(88,136)"><use href="#dip16"/><text class="lab" y="14">U7 SKT</text></g>
+  <g transform="translate(108,136)"><use href="#dip16"/><text class="lab" y="14">U8 SKT</text></g>
+  <g transform="translate(124.0,126.0)"><use href="#rth"/><text class="lab" y="2.55">R35 10k</text></g>
+  <g transform="translate(134.2,126.0)"><use href="#rth"/><text class="lab" y="2.55">R36 10k</text></g>
+  <g transform="translate(144.4,126.0)"><use href="#rth"/><text class="lab" y="2.55">R37 10k</text></g>
+  <g transform="translate(154.6,126.0)"><use href="#rth"/><text class="lab" y="2.55">R38 10k</text></g>
+  <g transform="translate(164.8,126.0)"><use href="#rth"/><text class="lab" y="2.55">R39 10k</text></g>
+  <g transform="translate(175.0,126.0)"><use href="#rth"/><text class="lab" y="2.55">R40 10k</text></g>
+  <g transform="translate(185.2,126.0)"><use href="#rth"/><text class="lab" y="2.55">R41 10k</text></g>
+  <g transform="translate(195.4,126.0)"><use href="#rth"/><text class="lab" y="2.55">R47 10k</text></g>
+  <g transform="translate(124.0,132.4)"><use href="#rth"/><text class="lab" y="2.55">R48 10k</text></g>
+  <g transform="translate(134.2,132.4)"><use href="#rth"/><text class="lab" y="2.55">R49 10k</text></g>
+  <g transform="translate(144.4,132.4)"><use href="#rth"/><text class="lab" y="2.55">R50 10k</text></g>
+  <g transform="translate(154.6,132.4)"><use href="#rth"/><text class="lab" y="2.55">R71 100k</text></g>
+  <g transform="translate(164.8,132.4)"><use href="#rth"/><text class="lab" y="2.55">R75 220k</text></g>
+  <g transform="translate(175.0,132.4)"><use href="#rth"/><text class="lab" y="2.55">R76 220k</text></g>
+  <g transform="translate(185.2,132.4)"><use href="#rth"/><text class="lab" y="2.55">R77 220k</text></g>
+  <g transform="translate(195.4,132.4)"><use href="#rth"/><text class="lab" y="2.55">R78 220k</text></g>
+  <g transform="translate(124.0,139.0)"><use href="#cth"/><text class="lab" y="2.65">C3 2n2</text></g>
+  <g transform="translate(132.3,139.0)"><use href="#cth"/><text class="lab" y="2.65">C7 10n</text></g>
+  <g transform="translate(140.6,139.0)"><use href="#cth"/><text class="lab" y="2.65">C8 10n</text></g>
+  <g transform="translate(148.9,139.0)"><use href="#cth"/><text class="lab" y="2.65">C9 10n</text></g>
+  <g transform="translate(157.2,139.0)"><use href="#cth"/><text class="lab" y="2.65">C10 10n</text></g>
+  <g transform="translate(165.5,139.0)"><use href="#cth"/><text class="lab" y="2.65">C11 10n</text></g>
+  <g transform="translate(173.8,139.0)"><use href="#cth"/><text class="lab" y="2.65">C12 10n</text></g>
+  <g transform="translate(182.1,139.0)"><use href="#cth"/><text class="lab" y="2.65">C13 10n</text></g>
+  <g transform="translate(190.4,139.0)"><use href="#cth"/><text class="lab" y="2.65">C14 10n</text></g>
+  <g transform="translate(124.0,145.4)"><use href="#cth"/><text class="lab" y="2.65">C15 10n</text></g>
+  <g transform="translate(132.3,145.4)"><use href="#cth"/><text class="lab" y="2.65">C16 10n</text></g>
+  <g transform="translate(140.6,145.4)"><use href="#cth"/><text class="lab" y="2.65">C17 10n</text></g>
+  <g transform="translate(148.9,145.4)"><use href="#cth"/><text class="lab" y="2.65">C18 22n</text></g>
+  <g transform="translate(157.2,145.4)"><use href="#cth"/><text class="lab" y="2.65">C31 100n</text></g>
+  <g transform="translate(165.5,145.4)"><use href="#cth"/><text class="lab" y="2.65">C32 100n</text></g>
+  <g transform="translate(173.8,145.4)"><use href="#cth"/><text class="lab" y="2.65">C33 100n</text></g>
+  <g transform="translate(182.1,145.4)"><use href="#cth"/><text class="lab" y="2.65">C34 100n</text></g>
+  <g transform="translate(190.4,145.4)"><use href="#cth"/><text class="lab" y="2.65">C35 100n</text></g>
+  <g transform="translate(124.0,151.8)"><use href="#cth"/><text class="lab" y="2.65">C36 100n</text></g>
+  <g transform="translate(132.3,151.8)"><use href="#cth"/><text class="lab" y="2.65">C37 100n</text></g>
+  <g transform="translate(140.6,151.8)"><use href="#cth"/><text class="lab" y="2.65">C38 100n</text></g>
+  <g transform="translate(148.9,151.8)"><use href="#cth"/><text class="lab" y="2.65">C39 100n</text></g>
+  <g transform="translate(157.2,151.8)"><use href="#cth"/><text class="lab" y="2.65">C40 100n</text></g>
+  <g transform="translate(165.5,151.8)"><use href="#cth"/><text class="lab" y="2.65">C41 100n</text></g>
+  <g transform="translate(173.8,151.8)"><use href="#cth"/><text class="lab" y="2.65">C42 100n</text></g>
+  <g transform="translate(190.0,151.8)"><use href="#cel"/><text class="lab" y="4.0">C69 47µ</text></g>
+  <g transform="translate(202.0,151.8)"><use href="#cel"/><text class="lab" y="4.0">C70 47µ</text></g>
+  <rect class="blk" x="58" y="158" width="156" height="52"/>
+  <text class="silk-s" x="59.5" y="160.5" style="text-anchor:start">VCO   U10 AS3340   U11 MC34063</text>
+  <g transform="translate(68,176)"><use href="#dip16"/><text class="lab" y="14">U10 SKT</text></g>
+  <g transform="translate(92,168)"><use href="#dip8"/><text class="lab" y="8.5">U11 SKT</text></g>
+  <g transform="translate(108,164)"><use href="#to92"/><text class="lab" y="4.5">78L12</text></g>
+  <g transform="translate(120,164)"><use href="#to92"/><text class="lab" y="4.5">78L05</text></g>
+  <g transform="translate(132,164)"><use href="#to92"/><text class="lab" y="4.5">79L05</text></g>
+  <g transform="translate(148,166)">
+    <rect fill="#c4a05a" stroke="#6b3f12" stroke-width="0.2" x="-3.2" y="-3.4" width="6.4" height="6.4"/>
+    <circle class="pad" cx="-1.27" cy="1.3" r="0.5"/><circle class="hole" cx="-1.27" cy="1.3" r="0.26"/>
+    <circle class="pad" cx="0" cy="-1.3" r="0.5"/><circle class="hole" cx="0" cy="-1.3" r="0.26"/>
+    <circle class="pad" cx="1.27" cy="1.3" r="0.5"/><circle class="hole" cx="1.27" cy="1.3" r="0.26"/>
+    <text class="lab" y="5.8">RV3</text></g>
+  <g transform="translate(160,166)">
+    <rect fill="#c4a05a" stroke="#6b3f12" stroke-width="0.2" x="-3.2" y="-3.4" width="6.4" height="6.4"/>
+    <circle class="pad" cx="-1.27" cy="1.3" r="0.5"/><circle class="hole" cx="-1.27" cy="1.3" r="0.26"/>
+    <circle class="pad" cx="0" cy="-1.3" r="0.5"/><circle class="hole" cx="0" cy="-1.3" r="0.26"/>
+    <circle class="pad" cx="1.27" cy="1.3" r="0.5"/><circle class="hole" cx="1.27" cy="1.3" r="0.26"/>
+    <text class="lab" y="5.8">RV4</text></g>
+  <g transform="translate(172,166)">
+    <rect fill="#c4a05a" stroke="#6b3f12" stroke-width="0.2" x="-3.2" y="-3.4" width="6.4" height="6.4"/>
+    <circle class="pad" cx="-1.27" cy="1.3" r="0.5"/><circle class="hole" cx="-1.27" cy="1.3" r="0.26"/>
+    <circle class="pad" cx="0" cy="-1.3" r="0.5"/><circle class="hole" cx="0" cy="-1.3" r="0.26"/>
+    <circle class="pad" cx="1.27" cy="1.3" r="0.5"/><circle class="hole" cx="1.27" cy="1.3" r="0.26"/>
+    <text class="lab" y="5.8">RV5</text></g>
+  <g transform="translate(184,166)">
+    <rect fill="#c4a05a" stroke="#6b3f12" stroke-width="0.2" x="-3.2" y="-3.4" width="6.4" height="6.4"/>
+    <circle class="pad" cx="-1.27" cy="1.3" r="0.5"/><circle class="hole" cx="-1.27" cy="1.3" r="0.26"/>
+    <circle class="pad" cx="0" cy="-1.3" r="0.5"/><circle class="hole" cx="0" cy="-1.3" r="0.26"/>
+    <circle class="pad" cx="1.27" cy="1.3" r="0.5"/><circle class="hole" cx="1.27" cy="1.3" r="0.26"/>
+    <text class="lab" y="5.8">RV6</text></g>
+  <g transform="translate(196,166)">
+    <rect fill="#c4a05a" stroke="#6b3f12" stroke-width="0.2" x="-3.2" y="-3.4" width="6.4" height="6.4"/>
+    <circle class="pad" cx="-1.27" cy="1.3" r="0.5"/><circle class="hole" cx="-1.27" cy="1.3" r="0.26"/>
+    <circle class="pad" cx="0" cy="-1.3" r="0.5"/><circle class="hole" cx="0" cy="-1.3" r="0.26"/>
+    <circle class="pad" cx="1.27" cy="1.3" r="0.5"/><circle class="hole" cx="1.27" cy="1.3" r="0.26"/>
+    <text class="lab" y="5.8">RV7</text></g>
+  <g transform="translate(108.0,178.0)"><use href="#rth"/><text class="lab" y="2.55">R82 0R47</text></g>
+  <g transform="translate(118.2,178.0)"><use href="#rth"/><text class="lab" y="2.55">R83 1k2</text></g>
+  <g transform="translate(128.4,178.0)"><use href="#rth"/><text class="lab" y="2.55">R84 1k2</text></g>
+  <g transform="translate(138.6,178.0)"><use href="#rth"/><text class="lab" y="2.55">R85 12k</text></g>
+  <g transform="translate(148.8,178.0)"><use href="#rth"/><text class="lab" y="2.55">R87 5k6</text></g>
+  <g transform="translate(159.0,178.0)"><use href="#rth"/><text class="lab" y="2.55">R88 5k6</text></g>
+  <g transform="translate(169.2,178.0)"><use href="#rth"/><text class="lab" y="2.55">R89 1k5</text></g>
+  <g transform="translate(108.0,184.4)"><use href="#rth"/><text class="lab" y="2.55">R90 100k</text></g>
+  <g transform="translate(118.2,184.4)"><use href="#rth"/><text class="lab" y="2.55">R91 100k</text></g>
+  <g transform="translate(128.4,184.4)"><use href="#rth"/><text class="lab" y="2.55">R92 100k</text></g>
+  <g transform="translate(138.6,184.4)"><use href="#rth"/><text class="lab" y="2.55">R93 100k</text></g>
+  <g transform="translate(148.8,184.4)"><use href="#rth"/><text class="lab" y="2.55">R94 180k</text></g>
+  <g transform="translate(159.0,184.4)"><use href="#rth"/><text class="lab" y="2.55">R95 330k</text></g>
+  <g transform="translate(169.2,184.4)"><use href="#rth"/><text class="lab" y="2.55">R96 1M5</text></g>
+  <g transform="translate(108.0,190.8)"><use href="#rth"/><text class="lab" y="2.55">R97 2M2</text></g>
+  <g transform="translate(118.2,190.8)"><use href="#rth"/><text class="lab" y="2.55">R98 470</text></g>
+  <g transform="translate(128.4,190.8)"><use href="#rth"/><text class="lab" y="2.55">R99 10k</text></g>
+  <g transform="translate(138.6,190.8)"><use href="#rth"/><text class="lab" y="2.55">R100 1k</text></g>
+  <g transform="translate(148.8,190.8)"><use href="#rth"/><text class="lab" y="2.55">R101 1k</text></g>
+  <g transform="translate(159.0,190.8)"><use href="#rth"/><text class="lab" y="2.55">R102 1k</text></g>
+  <g transform="translate(169.2,190.8)"><use href="#rth"/><text class="lab" y="2.55">R103 1k</text></g>
+  <g transform="translate(200.0,190.8)"><use href="#rth"/><text class="lab" y="2.55">R86 100k</text></g>
+  <g transform="translate(64.0,200.0)"><use href="#cth"/><text class="lab" y="2.65">C72 470p</text></g>
+  <g transform="translate(72.3,200.0)"><use href="#cth"/><text class="lab" y="2.65">C73 1n</text></g>
+  <g transform="translate(80.6,200.0)"><use href="#cth"/><text class="lab" y="2.65">C74 10n</text></g>
+  <g transform="translate(88.9,200.0)"><use href="#cth"/><text class="lab" y="2.65">C75 10n</text></g>
+  <g transform="translate(97.2,200.0)"><use href="#cth"/><text class="lab" y="2.65">C76 100n</text></g>
+  <g transform="translate(105.5,200.0)"><use href="#cth"/><text class="lab" y="2.65">C77 100n</text></g>
+  <g transform="translate(113.8,200.0)"><use href="#cth"/><text class="lab" y="2.65">C78 100n</text></g>
+  <g transform="translate(122.1,200.0)"><use href="#cth"/><text class="lab" y="2.65">C79 100n</text></g>
+  <g transform="translate(140.0,200.0)"><use href="#cth"/><text class="lab" y="2.65">C80 1µ</text></g>
+  <g transform="translate(148.3,200.0)"><use href="#cth"/><text class="lab" y="2.65">C81 1µ</text></g>
+  <g transform="translate(156.6,200.0)"><use href="#cth"/><text class="lab" y="2.65">C82 1µ</text></g>
+  <g transform="translate(172.0,200.0)"><use href="#cel"/><text class="lab" y="4.0">C83 10µ</text></g>
+  <g transform="translate(182.0,200.0)"><use href="#cel"/><text class="lab" y="4.0">C84 10µ</text></g>
+  <g transform="translate(192.0,200.0)"><use href="#cel"/><text class="lab" y="4.0">C85 10µ</text></g>
+  <g transform="translate(202.0,200.0)"><use href="#cel"/><text class="lab" y="4.0">C86 100µ</text></g>
+  <rect class="blk" x="6" y="178" width="46" height="30"/>
+  <text class="silk-s" x="7.5" y="180.5" style="text-anchor:start">LEDS  Q10 IN   Q11 REP   Q12 RATE</text>
+  <g transform="translate(12,184)"><use href="#to92"/><text class="lab" y="4.5">Q10</text></g>
+  <g transform="translate(22,184)"><use href="#to92"/><text class="lab" y="4.5">Q11</text></g>
+  <g transform="translate(32,184)"><use href="#to92"/><text class="lab" y="4.5">Q12</text></g>
+  <g transform="translate(40.0,185.0)"><use href="#cth"/><text class="lab" y="2.65">C87 100n</text></g>
+  <g transform="translate(48.0,186.0)"><use href="#cel"/><text class="lab" y="4.0">C88 10µ</text></g>
+  <g transform="translate(14.0,192.0)"><use href="#rth"/><text class="lab" y="2.55">R104 4k7</text></g>
+  <g transform="translate(23.2,192.0)"><use href="#rth"/><text class="lab" y="2.55">R105 4k7</text></g>
+  <g transform="translate(32.4,192.0)"><use href="#rth"/><text class="lab" y="2.55">R106 4k7</text></g>
+  <g transform="translate(41.6,192.0)"><use href="#rth"/><text class="lab" y="2.55">R107 4k7</text></g>
+  <g transform="translate(14.0,197.2)"><use href="#rth"/><text class="lab" y="2.55">R108 4k7</text></g>
+  <g transform="translate(23.2,197.2)"><use href="#rth"/><text class="lab" y="2.55">R109 10k</text></g>
+  <g transform="translate(32.4,197.2)"><use href="#rth"/><text class="lab" y="2.55">R110 220k</text></g>
+  <g transform="translate(41.6,197.2)"><use href="#rth"/><text class="lab" y="2.55">R111 10k</text></g>
+  <g transform="translate(14.0,202.4)"><use href="#rth"/><text class="lab" y="2.55">R112 220k</text></g>
+  <g transform="translate(23.2,202.4)"><use href="#rth"/><text class="lab" y="2.55">R113 47k</text></g>
+  <g transform="translate(32.4,202.4)"><use href="#rth"/><text class="lab" y="2.55">R114 220k</text></g>
+  <g transform="translate(44.0,202.4)"><use href="#cth"/><text class="lab" y="2.65">C89 100n</text></g>
+  <text class="lab" x="136" y="213.4">CIs só no soquete · pads J1–J11 furo 1,0 · pino 1 = quadrado · sem conector</text>
+</svg>

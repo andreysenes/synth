@@ -1,0 +1,204 @@
+=== 00_fonte.cir ===
+******
+** ngspice-47 : Circuit level simulation program
+** Compiled with KLU Direct Linear Solver
+** The U. C. Berkeley CAD Group
+** Copyright 1985-1994, Regents of the University of California.
+** Copyright 2001-2026, The ngspice team.
+** Please get your ngspice manual from https://ngspice.sourceforge.io/docs.html
+** Please file your bug-reports at http://ngspice.sourceforge.net/bugrep.html
+******
+
+Batch mode
+
+Comments and warnings go to log-file: out/00_fonte.log
+
+log → out/00_fonte.log
+OK markers found
+=== 01_osc.cir ===
+******
+** ngspice-47 : Circuit level simulation program
+** Compiled with KLU Direct Linear Solver
+** The U. C. Berkeley CAD Group
+** Copyright 1985-1994, Regents of the University of California.
+** Copyright 2001-2026, The ngspice team.
+** Please get your ngspice manual from https://ngspice.sourceforge.io/docs.html
+** Please file your bug-reports at http://ngspice.sourceforge.net/bugrep.html
+******
+
+Batch mode
+
+Comments and warnings go to log-file: out/01_osc.log
+
+log → out/01_osc.log
+(no DONE marker — check log for errors)
+=== 01_fm.cir ===
+******
+** ngspice-47 : Circuit level simulation program
+** Compiled with KLU Direct Linear Solver
+** The U. C. Berkeley CAD Group
+** Copyright 1985-1994, Regents of the University of California.
+** Copyright 2001-2026, The ngspice team.
+** Please get your ngspice manual from https://ngspice.sourceforge.io/docs.html
+** Please file your bug-reports at http://ngspice.sourceforge.net/bugrep.html
+******
+
+Batch mode
+
+Comments and warnings go to log-file: out/01_fm.log
+
+log → out/01_fm.log
+OK markers found
+=== 02_noise.cir ===
+******
+** ngspice-47 : Circuit level simulation program
+** Compiled with KLU Direct Linear Solver
+** The U. C. Berkeley CAD Group
+** Copyright 1985-1994, Regents of the University of California.
+** Copyright 2001-2026, The ngspice team.
+** Please get your ngspice manual from https://ngspice.sourceforge.io/docs.html
+** Please file your bug-reports at http://ngspice.sourceforge.net/bugrep.html
+******
+
+Batch mode
+
+Comments and warnings go to log-file: out/02_noise.log
+
+log → out/02_noise.log
+OK markers found
+=== 04_shape.cir ===
+******
+** ngspice-47 : Circuit level simulation program
+** Compiled with KLU Direct Linear Solver
+** The U. C. Berkeley CAD Group
+** Copyright 1985-1994, Regents of the University of California.
+** Copyright 2001-2026, The ngspice team.
+** Please get your ngspice manual from https://ngspice.sourceforge.io/docs.html
+** Please file your bug-reports at http://ngspice.sourceforge.net/bugrep.html
+******
+
+Batch mode
+
+Comments and warnings go to log-file: out/04_shape.log
+
+log → out/04_shape.log
+(no DONE marker — check log for errors)
+=== 05_vcf.cir ===
+******
+** ngspice-47 : Circuit level simulation program
+** Compiled with KLU Direct Linear Solver
+** The U. C. Berkeley CAD Group
+** Copyright 1985-1994, Regents of the University of California.
+** Copyright 2001-2026, The ngspice team.
+** Please get your ngspice manual from https://ngspice.sourceforge.io/docs.html
+** Please file your bug-reports at http://ngspice.sourceforge.net/bugrep.html
+******
+
+Batch mode
+
+Comments and warnings go to log-file: out/05_vcf.log
+
+log → out/05_vcf.log
+(no DONE marker — check log for errors)
+=== 06_vca.cir ===
+******
+** ngspice-47 : Circuit level simulation program
+** Compiled with KLU Direct Linear Solver
+** The U. C. Berkeley CAD Group
+** Copyright 1985-1994, Regents of the University of California.
+** Copyright 2001-2026, The ngspice team.
+** Please get your ngspice manual from https://ngspice.sourceforge.io/docs.html
+** Please file your bug-reports at http://ngspice.sourceforge.net/bugrep.html
+******
+
+Batch mode
+
+Comments and warnings go to log-file: out/06_vca.log
+
+log → out/06_vca.log
+(no DONE marker — check log for errors)
+=== 07_lfo.cir ===
+******
+** ngspice-47 : Circuit level simulation program
+** Compiled with KLU Direct Linear Solver
+** The U. C. Berkeley CAD Group
+** Copyright 1985-1994, Regents of the University of California.
+** Copyright 2001-2026, The ngspice team.
+** Please get your ngspice manual from https://ngspice.sourceforge.io/docs.html
+** Please file your bug-reports at http://ngspice.sourceforge.net/bugrep.html
+******
+
+Batch mode
+
+Comments and warnings go to log-file: out/07_lfo.log
+
+log → out/07_lfo.log
+(no DONE marker — check log for errors)
+=== 08b_nab.cir ===
+******
+** ngspice-47 : Circuit level simulation program
+** Compiled with KLU Direct Linear Solver
+** The U. C. Berkeley CAD Group
+** Copyright 1985-1994, Regents of the University of California.
+** Copyright 2001-2026, The ngspice team.
+** Please get your ngspice manual from https://ngspice.sourceforge.io/docs.html
+** Please file your bug-reports at http://ngspice.sourceforge.net/bugrep.html
+******
+
+Batch mode
+
+Comments and warnings go to log-file: out/08b_nab.log
+
+log → out/08b_nab.log
+OK markers found
+=== 08_pin6.cir ===
+******
+** ngspice-47 : Circuit level simulation program
+** Compiled with KLU Direct Linear Solver
+** The U. C. Berkeley CAD Group
+** Copyright 1985-1994, Regents of the University of California.
+** Copyright 2001-2026, The ngspice team.
+** Please get your ngspice manual from https://ngspice.sourceforge.io/docs.html
+** Please file your bug-reports at http://ngspice.sourceforge.net/bugrep.html
+******
+
+Batch mode
+
+Comments and warnings go to log-file: out/08_pin6.log
+
+log → out/08_pin6.log
+(no DONE marker — check log for errors)
+=== 08_echo.cir ===
+******
+** ngspice-47 : Circuit level simulation program
+** Compiled with KLU Direct Linear Solver
+** The U. C. Berkeley CAD Group
+** Copyright 1985-1994, Regents of the University of California.
+** Copyright 2001-2026, The ngspice team.
+** Please get your ngspice manual from https://ngspice.sourceforge.io/docs.html
+** Please file your bug-reports at http://ngspice.sourceforge.net/bugrep.html
+******
+
+Batch mode
+
+Comments and warnings go to log-file: out/08_echo.log
+
+log → out/08_echo.log
+(no DONE marker — check log for errors)
+=== harness_check.cir ===
+******
+** ngspice-47 : Circuit level simulation program
+** Compiled with KLU Direct Linear Solver
+** The U. C. Berkeley CAD Group
+** Copyright 1985-1994, Regents of the University of California.
+** Copyright 2001-2026, The ngspice team.
+** Please get your ngspice manual from https://ngspice.sourceforge.io/docs.html
+** Please file your bug-reports at http://ngspice.sourceforge.net/bugrep.html
+******
+
+Batch mode
+
+Comments and warnings go to log-file: out/harness_check.log
+
+log → out/harness_check.log
+(no DONE marker — check log for errors)

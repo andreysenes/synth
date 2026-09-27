@@ -2,7 +2,8 @@
 # VOZ-9 SPICE runner — run from voz-9/sim/
 # Usage: ./run.sh [block]
 #   block = 00_fonte | 01_osc | 01_fm | 02_noise | 04_shape | 05_vcf |
-#           06_vca | 07_lfo | 08b_nab | 08_pin6 | 08_echo | harness_check | all
+#           06_vca | 07_lfo | 08b_nab | 08_pin6 | 08_echo | harness_check |
+#           09_vco | all
 
 set -euo pipefail
 cd "$(dirname "$0")"
@@ -50,6 +51,7 @@ BLOCKS=(
   08_pin6
   08_echo
   harness_check
+  09_vco
 )
 
 target="${1:-all}"

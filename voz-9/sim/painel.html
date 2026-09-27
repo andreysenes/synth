@@ -69,13 +69,15 @@
   Clique <strong>Tocar</strong>. Em <strong>XLR IN</strong> escolha WAV ou a interface.
   EQ <strong>pós-mix</strong>. <strong>SEND</strong> = PRE, pré-EQ.
   <strong>OSC IN</strong> = mix osc ↔ XLR. Sem XLR, <strong>PRE</strong> = pré dos oscs.
+  Faixa de baixo: <strong>SAW</strong>, <strong>TRI</strong> e <strong>PUL</strong> escolhem a onda do VCO
+  (as três off = fora do áudio; mais de uma = somam). <strong>PW</strong> só muda o pulso.
   OUT = stereo / scope. Patch: jack→jack; botão direito remove.
 </p>
 <div class="row">
   <div class="panel-wrap">
-    <svg id="panel" viewBox="0 0 220 160" xmlns="http://www.w3.org/2000/svg">
-      <rect width="220" height="160" rx="2" fill="#9a9a98"/>
-      <rect x="4" y="4" width="212" height="152" rx="1.5" fill="#6e6e6c"/>
+    <svg id="panel" viewBox="0 0 220 216" xmlns="http://www.w3.org/2000/svg">
+      <rect width="220" height="216" rx="2" fill="#9a9a98"/>
+      <rect x="4" y="4" width="212" height="208" rx="1.5" fill="#6e6e6c"/>
       <g class="knob-hit" data-key="pitch_a" transform="translate(128,36)">
         <circle r="15" fill="#1a1a1a"/><line class="ptr" x1="0" y1="0" x2="0" y2="-12" stroke="#eee" stroke-width="2"/>
         <text class="lab" y="-21">OSC A</text>
@@ -196,6 +198,35 @@
       <g class="jack-hit" data-key="jack_clk" transform="translate(136,144)"><circle r="4" fill="#222"/><text class="sub" y="8">CLK</text></g>
       <g class="jack-hit" data-key="jack_send" transform="translate(151,144)"><circle r="4" fill="#222"/><text class="sub" y="8">SEND</text></g>
       <g class="jack-hit" data-key="jack_rcv" transform="translate(166,144)"><circle r="4" fill="#222"/><text class="sub" y="8">RCV</text></g>
+      <g class="knob-hit" data-key="coarse" transform="translate(32,190)">
+        <circle r="15" fill="#1a1a1a"/><line class="ptr" x1="0" y1="0" x2="0" y2="-12" stroke="#eee" stroke-width="2"/>
+        <text class="lab" y="-21">COARSE</text>
+      </g>
+      <g class="knob-hit" data-key="fine" transform="translate(66,190)">
+        <circle r="9" fill="#1a1a1a"/><line class="ptr" x1="0" y1="0" x2="0" y2="-7" stroke="#eee" stroke-width="1.5"/>
+        <text class="lab" y="-13">FINE</text>
+      </g>
+      <g class="knob-hit" data-key="pw" transform="translate(90,190)">
+        <circle r="9" fill="#1a1a1a"/><line class="ptr" x1="0" y1="0" x2="0" y2="-7" stroke="#eee" stroke-width="1.5"/>
+        <text class="lab" y="-13">PW</text>
+      </g>
+      <g class="knob-hit" data-key="vco_fm" transform="translate(114,190)">
+        <circle r="9" fill="#1a1a1a"/><line class="ptr" x1="0" y1="0" x2="0" y2="-7" stroke="#eee" stroke-width="1.5"/>
+        <text class="lab" y="-13">FM</text>
+      </g>
+      <g class="sw-hit" data-key="sw_saw" data-kind="01" transform="translate(138,190)">
+        <rect x="-5" y="-8" width="10" height="16" rx="2" fill="#333"/><line class="lev" x1="0" y1="0" x2="0" y2="6" stroke="#ccc" stroke-width="2"/>
+        <text class="lab" y="-13">SAW</text>
+      </g>
+      <g class="sw-hit" data-key="sw_tri" data-kind="01" transform="translate(156,190)">
+        <rect x="-5" y="-8" width="10" height="16" rx="2" fill="#333"/><line class="lev" x1="0" y1="0" x2="0" y2="6" stroke="#ccc" stroke-width="2"/>
+        <text class="lab" y="-13">TRI</text>
+      </g>
+      <g class="sw-hit" data-key="sw_pul" data-kind="01" transform="translate(174,190)">
+        <rect x="-5" y="-8" width="10" height="16" rx="2" fill="#333"/><line class="lev" x1="0" y1="0" x2="0" y2="-6" stroke="#ccc" stroke-width="2"/>
+        <text class="lab" y="-13">PUL</text>
+      </g>
+      <g class="jack-hit" data-key="jack_cv" transform="translate(198,190)"><circle r="4" fill="#222"/><text class="sub" y="8">CV</text></g>
     </svg>
   </div>
 
@@ -270,10 +301,12 @@ const state = {
   rate: 0.35, depth: 0.25, pre: 0.55, osc_in: 0.5,
   eq_low: 0.5, eq_mid_f: 0.45, eq_mid_g: 0.5, eq_high: 0.5,
   time_u: 0.4, fback: 0.35, wet: 0.4, volume: 0.55,
+  coarse: 0.45, fine: 0.5, pw: 0.5, vco_fm: 0,
   sw_osc_a: 1, sw_osc_b: 1, sw_drone: 1, sw_trem: 0, sw_mode: 0,
   sw_h1: 1, sw_h2: 1, sw_h3: 1, sw_stack: 0, sw_gate: 0,
+  sw_saw: 0, sw_tri: 0, sw_pul: 0,
   jack_a: 0, jack_b: 0, jack_in: 0, jack_filt: 0, jack_fcv: 0, jack_vcv: 0,
-  jack_lfo: 0, jack_ecv: 0, jack_clk: 0, jack_send: 0, jack_rcv: 0,
+  jack_lfo: 0, jack_ecv: 0, jack_clk: 0, jack_send: 0, jack_rcv: 0, jack_cv: 0,
   xlr_in: 1, xlr_solo: 0, xlr_source: 'wav', xlr_deviceId: '',
 };
 
@@ -290,6 +323,16 @@ let extFileName = 'twinkle.wav';
 let micStream = null;
 let micNode = null;
 let micSplit = null;
+
+function pulseWave(ac, width) {
+  const n = 48;
+  const real = new Float32Array(n);
+  const imag = new Float32Array(n);
+  for (let k = 1; k < n; k++) {
+    imag[k] = Math.sin(k * Math.PI * width) / (k * Math.PI);
+  }
+  return ac.createPeriodicWave(real, imag);
+}
 
 function logMap(u, lo, hi) {
   const t = Math.min(1, Math.max(0, u));
@@ -313,6 +356,18 @@ function buildGraph(ac) {
   oscA.type = 'square';
   const oscB = ac.createOscillator();
   oscB.type = 'square';
+  const vcoSaw = ac.createOscillator();
+  vcoSaw.type = 'sawtooth';
+  const vcoTri = ac.createOscillator();
+  vcoTri.type = 'triangle';
+  const vcoPul = ac.createOscillator();
+  vcoPul.type = 'square';
+  const gainSaw = ac.createGain();
+  const gainTri = ac.createGain();
+  const gainPul = ac.createGain();
+  gainSaw.gain.value = 0;
+  gainTri.gain.value = 0;
+  gainPul.gain.value = 0;
   const gainA = ac.createGain();
   const gainB = ac.createGain();
   const noise = ac.createBufferSource();
@@ -395,6 +450,12 @@ function buildGraph(ac) {
   lfo.connect(fmB);
   fmA.connect(oscA.frequency);
   fmB.connect(oscB.frequency);
+  const fmV = ac.createGain();
+  fmV.gain.value = 0;
+  lfo.connect(fmV);
+  fmV.connect(vcoSaw.detune);
+  fmV.connect(vcoTri.detune);
+  fmV.connect(vcoPul.detune);
 
   // LFO → FCV (cutoff CV)
   const fcvPatch = ac.createGain();
@@ -491,6 +552,9 @@ function buildGraph(ac) {
 
   gainA.connect(mix);
   gainB.connect(mix);
+  vcoSaw.connect(gainSaw); gainSaw.connect(mix);
+  vcoTri.connect(gainTri); gainTri.connect(mix);
+  vcoPul.connect(gainPul); gainPul.connect(mix);
   noiseGain.connect(mix);
   // PRE = extGain (SEND pré-EQ + ENV); OSC IN = xlrMix → mix
   extGain.connect(xlrMix);
@@ -552,12 +616,16 @@ function buildGraph(ac) {
 
   oscA.start();
   oscB.start();
+  vcoSaw.start();
+  vcoTri.start();
+  vcoPul.start();
   noise.start();
   lfo.start();
   tremBias.start();
 
   return {
-    oscA, oscB, gainA, gainB, noiseGain, extGain, xlrMix, eqLow, eqMid, eqHigh, mix, shapePre, shaper, makeCurve,
+    oscA, oscB, gainA, gainB, vcoSaw, vcoTri, vcoPul, gainSaw, gainTri, gainPul, fmV,
+    noiseGain, extGain, xlrMix, eqLow, eqMid, eqHigh, mix, shapePre, shaper, makeCurve,
     vcf, vca, lfo, tremolo, tremDepth, vcvPatch, tremBias, fmA, fmB, fcvPatch,
     filtNorm, filtFromA, filtFromB, filtFromIn, filtFromLfo,
     delays, headGains, fbGain, wetGain, dryGain, echoIn, echoMix, nabLp, timeMods,
@@ -607,6 +675,21 @@ function applyState() {
   n.oscA.frequency.setTargetAtTime(fA, now, 0.02);
   n.oscB.frequency.setTargetAtTime(fB, now, 0.02);
 
+  // VCO cromático: COARSE 0–5 oitavas a partir de C1, FINE ±4 semitons.
+  // SAW / TRI / PUL escolhem a onda que entra no mix (as três off = some).
+  const oct = state.coarse * 5 + (state.fine - 0.5) * (8 / 12);
+  const fV = 32.703125 * Math.pow(2, oct);
+  n.vcoSaw.frequency.setTargetAtTime(fV, now, 0.02);
+  n.vcoTri.frequency.setTargetAtTime(fV, now, 0.02);
+  n.vcoPul.frequency.setTargetAtTime(fV, now, 0.02);
+  const pw = Math.min(0.95, Math.max(0.05, state.pw));
+  if (!n._pw || Math.abs(n._pw - pw) > 0.01) {
+    n.vcoPul.setPeriodicWave(pulseWave(ctx, pw));
+    n._pw = pw;
+  }
+  const fmCents = (state.vco_fm || 0) * 80 + (hasPatch('jack_lfo', 'jack_cv') ? 400 : 0);
+  n.fmV.gain.setTargetAtTime(fmCents, now, 0.03);
+
   // AMOUNT + mute: DRONE+GATE = mute OSC A/B (echo tails keep ringing)
   // xlr_solo = só entrada COMBO/XLR (muta osciladores e noise)
   const amt = state.amount;
@@ -654,6 +737,10 @@ function applyState() {
   const oscPre = xlrLive ? oscAmt : (preAmt / 0.85);
   n.gainA.gain.setTargetAtTime(onA * (1 - amt) * 0.55 * oscPre, now, 0.015);
   n.gainB.gain.setTargetAtTime(onB * amt * 0.45 * oscPre, now, 0.015);
+  const wave = soloIn ? 0 : oscOpen * oscPre * 0.28;
+  n.gainSaw.gain.setTargetAtTime(state.sw_saw > 0.5 ? wave : 0, now, 0.015);
+  n.gainTri.gain.setTargetAtTime(state.sw_tri > 0.5 ? wave : 0, now, 0.015);
+  n.gainPul.gain.setTargetAtTime(state.sw_pul > 0.5 ? wave : 0, now, 0.015);
   n.noiseGain.gain.setTargetAtTime(soloIn ? 0 : 0.04 * oscOpen * oscPre, now, 0.03);
 
   // EQ 424 pós-mix: LOW 100 Hz ±10 · MID 250–5k ±12 · HIGH 10 kHz ±10
@@ -1061,6 +1148,12 @@ function drawScope() {
   const pct = Math.min(200, peak * 100);
   const fA = logMap(state.pitch_a, 12, 480).toFixed(0);
   const fB = logMap(state.pitch_b, 110, 4800).toFixed(0);
+  const fV = (32.703125 * Math.pow(2, state.coarse * 5 + (state.fine - 0.5) * (8 / 12))).toFixed(1);
+  const waves = [
+    state.sw_saw > 0.5 ? 'SAW' : '',
+    state.sw_tri > 0.5 ? 'TRI' : '',
+    state.sw_pul > 0.5 ? 'PUL' : '',
+  ].filter(Boolean).join('+') || 'off';
   const clip = peak > 0.98 ? ' · CLIP' : '';
   const tremLabel = state.sw_trem > 0.5 ? 'TREM' : state.sw_trem < -0.5 ? 'FLUT' : 'LFO off';
   const modeLabel =
@@ -1069,7 +1162,7 @@ function drawScope() {
       : `GATE · ENV ${(envLevel * 100).toFixed(0)}%`;
   const modeLabel2 = `${modeLabel} · ${tremLabel}`;
   document.getElementById('meter').textContent =
-    `A ${fA} Hz · B ${fB} Hz · pico ${pct.toFixed(0)}%${clip} · ${modeLabel2}`;
+    `VCO ${fV} Hz · ${waves} · A ${fA} Hz · B ${fB} Hz · pico ${pct.toFixed(0)}%${clip} · ${modeLabel2}`;
 
   applyState();
   scopeAnim = requestAnimationFrame(drawScope);
@@ -1151,10 +1244,10 @@ function render() {
 
 function buildInc() {
   const lines = ['* Generated by painel.html', ''];
-  ['pitch_a','pitch_b','amount','shape','cutoff','rate','depth','pre','osc_in','eq_low','eq_mid_f','eq_mid_g','eq_high','time_u','fback','wet','volume']
+  ['pitch_a','pitch_b','amount','shape','cutoff','rate','depth','pre','osc_in','eq_low','eq_mid_f','eq_mid_g','eq_high','time_u','fback','wet','volume','coarse','fine','pw','vco_fm']
     .forEach(k => lines.push(`.param ${k}=${state[k].toFixed(4)}`));
   lines.push('');
-  ['sw_osc_a','sw_osc_b','sw_drone','sw_trem','sw_mode','sw_h1','sw_h2','sw_h3','sw_stack','sw_gate']
+  ['sw_osc_a','sw_osc_b','sw_drone','sw_trem','sw_mode','sw_h1','sw_h2','sw_h3','sw_stack','sw_gate','sw_saw','sw_tri','sw_pul']
     .forEach(k => lines.push(`.param ${k}=${state[k]}`));
   lines.push(`.param sw_mode_p=${state.sw_mode < -0.5 ? 1 : 0}`);
   lines.push(`.param sw_mode_t=${state.sw_mode > 0.5 ? 1 : 0}`);

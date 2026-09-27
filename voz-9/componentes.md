@@ -19,6 +19,7 @@ Não leia tudo de uma vez. O caminho que fecha com a montagem:
 5. **LFO** (2N5457, TREM 3 pos).
 6. **Fita** (PT2399, TL072).
 7. **Voz** (NE5532, combo).
+8. **VCO cromático** — faixa de baixo do mesmo painel (`vco.md`). SAW / TRI / PUL.
 
 Em cada peça há quatro blocos:
 
@@ -161,7 +162,7 @@ O mais **vivo** (fecha com pouco Vgs, conduz fácil) → **VCF**. Um par parecid
 
 **Datasheet.** [ON Semi J201/J202](https://www.onsemi.com/pdf/datasheet/j201-d.pdf)
 
-**Não faça.** Gate sem resistor “no ar” em bancada — estática. Não espere 1 V/oitava: o J201 no pitch é *molho*, não teclado.
+**Não faça.** Gate sem resistor “no ar” em bancada — estática. Não espere 1 V/oitava: o J201 no pitch é *molho*, não teclado. Teclado → módulo VCO (`vco.md`).
 
 ---
 
@@ -352,13 +353,27 @@ TL072 = entrada JFET, mais “hi-fi”. 4558 = o som de pedal dos anos 80. Os do
 
 **Ideia.** **Oscilador de relaxação**: a saída bate no teto, o cap enche pelo pot de pitch, a entrada “−” passa de um limiar, a saída bate no chão, o cap esvazia, repete. O resultado é um **quadrado**, não um seno. Duas metades, dois osciladores. Quando as frequências se aproximam você ouve o **batimento** — o som do instrumento.
 
-Não é MiniMoog. Não há 1 V/oitava. Os pots 500 kA *são* a escala.
+Não é MiniMoog. Não há 1 V/oitava nestes dois. Os pots 500 kA *são* a escala. O cromático está na mesma placa (`vco.md`): AS3340, chaves SAW / TRI / PUL.
 
 **No VOZ-9.** OSC A (~10 Hz–500 Hz, cap 100 n). OSC B (~100 Hz–5 kHz, cap 10 n). A zona em que se encontram (~100–500 Hz) é onde o batimento vive.
 
 **Banco.** Um osc de cada vez no amp, volume baixo. Gira o pitch: deve ir de “motor” a “apito”. Os dois no AMOUNT no meio: uivo lento quando os tons se cruzam.
 
 **Datasheet.** O código na tampa. Apagou: [RC4558](https://www.ti.com/lit/ds/symlink/rc4558.pdf).
+
+---
+
+### AS3340 — a oitava, na mesma placa
+
+**Ideia.** Oscilador que dobra a frequência a cada 1 V. O par de transistores e o compensador de temperatura estão no mesmo silício, então a oitava não anda quando a caixa esquenta. É o que um teclado precisa. Os OSC A/B do VOZ-9 não são isto.
+
+**No projeto.** Faixa de baixo do `painel.svg` e bloco na BASE (`vco.md`). **SAW / TRI / PUL** escolhem a onda que entra no mix. GATE do teclado entra no **VCV**. A conta: 1 V / 100 kΩ = 10 µA; 10 µA × 1,793 kΩ = 17,93 mV = VT·ln(2) = uma oitava. O trim SCALE acha esse 1,793 k.
+
+**Banco.** Sem o chip: 12 V no pino 16, −5 V no pino 3. Com o chip e o trim feito: +5 V no CV = C6 (1046 Hz), 0 V = C1 (32,7 Hz). `sim/09_vco.cir` confere a lei.
+
+**Datasheet.** [AS3340 (Alfa)](https://store.synthrotek.com/assets/images/AS3340-datasheet.pdf). V3340 da Coolaudio serve, mesmos pinos.
+
+**Não faça.** Alimentar o pino 16 com 9 V (a folha começa em +10 V). Ligar o pino 3 em −9 V sem o 79L05. Esperar 1 V/oitava do J201.
 
 ---
 
@@ -484,11 +499,11 @@ Invertido: o 1N5817 segura. O LED não acende.
 
 ### Chicotes 2×N (fêmea na placa)
 
-**Ideia.** Housing 2,54 mm, **dupla fila**, no tamanho do grupo. **J1 OSC 2×10, J2 LFO 2×6, J3 DELAY 2×10, J4 PATCH A 2×10, J5 PATCH B 2×8, J6 CTRL 2×3, J7 IN+PRE+OSC IN 2×6, J8 OUT 2×3, J9 EQ 424 2×6** — nove chicotes.
+**Ideia.** Housing 2,54 mm, **dupla fila**, no tamanho do grupo. **J1 OSC 2×10, J2 LFO 2×6, J3 DELAY 2×10, J4 PATCH A 2×10, J5 PATCH B 2×8, J6 CTRL 2×3, J7 IN+PRE+OSC IN 2×6, J8 OUT 2×3, J9 EQ 424 2×6, J10 VCO 2×10** — dez chicotes. J10 leva COARSE, FINE, PW, FM, as chaves SAW/TRI/PUL e o jack CV.
 
 Na BASE solda a **fêmea**. Do painel sai o **macho**. Pino 1 = pad quadrado. Não cruze os grupos.
 
-CIs (U1–U4, U6–U8, **U9**) entram em **soquete DIP**. Ferro no soquete, nunca no chip.
+CIs (U1–U4, U6–U8, **U9**, **U10** AS3340, **U11** MC34063) entram em **soquete DIP**. Ferro no soquete, nunca no chip. 78L12, 78L05 e 79L05 do VCO são TO-92, sem soquete.
 
 Pinagem: `pcb.md`.
 

@@ -85,7 +85,7 @@ Válvula de um sentido. Só conduz quando o ânodo está uns **Vf** acima do cá
 | Silício (1N4148) | ~0,7 V | envelope do GATE |
 | Schottky (1N5817) | ~0,3 V | proteção da fonte |
 | Germânio (MP20 como diodo) | ~0,2 V | clipper “macio” |
-| LED | ~1,8–2,2 V | piloto (sempre com resistor) |
+| LED 3 mm vermelho | ~1,8–2,2 V | piloto e cinco indicadores (sempre com resistor) |
 
 ### Transistor bipolar vs JFET (o essencial)
 
@@ -171,7 +171,7 @@ O mais **vivo** (fecha com pouco Vgs, conduz fácil) → **VCF**. Um par parecid
 
 **No VOZ-9.** Um só, comprado novo. Drain → jack LFO e → DEPTH → LFO MODE. A chave **TREM** (ON–OFF–ON) escolhe 220 n (tremolo), **meio = off**, ou 47 µ (flutter).
 
-**Banco.** LED não mostra LFO. Ouça no jack LFO no amp, volume baixo: “fom-fom” lento (flutter) ou trêmolo rápido. Sem isso, a rede de 220 n ou o JFET está invertido.
+**Banco.** O **LED RATE** pisca na taxa: devagar no flutter, rápido no tremolo, **apagado** com TREM no centro. Ouça no jack LFO no amp, volume baixo, se quiser confirmar o formato. Sem pisca e sem som, a rede de 220 n ou o JFET está invertido.
 
 **Em geral.** Chorus, phaser, Univibe. Família 2N5457 / 58 / 59.
 
@@ -232,15 +232,53 @@ No VOZ-9 **não amplifica**. Base e coletor juntos = um diodo de duas pernas.
 
 ---
 
-### LED 3 mm — “tem 9 V”
+### LED 3 mm vermelho — piloto e cinco indicadores
 
-**Ideia.** Diodo que emite luz. Sempre com resistor (aqui 4k7): senão puxa corrente até queimar. Vf ~2 V; o 4k7 em 9 V limita a uns 1,5 mA — visível, não ofusca.
+**Ideia.** Diodo que emite luz. Sempre com resistor (aqui 4k7): senão puxa corrente até queimar. Vf ~2 V; o 4k7 em 9 V limita a uns 1,5 mA — visível, não ofusca. Perna longa = ânodo. Lado chato = cátodo. Furo no painel: **3,2 mm**.
 
-**No VOZ-9.** No painel. Ânodo e cátodo saem no **J6** pinos 1–2 (4k7 já na placa).
+**No VOZ-9.** Seis, todos iguais. O piloto sai no **J6** pinos 1–2. Os outros cinco saem no **J10** (4k7 já na placa; o cátodo volta e vai ao GND na BASE).
 
-**Banco.** Fonte boa + 1N5817 no sentido certo = acende. Apagado: fonte, jack P4 ou o 4k7.
+| LED | Mostra |
+| --- | --- |
+| **9V** | tem alimentação |
+| **A / B** | frequência do quadrado (grave pisca, agudo brilha) |
+| **RATE** | taxa do LFO; TREM no centro = apagado |
+| **REP** | cada repeat da fita (tap antes do WET) |
+| **IN** | áudio no pré, **antes** do knob PRE |
 
-**Datasheet.** Qualquer 3 mm, ex. [Kingbright L-7104](https://www.kingbrightusa.com/images/catalog/SPEC/L-7104ID.pdf)
+OSC A/B ligam direto no OUT do op-amp. IN, RATE e REP passam por um BC547 — o sinal de áudio ou de LFO não chega nos 2 V do LED sozinho. Esquema fechado: `esquema.md` §9.
+
+**Banco.**
+
+- Piloto: fonte boa + 1N5817 no sentido certo = acende. Apagado: fonte, jack P4 ou o 4k7.
+- A e B: gira o pitch no grave e o pisca acompanha. Chave OFF: o LED **continua** (o osc não para).
+- RATE: TREM fora do centro, o pisca muda com o knob. No centro, escuro.
+- REP: H1 on, TIME longo, um toque = um flash e a cauda. F-BACK no fundo = fica aceso. As três heads off = escuro.
+- IN: fala no SM58 acende nas sílabas mesmo com PRE no zero. P10 (guitarra) não acende.
+
+**Datasheet.** Qualquer 3 mm vermelho, ex. [Kingbright L-7104](https://www.kingbrightusa.com/images/catalog/SPEC/L-7104ID.pdf)
+
+---
+
+### BC547 — o interruptor dos LEDs de sinal
+
+**Ideia.** NPN pequeno. A base precisa de uns 0,6 V para a corrente passar de coletor a emissor. Abaixo disso, o LED fica escuro. É um detector de “tem sinal”, não um amplificador de áudio.
+
+**No VOZ-9.** Três, só nos indicadores que não são quadrado de 9 V:
+
+| # | LED | Base vê |
+| --- | --- | --- |
+| Q10 | IN | out_B do 5532, antes do PRE |
+| Q11 | REP | saída LÊ da fita, antes do WET |
+| Q12 | RATE | dreno do LFO, passando por 10 µ (+ no dreno) |
+
+Emissor no GND. Coletor no cátodo do LED. O 4k7 e o 9 V ficam no ânodo. 220 k da base ao GND segura o transistor mudo no silêncio.
+
+Face chata para você, pernas para baixo: **C · B · E**. Primo que serve: 2N3904, mas a pinagem vira **E · B · C**.
+
+**Banco.** Sem sinal, os três LEDs escuros (o piloto não conta). Invertido (C/E trocados) o LED não acende ou acende fraco e quente.
+
+**Datasheet.** [ON Semi BC547](https://www.onsemi.com/pdf/datasheet/bc547-d.pdf)
 
 ---
 
@@ -484,7 +522,7 @@ Invertido: o 1N5817 segura. O LED não acende.
 
 ### Chicotes 2×N (fêmea na placa)
 
-**Ideia.** Housing 2,54 mm, **dupla fila**, no tamanho do grupo. **J1 OSC 2×10, J2 LFO 2×6, J3 DELAY 2×10, J4 PATCH A 2×10, J5 PATCH B 2×8, J6 CTRL 2×3, J7 IN+PRE+OSC IN 2×6, J8 OUT 2×3, J9 EQ 424 2×6** — nove chicotes.
+**Ideia.** Housing 2,54 mm, **dupla fila**, no tamanho do grupo. **J1 OSC 2×10, J2 LFO 2×6, J3 DELAY 2×10, J4 PATCH A 2×10, J5 PATCH B 2×8, J6 CTRL 2×3, J7 IN+PRE+OSC IN 2×6, J8 OUT 2×3, J9 EQ 424 2×6, J10 LEDS 2×6** — dez chicotes.
 
 Na BASE solda a **fêmea**. Do painel sai o **macho**. Pino 1 = pad quadrado. Não cruze os grupos.
 
@@ -502,7 +540,7 @@ Pinagem: `pcb.md`.
 
 - **2k2 + 22k 1 %** — ganho ×10 do mic. Trocar um só dos 22 k por 20 k “qualquer” piora o CMRR (o cabo vira antena).
 - **220 Ω** (dois) — pad do XLR OUT e a mesma Z no pino 3 (quase-balanceado: o mixer vê os dois fios iguais e cancela um pouco de ruído).
-- **4k7 do LED**, **10 k** de mix, **220 k** de decay: lista em `bom.md`.
+- **4k7 dos LEDs** (piloto + cinco indicadores), **10 k** de mix e das bases IN/RATE, **220 k** de decay e do pull-down dos BC547: lista em `bom.md`.
 
 Código de 4 faixas: vermelho-vermelho-preto-marrom = 2,2 kΩ (5 faixas: o “preto” extra é o multiplicador ×1).
 
@@ -549,7 +587,10 @@ Cobre = verso. Sem furo metalizado: quando uma trilha precisa “mudar de lado�
 | Tempo de outro synth / MIDI* | jack **CLK** (+ conversor se for MIDI) |
 | Repeats até oscilar | F-BACK + trim + MP20 #2 |
 | Seco ↔ molhado | WET |
-| Voz no SM58 | combo IN XLR, NE5532, PRE, sem phantom |
+| Voz no SM58 | combo IN XLR, NE5532, PRE, sem phantom; LED IN antes do PRE |
+| Ver a nota dos oscs | LED A / LED B (pisca = grave) |
+| Ver a taxa do LFO | LED RATE; TREM no centro apaga |
+| Ver os repeats | LED REP (não segue o knob WET) |
 | Nível da voz | PRE (não o VOLUME) |
 | Eco com “ar” de gravador | TL072 + 3,3 n |
 | Só 5 V / só −9 V / não explodir | 78M05 / MAX1044 / 1N5817 |

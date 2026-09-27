@@ -78,6 +78,8 @@ XLR e P10 do combo são contatos **separados**. Mic no XLR; guitarra no P10. Nã
 
 **Conta:** SM58 ~3 mV × 10 × 11 ≈ **330 mV** no CW do PRE — nível de pedal, loop e PT2399 felizes.
 
+**LED IN** (3 mm vermelho, entre o combo e o PRE): tap nesse out_B, **antes** do pot. A fala acende o LED mesmo com PRE no zero. O P10 (guitarra → AMOUNT) não passa por aqui e não acende. Circuito: `esquema.md` §9.
+
 RF no painel (vale a pena, é barato): **100 p** de XLR 2 → massa e XLR 3 → massa, colado no combo.
 
 **Sem phantom.** Condensador precisa de 48 V inline *antes* do XLR IN. Se alguém mandar 48 V no cabo, os 10 µ / 25 V e o 5532 morrem — não ligue este IN em mesa com phantom ligado.

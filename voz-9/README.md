@@ -18,21 +18,23 @@ Sem XLR, **PRE** escala os oscs. **OSC IN** = mix osc ↔ mic (CCW = só drones,
 
 O pré vocal está em `pre-vocal.md`. Mesmo papel do Echo Master, **sem transformador** (diferencial no NE5532 + pad no XLR).
 
-Leia `esquema.md` para montar. Caderno de estudo: `componentes.md`. Uma fenolite no piso; **nove** chicotes 2×N e CIs em soquete: `pcb.md`. Lista de compra: `bom.md`. Simulador: `sim/painel.html`.
+Leia `esquema.md` para montar. Caderno de estudo: `componentes.md`. Uma fenolite no piso; **dez** chicotes 2×N e CIs em soquete: `pcb.md`. Lista de compra: `bom.md`. Simulador: `sim/painel.html`.
 
 ---
 
 ## Painel
 
-**Um módulo só**, caixa de mesa **retangular** (Noise Toaster / MFOS): faceplate paisagem **220 × 160 mm** em `painel.svg`. Caixa de madeira ~240 × 180 × 50 mm. Uma placa no fundo (`pcb.svg`); **9 chicotes** J1–J9 (fêmea na BASE, macho no painel). CIs em soquete.
+**Um módulo só**, caixa de mesa **retangular** (Noise Toaster / MFOS): faceplate paisagem **220 × 160 mm** em `painel.svg`. Caixa de madeira ~240 × 180 × 50 mm. Uma placa no fundo (`pcb.svg`); **10 chicotes** J1–J10 (fêmea na BASE, macho no painel). CIs em soquete.
 
 ```
- IN  PRE  OSC IN | LED 9V          OSC A  AMOUNT  OSC B
+ IN·LED  PRE  OSC IN | LED 9V     LED  OSC A  AMOUNT  OSC B  LED
  LOW  MID F  MID G  HIGH           A  B  SHAPE  CUTOFF  DRONE  GATE
- RATE  TREM  MODE  DEPTH
- TIME  WET  F-BACK  H1  H2  H3  STACK     |  VOLUME
+ LED  RATE  TREM  MODE  DEPTH
+ TIME  WET  F-BACK  LED  H1  H2  H3  STACK     |  VOLUME
  A B IN FILT FCV VCV LFO ECV CLK SEND RCV |  OUT
 ```
+
+LEDs 3 mm vermelho (`esquema.md` §9): **IN** (áudio antes do PRE), **9V** (piloto), **A** e **B** (frequência dos oscs), **RATE** (taxa do LFO), **REP** (repeats da fita, entre F-BACK e H1).
 
 - **Esquerda:** entrada + EQ + LFO. XLR no canto superior esquerdo.
 - **Direita:** osciladores + A/B/SHAPE/CUTOFF/DRONE/GATE.
@@ -133,7 +135,7 @@ Pinos P2: ponta = sinal, anel/sleeve = GND. CV é 0–9 V, sem 1 V/oitava. CLK: 
 
 ## O que comprar
 
-Tudo novo: `bom.md`. Um instrumento ~R$ **610** (varejo BR, set/2026, sem frete).
+Tudo novo: `bom.md`. Um instrumento ~R$ **620** (varejo BR, set/2026, sem frete).
 
 J201: marque Vgs(off) nos 8. O mais “vivo” vai no VCF; um par parecido nos FM. MP20 por último — ferro baixo.
 
@@ -141,12 +143,12 @@ J201: marque Vgs(off) nos 8. O mais “vivo” vai no VCF; um par parecido nos F
 
 ## Ordem de teste na protoboard
 
-1. Fonte: 9 V, −9 V (MAX1044), 5 V (78M05), 4V5, 1V8. LED acende.
-2. OSC A / OSC B / batimento.
+1. Fonte: 9 V, −9 V (MAX1044), 5 V (78M05), 4V5, 1V8. LED 9V acende.
+2. OSC A / OSC B / batimento. LEDs A e B na frequência.
 3. SHAPE, CUTOFF, GATE / DRONE.
-4. LFO + TREM (tremolo / off / flutter) + MODE.
-5. 5532 + PRE + OSC IN (mix) + EQ 424 (U9).
+4. LFO + TREM (tremolo / off / flutter) + MODE. LED RATE.
+5. 5532 + PRE + OSC IN (mix) + EQ 424 (U9). LED IN antes do PRE.
 6. TL072 NAB: VCA → GRAVA → H1 → LÊ.
-7. PT2399 H1, H2, H3. Jacks e normals por último.
+7. PT2399 H1, H2, H3. LED REP nos repeats. Jacks e normals por último.
 
 Detalhe: `esquema.md`. Placa: `pcb.md`.

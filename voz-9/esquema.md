@@ -4,7 +4,7 @@ Alimentação simples, 9 V centro-negativo. Referência de áudio em 4,5 V. O MA
 
 Quantidades e compra: `bom.md`. Tudo novo — um instrumento = uma lista.
 
-Uma fenolite no piso da caixa (220 × 160 mm): `pcb.md`. O painel só fura; **nove** chicotes 2×N J1–J9 (fêmea na BASE, macho no painel). CIs em soquete. **Um módulo** retangular de mesa.
+Uma fenolite no piso da caixa (220 × 160 mm): `pcb.md`. O painel só fura; **dez** chicotes 2×N J1–J10 (fêmea na BASE, macho no painel). CIs em soquete. **Um módulo** retangular de mesa.
 
 ---
 
@@ -13,7 +13,7 @@ Uma fenolite no piso da caixa (220 × 160 mm): `pcb.md`. O painel só fura; **no
 ```
 9V ── 1N5817 ──● V9 ── 47µ/25V ── GND
                │
-               ├── 4k7 ── LED ── GND          (piloto)
+               ├── 4k7 ── LED 9V ── GND       (piloto; os outros cinco estão no §9)
                │
                ├── 78M05 ──● V5 ── 10µ ── GND
                │              └── 100n ── GND
@@ -91,6 +91,8 @@ OUT_B ── 1µ ── [OSC B] ──●── 10k ── mix / AMOUNT
 
 As duas off: ficam noise + EXT IN + voz. Uma off: AMOUNT vira nível do que restou.
 
+**LED de frequência** (3 mm vermelho, um em cada osc): sai do **pino de saída do op-amp**, antes do 1 µF e antes da chave ON–OFF. Alto do quadrado acende, baixo apaga. Grave pisca; agudo vira brilho contínuo (o olho não separa mais). A chave cala o áudio e **não** apaga o LED — o chip continua rodando, e é assim que se afina no escuro. Detalhe e o resto dos indicadores: §9.
+
 ### Vibrato / FM (1 J201 por osc)
 
 O J201 entra em paralelo com o capacitor de tempo. Gate em 0 V → pouco efeito. Gate sobe → o cap descarrega mais rápido → o tom sobe e “molha”.
@@ -149,6 +151,8 @@ PRE W ──┬── SEND (pré-EQ, jack)                   │
 EXT IN = P10 + P2 em paralelo, após 100n. Guitarra no P10 não passa pelo 5532.
 
 Envelope da fala (GATE): tap fixo PRE → 100n → 10k → 1N4148 → ENV (§6). Não passa pelo OSC IN.
+
+**LED IN** (§9): tap no **out_B do 5532**, antes do pot PRE. Falar acende; PRE no zero não apaga. Guitarra no P10 não passa por aqui.
 
 J201 #6 = buffer opcional após o EQ / antes do SHAPE se o VCF carregar. Senão o mix + U9 aguentam.
 
@@ -317,7 +321,7 @@ D ── 220n ── n1 ── 220n ── n2 ── [Csel] ── G
 | **Centro (off)** | *(aberto)* | — | **sem efeito** — DEPTH não modula pitch/time/VCA |
 | Baixo **FLUTTER** | **47 µ** | ~0,3–4 Hz | wow de fita, heads cambaleando |
 
-`Csel` (220 n / 47 µ) e o detector CLK moram na BASE. A chave TREM e o pot RATE descem por cabo. Centro = nenhum Csel → LFO parado / sem modulação no painel.
+`Csel` (220 n / 47 µ) e o detector CLK moram na BASE. A chave TREM e o pot RATE descem por cabo. Centro = nenhum Csel → LFO parado / sem modulação no painel. O **LED RATE** (§9) pisca nessa mesma taxa; no centro fica apagado.
 
 **LFO MODE — SPDT ON–OFF–ON (3 estágios)** — *para onde* o DEPTH vai. Só age se TREM ≠ centro.
 
@@ -460,7 +464,7 @@ Teto Echo Master (≤50/50): 10 k entre a ponta molhada e o cursor.
 
 **F-BACK** (B100 k): feedback do laço, da saída LÊ de volta à entrada GRAVA. 0 = um eco; meio = repeats escuros; fundo = a fita oscila. O trimpot 100 k limita o máximo (igual ao trim interno do Echo Master), por baixo do painel.
 
-H1+H2+H3 off **ou** WET no mínimo = sem eco.
+H1+H2+H3 off **ou** WET no mínimo = sem eco. O **LED REP** (§9) olha a saída LÊ, antes do WET: cada repeat acende, a cauda some, F-BACK no fundo deixa aceso. WET no mínimo não apaga o LED.
 
 ### O que isso é — e o que não é
 
@@ -552,6 +556,98 @@ J201 #6 **não** é o NAB. Fica buffer depois do SHAPE se o VCF carregar o clipp
 
 ---
 
+## 9. LEDs indicadores (3 mm vermelho)
+
+Seis iguais, furo **3,2 mm**. O piloto de 9 V já estava na fonte (§0). Os outros cinco mostram o que está acontecendo: pitch dos oscs, taxa do LFO, repeats da fita, voz chegando.
+
+Perna longa = **ânodo**. Lado chato / perna curta = **cátodo**. Todos voltam o cátodo para GND **na BASE** (o chicote traz A e K; o K não fica solto no painel). Série **4k7** em cada um, na placa: (9 − 2) / 4k7 ≈ **1,5 mA**. Seis acesos ≈ 9 mA — a fonte de pedal aguenta.
+
+Chicote **J10** 2×6. Pino 1 = pad quadrado.
+
+| LED | Onde no painel | O que acende | Tap |
+| --- | --- | --- | --- |
+| **9V** | ao lado do P4 (J6, não J10) | tem alimentação | V9, direto |
+| **A** | à esquerda do OSC A | frequência do quadrado A | OUT do op-amp, antes do 1 µF |
+| **B** | à direita do OSC B | frequência do quadrado B | idem, metade B |
+| **RATE** | debaixo do knob RATE | taxa do LFO | drain do 2N5457, via 100 n |
+| **REP** | entre F-BACK e H1 | cada repeat da fita | saída LÊ (TL072 out B), antes do WET |
+| **IN** | entre o combo IN e o PRE | áudio chegando no pré | out_B do 5532, **antes** do pot PRE |
+
+### A e B — o quadrado acende o LED
+
+O OUT do osc já é 0–9 V. Não precisa de transistor.
+
+```
+OUT_A ── 4k7 (R82) ── J10 pino 1 (ânodo) ── LED A ── pino 2 ── GND
+OUT_B ── 4k7 (R83) ── J10 pino 3            ── LED B ── pino 4 ── GND
+```
+
+Meio do quadrado ≈ 50 %. Abaixo de uns 20 Hz você vê o pisca (é a nota). Acima, o olho soma e fica um brilho firme — ainda é a frequência, só que rápida. A chave ON–OFF corta o áudio **depois** do 1 µF; o LED fica no OUT, então continua piscando com a voz muda. Serve para afinar A contra B antes de abrir.
+
+O 4k7 está na saída do op-amp, não no capacitor de tempo. O TL072 empurra isso sem mudar o pitch de ouvido.
+
+### RATE — pisca na velocidade do LFO
+
+O LFO é lento e pequeno demais para um LED direto no jack (o 1 µ tira o contínuo e o sinal mora em volta de 0 V). Um **BC547** só conduz quando o dreno sobe.
+
+```
+drain do 2N5457 ── 10µ (C73, + no drain) ── 10k (R89) ── base Q12
+                                      base ── 220k (R90) ── GND
+                                      emissor ── GND
+V9 ── 4k7 (R84) ── J10 pino 5 ── LED RATE ── pino 6 ── coletor
+```
+
+O flutter desce a 0,3 Hz. Um 100 n nessa base (~230 k) corta abaixo de uns 7 Hz e o LED morre justo na fita lenta. O **10 µ** deixa passar o flutter e ainda barra o contínuo do dreno. Listra do eletrolítico para o lado da base.
+
+TREM em tremolo: pisca rápido (3–60 Hz; no fundo vira brilho). TREM em flutter: pisca devagar, dá para contar. **TREM no centro:** o oscilador para, o 10 µ não deixa passar o contínuo do dreno, o LED **apaga**. Não é o piloto.
+
+### REP — um flash por repeat
+
+A saída LÊ descansa em 0 V (±9 V, +in no GND). O positivo de cada eco liga o transistor; o olho junta os ciclos de áudio num pulso. TIME longo = flashes separados. Slap = brilho quase firme. F-BACK no talo (a fita oscilando) = aceso. Heads todas off = apagado.
+
+O tap é **antes do WET**. Dá para ver a fita trabalhar com o mix no seco.
+
+```
+out LÊ ── 100n (C74) ── 47k (R91) ── base Q11
+                            base ── 220k (R92) ── GND
+                            emissor ── GND
+V9 ── 4k7 (R85) ── J10 pino 7 ── LED REP ── pino 8 ── coletor
+```
+
+47 k para não carregar o NAB. O TL072 mal sente.
+
+### IN — voz chegou, antes do knob
+
+O SM58 no out_B do 5532 já está em nível de pedal (~330 mV, picos de fala passam de 0,6 V). O LED olha **esse** nó, não o cursor do PRE: girar o PRE até o zero não mente. Sem falar, base em 0, LED apagado.
+
+```
+out_B 5532 ── 100n (C72) ── 10k (R87) ── base Q10
+                               base ── 220k (R88) ── GND
+                               emissor ── GND
+V9 ── 4k7 (R86) ── J10 pino 9 ── LED IN ── pino 10 ── coletor
+```
+
+Guitarra no P10 do combo **não** acende: ela vai no AMOUNT, não no 5532. Fala baixa pisca nas sílabas; grito fica mais tempo aceso. Não é VU — é “tem áudio no pré”.
+
+### BC547
+
+NPN pequeno. Três: **Q10** IN, **Q11** REP, **Q12** RATE. Face chata para você, pernas para baixo: **C · B · E** (esquerda, meio, direita). O 2N3904 funciona no mesmo desenho e a pinagem é **E · B · C** — não troque no escuro.
+
+Coletora no cátodo do LED, emissor no GND, base no sinal. Sem sinal a base está no GND pelo 220 k e o LED fica escuro.
+
+### J10 — 2×6
+
+| Pino | Sinal |
+| ---: | --- |
+| 1–2 | LED A · K (OSC A) |
+| 3–4 | LED B · K (OSC B) |
+| 5–6 | LED RATE · K |
+| 7–8 | LED REP · K |
+| 9–10 | LED IN · K |
+| 11–12 | NC |
+
+---
+
 ## Mapa dos 6× J201 + amigos
 
 | Peça        | Função                         |
@@ -575,6 +671,8 @@ J201 #6 **não** é o NAB. Fica buffer depois do SHAPE se o VCF carregar o clipp
 | 78M05 | 5 V dos três chips |
 | MAX1044 | −9 V |
 | 1N5817 | Proteção da fonte |
+| BC547 ×3 | Drivers dos LEDs IN, REP e RATE |
+| LED 3 mm ×6 | Piloto 9 V + OSC A + OSC B + RATE + REP + IN |
 
 ---
 

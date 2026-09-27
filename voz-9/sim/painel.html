@@ -69,6 +69,8 @@
   Clique <strong>Tocar</strong>. Em <strong>XLR IN</strong> escolha WAV ou a interface.
   EQ <strong>pós-mix</strong>. <strong>SEND</strong> = PRE, pré-EQ.
   <strong>OSC IN</strong> = mix osc ↔ XLR. Sem XLR, <strong>PRE</strong> = pré dos oscs.
+  LEDs: <strong>A/B</strong> piscam na frequência, <strong>RATE</strong> no LFO,
+  <strong>REP</strong> nos repeats, <strong>IN</strong> na voz antes do PRE.
   OUT = stereo / scope. Patch: jack→jack; botão direito remove.
 </p>
 <div class="row">
@@ -166,6 +168,27 @@
       </g>
       <g class="gate-hit" data-key="sw_gate" transform="translate(198,76)">
         <circle r="7" fill="#c22"/><text class="lab" y="-12">GATE</text>
+      </g>
+      <g id="led-9v" transform="translate(96,21)" opacity="1">
+        <circle r="2.1" fill="#4a1010"/><circle r="1.5" fill="#e02020"/>
+      </g>
+      <g id="led-in" transform="translate(34,30)" opacity="0.22">
+        <circle r="2.1" fill="#4a1010"/><circle r="1.5" fill="#e02020"/>
+      </g>
+      <g id="led-osc-a" transform="translate(104,30)" opacity="0.22">
+        <circle r="2.1" fill="#4a1010"/><circle r="1.5" fill="#e02020"/>
+        <text class="sub" y="5" fill="#eee">A</text>
+      </g>
+      <g id="led-osc-b" transform="translate(209,36)" opacity="0.22">
+        <circle r="2.1" fill="#4a1010"/><circle r="1.5" fill="#e02020"/>
+        <text class="sub" y="5" fill="#eee">B</text>
+      </g>
+      <g id="led-rate" transform="translate(18,89)" opacity="0.22">
+        <circle r="2.1" fill="#4a1010"/><circle r="1.5" fill="#e02020"/>
+      </g>
+      <g id="led-rep" transform="translate(107,99)" opacity="0.22">
+        <circle r="2.1" fill="#4a1010"/><circle r="1.5" fill="#e02020"/>
+        <text class="sub" y="5" fill="#eee">REP</text>
       </g>
       
       <g class="knob-hit" data-key="eq_low" transform="translate(18,50)">
@@ -499,6 +522,13 @@ function buildGraph(ac) {
   voiceAnalyser.fftSize = 1024;
   voiceAnalyser.smoothingTimeConstant = 0.55;
   extGain.connect(voiceAnalyser);
+  // LED IN olha o áudio antes do PRE (extGain). LED REP olha o molhado antes do WET.
+  const inAnalyser = ac.createAnalyser();
+  inAnalyser.fftSize = 1024;
+  inAnalyser.smoothingTimeConstant = 0.35;
+  const repAnalyser = ac.createAnalyser();
+  repAnalyser.fftSize = 1024;
+  repAnalyser.smoothingTimeConstant = 0.12;
   // EQ 424 depois do mix, antes do SHAPE (afeta oscs + voz)
   mix.connect(eqLow);
   eqLow.connect(eqMid);
@@ -529,6 +559,7 @@ function buildGraph(ac) {
   dcBlock.connect(rcvGate);
   rcvGate.connect(wetGain);
   rcvGate.connect(fbGain);
+  rcvGate.connect(repAnalyser);
   fbGain.connect(echoIn);
 
   const master = ac.createGain();
@@ -562,7 +593,7 @@ function buildGraph(ac) {
     filtNorm, filtFromA, filtFromB, filtFromIn, filtFromLfo,
     delays, headGains, fbGain, wetGain, dryGain, echoIn, echoMix, nabLp, timeMods,
     tapeDrive, tapeSat, dcBlock, rcvGate, limiter, master, analyser, stereoOut,
-    voiceAnalyser,
+    voiceAnalyser, inAnalyser, repAnalyser,
   };
 }
 
@@ -817,6 +848,7 @@ function startExtSource() {
   extSource.buffer = extBuffer;
   extSource.loop = true;
   extSource.connect(nodes.extGain);
+  extSource.connect(nodes.inAnalyser);
   extSource.start();
 }
 
@@ -907,6 +939,7 @@ async function startMicInput(deviceId) {
   micSplit = ctx.createChannelSplitter(2);
   micNode.connect(micSplit);
   micSplit.connect(nodes.extGain, 0);
+  micSplit.connect(nodes.inAnalyser, 0);
   await listAudioInputs();
   const sel = document.getElementById('xlr-device');
   const trackId = micStream.getAudioTracks()[0]?.getSettings?.().deviceId;
@@ -1013,6 +1046,7 @@ function stopAudio() {
   document.getElementById('btn-play').textContent = 'Tocar';
   document.getElementById('btn-stop').disabled = true;
   document.getElementById('meter').textContent = 'parado';
+  paintLeds(false);
   updateXlrStatus('parado');
   const c = document.getElementById('scope');
   const g = c.getContext('2d');
@@ -1072,7 +1106,56 @@ function drawScope() {
     `A ${fA} Hz · B ${fB} Hz · pico ${pct.toFixed(0)}%${clip} · ${modeLabel2}`;
 
   applyState();
+  paintLeds(true);
   scopeAnim = requestAnimationFrame(drawScope);
+}
+
+function setLed(id, level) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const k = Math.max(0, Math.min(1, level));
+  el.setAttribute('opacity', (0.2 + 0.8 * k).toFixed(3));
+}
+
+function ledSquare(hz) {
+  if (hz >= 24) return 0.55;
+  const phase = ((performance.now() / 1000) * hz) % 1;
+  return phase < 0.5 ? 1 : 0;
+}
+
+function rmsOf(analyser) {
+  if (!analyser) return 0;
+  analyser.getFloatTimeDomainData(voiceEnvBuf);
+  let sum = 0;
+  for (let i = 0; i < voiceEnvBuf.length; i++) sum += voiceEnvBuf[i] * voiceEnvBuf[i];
+  return Math.sqrt(sum / voiceEnvBuf.length);
+}
+
+function paintLeds(active) {
+  setLed('led-9v', 1);
+  if (!active || !nodes) {
+    setLed('led-osc-a', 0);
+    setLed('led-osc-b', 0);
+    setLed('led-rate', 0);
+    setLed('led-rep', 0);
+    setLed('led-in', 0);
+    return;
+  }
+  setLed('led-osc-a', ledSquare(logMap(state.pitch_a, 12, 480)));
+  setLed('led-osc-b', ledSquare(logMap(state.pitch_b, 110, 4800)));
+  const tremOn = Math.abs(state.sw_trem) > 0.5;
+  const rateHz = state.sw_trem > 0.5
+    ? logMap(state.rate, 3, 55)
+    : logMap(state.rate, 0.3, 4);
+  setLed('led-rate', tremOn ? ledSquare(rateHz) : 0);
+  const heads = state.sw_h1 > 0.5 || state.sw_h2 > 0.5 || state.sw_h3 > 0.5;
+  const rep = heads ? Math.min(1, Math.max(0, (rmsOf(nodes.repAnalyser) - 0.004) / 0.04)) : 0;
+  setLed('led-rep', rep);
+  const xlrLive = state.xlr_in > 0.5 && (
+    state.xlr_source === 'interface' ? !!micNode : !!extBuffer
+  );
+  const inn = xlrLive ? Math.min(1, Math.max(0, (rmsOf(nodes.inAnalyser) - 0.008) / 0.06)) : 0;
+  setLed('led-in', inn);
 }
 
 /* ---------- panel UI ---------- */

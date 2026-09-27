@@ -94,3 +94,9 @@ Xeq_low   j9_1  j9_2  j9_3  pot_lin Rtot=100k u={eq_low}
 Xeq_mid_f j9_4  j9_5  j9_6  pot_lin Rtot=100k u={eq_mid_f}
 Xeq_mid_g j9_7  j9_8  j9_9  pot_lin Rtot=100k u={eq_mid_g}
 Xeq_high  j9_10 j9_11 j9_12 pot_lin Rtot=100k u={eq_high}
+
+* ===== J10 LEDS =====
+* Anode/cathode pairs. The diodes, 4k7 and BC547 live on the BASE
+* (base.cir / 09_leds.cir). Panel pins are just the two legs.
+Rj10nc11 j10_11 0 100Meg
+Rj10nc12 j10_12 0 100Meg

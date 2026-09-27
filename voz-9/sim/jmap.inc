@@ -1,8 +1,8 @@
-* VOZ-9 — J1–J9 pin map (must match pcb.md)
+* VOZ-9 — J1–J10 pin map (must match pcb.md)
 *
 * Node names used everywhere: j1_1 … j1_20, j2_1 … j2_12,
 * j3_1 … j3_20, j4_1 … j4_20, j5_1 … j5_16, j6_1 … j6_6,
-* j7_1 … j7_12, j8_1 … j8_6, j9_1 … j9_12
+* j7_1 … j7_12, j8_1 … j8_6, j9_1 … j9_12, j10_1 … j10_12
 *
 * J1 OSC 2x10 (19 used)
 *  1–2  OSC A A · B          (reostat 500kA — ends of pitch pot)
@@ -38,7 +38,7 @@
 *  1–3 LFO, 4–6 ECV, 7–9 CLK, 10–12 SEND, 13–15 RCV
 *
 * J6 CTRL
-*  1–2 LED A · K, 3–4 P4 TIP · GND, 5–6 GATE NA · GND
+*  1–2 LED 9V A · K, 3–4 P4 TIP · GND, 5–6 GATE NA · GND
 *
 * J7 IN combo + PRE + OSC IN 2x6: 1 X2, 2 X3, 3 X1, 4 TIP, 5 GND, 6–8 PRE, 9–11 OSC IN CCW · W · CW, 12 NC
 * J8 OUT combo: 1 X2, 2 X3, 3 X1, 4 TIP, 5 GND, 6 NC
@@ -48,5 +48,13 @@
 *  4–6  MID F CCW · W · CW   (250 Hz–5 kHz)
 *  7–9  MID G CCW · W · CW   (±12 dB)
 * 10–12 HIGH CCW · W · CW    (shelf 10 kHz ±10 dB)
+*
+* J10 LEDS 2x6 (indicator 3 mm red; series R and BC547 on BASE)
+*  1–2  OSC A A · K     (square OUT, before the mute switch)
+*  3–4  OSC B A · K
+*  5–6  RATE A · K      (LFO rate; TREM center = dark)
+*  7–8  REP A · K       (tape repeats, tap before WET)
+*  9–10 IN A · K        (5532 out_B, before PRE)
+* 11–12 NC
 *
 * This file is documentation only — no circuit.

@@ -1,0 +1,64 @@
+
+Note: No compatibility mode selected!
+
+
+Circuit: * voz-9 — 09_leds.cir
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+v9                                           9
+out_a                                        0
+na                               -1.36794e-228
+leda                             -1.36794e-228
+pre_b                                        0
+n72                                 1.7419e-06
+b10                                 1.7419e-06
+nin                                          9
+ledi                                         9
+c10                                    7.90774
+pre_q                                        0
+nq                                  1.7419e-06
+bq                                  1.7419e-06
+nqi                                          9
+ledq                                         9
+cq10                                   7.90774
+lfo_d                                        4
+n73                                 1.7419e-06
+b12                                 1.7419e-06
+nr                                           9
+ledr                                         9
+c12                                    7.90774
+nab_b                                        0
+n74                                 1.7419e-06
+b11                                 1.7419e-06
+np                                           9
+ledp                                         9
+c11                                    7.90774
+vsp#branch                         1.58356e-11
+vwet#branch                                  0
+vsr#branch                         1.58356e-11
+vlfo#branch                                  0
+vsqi#branch                        1.58356e-11
+vinq#branch                                  0
+vsin#branch                        1.58356e-11
+vin#branch                                   0
+vsa#branch                        2.91052e-232
+vsq#branch                       -2.91052e-232
+v9#branch                         -6.33415e-11
+
+
+No. of Data Rows : 17711
+i_osc               =  1.267664e-03 at=  6.014992e-01
+i_in                =  1.455481e-03 at=  1.155591e-03
+i_quiet             =  1.586731e-11 at=  4.098252e-03
+i_rate              =  1.456615e-03 at=  2.853155e+00
+i_rep               =  1.448407e-03 at=  6.422743e-04
+LEDS_DONE
+ngspice-42 done

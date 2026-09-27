@@ -225,6 +225,28 @@
   <g transform="translate(96,21)">
     <use href="#led"/>
   </g>
+  <!-- IN: áudio antes do PRE -->
+  <g transform="translate(34,30)">
+    <use href="#led"/>
+  </g>
+  <!-- frequência OSC A / OSC B -->
+  <g transform="translate(104,30)">
+    <use href="#led"/>
+    <text class="sub" y="4.7">A</text>
+  </g>
+  <g transform="translate(209,36)">
+    <use href="#led"/>
+    <text class="sub" y="4.7">B</text>
+  </g>
+  <!-- RATE: debaixo do knob -->
+  <g transform="translate(18,89)">
+    <use href="#led"/>
+  </g>
+  <!-- REP: repeats, entre F-BACK e H1 -->
+  <g transform="translate(107,99)">
+    <use href="#led"/>
+    <text class="sub" y="4.8">REP</text>
+  </g>
   <g transform="translate(110,21)">
     <use href="#p4"/>
     <text class="lab" y="-8.4">9V</text>

@@ -482,11 +482,11 @@ Invertido: o 1N5817 segura. O LED não acende.
 
 ---
 
-### Chicotes 2×N (fêmea na placa)
+### Pads de cabo (painel soldado na placa)
 
-**Ideia.** Housing 2,54 mm, **dupla fila**, no tamanho do grupo. **J1 OSC 2×10, J2 LFO 2×6, J3 DELAY 2×10, J4 PATCH A 2×10, J5 PATCH B 2×8, J6 CTRL 2×3, J7 IN+PRE+OSC IN 2×6, J8 OUT 2×3, J9 EQ 424 2×6** — nove chicotes.
+**Ideia.** Sem conector entre o faceplate e a BASE. Cada grupo é uma grade de **pads**: **J1 OSC 2×10, J2 LFO 2×6, J3 DELAY 2×10, J4 PATCH A 2×10, J5 PATCH B 2×8, J6 CTRL 2×3, J7 IN+PRE+OSC IN 2×6, J8 OUT 2×3, J9 EQ 424 2×6**.
 
-Na BASE solda a **fêmea**. Do painel sai o **macho**. Pino 1 = pad quadrado. Não cruze os grupos.
+Passo **3,5 mm**, furo **1,0 mm**, ilha Ø 2,4 mm. O fio entra e solda no verso. Pino 1 = pad quadrado. Não troque os grupos.
 
 CIs (U1–U4, U6–U8, **U9**) entram em **soquete DIP**. Ferro no soquete, nunca no chip.
 

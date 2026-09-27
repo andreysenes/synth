@@ -1,4 +1,4 @@
-* VOZ-9 — J1–J9 pin map (must match pcb.md)
+* VOZ-9 — J1–J9 pad map (must match pcb.md)
 *
 * Node names used everywhere: j1_1 … j1_20, j2_1 … j2_12,
 * j3_1 … j3_20, j4_1 … j4_20, j5_1 … j5_16, j6_1 … j6_6,

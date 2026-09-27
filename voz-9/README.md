@@ -18,13 +18,13 @@ Sem XLR, **PRE** escala os oscs. **OSC IN** = mix osc ↔ mic (CCW = só drones,
 
 O pré vocal está em `pre-vocal.md`. Mesmo papel do Echo Master, **sem transformador** (diferencial no NE5532 + pad no XLR).
 
-Leia `esquema.md` para montar. Caderno de estudo: `componentes.md`. Uma fenolite no piso; **nove** chicotes 2×N e CIs em soquete: `pcb.md`. Lista de compra: `bom.md`. Simulador: `sim/painel.html`.
+Leia `esquema.md` para montar. Caderno de estudo: `componentes.md`. Uma fenolite no piso; **nove** grupos de pads J1–J9 (cabo soldado direto) e CIs em soquete: `pcb.md`. Lista de compra: `bom.md`. Simulador: `sim/painel.html`.
 
 ---
 
 ## Painel
 
-**Um módulo só**, caixa de mesa **retangular** (Noise Toaster / MFOS): faceplate paisagem **220 × 160 mm** em `painel.svg`. Caixa de madeira ~240 × 180 × 50 mm. Uma placa no fundo (`pcb.svg`); **9 chicotes** J1–J9 (fêmea na BASE, macho no painel). CIs em soquete.
+**Um módulo só**, caixa de mesa **retangular** (Noise Toaster / MFOS): faceplate paisagem **220 × 160 mm** em `painel.svg`. Caixa de madeira ~240 × 180 × 50 mm. Uma placa no fundo (`pcb.svg`); os cabos do faceplate soldam direto nos pads **J1–J9**. CIs em soquete.
 
 ```
  IN  PRE  OSC IN | LED 9V          OSC A  AMOUNT  OSC B
@@ -133,7 +133,7 @@ Pinos P2: ponta = sinal, anel/sleeve = GND. CV é 0–9 V, sem 1 V/oitava. CLK: 
 
 ## O que comprar
 
-Tudo novo: `bom.md`. Um instrumento ~R$ **610** (varejo BR, set/2026, sem frete).
+Tudo novo: `bom.md`. Um instrumento ~R$ **565** (varejo BR, set/2026, sem frete).
 
 J201: marque Vgs(off) nos 8. O mais “vivo” vai no VCF; um par parecido nos FM. MP20 por último — ferro baixo.
 

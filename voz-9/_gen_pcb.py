@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Gera pcb.svg — BASE 220×160 com R1–R81 e C1–C71."""
 
+from pathlib import Path
+
 W, H = 220.0, 160.0
 seen_r, seen_c = set(), set()
 out = []
@@ -70,27 +72,36 @@ def ge(x, y, name):
     emit(f'    <text class="lab" y="3.4">{name}</text></g>')
 
 
-def hdr2x(x, y, cols, jref, title):
-    """Fêmea 2×N, passo 2,54 mm. Pino 1 = quadrado, canto esquerdo de cima."""
-    p = 2.54
-    w = (cols - 1) * p + 3.6
-    emit(f'  <rect class="hdr" x="{x - 1.8}" y="{y - 2.0}" width="{w}" height="9.4" rx="0.4"/>')
-    emit(f'  <rect fill="#6b3f12" x="{x + w / 2 - 3.1}" y="{y - 2.8}" width="2.4" height="0.85"/>')
+def pads2x(x, y, cols, jref, title):
+    """Pads 2×N para soldar o fio do painel. Passo 3,5 mm. Pino 1 = quadrado."""
+    p = 3.5
+    pr, hr = 1.2, 0.5
+    assert x - pr > 7, (jref, x - pr)
+    assert x + (cols - 1) * p + pr < 52.2, (jref, x + (cols - 1) * p + pr)
+    assert y - pr > 12, (jref, y)
+    assert y + p + pr < 151, (jref, y + p + pr)
     for col in range(cols):
         px = x + col * p
         for row in (0, 1):
             py = y + row * p
             n = col + 1 + row * cols
-            rpad = 0.72 if n == 1 else 0.62
-            emit(f'  <circle class="pad" cx="{px:.2f}" cy="{py:.2f}" r="{rpad}"/>')
-            emit(f'  <circle class="hole" cx="{px:.2f}" cy="{py:.2f}" r="0.35"/>')
-    emit(f'  <rect class="pad" x="{x - 0.7}" y="{y - 0.7}" width="1.4" height="1.4"/>')
-    emit(f'  <circle class="hole" cx="{x:.2f}" cy="{y:.2f}" r="0.35"/>')
-    emit(f'  <text class="silk-s" x="{x + (cols - 1) * p / 2}" y="{y + 8.6}">{jref} {title}  2×{cols}</text>')
-    emit(f'  <text class="lab" x="{x}" y="{y - 2.9}">1</text>')
-    emit(f'  <text class="lab" x="{x + (cols - 1) * p}" y="{y - 2.9}">{cols}</text>')
-    emit(f'  <text class="lab" x="{x}" y="{y + 6.7}">{cols + 1}</text>')
-    emit(f'  <text class="lab" x="{x + (cols - 1) * p}" y="{y + 6.7}">{2 * cols}</text>')
+            if n == 1:
+                emit(
+                    f'  <rect class="pad" x="{px - pr:.2f}" y="{py - pr:.2f}" '
+                    f'width="{2 * pr:.2f}" height="{2 * pr:.2f}"/>'
+                )
+            else:
+                emit(f'  <circle class="pad" cx="{px:.2f}" cy="{py:.2f}" r="{pr}"/>')
+            emit(f'  <circle class="hole" cx="{px:.2f}" cy="{py:.2f}" r="{hr}"/>')
+    mid = x + (cols - 1) * p / 2
+    emit(f'  <text class="lab" x="{x:.2f}" y="{y - pr - 0.55:.2f}">1</text>')
+    emit(f'  <text class="lab" x="{x + (cols - 1) * p:.2f}" y="{y - pr - 0.55:.2f}">{cols}</text>')
+    emit(f'  <text class="lab" x="{x:.2f}" y="{y + p + pr + 1.45:.2f}">{cols + 1}</text>')
+    emit(f'  <text class="lab" x="{x + (cols - 1) * p:.2f}" y="{y + p + pr + 1.45:.2f}">{2 * cols}</text>')
+    emit(
+        f'  <text class="silk-s" x="{mid:.2f}" y="{y + p + pr + 3.15:.2f}">'
+        f'{jref} {title}</text>'
+    )
 
 
 def rline(x0, y, items, dx=10.2):
@@ -121,7 +132,6 @@ emit(f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 -4 {W+8} {H+8}" wid
     .silk-s {{ fill: #3a2410; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 1.25px; text-anchor: middle; }}
     .lab {{ fill: #3a2410; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 1.02px; text-anchor: middle; }}
     .el {{ fill: none; stroke: #6b3f12; stroke-width: 0.18; }}
-    .hdr {{ fill: #c4a05a; stroke: #6b3f12; stroke-width: 0.22; }}
   </style>
   <defs>
     <g id="dip8">
@@ -184,21 +194,21 @@ emit(f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 -4 {W+8} {H+8}" wid
 emit(f'  <rect class="brd" x="0" y="0" width="{W}" height="{H}"/>')
 emit(f'  <rect class="gnd" x="2" y="2" width="{W-4}" height="{H-4}" rx="1"/>')
 emit('  <text class="silk" x="136" y="6.0">VOZ-9  BASE</text>')
-emit('  <text class="silk-s" x="136" y="8.3">220×160 · CIs em soquete · J 2×N fêmea · macho no painel</text>')
+emit('  <text class="silk-s" x="136" y="8.3">220×160 · CIs em soquete · cabos do painel soldados nos pads</text>')
 for x, y in ((4, 4), (216, 4), (4, 156), (216, 156)):
     emit(f'  <circle class="pad" cx="{x}" cy="{y}" r="2.1"/><circle class="hole" cx="{x}" cy="{y}" r="1.55"/>')
 
-# coluna chicotes — fêmea 2×N no tamanho de cada grupo
-blk(6, 8, 46, 146, "CHICOTES  FÊMEA  2×N")
-hdr2x(12, 16, 10, "J1", "OSC")
-hdr2x(12, 38, 6, "J2", "LFO")
-hdr2x(12, 58, 10, "J3", "DELAY")
-hdr2x(12, 80, 10, "J4", "PATCH A")
-hdr2x(12, 102, 8, "J5", "PATCH B")
-hdr2x(10, 126, 3, "J6", "CTRL")
-hdr2x(22, 126, 6, "J7", "IN+PRE")
-hdr2x(42, 126, 3, "J8", "OUT")
-hdr2x(12, 142, 6, "J9", "EQ424")
+# coluna de pads — fio do painel solda direto, sem conector
+blk(6, 8, 46, 146, "PADS  CABO  J1–J9")
+pads2x(9, 16, 10, "J1", "OSC")
+pads2x(9, 38, 6, "J2", "LFO")
+pads2x(9, 58, 10, "J3", "DELAY")
+pads2x(9, 80, 10, "J4", "PATCH A")
+pads2x(9, 102, 8, "J5", "PATCH B")
+pads2x(9, 124, 3, "J6", "CTRL")
+pads2x(20.5, 124, 6, "J7", "IN+PRE")
+pads2x(42.5, 124, 3, "J8", "OUT")
+pads2x(9, 140, 6, "J9", "EQ424")
 
 emit('  <path class="cu-w" d="M54,10 V150"/>')
 emit('  <path class="cu" d="M56.6,10 V148"/>')
@@ -329,7 +339,7 @@ cline(124, 151.8, [
 ce(190, 151.8, "C69", "47µ")
 ce(202, 151.8, "C70", "47µ")
 
-emit('  <text class="lab" x="136" y="157.6">CIs só no soquete · J1–J8 fêmea 2×N 2,54 · macho no painel · pino 1 = quadrado</text>')
+emit('  <text class="lab" x="136" y="157.6">CIs só no soquete · pads J1–J9 furo 1,0 · pino 1 = quadrado · sem conector</text>')
 emit("</svg>\n")
 
 missing_r = [f"R{i}" for i in range(1, 82) if f"R{i}" not in seen_r]
@@ -340,7 +350,6 @@ if missing_r or missing_c:
 if len(seen_r) != 81 or len(seen_c) != 71:
     raise SystemExit(f"contagem R={len(seen_r)} C={len(seen_c)}")
 
-path = "/Users/andreysenes/Guitar Pedal/voz-9/pcb.svg"
-with open(path, "w") as f:
-    f.write("\n".join(out))
+path = Path(__file__).with_name("pcb.svg")
+path.write_text("\n".join(out))
 print(f"ok {path}  R={len(seen_r)} C={len(seen_c)}")

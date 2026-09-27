@@ -5,6 +5,8 @@ Cada bloco fica junto do conector que o alimenta de fio, na ordem do sinal.
 Dois corredores ficam livres: barramento em cima, áudio no meio. O verso
 roteia com trilha curta. J1–J9 são pinos macho 1×N na borda de baixo.
 O esquema agrupa os mesmos blocos, ainda sem fios.
+As trilhas não nascem aqui: `route.py` grava as nets e o cobre.
+Rodar este gerador de novo apaga o roteamento.
 """
 
 import json

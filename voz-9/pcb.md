@@ -23,7 +23,7 @@ Imprimir o SVG em **escala 100 %**. Para transferência térmica, espelhar o cob
 
 O painel continua **220 × 160 mm**. A BASE é **300 × 300 mm** — maior que a face. O piso da caixa tem de cobrir a placa. A placa parafusa no fundo (M3 nos quatro cantos). Cabos folgados, sem esticar.
 
-Os blocos seguem o sinal e o pino de cada um, com dois corredores livres: alimentação em cima (V9, GND, VEE, V5, 4V5, 1V8) e áudio no meio. O verso roteia em trilha curta, com pouco jumper. Projeto para editar: `kicad/voz-9.kicad_pro`. O `pcb.svg` é o desenho anterior, mais apertado.
+Os blocos seguem o sinal e o pino de cada um, com dois corredores livres: alimentação em cima (V9, GND, VEE, V5, 4V5, 1V8) e áudio no meio. O cobre está em `kicad/voz-9.kicad_pcb`: trilhas de 0,6 mm nas duas faces (o verso é o cobre da fenolite, a frente é jumper) e um plano de GND no verso. Projeto para editar: `kicad/voz-9.kicad_pro`. O `pcb.svg` é o desenho anterior, mais apertado. O esquema ainda não tem fio; atualizar a placa a partir dele apaga este roteamento.
 
 ---
 

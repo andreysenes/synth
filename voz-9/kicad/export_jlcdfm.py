@@ -40,8 +40,9 @@ def run(args):
 def main():
     os.makedirs(OUT, exist_ok=True)
     for name in os.listdir(OUT):
-        if name != os.path.basename(ZIP):
-            os.remove(os.path.join(OUT, name))
+        if name in (os.path.basename(ZIP), ".gitignore"):
+            continue
+        os.remove(os.path.join(OUT, name))
     run(
         [
             "kicad-cli",

@@ -1073,7 +1073,7 @@ def write_board(path):
         (bay_x1, bay_y1, bay_x0, bay_y1),
         (bay_x0, bay_y1, bay_x0, bay_y0),
     ):
-        add_seg(board, x1, y1, x2, y2, pcbnew.F_SilkS, 0.12)
+        add_seg(board, x1, y1, x2, y2, pcbnew.F_SilkS, 0.16)
     add_text(
         board,
         "EQ 424",
@@ -1118,6 +1118,12 @@ def write_board(path):
                 layers.AddLayer(pcbnew.F_CrtYd)
                 layers.AddLayer(pcbnew.B_CrtYd)
                 pad.SetLayerSet(layers)
+        # A seda de 0,12 mm cai no aviso do JLCDFM (faixa 0,10–0,15).
+        for item in fp.GraphicalItems():
+            if item.GetLayer() not in (pcbnew.F_SilkS, pcbnew.B_SilkS):
+                continue
+            if pcbnew.ToMM(item.GetWidth()) < 0.16:
+                item.SetWidth(mm(0.16))
         if not p["bom"]:
             fp.SetExcludedFromBOM(True)
         board.Add(fp)

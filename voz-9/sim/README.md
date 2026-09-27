@@ -11,7 +11,7 @@ cd voz-9/sim
 ./run.sh 00_fonte
 ```
 
-* Painel tocável (`painel.html`): Web Audio + osciloscópio. Clique **Tocar**.
+* Painel tocável (`painel.html`): Web Audio + osciloscópio + **VU de saída** (pós-VOLUME). Clique **Tocar**.
   Knobs/chaves alteram o som ao vivo. Export SPICE continua no painel (details).
 
 ## Layout

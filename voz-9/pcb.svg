@@ -77,7 +77,7 @@
   <circle class="pad" cx="216" cy="4" r="2.1"/><circle class="hole" cx="216" cy="4" r="1.55"/>
   <circle class="pad" cx="4" cy="212" r="2.1"/><circle class="hole" cx="4" cy="212" r="1.55"/>
   <circle class="pad" cx="216" cy="212" r="2.1"/><circle class="hole" cx="216" cy="212" r="1.55"/>
-  <rect class="blk" x="6" y="8" width="46" height="164"/>
+  <rect class="blk" x="6" y="8" width="46" height="186"/>
   <text class="silk-s" x="7.5" y="10.5" style="text-anchor:start">PADS  CABO  J1–J10</text>
   <rect class="pad" x="7.80" y="14.80" width="2.40" height="2.40"/>
   <circle class="hole" cx="9.00" cy="16.00" r="0.5"/>
@@ -124,299 +124,303 @@
   <text class="lab" x="9.00" y="22.15">11</text>
   <text class="lab" x="40.50" y="22.15">20</text>
   <text class="silk-s" x="24.75" y="23.85">J1 OSC</text>
-  <rect class="pad" x="7.80" y="36.80" width="2.40" height="2.40"/>
-  <circle class="hole" cx="9.00" cy="38.00" r="0.5"/>
-  <circle class="pad" cx="9.00" cy="41.50" r="1.2"/>
-  <circle class="hole" cx="9.00" cy="41.50" r="0.5"/>
-  <circle class="pad" cx="12.50" cy="38.00" r="1.2"/>
-  <circle class="hole" cx="12.50" cy="38.00" r="0.5"/>
-  <circle class="pad" cx="12.50" cy="41.50" r="1.2"/>
-  <circle class="hole" cx="12.50" cy="41.50" r="0.5"/>
-  <circle class="pad" cx="16.00" cy="38.00" r="1.2"/>
-  <circle class="hole" cx="16.00" cy="38.00" r="0.5"/>
-  <circle class="pad" cx="16.00" cy="41.50" r="1.2"/>
-  <circle class="hole" cx="16.00" cy="41.50" r="0.5"/>
-  <circle class="pad" cx="19.50" cy="38.00" r="1.2"/>
-  <circle class="hole" cx="19.50" cy="38.00" r="0.5"/>
-  <circle class="pad" cx="19.50" cy="41.50" r="1.2"/>
-  <circle class="hole" cx="19.50" cy="41.50" r="0.5"/>
-  <circle class="pad" cx="23.00" cy="38.00" r="1.2"/>
-  <circle class="hole" cx="23.00" cy="38.00" r="0.5"/>
-  <circle class="pad" cx="23.00" cy="41.50" r="1.2"/>
-  <circle class="hole" cx="23.00" cy="41.50" r="0.5"/>
-  <circle class="pad" cx="26.50" cy="38.00" r="1.2"/>
-  <circle class="hole" cx="26.50" cy="38.00" r="0.5"/>
-  <circle class="pad" cx="26.50" cy="41.50" r="1.2"/>
-  <circle class="hole" cx="26.50" cy="41.50" r="0.5"/>
-  <text class="lab" x="9.00" y="36.25">1</text>
-  <text class="lab" x="26.50" y="36.25">6</text>
-  <text class="lab" x="9.00" y="44.15">7</text>
-  <text class="lab" x="26.50" y="44.15">12</text>
-  <text class="silk-s" x="17.75" y="45.85">J2 LFO</text>
-  <rect class="pad" x="7.80" y="56.80" width="2.40" height="2.40"/>
-  <circle class="hole" cx="9.00" cy="58.00" r="0.5"/>
-  <circle class="pad" cx="9.00" cy="61.50" r="1.2"/>
-  <circle class="hole" cx="9.00" cy="61.50" r="0.5"/>
-  <circle class="pad" cx="12.50" cy="58.00" r="1.2"/>
-  <circle class="hole" cx="12.50" cy="58.00" r="0.5"/>
-  <circle class="pad" cx="12.50" cy="61.50" r="1.2"/>
-  <circle class="hole" cx="12.50" cy="61.50" r="0.5"/>
-  <circle class="pad" cx="16.00" cy="58.00" r="1.2"/>
-  <circle class="hole" cx="16.00" cy="58.00" r="0.5"/>
-  <circle class="pad" cx="16.00" cy="61.50" r="1.2"/>
-  <circle class="hole" cx="16.00" cy="61.50" r="0.5"/>
-  <circle class="pad" cx="19.50" cy="58.00" r="1.2"/>
-  <circle class="hole" cx="19.50" cy="58.00" r="0.5"/>
-  <circle class="pad" cx="19.50" cy="61.50" r="1.2"/>
-  <circle class="hole" cx="19.50" cy="61.50" r="0.5"/>
-  <circle class="pad" cx="23.00" cy="58.00" r="1.2"/>
-  <circle class="hole" cx="23.00" cy="58.00" r="0.5"/>
-  <circle class="pad" cx="23.00" cy="61.50" r="1.2"/>
-  <circle class="hole" cx="23.00" cy="61.50" r="0.5"/>
-  <circle class="pad" cx="26.50" cy="58.00" r="1.2"/>
-  <circle class="hole" cx="26.50" cy="58.00" r="0.5"/>
-  <circle class="pad" cx="26.50" cy="61.50" r="1.2"/>
-  <circle class="hole" cx="26.50" cy="61.50" r="0.5"/>
-  <circle class="pad" cx="30.00" cy="58.00" r="1.2"/>
-  <circle class="hole" cx="30.00" cy="58.00" r="0.5"/>
-  <circle class="pad" cx="30.00" cy="61.50" r="1.2"/>
-  <circle class="hole" cx="30.00" cy="61.50" r="0.5"/>
-  <circle class="pad" cx="33.50" cy="58.00" r="1.2"/>
-  <circle class="hole" cx="33.50" cy="58.00" r="0.5"/>
-  <circle class="pad" cx="33.50" cy="61.50" r="1.2"/>
-  <circle class="hole" cx="33.50" cy="61.50" r="0.5"/>
-  <circle class="pad" cx="37.00" cy="58.00" r="1.2"/>
-  <circle class="hole" cx="37.00" cy="58.00" r="0.5"/>
-  <circle class="pad" cx="37.00" cy="61.50" r="1.2"/>
-  <circle class="hole" cx="37.00" cy="61.50" r="0.5"/>
-  <circle class="pad" cx="40.50" cy="58.00" r="1.2"/>
-  <circle class="hole" cx="40.50" cy="58.00" r="0.5"/>
-  <circle class="pad" cx="40.50" cy="61.50" r="1.2"/>
-  <circle class="hole" cx="40.50" cy="61.50" r="0.5"/>
-  <text class="lab" x="9.00" y="56.25">1</text>
-  <text class="lab" x="40.50" y="56.25">10</text>
-  <text class="lab" x="9.00" y="64.15">11</text>
-  <text class="lab" x="40.50" y="64.15">20</text>
-  <text class="silk-s" x="24.75" y="65.85">J3 DELAY</text>
-  <rect class="pad" x="7.80" y="78.80" width="2.40" height="2.40"/>
-  <circle class="hole" cx="9.00" cy="80.00" r="0.5"/>
-  <circle class="pad" cx="9.00" cy="83.50" r="1.2"/>
-  <circle class="hole" cx="9.00" cy="83.50" r="0.5"/>
-  <circle class="pad" cx="12.50" cy="80.00" r="1.2"/>
-  <circle class="hole" cx="12.50" cy="80.00" r="0.5"/>
-  <circle class="pad" cx="12.50" cy="83.50" r="1.2"/>
-  <circle class="hole" cx="12.50" cy="83.50" r="0.5"/>
-  <circle class="pad" cx="16.00" cy="80.00" r="1.2"/>
-  <circle class="hole" cx="16.00" cy="80.00" r="0.5"/>
-  <circle class="pad" cx="16.00" cy="83.50" r="1.2"/>
-  <circle class="hole" cx="16.00" cy="83.50" r="0.5"/>
-  <circle class="pad" cx="19.50" cy="80.00" r="1.2"/>
-  <circle class="hole" cx="19.50" cy="80.00" r="0.5"/>
-  <circle class="pad" cx="19.50" cy="83.50" r="1.2"/>
-  <circle class="hole" cx="19.50" cy="83.50" r="0.5"/>
-  <circle class="pad" cx="23.00" cy="80.00" r="1.2"/>
-  <circle class="hole" cx="23.00" cy="80.00" r="0.5"/>
-  <circle class="pad" cx="23.00" cy="83.50" r="1.2"/>
-  <circle class="hole" cx="23.00" cy="83.50" r="0.5"/>
-  <circle class="pad" cx="26.50" cy="80.00" r="1.2"/>
-  <circle class="hole" cx="26.50" cy="80.00" r="0.5"/>
-  <circle class="pad" cx="26.50" cy="83.50" r="1.2"/>
-  <circle class="hole" cx="26.50" cy="83.50" r="0.5"/>
-  <circle class="pad" cx="30.00" cy="80.00" r="1.2"/>
-  <circle class="hole" cx="30.00" cy="80.00" r="0.5"/>
-  <circle class="pad" cx="30.00" cy="83.50" r="1.2"/>
-  <circle class="hole" cx="30.00" cy="83.50" r="0.5"/>
-  <circle class="pad" cx="33.50" cy="80.00" r="1.2"/>
-  <circle class="hole" cx="33.50" cy="80.00" r="0.5"/>
-  <circle class="pad" cx="33.50" cy="83.50" r="1.2"/>
-  <circle class="hole" cx="33.50" cy="83.50" r="0.5"/>
-  <circle class="pad" cx="37.00" cy="80.00" r="1.2"/>
-  <circle class="hole" cx="37.00" cy="80.00" r="0.5"/>
-  <circle class="pad" cx="37.00" cy="83.50" r="1.2"/>
-  <circle class="hole" cx="37.00" cy="83.50" r="0.5"/>
-  <circle class="pad" cx="40.50" cy="80.00" r="1.2"/>
-  <circle class="hole" cx="40.50" cy="80.00" r="0.5"/>
-  <circle class="pad" cx="40.50" cy="83.50" r="1.2"/>
-  <circle class="hole" cx="40.50" cy="83.50" r="0.5"/>
-  <text class="lab" x="9.00" y="78.25">1</text>
-  <text class="lab" x="40.50" y="78.25">10</text>
-  <text class="lab" x="9.00" y="86.15">11</text>
-  <text class="lab" x="40.50" y="86.15">20</text>
-  <text class="silk-s" x="24.75" y="87.85">J4 PATCH A</text>
-  <rect class="pad" x="7.80" y="100.80" width="2.40" height="2.40"/>
-  <circle class="hole" cx="9.00" cy="102.00" r="0.5"/>
-  <circle class="pad" cx="9.00" cy="105.50" r="1.2"/>
-  <circle class="hole" cx="9.00" cy="105.50" r="0.5"/>
-  <circle class="pad" cx="12.50" cy="102.00" r="1.2"/>
-  <circle class="hole" cx="12.50" cy="102.00" r="0.5"/>
-  <circle class="pad" cx="12.50" cy="105.50" r="1.2"/>
-  <circle class="hole" cx="12.50" cy="105.50" r="0.5"/>
-  <circle class="pad" cx="16.00" cy="102.00" r="1.2"/>
-  <circle class="hole" cx="16.00" cy="102.00" r="0.5"/>
-  <circle class="pad" cx="16.00" cy="105.50" r="1.2"/>
-  <circle class="hole" cx="16.00" cy="105.50" r="0.5"/>
-  <circle class="pad" cx="19.50" cy="102.00" r="1.2"/>
-  <circle class="hole" cx="19.50" cy="102.00" r="0.5"/>
-  <circle class="pad" cx="19.50" cy="105.50" r="1.2"/>
-  <circle class="hole" cx="19.50" cy="105.50" r="0.5"/>
-  <circle class="pad" cx="23.00" cy="102.00" r="1.2"/>
-  <circle class="hole" cx="23.00" cy="102.00" r="0.5"/>
-  <circle class="pad" cx="23.00" cy="105.50" r="1.2"/>
-  <circle class="hole" cx="23.00" cy="105.50" r="0.5"/>
-  <circle class="pad" cx="26.50" cy="102.00" r="1.2"/>
-  <circle class="hole" cx="26.50" cy="102.00" r="0.5"/>
-  <circle class="pad" cx="26.50" cy="105.50" r="1.2"/>
-  <circle class="hole" cx="26.50" cy="105.50" r="0.5"/>
-  <circle class="pad" cx="30.00" cy="102.00" r="1.2"/>
-  <circle class="hole" cx="30.00" cy="102.00" r="0.5"/>
-  <circle class="pad" cx="30.00" cy="105.50" r="1.2"/>
-  <circle class="hole" cx="30.00" cy="105.50" r="0.5"/>
-  <circle class="pad" cx="33.50" cy="102.00" r="1.2"/>
-  <circle class="hole" cx="33.50" cy="102.00" r="0.5"/>
-  <circle class="pad" cx="33.50" cy="105.50" r="1.2"/>
-  <circle class="hole" cx="33.50" cy="105.50" r="0.5"/>
-  <text class="lab" x="9.00" y="100.25">1</text>
-  <text class="lab" x="33.50" y="100.25">8</text>
-  <text class="lab" x="9.00" y="108.15">9</text>
-  <text class="lab" x="33.50" y="108.15">16</text>
-  <text class="silk-s" x="21.25" y="109.85">J5 PATCH B</text>
-  <rect class="pad" x="7.80" y="122.80" width="2.40" height="2.40"/>
-  <circle class="hole" cx="9.00" cy="124.00" r="0.5"/>
-  <circle class="pad" cx="9.00" cy="127.50" r="1.2"/>
-  <circle class="hole" cx="9.00" cy="127.50" r="0.5"/>
-  <circle class="pad" cx="12.50" cy="124.00" r="1.2"/>
-  <circle class="hole" cx="12.50" cy="124.00" r="0.5"/>
-  <circle class="pad" cx="12.50" cy="127.50" r="1.2"/>
-  <circle class="hole" cx="12.50" cy="127.50" r="0.5"/>
-  <circle class="pad" cx="16.00" cy="124.00" r="1.2"/>
-  <circle class="hole" cx="16.00" cy="124.00" r="0.5"/>
-  <circle class="pad" cx="16.00" cy="127.50" r="1.2"/>
-  <circle class="hole" cx="16.00" cy="127.50" r="0.5"/>
-  <text class="lab" x="9.00" y="122.25">1</text>
-  <text class="lab" x="16.00" y="122.25">3</text>
-  <text class="lab" x="9.00" y="130.15">4</text>
-  <text class="lab" x="16.00" y="130.15">6</text>
-  <text class="silk-s" x="12.50" y="131.85">J6 CTRL</text>
-  <rect class="pad" x="19.30" y="122.80" width="2.40" height="2.40"/>
-  <circle class="hole" cx="20.50" cy="124.00" r="0.5"/>
-  <circle class="pad" cx="20.50" cy="127.50" r="1.2"/>
-  <circle class="hole" cx="20.50" cy="127.50" r="0.5"/>
-  <circle class="pad" cx="24.00" cy="124.00" r="1.2"/>
-  <circle class="hole" cx="24.00" cy="124.00" r="0.5"/>
-  <circle class="pad" cx="24.00" cy="127.50" r="1.2"/>
-  <circle class="hole" cx="24.00" cy="127.50" r="0.5"/>
-  <circle class="pad" cx="27.50" cy="124.00" r="1.2"/>
-  <circle class="hole" cx="27.50" cy="124.00" r="0.5"/>
-  <circle class="pad" cx="27.50" cy="127.50" r="1.2"/>
-  <circle class="hole" cx="27.50" cy="127.50" r="0.5"/>
-  <circle class="pad" cx="31.00" cy="124.00" r="1.2"/>
-  <circle class="hole" cx="31.00" cy="124.00" r="0.5"/>
-  <circle class="pad" cx="31.00" cy="127.50" r="1.2"/>
-  <circle class="hole" cx="31.00" cy="127.50" r="0.5"/>
-  <circle class="pad" cx="34.50" cy="124.00" r="1.2"/>
-  <circle class="hole" cx="34.50" cy="124.00" r="0.5"/>
-  <circle class="pad" cx="34.50" cy="127.50" r="1.2"/>
-  <circle class="hole" cx="34.50" cy="127.50" r="0.5"/>
-  <circle class="pad" cx="38.00" cy="124.00" r="1.2"/>
-  <circle class="hole" cx="38.00" cy="124.00" r="0.5"/>
-  <circle class="pad" cx="38.00" cy="127.50" r="1.2"/>
-  <circle class="hole" cx="38.00" cy="127.50" r="0.5"/>
-  <text class="lab" x="20.50" y="122.25">1</text>
-  <text class="lab" x="38.00" y="122.25">6</text>
-  <text class="lab" x="20.50" y="130.15">7</text>
-  <text class="lab" x="38.00" y="130.15">12</text>
-  <text class="silk-s" x="29.25" y="131.85">J7 IN+PRE</text>
-  <rect class="pad" x="41.30" y="122.80" width="2.40" height="2.40"/>
-  <circle class="hole" cx="42.50" cy="124.00" r="0.5"/>
-  <circle class="pad" cx="42.50" cy="127.50" r="1.2"/>
-  <circle class="hole" cx="42.50" cy="127.50" r="0.5"/>
-  <circle class="pad" cx="46.00" cy="124.00" r="1.2"/>
-  <circle class="hole" cx="46.00" cy="124.00" r="0.5"/>
-  <circle class="pad" cx="46.00" cy="127.50" r="1.2"/>
-  <circle class="hole" cx="46.00" cy="127.50" r="0.5"/>
-  <circle class="pad" cx="49.50" cy="124.00" r="1.2"/>
-  <circle class="hole" cx="49.50" cy="124.00" r="0.5"/>
-  <circle class="pad" cx="49.50" cy="127.50" r="1.2"/>
-  <circle class="hole" cx="49.50" cy="127.50" r="0.5"/>
-  <text class="lab" x="42.50" y="122.25">1</text>
-  <text class="lab" x="49.50" y="122.25">3</text>
-  <text class="lab" x="42.50" y="130.15">4</text>
-  <text class="lab" x="49.50" y="130.15">6</text>
-  <text class="silk-s" x="46.00" y="131.85">J8 OUT</text>
-  <rect class="pad" x="7.80" y="138.80" width="2.40" height="2.40"/>
-  <circle class="hole" cx="9.00" cy="140.00" r="0.5"/>
-  <circle class="pad" cx="9.00" cy="143.50" r="1.2"/>
-  <circle class="hole" cx="9.00" cy="143.50" r="0.5"/>
-  <circle class="pad" cx="12.50" cy="140.00" r="1.2"/>
-  <circle class="hole" cx="12.50" cy="140.00" r="0.5"/>
-  <circle class="pad" cx="12.50" cy="143.50" r="1.2"/>
-  <circle class="hole" cx="12.50" cy="143.50" r="0.5"/>
-  <circle class="pad" cx="16.00" cy="140.00" r="1.2"/>
-  <circle class="hole" cx="16.00" cy="140.00" r="0.5"/>
-  <circle class="pad" cx="16.00" cy="143.50" r="1.2"/>
-  <circle class="hole" cx="16.00" cy="143.50" r="0.5"/>
-  <circle class="pad" cx="19.50" cy="140.00" r="1.2"/>
-  <circle class="hole" cx="19.50" cy="140.00" r="0.5"/>
-  <circle class="pad" cx="19.50" cy="143.50" r="1.2"/>
-  <circle class="hole" cx="19.50" cy="143.50" r="0.5"/>
-  <circle class="pad" cx="23.00" cy="140.00" r="1.2"/>
-  <circle class="hole" cx="23.00" cy="140.00" r="0.5"/>
-  <circle class="pad" cx="23.00" cy="143.50" r="1.2"/>
-  <circle class="hole" cx="23.00" cy="143.50" r="0.5"/>
-  <circle class="pad" cx="26.50" cy="140.00" r="1.2"/>
-  <circle class="hole" cx="26.50" cy="140.00" r="0.5"/>
-  <circle class="pad" cx="26.50" cy="143.50" r="1.2"/>
-  <circle class="hole" cx="26.50" cy="143.50" r="0.5"/>
-  <text class="lab" x="9.00" y="138.25">1</text>
-  <text class="lab" x="26.50" y="138.25">6</text>
-  <text class="lab" x="9.00" y="146.15">7</text>
-  <text class="lab" x="26.50" y="146.15">12</text>
-  <text class="silk-s" x="17.75" y="147.85">J9 EQ424</text>
-  <rect class="pad" x="7.80" y="154.80" width="2.40" height="2.40"/>
-  <circle class="hole" cx="9.00" cy="156.00" r="0.5"/>
-  <circle class="pad" cx="9.00" cy="159.50" r="1.2"/>
-  <circle class="hole" cx="9.00" cy="159.50" r="0.5"/>
-  <circle class="pad" cx="12.50" cy="156.00" r="1.2"/>
-  <circle class="hole" cx="12.50" cy="156.00" r="0.5"/>
-  <circle class="pad" cx="12.50" cy="159.50" r="1.2"/>
-  <circle class="hole" cx="12.50" cy="159.50" r="0.5"/>
-  <circle class="pad" cx="16.00" cy="156.00" r="1.2"/>
-  <circle class="hole" cx="16.00" cy="156.00" r="0.5"/>
-  <circle class="pad" cx="16.00" cy="159.50" r="1.2"/>
-  <circle class="hole" cx="16.00" cy="159.50" r="0.5"/>
-  <circle class="pad" cx="19.50" cy="156.00" r="1.2"/>
-  <circle class="hole" cx="19.50" cy="156.00" r="0.5"/>
-  <circle class="pad" cx="19.50" cy="159.50" r="1.2"/>
-  <circle class="hole" cx="19.50" cy="159.50" r="0.5"/>
-  <circle class="pad" cx="23.00" cy="156.00" r="1.2"/>
-  <circle class="hole" cx="23.00" cy="156.00" r="0.5"/>
-  <circle class="pad" cx="23.00" cy="159.50" r="1.2"/>
-  <circle class="hole" cx="23.00" cy="159.50" r="0.5"/>
-  <circle class="pad" cx="26.50" cy="156.00" r="1.2"/>
-  <circle class="hole" cx="26.50" cy="156.00" r="0.5"/>
-  <circle class="pad" cx="26.50" cy="159.50" r="1.2"/>
-  <circle class="hole" cx="26.50" cy="159.50" r="0.5"/>
-  <circle class="pad" cx="30.00" cy="156.00" r="1.2"/>
-  <circle class="hole" cx="30.00" cy="156.00" r="0.5"/>
-  <circle class="pad" cx="30.00" cy="159.50" r="1.2"/>
-  <circle class="hole" cx="30.00" cy="159.50" r="0.5"/>
-  <circle class="pad" cx="33.50" cy="156.00" r="1.2"/>
-  <circle class="hole" cx="33.50" cy="156.00" r="0.5"/>
-  <circle class="pad" cx="33.50" cy="159.50" r="1.2"/>
-  <circle class="hole" cx="33.50" cy="159.50" r="0.5"/>
-  <circle class="pad" cx="37.00" cy="156.00" r="1.2"/>
-  <circle class="hole" cx="37.00" cy="156.00" r="0.5"/>
-  <circle class="pad" cx="37.00" cy="159.50" r="1.2"/>
-  <circle class="hole" cx="37.00" cy="159.50" r="0.5"/>
-  <circle class="pad" cx="40.50" cy="156.00" r="1.2"/>
-  <circle class="hole" cx="40.50" cy="156.00" r="0.5"/>
-  <circle class="pad" cx="40.50" cy="159.50" r="1.2"/>
-  <circle class="hole" cx="40.50" cy="159.50" r="0.5"/>
-  <text class="lab" x="9.00" y="154.25">1</text>
-  <text class="lab" x="40.50" y="154.25">10</text>
-  <text class="lab" x="9.00" y="162.15">11</text>
-  <text class="lab" x="40.50" y="162.15">20</text>
-  <text class="silk-s" x="24.75" y="163.85">J10 VCO</text>
+  <rect class="pad" x="7.80" y="34.80" width="2.40" height="2.40"/>
+  <circle class="hole" cx="9.00" cy="36.00" r="0.5"/>
+  <circle class="pad" cx="9.00" cy="39.50" r="1.2"/>
+  <circle class="hole" cx="9.00" cy="39.50" r="0.5"/>
+  <circle class="pad" cx="12.50" cy="36.00" r="1.2"/>
+  <circle class="hole" cx="12.50" cy="36.00" r="0.5"/>
+  <circle class="pad" cx="12.50" cy="39.50" r="1.2"/>
+  <circle class="hole" cx="12.50" cy="39.50" r="0.5"/>
+  <circle class="pad" cx="16.00" cy="36.00" r="1.2"/>
+  <circle class="hole" cx="16.00" cy="36.00" r="0.5"/>
+  <circle class="pad" cx="16.00" cy="39.50" r="1.2"/>
+  <circle class="hole" cx="16.00" cy="39.50" r="0.5"/>
+  <circle class="pad" cx="19.50" cy="36.00" r="1.2"/>
+  <circle class="hole" cx="19.50" cy="36.00" r="0.5"/>
+  <circle class="pad" cx="19.50" cy="39.50" r="1.2"/>
+  <circle class="hole" cx="19.50" cy="39.50" r="0.5"/>
+  <circle class="pad" cx="23.00" cy="36.00" r="1.2"/>
+  <circle class="hole" cx="23.00" cy="36.00" r="0.5"/>
+  <circle class="pad" cx="23.00" cy="39.50" r="1.2"/>
+  <circle class="hole" cx="23.00" cy="39.50" r="0.5"/>
+  <circle class="pad" cx="26.50" cy="36.00" r="1.2"/>
+  <circle class="hole" cx="26.50" cy="36.00" r="0.5"/>
+  <circle class="pad" cx="26.50" cy="39.50" r="1.2"/>
+  <circle class="hole" cx="26.50" cy="39.50" r="0.5"/>
+  <text class="lab" x="9.00" y="34.25">1</text>
+  <text class="lab" x="26.50" y="34.25">6</text>
+  <text class="lab" x="9.00" y="42.15">7</text>
+  <text class="lab" x="26.50" y="42.15">12</text>
+  <text class="silk-s" x="17.75" y="43.85">J2 LFO</text>
+  <rect class="pad" x="7.80" y="52.80" width="2.40" height="2.40"/>
+  <circle class="hole" cx="9.00" cy="54.00" r="0.5"/>
+  <circle class="pad" cx="9.00" cy="57.50" r="1.2"/>
+  <circle class="hole" cx="9.00" cy="57.50" r="0.5"/>
+  <circle class="pad" cx="12.50" cy="54.00" r="1.2"/>
+  <circle class="hole" cx="12.50" cy="54.00" r="0.5"/>
+  <circle class="pad" cx="12.50" cy="57.50" r="1.2"/>
+  <circle class="hole" cx="12.50" cy="57.50" r="0.5"/>
+  <circle class="pad" cx="16.00" cy="54.00" r="1.2"/>
+  <circle class="hole" cx="16.00" cy="54.00" r="0.5"/>
+  <circle class="pad" cx="16.00" cy="57.50" r="1.2"/>
+  <circle class="hole" cx="16.00" cy="57.50" r="0.5"/>
+  <circle class="pad" cx="19.50" cy="54.00" r="1.2"/>
+  <circle class="hole" cx="19.50" cy="54.00" r="0.5"/>
+  <circle class="pad" cx="19.50" cy="57.50" r="1.2"/>
+  <circle class="hole" cx="19.50" cy="57.50" r="0.5"/>
+  <circle class="pad" cx="23.00" cy="54.00" r="1.2"/>
+  <circle class="hole" cx="23.00" cy="54.00" r="0.5"/>
+  <circle class="pad" cx="23.00" cy="57.50" r="1.2"/>
+  <circle class="hole" cx="23.00" cy="57.50" r="0.5"/>
+  <circle class="pad" cx="26.50" cy="54.00" r="1.2"/>
+  <circle class="hole" cx="26.50" cy="54.00" r="0.5"/>
+  <circle class="pad" cx="26.50" cy="57.50" r="1.2"/>
+  <circle class="hole" cx="26.50" cy="57.50" r="0.5"/>
+  <circle class="pad" cx="30.00" cy="54.00" r="1.2"/>
+  <circle class="hole" cx="30.00" cy="54.00" r="0.5"/>
+  <circle class="pad" cx="30.00" cy="57.50" r="1.2"/>
+  <circle class="hole" cx="30.00" cy="57.50" r="0.5"/>
+  <circle class="pad" cx="33.50" cy="54.00" r="1.2"/>
+  <circle class="hole" cx="33.50" cy="54.00" r="0.5"/>
+  <circle class="pad" cx="33.50" cy="57.50" r="1.2"/>
+  <circle class="hole" cx="33.50" cy="57.50" r="0.5"/>
+  <circle class="pad" cx="37.00" cy="54.00" r="1.2"/>
+  <circle class="hole" cx="37.00" cy="54.00" r="0.5"/>
+  <circle class="pad" cx="37.00" cy="57.50" r="1.2"/>
+  <circle class="hole" cx="37.00" cy="57.50" r="0.5"/>
+  <circle class="pad" cx="40.50" cy="54.00" r="1.2"/>
+  <circle class="hole" cx="40.50" cy="54.00" r="0.5"/>
+  <circle class="pad" cx="40.50" cy="57.50" r="1.2"/>
+  <circle class="hole" cx="40.50" cy="57.50" r="0.5"/>
+  <text class="lab" x="9.00" y="52.25">1</text>
+  <text class="lab" x="40.50" y="52.25">10</text>
+  <text class="lab" x="9.00" y="60.15">11</text>
+  <text class="lab" x="40.50" y="60.15">20</text>
+  <text class="silk-s" x="24.75" y="61.85">J3 DELAY</text>
+  <rect class="pad" x="7.80" y="72.80" width="2.40" height="2.40"/>
+  <circle class="hole" cx="9.00" cy="74.00" r="0.5"/>
+  <circle class="pad" cx="9.00" cy="77.50" r="1.2"/>
+  <circle class="hole" cx="9.00" cy="77.50" r="0.5"/>
+  <circle class="pad" cx="12.50" cy="74.00" r="1.2"/>
+  <circle class="hole" cx="12.50" cy="74.00" r="0.5"/>
+  <circle class="pad" cx="12.50" cy="77.50" r="1.2"/>
+  <circle class="hole" cx="12.50" cy="77.50" r="0.5"/>
+  <circle class="pad" cx="16.00" cy="74.00" r="1.2"/>
+  <circle class="hole" cx="16.00" cy="74.00" r="0.5"/>
+  <circle class="pad" cx="16.00" cy="77.50" r="1.2"/>
+  <circle class="hole" cx="16.00" cy="77.50" r="0.5"/>
+  <circle class="pad" cx="19.50" cy="74.00" r="1.2"/>
+  <circle class="hole" cx="19.50" cy="74.00" r="0.5"/>
+  <circle class="pad" cx="19.50" cy="77.50" r="1.2"/>
+  <circle class="hole" cx="19.50" cy="77.50" r="0.5"/>
+  <circle class="pad" cx="23.00" cy="74.00" r="1.2"/>
+  <circle class="hole" cx="23.00" cy="74.00" r="0.5"/>
+  <circle class="pad" cx="23.00" cy="77.50" r="1.2"/>
+  <circle class="hole" cx="23.00" cy="77.50" r="0.5"/>
+  <circle class="pad" cx="26.50" cy="74.00" r="1.2"/>
+  <circle class="hole" cx="26.50" cy="74.00" r="0.5"/>
+  <circle class="pad" cx="26.50" cy="77.50" r="1.2"/>
+  <circle class="hole" cx="26.50" cy="77.50" r="0.5"/>
+  <circle class="pad" cx="30.00" cy="74.00" r="1.2"/>
+  <circle class="hole" cx="30.00" cy="74.00" r="0.5"/>
+  <circle class="pad" cx="30.00" cy="77.50" r="1.2"/>
+  <circle class="hole" cx="30.00" cy="77.50" r="0.5"/>
+  <circle class="pad" cx="33.50" cy="74.00" r="1.2"/>
+  <circle class="hole" cx="33.50" cy="74.00" r="0.5"/>
+  <circle class="pad" cx="33.50" cy="77.50" r="1.2"/>
+  <circle class="hole" cx="33.50" cy="77.50" r="0.5"/>
+  <circle class="pad" cx="37.00" cy="74.00" r="1.2"/>
+  <circle class="hole" cx="37.00" cy="74.00" r="0.5"/>
+  <circle class="pad" cx="37.00" cy="77.50" r="1.2"/>
+  <circle class="hole" cx="37.00" cy="77.50" r="0.5"/>
+  <circle class="pad" cx="40.50" cy="74.00" r="1.2"/>
+  <circle class="hole" cx="40.50" cy="74.00" r="0.5"/>
+  <circle class="pad" cx="40.50" cy="77.50" r="1.2"/>
+  <circle class="hole" cx="40.50" cy="77.50" r="0.5"/>
+  <text class="lab" x="9.00" y="72.25">1</text>
+  <text class="lab" x="40.50" y="72.25">10</text>
+  <text class="lab" x="9.00" y="80.15">11</text>
+  <text class="lab" x="40.50" y="80.15">20</text>
+  <text class="silk-s" x="24.75" y="81.85">J4 PATCH A</text>
+  <rect class="pad" x="7.80" y="92.80" width="2.40" height="2.40"/>
+  <circle class="hole" cx="9.00" cy="94.00" r="0.5"/>
+  <circle class="pad" cx="9.00" cy="97.50" r="1.2"/>
+  <circle class="hole" cx="9.00" cy="97.50" r="0.5"/>
+  <circle class="pad" cx="12.50" cy="94.00" r="1.2"/>
+  <circle class="hole" cx="12.50" cy="94.00" r="0.5"/>
+  <circle class="pad" cx="12.50" cy="97.50" r="1.2"/>
+  <circle class="hole" cx="12.50" cy="97.50" r="0.5"/>
+  <circle class="pad" cx="16.00" cy="94.00" r="1.2"/>
+  <circle class="hole" cx="16.00" cy="94.00" r="0.5"/>
+  <circle class="pad" cx="16.00" cy="97.50" r="1.2"/>
+  <circle class="hole" cx="16.00" cy="97.50" r="0.5"/>
+  <circle class="pad" cx="19.50" cy="94.00" r="1.2"/>
+  <circle class="hole" cx="19.50" cy="94.00" r="0.5"/>
+  <circle class="pad" cx="19.50" cy="97.50" r="1.2"/>
+  <circle class="hole" cx="19.50" cy="97.50" r="0.5"/>
+  <circle class="pad" cx="23.00" cy="94.00" r="1.2"/>
+  <circle class="hole" cx="23.00" cy="94.00" r="0.5"/>
+  <circle class="pad" cx="23.00" cy="97.50" r="1.2"/>
+  <circle class="hole" cx="23.00" cy="97.50" r="0.5"/>
+  <circle class="pad" cx="26.50" cy="94.00" r="1.2"/>
+  <circle class="hole" cx="26.50" cy="94.00" r="0.5"/>
+  <circle class="pad" cx="26.50" cy="97.50" r="1.2"/>
+  <circle class="hole" cx="26.50" cy="97.50" r="0.5"/>
+  <circle class="pad" cx="30.00" cy="94.00" r="1.2"/>
+  <circle class="hole" cx="30.00" cy="94.00" r="0.5"/>
+  <circle class="pad" cx="30.00" cy="97.50" r="1.2"/>
+  <circle class="hole" cx="30.00" cy="97.50" r="0.5"/>
+  <circle class="pad" cx="33.50" cy="94.00" r="1.2"/>
+  <circle class="hole" cx="33.50" cy="94.00" r="0.5"/>
+  <circle class="pad" cx="33.50" cy="97.50" r="1.2"/>
+  <circle class="hole" cx="33.50" cy="97.50" r="0.5"/>
+  <text class="lab" x="9.00" y="92.25">1</text>
+  <text class="lab" x="33.50" y="92.25">8</text>
+  <text class="lab" x="9.00" y="100.15">9</text>
+  <text class="lab" x="33.50" y="100.15">16</text>
+  <text class="silk-s" x="21.25" y="101.85">J5 PATCH B</text>
+  <rect class="pad" x="7.80" y="110.80" width="2.40" height="2.40"/>
+  <circle class="hole" cx="9.00" cy="112.00" r="0.5"/>
+  <circle class="pad" cx="9.00" cy="115.50" r="1.2"/>
+  <circle class="hole" cx="9.00" cy="115.50" r="0.5"/>
+  <circle class="pad" cx="12.50" cy="112.00" r="1.2"/>
+  <circle class="hole" cx="12.50" cy="112.00" r="0.5"/>
+  <circle class="pad" cx="12.50" cy="115.50" r="1.2"/>
+  <circle class="hole" cx="12.50" cy="115.50" r="0.5"/>
+  <circle class="pad" cx="16.00" cy="112.00" r="1.2"/>
+  <circle class="hole" cx="16.00" cy="112.00" r="0.5"/>
+  <circle class="pad" cx="16.00" cy="115.50" r="1.2"/>
+  <circle class="hole" cx="16.00" cy="115.50" r="0.5"/>
+  <text class="lab" x="9.00" y="110.25">1</text>
+  <text class="lab" x="16.00" y="110.25">3</text>
+  <text class="lab" x="9.00" y="118.15">4</text>
+  <text class="lab" x="16.00" y="118.15">6</text>
+  <text class="silk-s" x="12.50" y="119.85">J6 CTRL</text>
+  <rect class="pad" x="20.80" y="110.80" width="2.40" height="2.40"/>
+  <circle class="hole" cx="22.00" cy="112.00" r="0.5"/>
+  <circle class="pad" cx="22.00" cy="115.50" r="1.2"/>
+  <circle class="hole" cx="22.00" cy="115.50" r="0.5"/>
+  <circle class="pad" cx="25.50" cy="112.00" r="1.2"/>
+  <circle class="hole" cx="25.50" cy="112.00" r="0.5"/>
+  <circle class="pad" cx="25.50" cy="115.50" r="1.2"/>
+  <circle class="hole" cx="25.50" cy="115.50" r="0.5"/>
+  <circle class="pad" cx="29.00" cy="112.00" r="1.2"/>
+  <circle class="hole" cx="29.00" cy="112.00" r="0.5"/>
+  <circle class="pad" cx="29.00" cy="115.50" r="1.2"/>
+  <circle class="hole" cx="29.00" cy="115.50" r="0.5"/>
+  <circle class="pad" cx="32.50" cy="112.00" r="1.2"/>
+  <circle class="hole" cx="32.50" cy="112.00" r="0.5"/>
+  <circle class="pad" cx="32.50" cy="115.50" r="1.2"/>
+  <circle class="hole" cx="32.50" cy="115.50" r="0.5"/>
+  <circle class="pad" cx="36.00" cy="112.00" r="1.2"/>
+  <circle class="hole" cx="36.00" cy="112.00" r="0.5"/>
+  <circle class="pad" cx="36.00" cy="115.50" r="1.2"/>
+  <circle class="hole" cx="36.00" cy="115.50" r="0.5"/>
+  <circle class="pad" cx="39.50" cy="112.00" r="1.2"/>
+  <circle class="hole" cx="39.50" cy="112.00" r="0.5"/>
+  <circle class="pad" cx="39.50" cy="115.50" r="1.2"/>
+  <circle class="hole" cx="39.50" cy="115.50" r="0.5"/>
+  <text class="lab" x="22.00" y="110.25">1</text>
+  <text class="lab" x="39.50" y="110.25">6</text>
+  <text class="lab" x="22.00" y="118.15">7</text>
+  <text class="lab" x="39.50" y="118.15">12</text>
+  <text class="silk-s" x="30.75" y="119.85">J7 IN+PRE</text>
+  <rect class="pad" x="7.80" y="126.80" width="2.40" height="2.40"/>
+  <circle class="hole" cx="9.00" cy="128.00" r="0.5"/>
+  <circle class="pad" cx="9.00" cy="131.50" r="1.2"/>
+  <circle class="hole" cx="9.00" cy="131.50" r="0.5"/>
+  <circle class="pad" cx="12.50" cy="128.00" r="1.2"/>
+  <circle class="hole" cx="12.50" cy="128.00" r="0.5"/>
+  <circle class="pad" cx="12.50" cy="131.50" r="1.2"/>
+  <circle class="hole" cx="12.50" cy="131.50" r="0.5"/>
+  <circle class="pad" cx="16.00" cy="128.00" r="1.2"/>
+  <circle class="hole" cx="16.00" cy="128.00" r="0.5"/>
+  <circle class="pad" cx="16.00" cy="131.50" r="1.2"/>
+  <circle class="hole" cx="16.00" cy="131.50" r="0.5"/>
+  <circle class="pad" cx="19.50" cy="128.00" r="1.2"/>
+  <circle class="hole" cx="19.50" cy="128.00" r="0.5"/>
+  <circle class="pad" cx="19.50" cy="131.50" r="1.2"/>
+  <circle class="hole" cx="19.50" cy="131.50" r="0.5"/>
+  <text class="lab" x="9.00" y="126.25">1</text>
+  <text class="lab" x="19.50" y="126.25">4</text>
+  <text class="lab" x="9.00" y="134.15">5</text>
+  <text class="lab" x="19.50" y="134.15">8</text>
+  <text class="silk-s" x="14.25" y="135.85">J8 OUT</text>
+  <rect class="pad" x="7.80" y="144.80" width="2.40" height="2.40"/>
+  <circle class="hole" cx="9.00" cy="146.00" r="0.5"/>
+  <circle class="pad" cx="9.00" cy="149.50" r="1.2"/>
+  <circle class="hole" cx="9.00" cy="149.50" r="0.5"/>
+  <circle class="pad" cx="12.50" cy="146.00" r="1.2"/>
+  <circle class="hole" cx="12.50" cy="146.00" r="0.5"/>
+  <circle class="pad" cx="12.50" cy="149.50" r="1.2"/>
+  <circle class="hole" cx="12.50" cy="149.50" r="0.5"/>
+  <circle class="pad" cx="16.00" cy="146.00" r="1.2"/>
+  <circle class="hole" cx="16.00" cy="146.00" r="0.5"/>
+  <circle class="pad" cx="16.00" cy="149.50" r="1.2"/>
+  <circle class="hole" cx="16.00" cy="149.50" r="0.5"/>
+  <circle class="pad" cx="19.50" cy="146.00" r="1.2"/>
+  <circle class="hole" cx="19.50" cy="146.00" r="0.5"/>
+  <circle class="pad" cx="19.50" cy="149.50" r="1.2"/>
+  <circle class="hole" cx="19.50" cy="149.50" r="0.5"/>
+  <circle class="pad" cx="23.00" cy="146.00" r="1.2"/>
+  <circle class="hole" cx="23.00" cy="146.00" r="0.5"/>
+  <circle class="pad" cx="23.00" cy="149.50" r="1.2"/>
+  <circle class="hole" cx="23.00" cy="149.50" r="0.5"/>
+  <circle class="pad" cx="26.50" cy="146.00" r="1.2"/>
+  <circle class="hole" cx="26.50" cy="146.00" r="0.5"/>
+  <circle class="pad" cx="26.50" cy="149.50" r="1.2"/>
+  <circle class="hole" cx="26.50" cy="149.50" r="0.5"/>
+  <text class="lab" x="9.00" y="144.25">1</text>
+  <text class="lab" x="26.50" y="144.25">6</text>
+  <text class="lab" x="9.00" y="152.15">7</text>
+  <text class="lab" x="26.50" y="152.15">12</text>
+  <text class="silk-s" x="17.75" y="153.85">J9 EQ424</text>
+  <rect class="pad" x="7.80" y="162.80" width="2.40" height="2.40"/>
+  <circle class="hole" cx="9.00" cy="164.00" r="0.5"/>
+  <circle class="pad" cx="9.00" cy="167.50" r="1.2"/>
+  <circle class="hole" cx="9.00" cy="167.50" r="0.5"/>
+  <circle class="pad" cx="12.50" cy="164.00" r="1.2"/>
+  <circle class="hole" cx="12.50" cy="164.00" r="0.5"/>
+  <circle class="pad" cx="12.50" cy="167.50" r="1.2"/>
+  <circle class="hole" cx="12.50" cy="167.50" r="0.5"/>
+  <circle class="pad" cx="16.00" cy="164.00" r="1.2"/>
+  <circle class="hole" cx="16.00" cy="164.00" r="0.5"/>
+  <circle class="pad" cx="16.00" cy="167.50" r="1.2"/>
+  <circle class="hole" cx="16.00" cy="167.50" r="0.5"/>
+  <circle class="pad" cx="19.50" cy="164.00" r="1.2"/>
+  <circle class="hole" cx="19.50" cy="164.00" r="0.5"/>
+  <circle class="pad" cx="19.50" cy="167.50" r="1.2"/>
+  <circle class="hole" cx="19.50" cy="167.50" r="0.5"/>
+  <circle class="pad" cx="23.00" cy="164.00" r="1.2"/>
+  <circle class="hole" cx="23.00" cy="164.00" r="0.5"/>
+  <circle class="pad" cx="23.00" cy="167.50" r="1.2"/>
+  <circle class="hole" cx="23.00" cy="167.50" r="0.5"/>
+  <circle class="pad" cx="26.50" cy="164.00" r="1.2"/>
+  <circle class="hole" cx="26.50" cy="164.00" r="0.5"/>
+  <circle class="pad" cx="26.50" cy="167.50" r="1.2"/>
+  <circle class="hole" cx="26.50" cy="167.50" r="0.5"/>
+  <circle class="pad" cx="30.00" cy="164.00" r="1.2"/>
+  <circle class="hole" cx="30.00" cy="164.00" r="0.5"/>
+  <circle class="pad" cx="30.00" cy="167.50" r="1.2"/>
+  <circle class="hole" cx="30.00" cy="167.50" r="0.5"/>
+  <circle class="pad" cx="33.50" cy="164.00" r="1.2"/>
+  <circle class="hole" cx="33.50" cy="164.00" r="0.5"/>
+  <circle class="pad" cx="33.50" cy="167.50" r="1.2"/>
+  <circle class="hole" cx="33.50" cy="167.50" r="0.5"/>
+  <circle class="pad" cx="37.00" cy="164.00" r="1.2"/>
+  <circle class="hole" cx="37.00" cy="164.00" r="0.5"/>
+  <circle class="pad" cx="37.00" cy="167.50" r="1.2"/>
+  <circle class="hole" cx="37.00" cy="167.50" r="0.5"/>
+  <circle class="pad" cx="40.50" cy="164.00" r="1.2"/>
+  <circle class="hole" cx="40.50" cy="164.00" r="0.5"/>
+  <circle class="pad" cx="40.50" cy="167.50" r="1.2"/>
+  <circle class="hole" cx="40.50" cy="167.50" r="0.5"/>
+  <text class="lab" x="9.00" y="162.25">1</text>
+  <text class="lab" x="40.50" y="162.25">10</text>
+  <text class="lab" x="9.00" y="170.15">11</text>
+  <text class="lab" x="40.50" y="170.15">20</text>
+  <text class="silk-s" x="24.75" y="171.85">J10 VCO</text>
   <path class="cu-w" d="M54,10 V150"/>
   <path class="cu" d="M56.6,10 V148"/>
   <path class="cu" d="M214,10 V148"/>

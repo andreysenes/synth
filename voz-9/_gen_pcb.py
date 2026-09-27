@@ -197,18 +197,19 @@ emit('  <text class="silk-s" x="136" y="8.3">220×216 · CIs em soquete · cabos
 for x, y in ((4, 4), (216, 4), (4, 212), (216, 212)):
     emit(f'  <circle class="pad" cx="{x}" cy="{y}" r="2.1"/><circle class="hole" cx="{x}" cy="{y}" r="1.55"/>')
 
-# coluna de pads — fio do painel solda direto, sem conector. J10 é o VCO.
-blk(6, 8, 46, 164, "PADS  CABO  J1–J10")
+# coluna de pads — fio do painel solda direto, sem conector.
+# J8 é 2×4 (combo OUT + V9/VEE do VU). J10 é o VCO.
+blk(6, 8, 46, 186, "PADS  CABO  J1–J10")
 pads2x(9, 16, 10, "J1", "OSC")
-pads2x(9, 38, 6, "J2", "LFO")
-pads2x(9, 58, 10, "J3", "DELAY")
-pads2x(9, 80, 10, "J4", "PATCH A")
-pads2x(9, 102, 8, "J5", "PATCH B")
-pads2x(9, 124, 3, "J6", "CTRL")
-pads2x(20.5, 124, 6, "J7", "IN+PRE")
-pads2x(42.5, 124, 3, "J8", "OUT")
-pads2x(9, 140, 6, "J9", "EQ424")
-pads2x(9, 156, 10, "J10", "VCO")
+pads2x(9, 36, 6, "J2", "LFO")
+pads2x(9, 54, 10, "J3", "DELAY")
+pads2x(9, 74, 10, "J4", "PATCH A")
+pads2x(9, 94, 8, "J5", "PATCH B")
+pads2x(9, 112, 3, "J6", "CTRL")
+pads2x(22, 112, 6, "J7", "IN+PRE")
+pads2x(9, 128, 4, "J8", "OUT")
+pads2x(9, 146, 6, "J9", "EQ424")
+pads2x(9, 164, 10, "J10", "VCO")
 
 emit('  <path class="cu-w" d="M54,10 V150"/>')
 emit('  <path class="cu" d="M56.6,10 V148"/>')

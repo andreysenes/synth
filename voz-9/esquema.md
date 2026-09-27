@@ -1,6 +1,6 @@
 # VOZ-9 — esquema
 
-Alimentação simples, 9 V centro-negativo. Referência de áudio em 4,5 V. O MAX1044 gera −9 V para o germânio, o NE5532, o TL072 do NAB (**U3**) e o TL072 do EQ voz (**U9**). Se ele falhar, o clipper ainda funciona como diodo à terra; o EQ da fita, o EQ 424 e o pré de mic perdem headroom.
+Alimentação simples, 9 V centro-negativo. Referência de áudio em 4,5 V. O MAX1044 gera −9 V para o germânio, o NE5532, o TL072 do NAB (**U3**), o TL072 do EQ voz (**U9**) e o TL072 do VU de saída (**U12**). Se ele falhar, o clipper ainda funciona como diodo à terra; o EQ da fita, o EQ 424 e o pré de mic perdem headroom.
 
 Quantidades e compra: `bom.md`. Tudo novo — um instrumento = uma lista.
 
@@ -32,7 +32,7 @@ V9 ── 10k ──● 4V5 ── 10k ── GND
 
 P4 no painel no centro horizontal (**x=110**), à direita do LED; combo IN no canto superior esquerdo (**x=20**). Centro-negativo. Não inverta a fonte.
 
-VEE (−9 V) alimenta o **NE5532**, o **TL072 NAB (U3)** e o **TL072 EQ voz (U9)**. Sem o inversor, pré e EQs saturam cedo. O pré é diferencial ativo — **sem transformador**.
+VEE (−9 V) alimenta o **NE5532**, o **TL072 NAB (U3)**, o **TL072 EQ voz (U9)** e o **TL072 do VU (U12)** (§9). Sem o inversor, pré e EQs saturam cedo. O pré é diferencial ativo — **sem transformador**.
 
 Nível: **PRE** → **SEND** (pré-EQ). **OSC IN** = mix osc (CCW) ↔ XLR (CW) → mix → **EQ 424** → SHAPE…. Sem XLR, PRE = pré-amp dos oscs. Detalhe: `pre-vocal.md`. Não confundir com **VOLUME** (saída).
 
@@ -552,6 +552,38 @@ J201 #6 **não** é o NAB. Fica buffer depois do SHAPE se o VCF carregar o clipp
 
 ---
 
+## 9. VU de saída (U12 TL072)
+
+Um **VU analógico** (movimento de bobina móvel, tipo TN-73) no painel mostra o nível que sai — **depois do VOLUME**, o mesmo ponto que vai ao combo OUT. Não é medidor de pico: sobe rápido e desce devagar, como um VU de mesa.
+
+O movimento sozinho não lê nível de pedal (precisa de ~1 V e alguns mA) e, ligado direto, ainda **carregaria** o áudio. Então um **TL072 (U12, ±9 V)** faz um **retificador de precisão de onda completa** (valor absoluto) e a média enche o ponteiro. Uma metade retifica meia onda; a outra soma o sinal cru + a meia onda retificada = onda completa.
+
+Essa plaquinha **não** entra na BASE: o U10 de lá é o AS3340. Mora **atrás do próprio meter** (uma ilhada / dead-bug). Sinal e alimentação sobem pelos pads **J8** (combo OUT), que passa de 2×3 para **2×4**. Os refs começam em R115 / C90 / RV8 para não repetir o VCO.
+
+```
+TIP (J8 p4, pós-VOLUME) ── C90 100n ──●── R116 10k ──●───────────●── R118 10k ──● U12B(−) ──● out B
+                                      │              │           │                           │
+                                     R115 100k     U12A(−)     R119 4k7                   R120 10k
+                                      │            R117 10k (fb) (≈ R/2, da meia onda)       │
+                                     GND           D6 · D7 (1N4148) no laço da U12A      out B ──┘
+    U12A(+) = GND        U12B(+) = GND
+
+out B ──●── RV8 10k (calibra 0 VU) ──● VU (+)   ── meter (bobina móvel) ──● VU (−) = GND
+        └── C91 47µ ── GND  (balística / média)
+```
+
+- **U12A** retifica meia onda com D6/D7 (silício; a queda some no laço de feedback — por isso “precisão”).
+- **U12B** soma o cru (R118 10 k) com a meia onda em dobro de peso (R119 4k7 ≈ R/2) → **onda completa**, sempre positiva.
+- **RV8 10 k** ajusta o fundo de escala: toca no nível mais alto que você usa e abre RV8 até o ponteiro parar em **0 VU** (início do vermelho). RV3–RV7 são os trims do VCO, na BASE.
+- **C91 47 µ** em paralelo com o meter faz a média: o ponteiro não treme na frequência do áudio, sobe rápido e cai devagar.
+- 100 n em V9 e em VEE ao lado do U12 (**C92**, **C93**), como nos outros op-amps.
+
+A corrente do ponteiro sai do trilho **V9** (pelo U12B), não do VEE. O VEE só ganha o consumo de repouso do U12 (~3 mA) — cabe no MAX1044 junto do 5532/U3/U9. Sem o U12 no soquete, o instrumento toca igual: o VU só para de indicar.
+
+**Contrato J8** (combo OUT, agora **2×4**): pinos 1–5 = X2 · X3 · X1 · TIP · GND (como antes); **6 = V9**, **7 = VEE**, **8 = NC**. A plaquinha do VU puxa **TIP (p4) + GND (p5) + V9 (p6) + VEE (p7)** daqui e liga o meter localmente. Uma folga de 9 V ao lado do áudio de saída é pouca — os fios são curtos e o nível é alto.
+
+---
+
 ## Mapa dos 6× J201 + amigos
 
 | Peça        | Função                         |
@@ -568,6 +600,9 @@ J201 #6 **não** é o NAB. Fica buffer depois do SHAPE se o VCF carregar o clipp
 | Op-amp U2 | OSC A + OSC B (TL072/4558) |
 | TL072 U3 | NAB: GRAVA + LÊ (§8b) |
 | TL072 U9 | EQ voz 424 (§3b) |
+| AS3340 U10 | VCO cromático (`vco.md`) |
+| MC34063 U11 | 9 V → 15 V do VCO |
+| TL072 U12 | VU de saída — retificador (§9) |
 | NE5532 U1 | Pré de mic |
 | PT2399 #1 | Head 1 curto |
 | PT2399 #2 | Head 2 médio |

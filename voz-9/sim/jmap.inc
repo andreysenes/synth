@@ -2,7 +2,7 @@
 *
 * Node names used everywhere: j1_1 … j1_20, j2_1 … j2_12,
 * j3_1 … j3_20, j4_1 … j4_20, j5_1 … j5_16, j6_1 … j6_6,
-* j7_1 … j7_12, j8_1 … j8_6, j9_1 … j9_12, j10_1 … j10_20
+* j7_1 … j7_12, j8_1 … j8_8, j9_1 … j9_12, j10_1 … j10_20
 *
 * J1 OSC 2x10 (19 used)
 *  1–2  OSC A A · B          (reostat 500kA — ends of pitch pot)
@@ -41,7 +41,8 @@
 *  1–2 LED A · K, 3–4 P4 TIP · GND, 5–6 GATE NA · GND
 *
 * J7 IN combo + PRE + OSC IN 2x6: 1 X2, 2 X3, 3 X1, 4 TIP, 5 GND, 6–8 PRE, 9–11 OSC IN CCW · W · CW, 12 NC
-* J8 OUT combo: 1 X2, 2 X3, 3 X1, 4 TIP, 5 GND, 6 NC
+* J8 OUT combo 2x4: 1 X2, 2 X3, 3 X1, 4 TIP, 5 GND, 6 V9, 7 VEE, 8 NC
+*   pins 4–7 feed the VU daughterboard (U12) behind the meter
 *
 * J9 EQ voz 424 2x6
 *  1–3  LOW CCW · W · CW     (shelf 100 Hz ±10 dB)

@@ -61,7 +61,8 @@ Passivos **0805 1 %** da biblioteca **Basic** (sem taxa extra de peça). CIs em 
 | 1 | P4 9 V | |
 | 4 | cabo P2 | |
 | 1 | fio 24 AWG 10 m | cabos do painel, soldados nos pads J1–J10 |
-| 10 | soquete DIP | U1–U4, U6–U8, **U9–U11** — some se for SOP |
+| 11 | soquete DIP | U1–U4, U6–U8, **U9–U12** — some se for SOP |
+| 1 | VU analógico (TN-73) | no painel; driver U12 atrás do meter |
 | 1 | caixa + face 220×216 | |
 | 1 | fenolite 220×216 | ou encomenda FR4 na própria JLC, outro fluxo |
 
@@ -73,7 +74,7 @@ Essas linhas **não** estão no CSV de propósito: o tool marcaria unmatched e s
 
 Inventados para o matching. Ainda não há netlist KiCad. Quando existir PCB FR4, estes refs têm de bater com o CPL.
 
-- **U1** 5532 · **U2** osc · **U3** NAB · **U4** ICL7660 · **U5** 78M05 · **U6–U8** PT2399 · **U9** EQ voz 424 · **U10** AS3340 · **U11** MC34063
+- **U1** 5532 · **U2** osc · **U3** NAB · **U4** ICL7660 · **U5** 78M05 · **U6–U8** PT2399 · **U9** EQ voz 424 · **U10** AS3340 · **U11** MC34063 · **U12** VU (atrás do meter)
 - **Q1–Q6** J201 no circuito · **Q8 Q9** folga · **Q7** LFO
 - **D1** proteção · **D2–D5** 4148 · **LED1** piloto
 - **R1…R103** e **C1…C86** na ordem da `bom.md` (+ passivos EQ em §3b, passivos do VCO em `vco.md`)

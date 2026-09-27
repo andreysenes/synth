@@ -1,6 +1,6 @@
 # VOZ-9 — o que o VCO acrescenta
 
-Estas peças **já estão** na `bom.md` e no total de ~R$ **740**. Não compre de novo e não monte uma segunda caixa. Preços estimados, varejo Brasil, set/2026, sem frete.
+Estas peças **já estão** na `bom.md`. O instrumento completo, com VCO e VU, fica em ~R$ **796**. Não compre o VCO de novo e não monte uma segunda caixa. Preços estimados, varejo Brasil, set/2026, sem frete.
 
 O CI é **AS3340** DIP-16 (Alfa) ou **V3340** (Coolaudio) — mesmos pinos. Sem tempco discreto, sem par de 2N3904, sem segundo MAX1044 e sem segundo P4. O −9 V é o U4 da BASE.
 

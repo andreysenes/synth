@@ -499,7 +499,7 @@ Invertido: o 1N5817 segura. O LED não acende.
 
 ### Pads de cabo (painel soldado na placa)
 
-**Ideia.** Sem conector entre o faceplate e a BASE. Cada grupo é uma grade de **pads**: **J1 OSC 2×10, J2 LFO 2×6, J3 DELAY 2×10, J4 PATCH A 2×10, J5 PATCH B 2×8, J6 CTRL 2×3, J7 IN+PRE+OSC IN 2×6, J8 OUT 2×3, J9 EQ 424 2×6, J10 VCO 2×10**. J10 leva COARSE, FINE, PW, FM, as chaves SAW/TRI/PUL e o jack CV.
+**Ideia.** Sem conector entre o faceplate e a BASE. Cada grupo é uma grade de **pads**: **J1 OSC 2×10, J2 LFO 2×6, J3 DELAY 2×10, J4 PATCH A 2×10, J5 PATCH B 2×8, J6 CTRL 2×3, J7 IN+PRE+OSC IN 2×6, J8 OUT 2×4, J9 EQ 424 2×6, J10 VCO 2×10**. J10 leva COARSE, FINE, PW, FM, as chaves SAW/TRI/PUL e o jack CV.
 
 Passo **3,5 mm**, furo **1,0 mm**, ilha Ø 2,4 mm. O fio entra e solda no verso. Pino 1 = pad quadrado. Não troque os grupos.
 
@@ -508,6 +508,26 @@ CIs (U1–U4, U6–U8, **U9**, **U10** AS3340, **U11** MC34063) entram em **soqu
 Pinagem: `pcb.md`.
 
 **Banco.** Fonte **desligada**: J6 pino 4 (P4-GND) ↔ malha do combo. Contínuo. J6 pino 3 (P4-TIP) **não** pode achar GND.
+
+---
+
+## Medição — o VU de saída
+
+### VU analógico — o olho da saída
+
+**Ideia.** Um **VU** é um microamperímetro de bobina móvel: uma agulha presa a uma bobina que gira num ímã quando passa corrente. Ele mede **corrente contínua**, não áudio. Para “ver” o som, primeiro a gente **retifica** (transforma o sobe-e-desce em só-sobe) e faz a **média** com um capacitor. Por norma o VU é lento de propósito: sobe rápido, desce devagar — mostra o *volume percebido*, não o pico instantâneo (isso é trabalho de um LED de clip).
+
+O movimento sozinho precisa de ~1 V e alguns mA no fundo de escala; a saída de pedal nem sempre chega lá, e ligar o meter direto ainda *carregaria* o áudio. Por isso existe o **driver**: um op-amp que copia o sinal sem puxá-lo e entrega corrente ao ponteiro.
+
+**No VOZ-9.** Tap **depois do VOLUME** (mesmo ponto do combo OUT). **U12 (TL072, ±9 V)** faz um **retificador de precisão de onda completa**: uma metade retifica meia onda (D6/D7 no laço — a queda do diodo some no feedback), a outra soma cru + meia onda e fecha a onda completa. **RV8 10 k** calibra o 0 VU; **C91 47 µ** faz a média/balística. O U10 da BASE é o AS3340, então essa plaquinha mora **atrás do meter**; sinal e alimentação (TIP · GND · V9 · VEE) sobem pelos pads **J8**, que viram **2×4**. Detalhe: `esquema.md` §9.
+
+**Banco.** Tocando, VOLUME a meio: a agulha deve subir com o som e cair devagar no silêncio. Toca no trecho mais alto que você usa e abre **RV8** até parar no início do vermelho (0 VU). Agulha colada no fim = RV8 aberto demais ou ganho alto; agulha morta = U12 fora do soquete, meter invertido (troca os 2 fios) ou C91 seco. O instrumento **toca igual sem o U12** — só perde a indicação.
+
+**Em geral.** Mesa de gravação, amplificador valvulado, compressor 1176/LA-2A. Primos: “VU” de LED (barra), medidor de pico (PPM, balística rápida). O da foto do projeto é um **TN-73** (movimento simples ~ nível de linha).
+
+**Datasheet.** Não tem folha de verdade (peça mecânica). O que importa: **corrente de fundo de escala** (ex. 200 µA–1 mA) e a **resistência interna** — quanto menor a corrente, maior o resistor de série (RV8 + fixo) para não bater o batente.
+
+**Não faça.** Ligar o meter direto na saída sem o driver (carrega o áudio e mal se mexe). Inverter os 2 fios (agulha bate no batente esquerdo). Confundir com medidor de pico: o VU é lento *por norma*.
 
 ---
 
@@ -567,6 +587,7 @@ Cobre = verso. Sem furo metalizado: quando uma trilha precisa “mudar de lado�
 | Voz no SM58 | combo IN XLR, NE5532, PRE, sem phantom |
 | Nível da voz | PRE (não o VOLUME) |
 | Eco com “ar” de gravador | TL072 + 3,3 n |
+| Ver o nível que sai | VU de saída + VOLUME (U12, §9) |
 | Só 5 V / só −9 V / não explodir | 78M05 / MAX1044 / 1N5817 |
 
 ---
@@ -577,6 +598,7 @@ Cobre = verso. Sem furo metalizado: quando uma trilha precisa “mudar de lado�
 | --- | --- |
 | Combo clone | Medir pinos; Neutrik só como mapa |
 | MP20 pintado | Folha soviética; tratar como AC128 |
+| VU analógico | Mecânico; ver corrente de fundo de escala + R interna |
 | Knob, caixa, cabo P2 | Mecânica |
 
 ---

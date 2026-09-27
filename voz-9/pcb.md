@@ -45,6 +45,8 @@ Pads de cabo na coluna esquerda (**J1–J10**, dupla fila). Circuito à direita;
 - **2×** trimpot 100 k (RV1 F-BACK, RV2 res)
 - **J1–J10** pads para o fio do painel — furo 1,0 mm, passo 3,5 mm, pino 1 quadrado
 
+O **VU de saída** (U12 + R115–R120 + C90–C93 + D6/D7 + RV8) **não** entra na BASE — o U10 de lá é o AS3340. Mora numa ilhada atrás do meter e puxa TIP · GND · V9 · VEE dos pads **J8** (agora 2×4). Esquema: `esquema.md` §9.
+
 ---
 
 ## Cabos painel → BASE
@@ -60,7 +62,7 @@ Na placa: **pads em dupla fila**, passo **3,5 mm**, furo **1,0 mm**, ilha Ø **2
 | **J5** | 2×8 | 16 | PATCH B |
 | **J6** | 2×3 | 6 | CTRL (LED, P4, GATE) |
 | **J7** | 2×6 | 12 | combo IN + PRE + OSC IN |
-| **J8** | 2×3 | 6 | combo OUT |
+| **J8** | 2×4 | 8 | combo OUT + alimenta o VU |
 | **J9** | 2×6 | 12 | EQ voz 424 |
 | **J10** | 2×10 | 20 | VCO cromático |
 
@@ -159,12 +161,16 @@ P4: centro-negativo. **Confira no jack.** 1N5817 na BASE, no pino 3 (TIP).
 
 100 p de RF no combo (e C1 C2 na placa). PRE = nível; OSC IN = mix osc ↔ XLR (`pre-vocal.md`).
 
-### J8 combo OUT — 2×3
+### J8 combo OUT — 2×4
 
 | Pino | Sinal |
 | ---: | --- |
 | 1–5 | X2 · X3 · X1 · TIP · GND |
-| 6 | NC |
+| 6 | V9 (alimenta o VU) |
+| 7 | VEE (alimenta o VU) |
+| 8 | NC |
+
+O TIP (pino 4, pós-VOLUME) é o sinal que o VU mede. A plaquinha do VU (U12) fica **atrás do meter** e puxa TIP · GND · V9 · VEE destes pads (`esquema.md` §9).
 
 ### J9 EQ voz 424 — 2×6
 
@@ -223,6 +229,7 @@ Coordenadas em mm, origem no canto superior esquerdo.
 | CUTOFF | 166 | 76 | 7,5 |
 | DRONE/GATE | 184 | 76 | 6,0 |
 | GATE | 198 | 76 | 7,0 |
+| VU (saída) | 150 | 61 | recorte ~30×11 |
 | TIME | 26 | 112 | 7,5 |
 | WET | 52 | 112 | 7,5 |
 | F-BACK | 84 | 112 | 7,5 |
@@ -259,7 +266,9 @@ Mesmos designators do `jlcpcb-bom.csv` + bloco EQ. Axial ¼ W, passo **7,62 mm**
 | ENV | | C27 C28 100n · C68 C71 47µ · C53 C54 2µ2 |
 | FITA | R35–R41 R47–R50 10k · R71 100k · R75–R78 220k | C3 2n2 · C7–C17 10n · C18 22n · C31–C42 100n · C69 C70 47µ |
 
-Trimpots: RV1 teto F-BACK, RV2 ressonância. (PRE no painel substitui o antigo RV3 bias 5532.)
+Trimpots na BASE: RV1 teto F-BACK, RV2 ressonância, RV3–RV7 do VCO (`vco.md`). RV8 (10 k) = calibração do VU, na ilhada atrás do meter (`esquema.md` §9).
+
+O **VU** não aparece na tabela: U12 + R115–R120 + C90–C93 + D6/D7 + RV8 ficam atrás do meter, alimentados pelo J8 2×4.
 
 ---
 

@@ -24,7 +24,8 @@ def iu(value):
 
 
 def _mark(bucket, x, y, radius):
-    rad = radius + NEED
+    # Folga extra para a trilha entre os centros da grade não furar o DRC.
+    rad = radius + NEED + 0.08
     x0 = int((x - rad) / GRID)
     x1 = int((x + rad) / GRID) + 1
     y0 = int((y - rad) / GRID)
@@ -35,12 +36,26 @@ def _mark(bucket, x, y, radius):
                 bucket.add((ix, iy))
 
 
+def _dist_point_seg(px, py, x1, y1, x2, y2):
+    dx, dy = x2 - x1, y2 - y1
+    length2 = dx * dx + dy * dy
+    if length2 < 1e-12:
+        return ((px - x1) ** 2 + (py - y1) ** 2) ** 0.5
+    t = max(0.0, min(1.0, ((px - x1) * dx + (py - y1) * dy) / length2))
+    qx, qy = x1 + t * dx, y1 + t * dy
+    return ((px - qx) ** 2 + (py - qy) ** 2) ** 0.5
+
+
 def _mark_seg(bucket, x1, y1, x2, y2, radius):
-    length = ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5
-    steps = max(1, int(length / 0.35))
-    for i in range(steps + 1):
-        t = i / steps
-        _mark(bucket, x1 + (x2 - x1) * t, y1 + (y2 - y1) * t, radius)
+    rad = radius + NEED + 0.08
+    x0 = int((min(x1, x2) - rad) / GRID)
+    x1i = int((max(x1, x2) + rad) / GRID) + 1
+    y0 = int((min(y1, y2) - rad) / GRID)
+    y1i = int((max(y1, y2) + rad) / GRID) + 1
+    for ix in range(x0, x1i):
+        for iy in range(y0, y1i):
+            if _dist_point_seg(ix * GRID, iy * GRID, x1, y1, x2, y2) <= rad:
+                bucket.add((ix, iy))
 
 
 def route_pair(board, net_name, ax, ay, bx, by):
@@ -57,11 +72,21 @@ def route_pair(board, net_name, ax, ay, bx, by):
 
     for fp in board.GetFootprints():
         for pad in fp.Pads():
-            if pad.GetNetname() in (net_name, ""):
+            px = mm(pad.GetPosition().x)
+            py = mm(pad.GetPosition().y)
+            drill = mm(pad.GetDrillSize().x) / 2
+            if drill > 0:
+                # Furo do via (0,6 mm) não pode chegar a 0,25 mm de outro furo.
+                hole = drill + 0.30 + 0.30
+                for ix in range(int((px - hole) / GRID), int((px + hole) / GRID) + 1):
+                    for iy in range(int((py - hole) / GRID), int((py + hole) / GRID) + 1):
+                        if (ix * GRID - px) ** 2 + (iy * GRID - py) ** 2 <= hole * hole:
+                            via_block.add((ix, iy))
+            if pad.GetNetname() == net_name:
                 continue
             block_both(
-                mm(pad.GetPosition().x),
-                mm(pad.GetPosition().y),
+                px,
+                py,
                 max(mm(pad.GetSize().x), mm(pad.GetSize().y)) / 2,
             )
     for item in board.GetTracks():
@@ -81,16 +106,16 @@ def route_pair(board, net_name, ax, ay, bx, by):
         )
         x1, y1 = mm(item.GetStart().x), mm(item.GetStart().y)
         x2, y2 = mm(item.GetEnd().x), mm(item.GetEnd().y)
-        length = ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5
-        steps = max(1, int(length / 0.4))
-        for i in range(steps + 1):
-            t = i / steps
-            px, py = x1 + (x2 - x1) * t, y1 + (y2 - y1) * t
-            rad = mm(item.GetWidth()) / 2 + VIA_R + CLEAR
-            for ix in range(int((px - rad) / GRID), int((px + rad) / GRID) + 1):
-                for iy in range(int((py - rad) / GRID), int((py + rad) / GRID) + 1):
-                    if (ix * GRID - px) ** 2 + (iy * GRID - py) ** 2 <= rad * rad:
-                        via_block.add((ix, iy))
+        # 0,02 mm a mais: o DRC mede o cobre real, não o centro da célula.
+        rad = mm(item.GetWidth()) / 2 + VIA_R + CLEAR + 0.02
+        ix0 = int((min(x1, x2) - rad) / GRID)
+        ix1 = int((max(x1, x2) + rad) / GRID) + 1
+        iy0 = int((min(y1, y2) - rad) / GRID)
+        iy1 = int((max(y1, y2) + rad) / GRID) + 1
+        for ix in range(ix0, ix1):
+            for iy in range(iy0, iy1):
+                if _dist_point_seg(ix * GRID, iy * GRID, x1, y1, x2, y2) <= rad:
+                    via_block.add((ix, iy))
 
     edge = board.GetBoardEdgesBoundingBox()
     x_max = pcbnew.ToMM(edge.GetRight()) - 1.5

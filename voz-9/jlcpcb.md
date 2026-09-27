@@ -60,8 +60,8 @@ Passivos **0805 1 %** da biblioteca **Basic** (sem taxa extra de peça). CIs em 
 | 2 | combo XLR+P10 clone | |
 | 1 | P4 9 V | |
 | 4 | cabo P2 | |
-| 1 | fio 24 AWG 10 m | chicotes painel → BASE |
-| 9 | fêmea/macho 2×N (3 / 6 / 8 / 10) | J1–J9, passo 2,54 mm |
+| 1 | fio 24 AWG 10 m | fios do painel até os pinos da BASE |
+| 4 | barra de pinos macho 1×40 2,54 mm | J1–J9 na borda da placa |
 | 8 | soquete DIP | U1–U4, U6–U8, **U9** — some se for SOP |
 | 1 | caixa (piso ≥ 300×300) + face 220×160 | |
 | 1 | fenolite 300×300 | ou encomenda FR4 na própria JLC, outro fluxo |

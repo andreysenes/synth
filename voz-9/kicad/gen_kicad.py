@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Gera o projeto KiCad da BASE VOZ-9 (placa 300×300 mm).
 
-O miolo é o mesmo desenho de `_gen_pcb.py` (220×160 centrado).
-Não há netlist no SVG: o esquema traz as peças, os valores e os
-footprints, ainda sem fios.
+Os blocos do circuito ocupam a placa com folga para roteamento.
+J1–J9 são pinos macho 1×N na borda de baixo: o fio entra ali.
+Não há netlist: o esquema traz as peças, ainda sem fios.
 """
 
 import json
@@ -19,7 +19,6 @@ FP = "/usr/share/kicad/footprints"
 DEMO_PRO = "/usr/share/kicad/demos/pic_programmer/pic_programmer.kicad_pro"
 
 W, H = 300.0, 300.0
-OX, OY = (W - 220.0) / 2.0, (H - 160.0) / 2.0  # igual a _gen_pcb.py
 
 FP_R = "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal"
 FP_C = "Capacitor_THT:C_Rect_L7.2mm_W2.5mm_P5.00mm"
@@ -41,6 +40,7 @@ SYM_JFET = "Device:Q_NJFET_DGS"
 SHEET_UUID = str(uuid.uuid5(uuid.NAMESPACE_URL, "voz-9-sheet"))
 
 parts = []
+notes = []
 block = ""
 
 
@@ -48,7 +48,7 @@ def uid(*bits):
     return str(uuid.uuid5(uuid.NAMESPACE_URL, "voz-9:" + ":".join(bits)))
 
 
-def add(ref, val, sym, fp, x, y, bom=True):
+def add(ref, val, sym, fp, x, y, bom=True, rot=0):
     parts.append(
         {
             "ref": ref,
@@ -57,6 +57,7 @@ def add(ref, val, sym, fp, x, y, bom=True):
             "fp": fp,
             "x": x,
             "y": y,
+            "rot": rot,
             "block": block,
             "bom": bom,
         }
@@ -64,41 +65,43 @@ def add(ref, val, sym, fp, x, y, bom=True):
 
 
 def R(ref, val, x, y):
-    add(ref, val, "Device:R", FP_R, x - 3.81 + OX, y + OY)
+    add(ref, val, "Device:R", FP_R, 0, 0)
 
 
 def C(ref, val, x, y):
-    add(ref, val, "Device:C", FP_C, x - 2.5 + OX, y + OY)
+    add(ref, val, "Device:C", FP_C, 0, 0)
 
 
 def CE(ref, val, x, y):
-    add(ref, val, "Device:C_Polarized", FP_CE, x - 1.25 + OX, y + OY)
+    add(ref, val, "Device:C_Polarized", FP_CE, 0, 0)
 
 
 def D(ref, val, x, y):
-    add(ref, val, "Device:D", FP_D, x - 3.81 + OX, y + OY)
+    add(ref, val, "Device:D", FP_D, 0, 0)
 
 
 def Q(ref, val, x, y):
-    add(ref, val, SYM_JFET, FP_TO92, x - 1.27 + OX, y + 0.42 + OY)
+    add(ref, val, SYM_JFET, FP_TO92, 0, 0)
 
 
 def DIP8(ref, val, sym, x, y):
-    add(ref, val, sym, FP_DIP8, x - 3.81 + OX, y - 3.81 + OY)
+    add(ref, val, sym, FP_DIP8, 0, 0)
 
 
 def DIP16(ref, val, sym, x, y):
-    add(ref, val, sym, FP_DIP16, x - 3.81 + OX, y - 8.89 + OY)
+    add(ref, val, sym, FP_DIP16, 0, 0)
 
 
 def HDR(ref, cols, x, y, name):
+    n = cols * 2
     add(
         ref,
         name,
-        f"Connector_Generic:Conn_02x{cols:02d}_Top_Bottom",
-        f"voz9:PinSocket_2x{cols:02d}_TopBottom",
-        x + OX,
-        y + OY,
+        f"Connector_Generic:Conn_01x{n:02d}",
+        f"Connector_PinHeader_2.54mm:PinHeader_1x{n:02d}_P2.54mm_Vertical",
+        0,
+        0,
+        rot=90,
     )
 
 
@@ -133,7 +136,7 @@ def build_parts():
     block = "FONTE"
     D("D1", "1N5817", 64, 21)
     DIP8("U4", "MAX1044", SYM_7660, 80, 22)
-    add("U5", "78M05", SYM_REG, FP_TO220, 100 - 2.54 + OX, 23.6 + OY)
+    add("U5", "78M05", SYM_REG, FP_TO220, 0, 0)
     CE("C56", "10µ", 114, 20)
     CE("C57", "10µ", 114, 29)
     CE("C58", "10µ", 114, 38)
@@ -205,10 +208,10 @@ def build_parts():
     block = "ENV"
     cline(128, 98, [("C27", "100n"), ("C28", "100n")])
     eline(128, 108, [("C68", "47µ"), ("C53", "2µ2"), ("C54", "2µ2"), ("C71", "47µ")])
-    add("RV1", "100k", "Device:R_Potentiometer_Trim", FP_TRIM, 168 + 2.54 + OX, 108 + OY)
+    add("RV1", "100k", "Device:R_Potentiometer_Trim", FP_TRIM, 0, 0)
 
     block = "TRIM"
-    add("RV2", "100k", "Device:R_Potentiometer_Trim", FP_TRIM, 186 + 2.54 + OX, 104 + OY)
+    add("RV2", "100k", "Device:R_Potentiometer_Trim", FP_TRIM, 0, 0)
     D("D7", "MP20", 202, 104)
 
     block = "FITA"
@@ -296,6 +299,119 @@ def build_parts():
         start=1,
     ):
         add(f"H{i}", "M3", "Mechanical:MountingHole", FP_HOLE, x, y, bom=False)
+
+
+# Caixa do footprint em relação à origem (pino 1), com folga para o corpo.
+# TO-220 ganha espaço extra acima dos pinos para a aba.
+BOX = {
+    FP_R: (-1.2, -2.0, 9.2, 2.0),
+    FP_C: (-1.5, -2.0, 6.8, 2.0),
+    FP_CE: (-2.0, -3.2, 4.4, 3.2),
+    FP_D: (-1.5, -2.0, 9.4, 2.0),
+    FP_DIP8: (-1.8, -2.2, 9.6, 10.0),
+    FP_DIP16: (-1.8, -2.2, 9.6, 20.2),
+    FP_TO92: (-1.8, -3.2, 4.4, 2.4),
+    FP_TO220: (-3.2, -16.0, 8.4, 2.2),
+    FP_TRIM: (-8.2, -3.2, 3.0, 3.2),
+}
+
+
+def rank(part):
+    fp = part["fp"]
+    if "DIP-16" in fp:
+        return 0
+    if "DIP-8" in fp:
+        return 1
+    if "TO-220" in fp:
+        return 2
+    if "TO-92" in fp:
+        return 3
+    if "Diode" in fp:
+        return 4
+    if "Potentiometer" in fp:
+        return 5
+    if "R_Axial" in fp:
+        return 6
+    return 7
+
+
+def pack(items, x0, y0, x1, gap=3.4):
+    cursor_x = x0
+    cursor_y = y0
+    row_h = 0.0
+    for part in items:
+        left, top, right, bottom = BOX[part["fp"]]
+        width = right - left
+        height = bottom - top
+        if cursor_x > x0 and cursor_x + width > x1:
+            cursor_x = x0
+            cursor_y += row_h + gap
+            row_h = 0.0
+        part["x"] = cursor_x - left
+        part["y"] = cursor_y - top
+        part["rot"] = 0
+        cursor_x += width + gap
+        row_h = max(row_h, height)
+    return cursor_y + row_h
+
+
+def place_pins():
+    """Duas fileiras de pinos na borda de baixo. Pino 1 à esquerda."""
+    by_ref = {part["ref"]: part for part in parts}
+    rows = (
+        (["J1", "J3", "J4", "J5"], 293.0),
+        (["J2", "J7", "J9", "J6", "J8"], 283.5),
+    )
+    x_left, x_right = 16.0, 280.0
+    for refs, y in rows:
+        groups = []
+        for ref in refs:
+            part = by_ref[ref]
+            count = int(part["fp"].split("1x")[1][:2])
+            groups.append((part, count))
+        span = sum((count - 1) * 2.54 for _, count in groups)
+        gap = (x_right - x_left - span) / (len(groups) - 1)
+        x = x_left
+        for part, count in groups:
+            part["x"] = x
+            part["y"] = y
+            part["rot"] = 90
+            notes.append((f"{part['ref']} {part['val']}", x + (count - 1) * 1.27, y - 3.5))
+            x += (count - 1) * 2.54 + gap
+
+
+def place_blocks():
+    groups = {}
+    for part in parts:
+        if part["ref"][0] in "JH":
+            continue
+        groups.setdefault(part["block"], []).append(part)
+    for items in groups.values():
+        items.sort(key=rank)
+
+    def band(y, columns):
+        bottoms = []
+        for name, x0, x1 in columns:
+            notes.append((name, x0, y - 3.2))
+            items = groups.pop(name)
+            bottoms.append(pack(items, x0, y, x1))
+        return max(bottoms)
+
+    # Faixas espalhadas até perto dos pinos, com corredor para o fio subir.
+    bands = (
+        (22, (("FONTE", 14, 108), ("U1", 112, 206), ("U2", 210, 288)), 94),
+        (102, (("NAB", 14, 108), ("MIX", 112, 200), ("VCF", 204, 288)), 160),
+        (168, (("CLK", 14, 150), ("ENV", 154, 230), ("TRIM", 234, 288)), 208),
+        (216, (("FITA", 14, 288),), 272),
+    )
+    bottom = 0
+    for y0, columns, limit in bands:
+        bottom = band(y0, columns)
+        if bottom > limit:
+            raise SystemExit(f"faixa em y={y0} desceu até {bottom:.1f}, limite {limit}")
+    if groups:
+        raise SystemExit(f"blocos sem lugar: {sorted(groups)}")
+    return bottom
 
 
 def check_parts():
@@ -415,9 +531,10 @@ def write_schematic(path, embedded, meta):
         (
             20,
             page_h - 12,
-            "VOZ-9 BASE 300×300 mm — peças do pcb.svg, ainda sem ligações. "
-            "D6/D7 = MP20. J1–J9 numerados em linha (pino 1 no canto). "
-            "Q7 2N5457: conferir pinagem do lote.",
+            "VOZ-9 BASE 300×300 mm. Blocos espalhados na placa. "
+            "J1–J9 são pinos 1×N na borda de baixo; o fio entra no pino. "
+            "Numeração 1…N igual à tabela de pcb.md. Ainda sem ligações. "
+            "D6/D7 = MP20. Q7 2N5457: conferir a pinagem do lote.",
         )
     ]
     for name in order:
@@ -582,74 +699,9 @@ def add_text(board, text, x, y, layer, size=1.6):
     board.Add(item)
 
 
-def make_header(cols):
-    src = pcbnew.FootprintLoad(
-        os.path.join(FP, "Connector_PinSocket_2.54mm.pretty"),
-        f"PinSocket_2x{cols:02d}_P2.54mm_Vertical",
-    )
-    sample = list(src.Pads())[0]
-    fp = pcbnew.FOOTPRINT(None)
-    name = f"PinSocket_2x{cols:02d}_TopBottom"
-    fp.SetFPID(pcbnew.LIB_ID("voz9", name))
-    fp.SetReference("REF**")
-    fp.SetValue(f"J 2x{cols}")
-    fp.SetLibDescription(
-        "Soquete fêmea 2,54 mm. Pino 1 no canto superior esquerdo; "
-        "a fila de cima é 1..N e a de baixo N+1..2N."
-    )
-    fp.SetAttributes(pcbnew.FP_THROUGH_HOLE)
-    for col in range(cols):
-        for row in range(2):
-            n = col + 1 + row * cols
-            pad = pcbnew.PAD(fp)
-            pad.SetNumber(str(n))
-            pad.SetAttribute(pcbnew.PAD_ATTRIB_PTH)
-            pad.SetShape(pcbnew.PAD_SHAPE_RECT if n == 1 else pcbnew.PAD_SHAPE_CIRCLE)
-            pad.SetSize(sample.GetSize())
-            pad.SetDrillSize(sample.GetDrillSize())
-            pad.SetLayerSet(sample.GetLayerSet())
-            pad.SetPosition(xy(col * 2.54, row * 2.54))
-            fp.Add(pad)
-    x1, y1 = -1.4, -1.5
-    x2, y2 = (cols - 1) * 2.54 + 1.4, 2.54 + 1.5
-    for layer, width in ((pcbnew.F_SilkS, 0.12), (pcbnew.F_CrtYd, 0.05)):
-        box = pcbnew.PCB_SHAPE(fp)
-        box.SetShape(pcbnew.SHAPE_T_RECT)
-        box.SetStart(xy(x1, y1))
-        box.SetEnd(xy(x2, y2))
-        box.SetLayer(layer)
-        box.SetWidth(mm(width))
-        if layer == pcbnew.F_CrtYd:
-            box.SetStart(xy(x1 - 0.25, y1 - 0.25))
-            box.SetEnd(xy(x2 + 0.25, y2 + 0.25))
-        fp.Add(box)
-    fp.Reference().SetPosition(xy((cols - 1) * 1.27, -2.6))
-    fp.Value().SetPosition(xy((cols - 1) * 1.27, 2.54 + 3.2))
-    return name, fp
-
-
-def write_footprints():
-    lib = os.path.join(ROOT, "voz9.pretty")
-    os.makedirs(lib, exist_ok=True)
-    io = pcbnew.PCB_IO_MGR.FindPlugin(pcbnew.PCB_IO_MGR.KICAD_SEXP)
-    for cols in (3, 6, 8, 10):
-        name, fp = make_header(cols)
-        io.FootprintSave(lib, fp)
-    table = """(fp_lib_table
-  (version 7)
-  (lib (name "voz9")(type "KiCad")(uri "${KIPRJMOD}/voz9.pretty")(options "")(descr "Conectores J1–J9, numeração em linha"))
-)
-"""
-    with open(os.path.join(ROOT, "fp-lib-table"), "w", encoding="utf-8") as fh:
-        fh.write(table)
-
-
 def load_fp(fp_id):
     nick, name = fp_id.split(":", 1)
-    if nick == "voz9":
-        directory = os.path.join(ROOT, "voz9.pretty")
-    else:
-        directory = os.path.join(FP, nick + ".pretty")
+    directory = os.path.join(FP, nick + ".pretty")
     fp = pcbnew.FootprintLoad(directory, name)
     if fp is None:
         raise SystemExit(f"footprint ausente: {fp_id}")
@@ -668,7 +720,7 @@ def write_board(path):
     tb.SetDate("2026-09-27")
     tb.SetRevision("A")
     tb.SetComment(0, "300 x 300 mm")
-    tb.SetComment(1, "Cobre simples no verso. Esquema ainda sem nets.")
+    tb.SetComment(1, "Pinos 1xN na borda de baixo. Esquema ainda sem nets.")
 
     add_seg(board, 0, 0, W, 0, pcbnew.Edge_Cuts)
     add_seg(board, W, 0, W, H, pcbnew.Edge_Cuts)
@@ -678,23 +730,27 @@ def write_board(path):
     add_text(board, "VOZ-9 BASE  300 x 300 mm", 150, 8, pcbnew.F_SilkS, 2.2)
     add_text(
         board,
-        "miolo 220x160 centrado   cobre no verso   CIs em soquete   pino 1 quadrado nos J",
+        "fio na base, pinos 1xN   pino 1 a esquerda de cada grupo   CIs em soquete   cobre no verso",
         150,
-        12,
+        12.5,
         pcbnew.F_SilkS,
-        1.2,
+        1.15,
     )
-    # Trilhos desenhados no SVG (ainda não são nets).
-    for x, label in ((54, "GND"), (56.6, "V9"), (214, "4V5")):
-        add_seg(board, x + OX, 10 + OY, x + OX, 150 + OY, pcbnew.Dwgs_User, 0.4)
-        add_text(board, label, x + OX, 8 + OY, pcbnew.Dwgs_User, 1.2)
+    for text, x, y in notes:
+        add_text(board, text, x, y, pcbnew.F_SilkS, 1.15)
 
     for p in parts:
         fp = load_fp(p["fp"])
         fp.SetPosition(xy(p["x"], p["y"]))
+        if p.get("rot"):
+            fp.SetOrientation(pcbnew.EDA_ANGLE(p["rot"], pcbnew.DEGREES_T))
         fp.SetReference(p["ref"])
         fp.SetValue(p["val"])
-        fp.Reference().SetVisible(True)
+        if p["ref"].startswith("J"):
+            fp.Reference().SetVisible(False)
+            fp.Value().SetVisible(False)
+        else:
+            fp.Reference().SetVisible(True)
         if not p["bom"]:
             fp.SetExcludedFromBOM(True)
         board.Add(fp)
@@ -724,13 +780,14 @@ def write_project(path):
 def main():
     build_parts()
     check_parts()
+    place_pins()
+    bottom = place_blocks()
     used = {p["sym"] for p in parts}
     embedded, meta = load_symbols(used)
-    write_footprints()
     write_board(os.path.join(ROOT, "voz-9.kicad_pcb"))
     write_schematic(os.path.join(ROOT, "voz-9.kicad_sch"), embedded, meta)
     write_project(os.path.join(ROOT, "voz-9.kicad_pro"))
-    print(f"ok  peças={len(parts)}  placa={W:.0f}x{H:.0f}  offset=({OX:.0f},{OY:.0f})")
+    print(f"ok  peças={len(parts)}  placa={W:.0f}x{H:.0f}  circuito até y={bottom:.1f}")
 
 
 if __name__ == "__main__":

@@ -4,7 +4,7 @@ Alimentação simples, 9 V centro-negativo. Referência de áudio em 4,5 V. O MA
 
 Quantidades e compra: `bom.md`. Tudo novo — um instrumento = uma lista.
 
-Uma fenolite no piso da caixa (**300 × 300 mm**): `pcb.md`. O painel segue 220 × 160. O painel só fura; **nove** chicotes 2×N J1–J9 (fêmea na BASE, macho no painel). CIs em soquete. **Um módulo** retangular de mesa.
+Uma fenolite no piso da caixa (**300 × 300 mm**): `pcb.md`. O painel segue 220 × 160. O painel só fura; os fios descem para **pinos 1×N** J1–J9 na borda de baixo da BASE. CIs em soquete. **Um módulo** retangular de mesa.
 
 ---
 

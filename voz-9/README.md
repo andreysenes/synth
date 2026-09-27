@@ -18,13 +18,13 @@ Sem XLR, **PRE** escala os oscs. **OSC IN** = mix osc ↔ mic (CCW = só drones,
 
 O pré vocal está em `pre-vocal.md`. Mesmo papel do Echo Master, **sem transformador** (diferencial no NE5532 + pad no XLR).
 
-Leia `esquema.md` para montar. Caderno de estudo: `componentes.md`. Uma fenolite no piso; **nove** chicotes 2×N e CIs em soquete: `pcb.md`. Lista de compra: `bom.md`. Simulador: `sim/painel.html`.
+Leia `esquema.md` para montar. Caderno de estudo: `componentes.md`. Uma fenolite no piso; **pinos J1–J9** na borda da placa e CIs em soquete: `pcb.md`. Lista de compra: `bom.md`. Simulador: `sim/painel.html`.
 
 ---
 
 ## Painel
 
-**Um módulo só**, caixa de mesa **retangular** (Noise Toaster / MFOS): faceplate paisagem **220 × 160 mm** em `painel.svg`. A placa do fundo é **300 × 300 mm** (`pcb.svg`, KiCad em `kicad/`); o piso da caixa tem de cobrir essa placa. **9 chicotes** J1–J9 (fêmea na BASE, macho no painel). CIs em soquete.
+**Um módulo só**, caixa de mesa **retangular** (Noise Toaster / MFOS): faceplate paisagem **220 × 160 mm** em `painel.svg`. A placa do fundo é **300 × 300 mm** (`pcb.svg`, KiCad em `kicad/`); o piso da caixa tem de cobrir essa placa. Os fios do painel entram em **pinos J1–J9** na borda de baixo da placa. CIs em soquete.
 
 ```
  IN  PRE  OSC IN | LED 9V          OSC A  AMOUNT  OSC B

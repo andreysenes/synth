@@ -89,18 +89,10 @@ J201: 6 no circuito; os 2 extra casam Vgs(off). O mais “vivo” (conduz com ga
 | 4 | cabo P2 curto | patch | 4,50 | **18,00** |
 | 2 | combo XLR+P10 **clone** | IN e OUT | 22,00 | **44,00** |
 | 1 | P4 (jack 9 V DC) | fonte, centro-negativo | 3,00 | **3,00** |
-| 3 | soquete fêmea **2×10** 2,54 mm | J1 OSC · J3 DELAY · J4 PATCH A | 2,50 | **7,50** |
-| 1 | soquete fêmea **2×8** 2,54 mm | J5 PATCH B | 2,20 | **2,20** |
-| 3 | soquete fêmea **2×6** 2,54 mm | J2 LFO · J7 IN · **J9 EQ** | 2,00 | **6,00** |
-| 2 | soquete fêmea **2×3** 2,54 mm | J6 CTRL · J8 OUT | 1,50 | **3,00** |
-| 3 | housing macho **2×10** | chicotes J1 J3 J4 | 2,00 | **6,00** |
-| 1 | housing macho **2×8** | J5 | 1,80 | **1,80** |
-| 3 | housing macho **2×6** | J2 · J7 · **J9** | 1,60 | **4,80** |
-| 2 | housing macho **2×3** | J6 J8 | 1,20 | **2,40** |
-| 120 | terminal crimp macho 2,54 mm | pinos (124 usados) | 0,10 | **12,00** |
-| 1 | fio 24 AWG 10 m (várias cores) | fios dos **9** chicotes J1–J9 | 8,00 | **8,00** |
+| 4 | barra de pinos macho **1×40** 2,54 mm | cortar J1–J9 (124 pinos) na borda da BASE | 3,00 | **12,00** |
+| 1 | fio 24 AWG 10 m (várias cores) | fios do painel até os pinos J1–J9 | 8,00 | **8,00** |
 
-**151.** Clone é fêmea nos dois furos. Confira o furo (~24 mm). Família 2×N: fêmea na placa, macho no painel. **J7** = 2×6 (combo + PRE + **OSC IN**; pino 12 NC). **J9** = EQ 424.
+**~120** a menos que a lista antiga de housings: saíram soquete fêmea, macho e crimp. O fio solda no pino. Clone XLR continua fêmea nos dois furos — isso é o painel, não a placa. **J7** = 1×12 (combo + PRE + **OSC IN**; pino 12 NC). **J9** = EQ 424.
 
 ---
 
@@ -173,11 +165,11 @@ Lista do circuito **inteiro**. ~R$ 0,10–0,25 a unidade. Pacote fechado ~**16,0
 | Pots | 106 |
 | Knobs | 54 |
 | Chaves | 40 |
-| Conectores | 151 |
+| Conectores | 117 |
 | Resistores | 16 |
 | Capacitores | 38 |
 | Placas / caixa | 104 |
-| **Um VOZ-9, tudo novo** | ~ **610** |
+| **Um VOZ-9, tudo novo** | ~ **576** |
 
 Fonte 9 V centro-negativo (~R$ 25–40) se ainda não tiver uma. Não entra na soma: a de pedal serve.
 

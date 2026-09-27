@@ -1,6 +1,6 @@
 # VOZ-9 — uma placa no piso
 
-Uma fenolite no **fundo da caixa**. O painel (`painel.svg`) é só chapa. **Nove** chicotes 2×N (2,54 mm): **fêmea na BASE**, **macho no painel**. CIs só em soquete. Sem FACE, sem flat, sem IDC.
+Uma fenolite no **fundo da caixa**. O painel (`painel.svg`) é só chapa. Na BASE, **J1–J9** são **pinos macho 1×N** (2,54 mm) na **borda de baixo**: o fio do painel entra direto no pino. CIs só em soquete. Sem FACE, sem flat, sem IDC, sem soquete fêmea.
 
 | Placa | Arquivo | Tamanho | Cobre | O que leva |
 | --- | --- | --- | --- | --- |
@@ -15,7 +15,7 @@ Imprimir o SVG em **escala 100 %**. Para transferência térmica, espelhar o cob
           └──────────────┬─────────────────┘
                          │ cabos folgados
           ┌──────────────┴─────────────────┐
-          │  J1–J9 fêmea · fonte oscs fita │
+          │  pinos J1–J9 na borda de baixo │
           │        PCB 300×300 mm          │
           └────────────────────────────────┘
             piso da caixa ≥ 300×300
@@ -23,7 +23,7 @@ Imprimir o SVG em **escala 100 %**. Para transferência térmica, espelhar o cob
 
 O painel continua **220 × 160 mm**. A BASE é **300 × 300 mm** — maior que a face. O piso da caixa tem de cobrir a placa. A placa parafusa no fundo (M3 nos quatro cantos). Cabos folgados, sem esticar.
 
-O miolo (chicotes + circuito) é o desenho de 220 × 160, centrado. Projeto para editar: `kicad/voz-9.kicad_pro`.
+Os blocos ficam espalhados na placa, com corredor até os pinos. Projeto para editar: `kicad/voz-9.kicad_pro`. O `pcb.svg` é o desenho anterior, mais apertado.
 
 ---
 
@@ -38,38 +38,41 @@ Furos em `painel.svg`. Nada de cobre atrás da chapa.
 
 ### BASE (`pcb.svg`)
 
-Chicotes na coluna esquerda (**J1–J9**, fêmea 2×N). Circuito à direita. Gerador: `_gen_pcb.py`.
+**J1–J9** na borda inferior, duas fileiras de pinos. O circuito ocupa o resto da placa, por bloco. Gerador do KiCad: `kicad/gen_kicad.py`.
 
 - soquetes DIP: U1 5532, U2 osc, U3 NAB, U4 7660, U6–U8 PT2399, **U9 EQ voz** — **não soldar o chip**
 - 1N5817, 78M05 (sem soquete — TO-220)
 - 6× J201, 2N5457, 2× MP20, 1N4148
 - Csel (220 n / 47 µ) e detector CLK
 - **2×** trimpot 100 k (RV1 F-BACK, RV2 res)
-- **J1–J9** fêmea 2,54 mm 2×N — macho vem do painel
+- **J1–J9** pino macho 2,54 mm 1×N, na borda de baixo — o fio solda ou encaixa no pino
 
 ---
 
-## Chicotes painel → BASE
+## Fios painel → BASE
 
-Família: housing **dupla fila, passo 2,54 mm**. Fêmea na BASE, macho no painel.
+Pinos **macho, fila única, passo 2,54 mm**, na borda de baixo da placa. O número do pino é o mesmo da tabela (1…N). Pino **1** à esquerda de cada grupo.
+
+Fileira de baixo, da esquerda para a direita: **J1 · J3 · J4 · J5**.  
+Fileira logo acima: **J2 · J7 · J9 · J6 · J8**.
 
 | J | Tamanho | Vias | Grupo |
 | --- | --- | ---: | --- |
-| **J1** | 2×10 | 20 | OSC |
-| **J2** | 2×6 | 12 | LFO |
-| **J3** | 2×10 | 20 | DELAY |
-| **J4** | 2×10 | 20 | PATCH A |
-| **J5** | 2×8 | 16 | PATCH B |
-| **J6** | 2×3 | 6 | CTRL (LED, P4, GATE) |
-| **J7** | 2×6 | 12 | combo IN + PRE + OSC IN |
-| **J8** | 2×3 | 6 | combo OUT |
-| **J9** | 2×6 | 12 | EQ voz 424 |
+| **J1** | 1×20 | 20 | OSC |
+| **J2** | 1×12 | 12 | LFO |
+| **J3** | 1×20 | 20 | DELAY |
+| **J4** | 1×20 | 20 | PATCH A |
+| **J5** | 1×16 | 16 | PATCH B |
+| **J6** | 1×6 | 6 | CTRL (LED, P4, GATE) |
+| **J7** | 1×12 | 12 | combo IN + PRE + OSC IN |
+| **J8** | 1×6 | 6 | combo OUT |
+| **J9** | 1×12 | 12 | EQ voz 424 |
 
-Pino **1** = pad quadrado + lingueta. Não cruze os machos. Marque cada housing.
+Pino **1** = primeiro pino à esquerda. Não cruze os grupos. Marque o fio.
 
 Três pernas de pot: **CCW · W · CW**. Reostato OSC A/B: **A · B**. Jack: **TIP · SW · GND**.
 
-### J1 OSC — 2×10 (19 usados)
+### J1 OSC — 1×20 (19 usados)
 
 | Pino | Sinal |
 | ---: | --- |
@@ -83,7 +86,7 @@ Três pernas de pot: **CCW · W · CW**. Reostato OSC A/B: **A · B**. Jack: **T
 | 18–19 | DRONE COM · ON |
 | 20 | NC |
 
-### J2 LFO — 2×6 (12, cheio)
+### J2 LFO — 1×12 (12, cheio)
 
 | Pino | Sinal |
 | ---: | --- |
@@ -94,10 +97,10 @@ Três pernas de pot: **CCW · W · CW**. Reostato OSC A/B: **A · B**. Jack: **T
 
 Csel 220 n / 47 µ fica **na BASE**. RATE W = gate do LFO.
 
-### J3 DELAY — 2×10 (20, cheio)
+### J3 DELAY — 1×20 (20, cheio)
 
 No painel, da esquerda: **TIME · WET · F-BACK · H1 · H2 · H3 · STACK** | VOLUME.  
-Pinagem do chicote (estável com o SPICE / `jmap.inc`):
+Pinagem (estável com o SPICE / `jmap.inc`):
 
 | Pino | Sinal |
 | ---: | --- |
@@ -112,7 +115,7 @@ Pinagem do chicote (estável com o SPICE / `jmap.inc`):
 
 Ao crimpar o macho do painel, siga a tabela — não a ordem física dos knobs.
 
-### J4 PATCH A — 2×10 (18 usados)
+### J4 PATCH A — 1×20 (18 usados)
 
 A · B · IN · FILT · FCV · VCV — cada um **TIP · SW · GND**. FILT usa o SW.
 
@@ -126,7 +129,7 @@ A · B · IN · FILT · FCV · VCV — cada um **TIP · SW · GND**. FILT usa o 
 | 16–18 | VCV |
 | 19–20 | NC |
 
-### J5 PATCH B — 2×8 (15 usados)
+### J5 PATCH B — 1×16 (15 usados)
 
 | Pino | Jack |
 | ---: | --- |
@@ -139,7 +142,7 @@ A · B · IN · FILT · FCV · VCV — cada um **TIP · SW · GND**. FILT usa o 
 
 CLK ponta → detector na BASE → mesmo nó do ECV. SEND = PRE (pré-EQ / pré-OSC IN).
 
-### J6 CTRL — 2×3
+### J6 CTRL — 1×6
 
 | Pino | Sinal |
 | ---: | --- |
@@ -149,7 +152,7 @@ CLK ponta → detector na BASE → mesmo nó do ECV. SEND = PRE (pré-EQ / pré-
 
 P4: centro-negativo. **Confira no jack.** 1N5817 na BASE, no pino 3 (TIP).
 
-### J7 combo IN + PRE + OSC IN — 2×6
+### J7 combo IN + PRE + OSC IN — 1×12
 
 | Pino | Sinal |
 | ---: | --- |
@@ -160,14 +163,14 @@ P4: centro-negativo. **Confira no jack.** 1N5817 na BASE, no pino 3 (TIP).
 
 100 p de RF no combo (e C1 C2 na placa). PRE = nível; OSC IN = mix osc ↔ XLR (`pre-vocal.md`).
 
-### J8 combo OUT — 2×3
+### J8 combo OUT — 1×6
 
 | Pino | Sinal |
 | ---: | --- |
 | 1–5 | X2 · X3 · X1 · TIP · GND |
 | 6 | NC |
 
-### J9 EQ voz 424 — 2×6
+### J9 EQ voz 424 — 1×12
 
 | Pino | Sinal |
 | ---: | --- |
@@ -251,7 +254,7 @@ Trimpots: RV1 teto F-BACK, RV2 ressonância. (PRE no painel substitui o antigo R
 2. Lado **COBRE**: espelha. Lado **SILK**: não espelha.
 3. Fenolite simples. Furos: 0,8 mm nos J1–J9 e R/C, 1,0 mm nos soquetes DIP, 3,2 mm nos M3.
 4. Jumpers no lado dos componentes (tracejado no SVG).
-5. Solda **soquetes DIP** (incl. **U9**) e **fêmeas J1–J9**. Depois JFET/germânio. CIs e chicotes macho **por último**.
+5. Solda **soquetes DIP** (incl. **U9**) e os **pinos J1–J9** na borda. Depois JFET/germânio. CIs **por último**. O fio do painel entra no pino.
 
 Antes de ligar 9 V: ohmímetro entre J6 pino 4 (P4-GND) e a malha do combo. Tem de ser contínuo. J6 pino 3 (P4-TIP) **não** pode achar GND.
 

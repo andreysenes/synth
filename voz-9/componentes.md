@@ -482,11 +482,11 @@ Invertido: o 1N5817 segura. O LED não acende.
 
 ---
 
-### Chicotes 2×N (fêmea na placa)
+### Pinos J1–J9 (fio direto na placa)
 
-**Ideia.** Housing 2,54 mm, **dupla fila**, no tamanho do grupo. **J1 OSC 2×10, J2 LFO 2×6, J3 DELAY 2×10, J4 PATCH A 2×10, J5 PATCH B 2×8, J6 CTRL 2×3, J7 IN+PRE+OSC IN 2×6, J8 OUT 2×3, J9 EQ 424 2×6** — nove chicotes.
+**Ideia.** Barra de pinos macho 2,54 mm, **fila única**, na borda de baixo da BASE. **J1 OSC 1×20, J2 LFO 1×12, J3 DELAY 1×20, J4 PATCH A 1×20, J5 PATCH B 1×16, J6 CTRL 1×6, J7 IN+PRE+OSC IN 1×12, J8 OUT 1×6, J9 EQ 424 1×12**.
 
-Na BASE solda a **fêmea**. Do painel sai o **macho**. Pino 1 = pad quadrado. Não cruze os grupos.
+O fio do painel solda no pino. Pino 1 à esquerda de cada grupo. Não cruze os grupos. A numeração 1…N é a mesma tabela de antes.
 
 CIs (U1–U4, U6–U8, **U9**) entram em **soquete DIP**. Ferro no soquete, nunca no chip.
 

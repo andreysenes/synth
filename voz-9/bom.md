@@ -132,15 +132,15 @@ Lista do circuito **inteiro**. ~R$ 0,10–0,25 a unidade. Pacote fechado ~**16,0
 | 10 n | filme / cerâmico | 13 | OSC B; LPF laço; filtros PT2399; **EQ MID** | 0,35 | **4,55** |
 | 22 n | filme | 1 | laço “fita gasta” (opcional no lugar do 10 n) | 0,50 | **0,50** |
 | 33 n | filme | 1 | **EQ LOW** shelf (~100 Hz) | 0,50 | **0,50** |
-| 100 n | cerâmico / filme | 27 | OSC A; acoplos; VCC PT2399; 5532; fala→ENV; **EQ in/out (2)** | 0,40 | **10,80** |
+| 100 n | cerâmico / filme | 25 | OSC A; acoplos; VCC PT2399; 5532; fala→ENV; **EQ in/out (C30 C72)** | 0,40 | **10,00** |
 | 220 n | filme | 8 | LFO fase (3); Csel tremolo; VCF; NAB grave GRAVA+LÊ (2); folga | 0,50 | **4,00** |
 | 1 µ | filme | 2 | saída OSC A e B | 1,50 | **3,00** |
-| 1 µ / 2µ2 | eletrolítico | 2 | saída LFO; saída VCA | 0,50 | **1,00** |
+| 2µ2 | eletrolítico | 2 | saída LFO (C53); saída VCA (C54) | 0,50 | **1,00** |
 | 4 µ7 | eletrolítico | 1 | detector CLK | 0,50 | **0,50** |
 | 10 µ / **25 V** | eletrolítico | 8 | MAX1044 (2); 78M05; V5 H2+H3 (2); XLR (2); 5532 ± | 0,60 | **4,80** |
 | 47 µ / 16 V | eletrolítico | 8 | V9, VEE, 4V5, 1V8, envelope, H2, H3, Csel flutter | 0,70 | **5,60** |
 
-**37,75.** Polaridade: eletrolítico, listra = negativo. 25 V no XLR e no MAX1044. EQ voz: 33 n / 1 n / 10 n + 2× 100 n (`esquema.md` §3b).
+**36,95.** Polaridade: eletrolítico, listra = negativo. 25 V no XLR e no MAX1044. EQ voz: 33 n / 1 n / 10 n + 2× 100 n (`esquema.md` §3b). Os 100 n da placa são 25: C19–C42 e C72.
 
 ---
 
@@ -151,7 +151,7 @@ Lista do circuito **inteiro**. ~R$ 0,10–0,25 a unidade. Pacote fechado ~**16,0
 | 1 | fenolite simples 300×300 mm | PCB BASE | 12,00 | **12,00** |
 | 5 | soquete DIP-8 | U1 5532 · U2 osc · U3 NAB · U4 7660 · **U9 EQ voz** | 1,50 | **7,50** |
 | 3 | soquete DIP-16 | PT2399 H1, H2 e H3 | 1,50 | **4,50** |
-| 1 | caixa com piso ≥ 300×300 mm + face 220×160 | mesa estilo Toaster; a BASE é maior que a face | 80,00 | **80,00** |
+| 1 | caixa com piso ≥ 300×140 mm + face 220×160 | a BASE é 300×140; a face continua 220×160 | 80,00 | **80,00** |
 
 **104,00.** Uma placa no piso. CIs nos soquetes. Sem FACE, sem IDC, sem flat. O pré é o NE5532 em diferencial; a saída XLR é pad + quase-balanceado (`pre-vocal.md`).
 
@@ -165,9 +165,9 @@ Lista do circuito **inteiro**. ~R$ 0,10–0,25 a unidade. Pacote fechado ~**16,0
 | Pots | 106 |
 | Knobs | 54 |
 | Chaves | 40 |
-| Conectores | 117 |
+| Conectores | 118 |
 | Resistores | 16 |
-| Capacitores | 38 |
+| Capacitores | 37 |
 | Placas / caixa | 104 |
 | **Um VOZ-9, tudo novo** | ~ **576** |
 

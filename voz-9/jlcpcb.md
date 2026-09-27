@@ -96,7 +96,7 @@ No [pedido de PCB](https://jlcpcb.com/quote) suba esse zip e marque:
 
 Placa nua. A JLCPCB não monta esta BASE: as peças são through-hole e o painel liga por cabo nos pinos. O CSV `jlcpcb-bom.csv` é a lista SMT equivalente, outro fluxo.
 
-A primeira análise no JLCDFM fechou com 0 erros. A seda de contorno está em 0,16 mm. Os quatro M3 são furo não metalizado de 3,2 mm, sem cobre.
+O JLCDFM desta revisão fechou com 0 erros e 0 avisos. A seda fica a 0,20 mm do cobre e o traço mínimo é 0,16 mm. Os quatro M3 são furo não metalizado de 3,2 mm, sem cobre.
 
 O zip descreve a placa como está no KiCad. Sem trilhas gravadas, a fábrica entrega só os pads e os furos.
 
@@ -104,12 +104,12 @@ O zip descreve a placa como está no KiCad. Sem trilhas gravadas, a fábrica ent
 
 ## Designators
 
-Inventados para o matching. Ainda não há netlist KiCad. Quando existir PCB FR4, estes refs têm de bater com o CPL.
+Os designators são os da BASE. `python3 kicad/check_bom.py` falha se o CSV ou a `bom.md` divergir da placa.
 
 - **U1** 5532 · **U2** osc · **U3** NAB · **U4** ICL7660 · **U5** 78M05 · **U6–U8** PT2399 · **U9** EQ voz 424
-- **Q1–Q6** J201 no circuito · **Q8 Q9** folga · **Q7** LFO
-- **D1** proteção · **D2–D5** 4148 · **LED1** piloto
-- **R1…R86** e **C1…C75** na ordem da `bom.md` (EQ 424 = R82–R86, C72–C75; R71 = 10 k)
+- **Q1–Q6** J201 · **Q7** LFO. Os 2 J201 extras para casar Vgs estão só na `bom.md`: não existem na placa.
+- **D1** proteção · **D2–D5** 4148. **D6 D7** são MP20 e ficam fora deste CSV (sem peça LCSC). O LED 3 mm é do painel, na `bom.md`.
+- **R1…R86** e **C1…C75** (EQ 424 = R82–R86, C72–C75; R71 = 10 k). Os 47 µ da placa estão na linha 22 µ / 25 V.
 
 ---
 

@@ -1033,7 +1033,7 @@ def add_text(board, text, x, y, layer, size=1.6):
     item.SetPosition(xy(x, y))
     item.SetLayer(layer)
     item.SetTextSize(pcbnew.VECTOR2I(mm(size), mm(size)))
-    item.SetTextThickness(mm(size * 0.15))
+    item.SetTextThickness(mm(size / 6.0))
     board.Add(item)
 
 
@@ -1097,10 +1097,27 @@ def write_board(path):
             fp.Value().SetVisible(False)
         else:
             fp.Reference().SetVisible(True)
+            for txt in (fp.Reference(), fp.Value()):
+                if not txt.IsVisible():
+                    continue
+                height = pcbnew.ToMM(txt.GetTextHeight())
+                if height < 1.0:
+                    txt.SetTextSize(pcbnew.VECTOR2I(mm(1.0), mm(1.0)))
+                    height = 1.0
+                # JLCPCB: altura ≥ 1,0 mm, traço ≥ 0,15 mm, razão 1:6.
+                txt.SetTextThickness(mm(max(height / 6.0, 0.15)))
         if "TO-92" in p["fp"]:
             for pad in fp.Pads():
                 if pad.GetNumber() == "1":
                     pad.SetShape(pcbnew.PAD_SHAPE_CIRCLE)
+        if p["ref"].startswith("H"):
+            # Furo M3 sem cobre. Anel zero no NPTH é erro no JLCDFM.
+            for pad in fp.Pads():
+                pad.SetAttribute(pcbnew.PAD_ATTRIB_NPTH)
+                layers = pcbnew.LSET()
+                layers.AddLayer(pcbnew.F_CrtYd)
+                layers.AddLayer(pcbnew.B_CrtYd)
+                pad.SetLayerSet(layers)
         if not p["bom"]:
             fp.SetExcludedFromBOM(True)
         board.Add(fp)

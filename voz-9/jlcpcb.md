@@ -70,6 +70,20 @@ Essas linhas **não** estão no CSV de propósito: o tool marcaria unmatched e s
 
 ---
 
+## JLCDFM — a placa, não o BOM
+
+O [JLCDFM](https://jlcdfm.com/) lê **Gerber**, não o CSV. É o jeito de ver se a BASE passa na fábrica (trilha, máscara, furo, seda, contorno) antes de pagar.
+
+1. `python3 kicad/export_jlcdfm.py` gera `kicad/jlcdfm/voz-9-jlcdfm.zip`.
+2. Abra [jlcdfm.com](https://jlcdfm.com/) e suba esse zip (máx. 50 MB).
+3. Regras usadas, as da [capacidade JLCPCB](https://jlcpcb.com/capabilities/pcb-capabilities) para FR4 de 2 camadas e 1 oz: trilha/espaço ≥ 0,10 mm, furo 0,15–6,3 mm, anel do furo metalizado ≥ 0,20 mm, seda ≥ 1,0 mm de altura e 0,15 mm de traço, cobre a 0,2 mm da borda.
+
+A BASE continua com trilha de 0,6 mm e folga de 0,35 mm — mais folgada que o mínimo da fábrica. Os furos M3 são NPTH sem cobre: anel zero em furo não metalizado é erro de DFM. A seda da peça fica na razão 1:6.
+
+O zip descreve a placa como está no KiCad. Sem o roteamento fechado, o JLCDFM não tem trilha para medir — só pad, furo, máscara, seda e contorno.
+
+---
+
 ## Designators
 
 Inventados para o matching. Ainda não há netlist KiCad. Quando existir PCB FR4, estes refs têm de bater com o CPL.

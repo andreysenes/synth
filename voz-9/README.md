@@ -20,6 +20,8 @@ O pré vocal está em `pre-vocal.md`. Mesmo papel do Echo Master, **sem transfor
 
 Leia `esquema.md` para montar. Caderno de estudo: `componentes.md`. Uma fenolite no piso; **nove** chicotes 2×N e CIs em soquete: `pcb.md`. Lista de compra: `bom.md`. Simulador: `sim/painel.html`.
 
+Teclado: o VCO cromático é outro módulo (`vco.md`). Este aqui continua filtro + espaço + germânio.
+
 ---
 
 ## Painel
@@ -128,6 +130,18 @@ Pinos P2: ponta = sinal, anel/sleeve = GND. CV é 0–9 V, sem 1 V/oitava. CLK: 
 - **Slapback** — só H1, TIME no mínimo, F-BACK baixo.
 - **Clock externo** — sync → CLK. MIDI → conversor → CLK.
 - **Voz + drones** — SM58, PRE meio, OSC IN meio, EQ a gosto, GATE ou DRONE.
+
+### Com teclado
+
+OSC A/B não são 1 V/oitava. O cromático é outro módulo (`vco.md`, lista `vco-bom.md`): AS3340, face 160 × 110.
+
+```
+teclado CV   →  VCO CV
+teclado GATE →  VCV
+VCO SAW      →  IN
+```
+
+OSC A e OSC B off, DRONE/GATE em GATE. O IN ainda passa pelo germânio, pelo filtro e pela fita.
 
 ---
 

@@ -619,4 +619,4 @@ Os outros P2 são só ponta + terra. Sem chave.
 
 PITCH A/B são pots grandes, não CV expo. FCV e ECV são “molhar o parâmetro”, não afinar. VCV é gate / envelope, não velocity.
 
-Se um dia entrar um teclado, este instrumento continua sendo o filtro + o espaço + o germânio. O VCO cromático seria outro módulo.
+O teclado não entra nestes pots. Este instrumento continua sendo o filtro + o espaço + o germânio. O VCO cromático é outro módulo: `vco.md`. O áudio dele entra no **IN** (passa pelo SHAPE). O GATE do teclado entra no **VCV**.

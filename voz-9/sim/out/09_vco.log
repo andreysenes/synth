@@ -1,0 +1,103 @@
+
+Note: No compatibility mode selected!
+
+
+Circuit: * voz-9 — 09_vco.cir
+
+--- 17 93 mV por volt no pino Scale (Rs = 1,793 k) ---
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+
+No. of Data Rows : 6
+                             * voz-9 — 09_vco.cir
+                             DC transfer characteristic  Sun Sep 27 15:08:49  2026
+--------------------------------------------------------------------------------
+Index   v-sweep         v(scale)        
+--------------------------------------------------------------------------------
+0	0.000000e+00	-8.96500e-02	
+1	1.000000e+00	-7.17200e-02	
+2	2.000000e+00	-5.37900e-02	
+3	3.000000e+00	-3.58600e-02	
+4	4.000000e+00	-1.79300e-02	
+5	5.000000e+00	0.000000e+00	
+step_mV err_mV
+step = 1.793000e+01
+err = 0.000000e+00
+--- C6 em +5 V ---
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+cv                                           5
+fci                                          0
+scale                                        0
+saw                                          0
+b.xexpo.bsaw#branch                          0
+v.xexpo.vfci#branch                      5e-05
+vcv#branch                              -5e-05
+
+
+No. of Data Rows : 1608
+a1                  =  1.911132e-03
+a2                  =  5.733397e-03
+f5_Hz c6_cents
+f5 = 1.046500e+03
+c6 = -1.39581e-04
+--- C1 em 0 V ---
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+cv                                           0
+fci                                          0
+scale                                 -0.08965
+saw                                          0
+b.xexpo.bsaw#branch                          0
+v.xexpo.vfci#branch                          0
+vcv#branch                                   0
+
+
+No. of Data Rows : 11008
+b1                  =  6.115624e-02
+b2                  =  1.834687e-01
+f0_Hz c1_cents
+f0 = 3.270313e+01
+c1 = 1.435031e-04
+--- C2 em +1 V (uma oitava acima de C1) ---
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+cv                                           1
+fci                                          0
+scale                                 -0.07172
+saw                                          0
+b.xexpo.bsaw#branch                          0
+v.xexpo.vfci#branch                      1e-05
+vcv#branch                              -1e-05
+
+
+No. of Data Rows : 12008
+d1                  =  3.057812e-02
+d2                  =  9.173435e-02
+f1_Hz c2_cents
+f1 = 6.540626e+01
+c2 = 1.435031e-04
+VCO_OK
+ngspice-42 done

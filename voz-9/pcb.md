@@ -267,3 +267,5 @@ Antes de ligar 9 V: ohmímetro entre J6 pino 4 (P4-GND) e a malha do combo. Tem 
 8. PT2399 os três. Combos e patch por último.
 
 Esquema: `esquema.md`. Pré: `pre-vocal.md`.
+
+O VCO cromático não mora nesta placa. É outra caixa, 160 × 110 mm: `vco.md`.

@@ -1,0 +1,86 @@
+* VOZ-9 — 09_vco.cir
+* Módulo VCO cromático (AS3340): a oitava é Rs × (1 V / 100 k).
+*
+* A 27 °C, VT·ln(2) = 17,93 mV.
+* 1 V / 100 kΩ = 10 µA; 10 µA × 1,793 kΩ = 17,93 mV = 1 oitava.
+* 1,793 kΩ é o trim (1k5 + ~293 Ω do multiturn de 500 Ω).
+*
+* Offset interno do 3340: +5,000 V no CV cancela 50 µA → C6 (1046,5 Hz).
+* 0 V → C1 (32,70 Hz). COARSE, FINE e FM ficam em 0 — este teste é o
+* caminho do teclado.
+
+.include models/vco_expo.mod
+
+Vcv cv 0 DC 5
+Rcv cv fci 100k
+Xexpo fci scale saw AS3340_EXPO
+Rs scale 0 1793
+
+.control
+set noaskquit
+echo --- 17,93 mV por volt no pino Scale (Rs = 1,793 k) ---
+dc vcv 0 5 1
+print v(scale)
+let step = (v(scale)[1] - v(scale)[0]) * 1000
+let err = abs(step - 17.93)
+echo step_mV err_mV
+print step err
+if abs(err) < 0.05
+  set pass_step = 1
+else
+  set pass_step = 0
+end
+
+echo --- C6 em +5 V ---
+alter vcv = 5
+tran 5u 8m
+meas tran a1 WHEN v(saw)=0 RISE=2
+meas tran a2 WHEN v(saw)=0 RISE=6
+let f5 = 4 / (a2 - a1)
+let c6 = 1200 * ln(f5 / 1046.5) / ln(2)
+echo f5_Hz c6_cents
+print f5 c6
+if abs(c6) < 5
+  set pass_c6 = 1
+else
+  set pass_c6 = 0
+end
+
+echo --- C1 em 0 V ---
+alter vcv = 0
+tran 20u 220m
+meas tran b1 WHEN v(saw)=0 RISE=2
+meas tran b2 WHEN v(saw)=0 RISE=6
+let f0 = 4 / (b2 - b1)
+let c1 = 1200 * ln(f0 / 32.703125) / ln(2)
+echo f0_Hz c1_cents
+print f0 c1
+if abs(c1) < 5
+  set pass_c1 = 1
+else
+  set pass_c1 = 0
+end
+
+echo --- C2 em +1 V (uma oitava acima de C1) ---
+alter vcv = 1
+tran 10u 120m
+meas tran d1 WHEN v(saw)=0 RISE=2
+meas tran d2 WHEN v(saw)=0 RISE=6
+let f1 = 4 / (d2 - d1)
+let c2 = 1200 * ln(f1 / 65.40625) / ln(2)
+echo f1_Hz c2_cents
+print f1 c2
+if abs(c2) < 5
+  set pass_c2 = 1
+else
+  set pass_c2 = 0
+end
+
+if ($pass_step = 1) & ($pass_c6 = 1) & ($pass_c1 = 1) & ($pass_c2 = 1)
+  echo VCO_OK
+else
+  echo VCO_FAIL
+end
+quit
+.endc
+.end

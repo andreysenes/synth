@@ -19,6 +19,7 @@ Não leia tudo de uma vez. O caminho que fecha com a montagem:
 5. **LFO** (2N5457, TREM 3 pos).
 6. **Fita** (PT2399, TL072).
 7. **Voz** (NE5532, combo).
+8. **VCO cromático** — outro módulo (`vco.md`). Só quando for entrar teclado.
 
 Em cada peça há quatro blocos:
 
@@ -161,7 +162,7 @@ O mais **vivo** (fecha com pouco Vgs, conduz fácil) → **VCF**. Um par parecid
 
 **Datasheet.** [ON Semi J201/J202](https://www.onsemi.com/pdf/datasheet/j201-d.pdf)
 
-**Não faça.** Gate sem resistor “no ar” em bancada — estática. Não espere 1 V/oitava: o J201 no pitch é *molho*, não teclado.
+**Não faça.** Gate sem resistor “no ar” em bancada — estática. Não espere 1 V/oitava: o J201 no pitch é *molho*, não teclado. Teclado → módulo VCO (`vco.md`).
 
 ---
 
@@ -352,13 +353,27 @@ TL072 = entrada JFET, mais “hi-fi”. 4558 = o som de pedal dos anos 80. Os do
 
 **Ideia.** **Oscilador de relaxação**: a saída bate no teto, o cap enche pelo pot de pitch, a entrada “−” passa de um limiar, a saída bate no chão, o cap esvazia, repete. O resultado é um **quadrado**, não um seno. Duas metades, dois osciladores. Quando as frequências se aproximam você ouve o **batimento** — o som do instrumento.
 
-Não é MiniMoog. Não há 1 V/oitava. Os pots 500 kA *são* a escala.
+Não é MiniMoog. Não há 1 V/oitava nestes dois. Os pots 500 kA *são* a escala. O cromático é outro módulo (`vco.md`): AS3340, 1 V/oitava, áudio no IN.
 
 **No VOZ-9.** OSC A (~10 Hz–500 Hz, cap 100 n). OSC B (~100 Hz–5 kHz, cap 10 n). A zona em que se encontram (~100–500 Hz) é onde o batimento vive.
 
 **Banco.** Um osc de cada vez no amp, volume baixo. Gira o pitch: deve ir de “motor” a “apito”. Os dois no AMOUNT no meio: uivo lento quando os tons se cruzam.
 
 **Datasheet.** O código na tampa. Apagou: [RC4558](https://www.ti.com/lit/ds/symlink/rc4558.pdf).
+
+---
+
+### AS3340 — a oitava, noutro módulo
+
+**Ideia.** Oscilador que dobra a frequência a cada 1 V. O par de transistores e o compensador de temperatura estão no mesmo silício, então a oitava não anda quando a caixa esquenta. É o que um teclado precisa. Os OSC A/B do VOZ-9 não são isto.
+
+**No projeto.** Módulo separado (`vco.md`), face 160 × 110. Áudio entra no **IN** do VOZ-9. GATE do teclado entra no **VCV**. A conta: 1 V / 100 kΩ = 10 µA; 10 µA × 1,793 kΩ = 17,93 mV = VT·ln(2) = uma oitava. O trim SCALE acha esse 1,793 k.
+
+**Banco.** Sem o chip: 12 V no pino 16, −5 V no pino 3. Com o chip e o trim feito: +5 V no CV = C6 (1046 Hz), 0 V = C1 (32,7 Hz). `sim/09_vco.cir` confere a lei.
+
+**Datasheet.** [AS3340 (Alfa)](https://store.synthrotek.com/assets/images/AS3340-datasheet.pdf). V3340 da Coolaudio serve, mesmos pinos.
+
+**Não faça.** Alimentar o pino 16 com 9 V (a folha começa em +10 V). Ligar o pino 3 em −9 V sem o 79L05. Esperar 1 V/oitava do J201.
 
 ---
 

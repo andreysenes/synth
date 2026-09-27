@@ -4,7 +4,7 @@ Mesma caixa, mesmo `painel.svg`, mesma fenolite. OSC A e OSC B continuam pots de
 
 O cromático é um **AS3340** (Alfa; o Coolaudio **V3340** tem os mesmos pinos) na BASE. O par casado e a compensação de temperatura estão no die. Dois 2N3904 colados não fazem esse serviço.
 
-A face cresce para **220 × 216 mm**: a faixa de baixo do `painel.svg` é o VCO. Chicote **J10**. Lista na `bom.md` (detalhe em `vco-bom.md`).
+A face cresce para **220 × 216 mm**: a faixa de baixo do `painel.svg` é o VCO. Os fios soldam nos pads **J10**. Lista na `bom.md` (detalhe em `vco-bom.md`).
 
 ---
 

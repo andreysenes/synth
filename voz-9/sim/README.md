@@ -1,6 +1,6 @@
 # VOZ-9 — simulação SPICE (placa + interface)
 
-Painel e BASE só se encontram nos chicotes **J1–J10** (`pcb.md`).  
+Painel e BASE só se encontram nos cabos soldados nos pads **J1–J10** (`pcb.md`).
 O PT2399 vira atraso fixo; JFET/op-amp/NAB/EQ são analógicos.
 
 ## Instalar

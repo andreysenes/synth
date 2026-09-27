@@ -1,8 +1,8 @@
-* VOZ-9 — J1–J9 pin map (must match pcb.md)
+* VOZ-9 — J1–J10 pad map (must match pcb.md)
 *
 * Node names used everywhere: j1_1 … j1_20, j2_1 … j2_12,
 * j3_1 … j3_20, j4_1 … j4_20, j5_1 … j5_16, j6_1 … j6_6,
-* j7_1 … j7_12, j8_1 … j8_6, j9_1 … j9_12
+* j7_1 … j7_12, j8_1 … j8_6, j9_1 … j9_12, j10_1 … j10_20
 *
 * J1 OSC 2x10 (19 used)
 *  1–2  OSC A A · B          (reostat 500kA — ends of pitch pot)
@@ -48,5 +48,15 @@
 *  4–6  MID F CCW · W · CW   (250 Hz–5 kHz)
 *  7–9  MID G CCW · W · CW   (±12 dB)
 * 10–12 HIGH CCW · W · CW    (shelf 10 kHz ±10 dB)
+*
+* J10 VCO 2x10 (pads, same panel)
+*  1–3  COARSE GND · W · +5
+*  4–6  FINE −5 · W · +5
+*  7–9  PW GND · W · +5
+* 10–12 FM GND · W · LFO
+* 13–14 SAW COM · ON
+* 15–16 TRI COM · ON
+* 17–18 PUL COM · ON
+* 19–20 CV TIP · GND
 *
 * This file is documentation only — no circuit.

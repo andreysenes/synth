@@ -18,15 +18,15 @@ Sem XLR, **PRE** escala os oscs. **OSC IN** = mix osc ↔ mic (CCW = só drones,
 
 O pré vocal está em `pre-vocal.md`. Mesmo papel do Echo Master, **sem transformador** (diferencial no NE5532 + pad no XLR).
 
-Leia `esquema.md` para montar. Caderno de estudo: `componentes.md`. Uma fenolite no piso; **dez** chicotes 2×N e CIs em soquete: `pcb.md`. Lista de compra: `bom.md`. Simulador: `sim/painel.html`.
+Leia `esquema.md` para montar. Caderno de estudo: `componentes.md`. Uma fenolite no piso; **dez** grupos de pads J1–J10 (cabo soldado direto) e CIs em soquete: `pcb.md`. Lista de compra: `bom.md`. Simulador: `sim/painel.html`.
 
-Teclado: o VCO cromático está na faixa de baixo do mesmo painel (`vco.md`). SAW, TRI e PUL escolhem a onda.
+Teclado: o VCO cromático está na faixa de baixo do mesmo painel (`vco.md`). SAW, TRI e PUL escolhem a onda. O cabo dele solda no **J10**.
 
 ---
 
 ## Painel
 
-**Um módulo só**, caixa de mesa **retangular** (Noise Toaster / MFOS): faceplate paisagem **220 × 216 mm** em `painel.svg`. Caixa de madeira ~240 × 236 × 50 mm. Uma placa no fundo (`pcb.svg`); **10 chicotes** J1–J10 (fêmea na BASE, macho no painel). CIs em soquete.
+**Um módulo só**, caixa de mesa **retangular** (Noise Toaster / MFOS): faceplate paisagem **220 × 216 mm** em `painel.svg`. Caixa de madeira ~240 × 236 × 50 mm. Uma placa no fundo (`pcb.svg`); os cabos do faceplate soldam direto nos pads **J1–J10**. CIs em soquete.
 
 ```
  IN  PRE  OSC IN | LED 9V          OSC A  AMOUNT  OSC B
@@ -148,7 +148,7 @@ As três ondas off = o VCO sai do áudio. OSC A e OSC B off, DRONE/GATE em GATE,
 
 ## O que comprar
 
-Tudo novo: `bom.md`. Um instrumento ~R$ **792** (varejo BR, set/2026, sem frete). O VCO cromático entra nessa soma.
+Tudo novo: `bom.md`. Um instrumento ~R$ **740** (varejo BR, set/2026, sem frete). O VCO cromático entra nessa soma; os cabos do painel soldam direto, sem conector 2,54 mm.
 
 J201: marque Vgs(off) nos 8. O mais “vivo” vai no VCF; um par parecido nos FM. MP20 por último — ferro baixo.
 

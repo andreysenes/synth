@@ -1,6 +1,6 @@
 # VOZ-9 — uma placa no piso
 
-Uma fenolite no **fundo da caixa**. O painel (`painel.svg`) é só chapa. **Dez** chicotes 2×N (2,54 mm): **fêmea na BASE**, **macho no painel**. CIs só em soquete. Sem FACE, sem flat, sem IDC.
+Uma fenolite no **fundo da caixa**. O painel (`painel.svg`) é só chapa. **Dez** grupos de pads J1–J10: o cabo do painel **solda direto** na BASE. Sem conector, sem fêmea, sem macho, sem crimp. CIs só em soquete. Sem FACE, sem flat, sem IDC.
 
 | Placa | Arquivo | Tamanho | Cobre | O que leva |
 | --- | --- | --- | --- | --- |
@@ -15,8 +15,8 @@ Imprimir o SVG em **escala 100 %**. Para transferência térmica, espelhar o cob
           └──────────────┬─────────────────┘
                          │ cabos 8–12 cm
           ┌──────────────┴─────────────────┐
-          │  J1–J10 fêmea · fonte oscs fita│
-          │     PCB 220×216 (R+C+CIs+VCO)  │
+          │ pads J1–J10 · fonte oscs fita │
+          │   PCB 220×216 (R+C+CIs+VCO)   │
           └────────────────────────────────┘
             piso da caixa ~240×236×50
 ```
@@ -36,22 +36,22 @@ Furos em `painel.svg`. Nada de cobre atrás da chapa.
 
 ### BASE (`pcb.svg`)
 
-Chicotes na coluna esquerda (**J1–J10**, fêmea 2×N). Circuito à direita; o bloco do VCO fica na faixa de baixo. Gerador: `_gen_pcb.py`.
+Pads de cabo na coluna esquerda (**J1–J10**, dupla fila). Circuito à direita; o bloco do VCO fica na faixa de baixo. Gerador: `_gen_pcb.py`.
 
 - soquetes DIP: U1 5532, U2 osc, U3 NAB, U4 7660, U6–U8 PT2399, **U9 EQ voz**, **U10 AS3340**, **U11 MC34063** — **não soldar o chip**
 - 1N5817, 78M05 (sem soquete — TO-220)
 - 6× J201, 2N5457, 2× MP20, 1N4148
 - Csel (220 n / 47 µ) e detector CLK
 - **2×** trimpot 100 k (RV1 F-BACK, RV2 res)
-- **J1–J10** fêmea 2,54 mm 2×N — macho vem do painel
+- **J1–J10** pads para o fio do painel — furo 1,0 mm, passo 3,5 mm, pino 1 quadrado
 
 ---
 
-## Chicotes painel → BASE
+## Cabos painel → BASE
 
-Família: housing **dupla fila, passo 2,54 mm**. Fêmea na BASE, macho no painel.
+Na placa: **pads em dupla fila**, passo **3,5 mm**, furo **1,0 mm**, ilha Ø **2,4 mm**. O fio 24 AWG entra no furo e solda no cobre (verso). Sem housing.
 
-| J | Tamanho | Vias | Grupo |
+| J | Pads | Vias | Grupo |
 | --- | --- | ---: | --- |
 | **J1** | 2×10 | 20 | OSC |
 | **J2** | 2×6 | 12 | LFO |
@@ -64,7 +64,7 @@ Família: housing **dupla fila, passo 2,54 mm**. Fêmea na BASE, macho no painel
 | **J9** | 2×6 | 12 | EQ voz 424 |
 | **J10** | 2×10 | 20 | VCO cromático |
 
-Pino **1** = pad quadrado + lingueta. Não cruze os machos. Marque cada housing.
+Pino **1** = pad quadrado, canto esquerdo de cima. A numeração corre a fila de cima e depois a de baixo — a mesma do SPICE / `jmap.inc`. Não troque os grupos. Marque cada maço.
 
 Três pernas de pot: **CCW · W · CW**. Reostato OSC A/B: **A · B**. Jack: **TIP · SW · GND**.
 
@@ -96,7 +96,7 @@ Csel 220 n / 47 µ fica **na BASE**. RATE W = gate do LFO.
 ### J3 DELAY — 2×10 (20, cheio)
 
 No painel, da esquerda: **TIME · WET · F-BACK · H1 · H2 · H3 · STACK** | VOLUME.  
-Pinagem do chicote (estável com o SPICE / `jmap.inc`):
+Pinagem dos pads (estável com o SPICE / `jmap.inc`):
 
 | Pino | Sinal |
 | ---: | --- |
@@ -109,7 +109,7 @@ Pinagem do chicote (estável com o SPICE / `jmap.inc`):
 | 16–17 | STACK COM · ON |
 | 18–20 | VOLUME CCW · W · CW |
 
-Ao crimpar o macho do painel, siga a tabela — não a ordem física dos knobs.
+Ao soldar, siga a tabela — não a ordem física dos knobs.
 
 ### J4 PATCH A — 2×10 (18 usados)
 
@@ -267,9 +267,9 @@ Trimpots: RV1 teto F-BACK, RV2 ressonância. (PRE no painel substitui o antigo R
 
 1. Imprime `pcb.svg` em laser, **100 %**, sem “ajustar à página”.
 2. Lado **COBRE**: espelha. Lado **SILK**: não espelha.
-3. Fenolite simples. Furos: 0,8 mm nos J1–J10 e R/C, 1,0 mm nos soquetes DIP, 3,2 mm nos M3.
+3. Fenolite simples. Furos: **1,0 mm** nos pads J1–J10 e nos soquetes DIP, 0,8 mm nos R/C, 3,2 mm nos M3.
 4. Jumpers no lado dos componentes (tracejado no SVG).
-5. Solda **soquetes DIP** (incl. **U9**, **U10**, **U11**) e **fêmeas J1–J10**. Depois JFET/germânio. CIs e chicotes macho **por último**.
+5. Solda **soquetes DIP** (incl. **U9**, **U10**, **U11**). Depois JFET/germânio. Os cabos do painel entram nos pads **por último**: estanha, enfia no furo, solda no verso. Um ponto de cola quente na borda da coluna segura o maço.
 
 Antes de ligar 9 V: ohmímetro entre J6 pino 4 (P4-GND) e a malha do combo. Tem de ser contínuo. J6 pino 3 (P4-TIP) **não** pode achar GND.
 
@@ -288,4 +288,4 @@ Antes de ligar 9 V: ohmímetro entre J6 pino 4 (P4-GND) e a malha do combo. Tem 
 
 Esquema: `esquema.md`. Pré: `pre-vocal.md`.
 
-O VCO cromático mora nesta mesma placa, faixa de baixo, chicote **J10**. Ondas: `vco.md`.
+O VCO cromático mora nesta mesma placa, faixa de baixo, pads **J10**. Ondas: `vco.md`.

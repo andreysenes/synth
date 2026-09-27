@@ -4,7 +4,7 @@ Caderno de estudo (o que cada peça é, faz, e o datasheet): `componentes.md`.
 
 BOM SMT / LCSC para o [BOM Tool da JLCPCB](https://jlcpcb.com/parts/bom-tool): `jlcpcb-bom.csv` — como subir: `jlcpcb.md`.
 
-Projeto de **reprodução**: tudo **novo**, um instrumento = uma compra. Nada de recuperar pedais, kits DaPia ou a placa roxa. Dá para montar de novo com a mesma lista. O VCO cromático (faixa de baixo, chicote J10) entra nesta lista — não é outro módulo.
+Projeto de **reprodução**: tudo **novo**, um instrumento = uma compra. Nada de recuperar pedais, kits DaPia ou a placa roxa. Dá para montar de novo com a mesma lista. O VCO cromático (faixa de baixo, pads J10) entra nesta lista — não é outro módulo.
 
 Preços **estimados**, varejo Brasil, set/2026, **sem frete**. Pré vocal **sem transformador**. Combos **clone** (não Neutrik).
 
@@ -103,18 +103,9 @@ J201: 6 no circuito; os 2 extra casam Vgs(off). O mais “vivo” (conduz com ga
 | 4 | cabo P2 curto | patch | 4,50 | **18,00** |
 | 2 | combo XLR+P10 **clone** | IN e OUT | 22,00 | **44,00** |
 | 1 | P4 (jack 9 V DC) | fonte, centro-negativo | 3,00 | **3,00** |
-| 4 | soquete fêmea **2×10** 2,54 mm | J1 OSC · J3 DELAY · J4 PATCH A · **J10 VCO** | 2,50 | **10,00** |
-| 1 | soquete fêmea **2×8** 2,54 mm | J5 PATCH B | 2,20 | **2,20** |
-| 3 | soquete fêmea **2×6** 2,54 mm | J2 LFO · J7 IN · **J9 EQ** | 2,00 | **6,00** |
-| 2 | soquete fêmea **2×3** 2,54 mm | J6 CTRL · J8 OUT | 1,50 | **3,00** |
-| 4 | housing macho **2×10** | chicotes J1 J3 J4 **J10** | 2,00 | **8,00** |
-| 1 | housing macho **2×8** | J5 | 1,80 | **1,80** |
-| 3 | housing macho **2×6** | J2 · J7 · **J9** | 1,60 | **4,80** |
-| 2 | housing macho **2×3** | J6 J8 | 1,20 | **2,40** |
-| 140 | terminal crimp macho 2,54 mm | pinos (144 usados) | 0,10 | **14,00** |
-| 1 | fio 24 AWG 10 m (várias cores) | fios dos **10** chicotes J1–J10 | 8,00 | **8,00** |
+| 1 | fio 24 AWG 10 m (várias cores) | cabos do painel, soldados nos pads **J1–J10** | 8,00 | **8,00** |
 
-**161.** Clone é fêmea nos dois furos. Confira o furo (~24 mm). Família 2×N: fêmea na placa, macho no painel. **J7** = 2×6 (combo + PRE + **OSC IN**; pino 12 NC). **J9** = EQ 424. **J10** = 2×10 (COARSE, FINE, PW, FM, SAW, TRI, PUL, CV).
+**109.** Clone é fêmea nos dois furos. Confira o furo (~24 mm). Painel → BASE: fio direto no pad, sem fêmea, sem macho, sem crimp. **J7** = 2×6 (combo + PRE + **OSC IN**; pino 12 NC). **J9** = EQ 424. **J10** = 2×10 (COARSE, FINE, PW, FM, SAW, TRI, PUL, CV).
 
 ---
 
@@ -206,7 +197,7 @@ Pacote do instrumento sem o VCO ~**16,00**. O VCO acrescenta o pacote abaixo (~*
 | 4 | soquete DIP-16 | PT2399 H1, H2, H3 · **U10 AS3340** | 1,50 | **6,00** |
 | 1 | caixa madeira ~240×236×50 mm + face 220×216 | mesa estilo Toaster | 90,00 | **90,00** |
 
-**121,00.** Uma placa no piso, agora alta o bastante para a faixa do VCO. CIs nos soquetes. Sem FACE, sem IDC, sem flat, sem segunda caixa. O pré é o NE5532 em diferencial; a saída XLR é pad + quase-balanceado (`pre-vocal.md`). 78L12, 78L05 e 79L05 não usam soquete.
+**121,00.** Uma placa no piso, agora alta o bastante para a faixa do VCO. CIs nos soquetes. Sem FACE, sem IDC, sem flat, sem conector painel–placa, sem segunda caixa. O pré é o NE5532 em diferencial; a saída XLR é pad + quase-balanceado (`pre-vocal.md`). 78L12, 78L05 e 79L05 não usam soquete.
 
 ---
 
@@ -218,11 +209,11 @@ Pacote do instrumento sem o VCO ~**16,00**. O VCO acrescenta o pacote abaixo (~*
 | Pots | 148 |
 | Knobs | 66 |
 | Chaves | 50 |
-| Conectores | 161 |
+| Conectores | 109 |
 | Resistores | 24 |
 | Capacitores | 56 |
 | Placas / caixa | 121 |
-| **Um VOZ-9, tudo novo** | ~ **792** |
+| **Um VOZ-9, tudo novo** | ~ **740** |
 
 Fonte 9 V centro-negativo (~R$ 25–40) se ainda não tiver uma. Não entra na soma: a de pedal serve.
 

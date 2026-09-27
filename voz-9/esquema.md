@@ -4,7 +4,7 @@ Alimentação simples, 9 V centro-negativo. Referência de áudio em 4,5 V. O MA
 
 Quantidades e compra: `bom.md`. Tudo novo — um instrumento = uma lista.
 
-Uma fenolite no piso da caixa (220 × 216 mm): `pcb.md`. O painel só fura; **dez** chicotes 2×N J1–J10 (fêmea na BASE, macho no painel). CIs em soquete. **Um módulo** retangular de mesa. O VCO cromático é a faixa de baixo do mesmo painel (`vco.md`).
+Uma fenolite no piso da caixa (220 × 216 mm): `pcb.md`. O painel só fura; os cabos soldam direto nos pads **J1–J10** da BASE. CIs em soquete. **Um módulo** retangular de mesa. O VCO cromático é a faixa de baixo do mesmo painel (`vco.md`), no **J10**.
 
 ---
 

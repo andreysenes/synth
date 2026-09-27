@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 """Gera o projeto KiCad da BASE VOZ-9 (placa 300×300 mm).
 
-Os blocos do circuito ocupam a placa com folga para roteamento.
-J1–J9 são pinos macho 1×N na borda de baixo: o fio entra ali.
-Não há netlist: o esquema traz as peças, ainda sem fios.
+Cada bloco fica junto do conector que o alimenta de fio, na ordem do sinal.
+Dois corredores ficam livres: barramento em cima, áudio no meio. O verso
+roteia com trilha curta. J1–J9 são pinos macho 1×N na borda de baixo.
+O esquema agrupa os mesmos blocos, ainda sem fios.
 """
 
 import json
+import math
 import os
 import re
 import uuid
@@ -317,6 +319,7 @@ BOX = {
 
 
 def rank(part):
+    """CI primeiro, depois o desacoplamento, resistores por último."""
     fp = part["fp"]
     if "DIP-16" in fp:
         return 0
@@ -326,13 +329,17 @@ def rank(part):
         return 2
     if "TO-92" in fp:
         return 3
-    if "Diode" in fp:
-        return 4
     if "Potentiometer" in fp:
+        return 4
+    if "Diode" in fp:
         return 5
-    if "R_Axial" in fp:
+    if "CP_Radial" in fp:
         return 6
-    return 7
+    if "C_Rect" in fp:
+        return 7
+    if "R_Axial" in fp:
+        return 8
+    return 9
 
 
 def pack(items, x0, y0, x1, gap=3.4):
@@ -380,6 +387,80 @@ def place_pins():
             x += (count - 1) * 2.54 + gap
 
 
+# Peças reagrupadas pelo fio que elas puxam, não pelo tamanho.
+# O nome do bloco é o mesmo no esquema e na seda da placa.
+FLOW = {
+    "FONTE": "D1 U4 U5 C56 C57 C58 R14 R17 R19 R20 R18 R55 C22 C64 C65 C66 C67".split(),
+    "OSC": "U2 Q1 Q2 R21 R22 R62 R63 R72 C21 C6 C19 C51 C52".split(),
+    "MIX": "Q3 Q6 D6 R23 R24 R25 R26 R27 R28 R29 R3 R4 R64 R65 R66 R80 R73 C26".split(),
+    "PRE": "U1 R12 R13 R57 R58 R6 R42 R44 C1 C2 C23 C24 C25 C59 C60 C61 C62 C63".split(),
+    "EQ": ["U9"],
+    "MOD": (
+        "Q4 Q5 Q7 D2 RV2 R30 R31 R32 R33 R34 R67 R68 R69 R61 R5 R15 R74 R81 "
+        "C43 C44 C45 C46 C47 C27 C28 C68 C71 C53 C54"
+    ).split(),
+    "NAB": "U3 R51 R52 R53 R54 R16 R45 R46 C4 C5 C48 C49 C50 C20 C29 C30".split(),
+    "FITA": (
+        "U6 U7 U8 RV1 D7 R35 R36 R37 R38 R39 R40 R41 R47 R48 R49 R50 R71 "
+        "R75 R76 R77 R78 C3 C7 C8 C9 C10 C11 C12 C13 C14 C15 C16 C17 C18 "
+        "C31 C32 C33 C34 C35 C36 C37 C38 C39 C40 C41 C42 C69 C70"
+    ).split(),
+    "CLK": "D3 D4 R59 R43 R70 R79 R11 R7 R8 R9 R10 R56 R60 C55".split(),
+    "OUT": ["R1", "R2"],
+}
+
+HEADER_BLOCK = {
+    "J1": "OSC",
+    "J2": "MOD",
+    "J3": "FITA",
+    "J4": "MOD",
+    "J5": "CLK",
+    "J6": "FONTE",
+    "J7": "PRE",
+    "J8": "OUT",
+    "J9": "EQ",
+}
+
+# (x0, y0, x1, limite_y). O pack para antes do corredor seguinte.
+ISLANDS = (
+    ("FONTE", 156, 18, 288, 58),
+    ("OSC", 14, 220, 82, 268),
+    ("PRE", 88, 68, 158, 112),
+    ("EQ", 166, 72, 214, 120),
+    ("MIX", 14, 112, 158, 148),
+    ("MOD", 14, 176, 108, 270),
+    ("NAB", 114, 176, 188, 206),
+    ("CLK", 114, 212, 188, 270),
+    ("FITA", 194, 176, 288, 240),
+    ("OUT", 250, 246, 288, 270),
+)
+
+# Baía do EQ 424: o CI fica no canto; a rede Baxandall ainda não tem ref.
+EQ_BAY = (164, 66, 230, 128)
+
+
+def assign_flow():
+    owner = {}
+    for name, refs in FLOW.items():
+        for ref in refs:
+            if ref in owner:
+                raise SystemExit(f"{ref} em dois blocos")
+            owner[ref] = name
+    for part in parts:
+        ref = part["ref"]
+        if ref in owner:
+            part["block"] = owner[ref]
+        elif ref in HEADER_BLOCK:
+            part["block"] = HEADER_BLOCK[ref]
+        elif ref[0] == "H":
+            part["block"] = "FUROS"
+        else:
+            raise SystemExit(f"{ref} sem bloco de roteamento")
+    missing = [ref for ref in owner if ref not in {p["ref"] for p in parts}]
+    if missing:
+        raise SystemExit(f"bloco cita ref ausente: {missing}")
+
+
 def place_blocks():
     groups = {}
     for part in parts:
@@ -389,29 +470,68 @@ def place_blocks():
     for items in groups.values():
         items.sort(key=rank)
 
-    def band(y, columns):
-        bottoms = []
-        for name, x0, x1 in columns:
-            notes.append((name, x0, y - 3.2))
-            items = groups.pop(name)
-            bottoms.append(pack(items, x0, y, x1))
-        return max(bottoms)
+    # D1 entre o pino da fonte e o barramento: ânodo (pino 2) para baixo, rumo a J6.
+    diode = next(part for part in groups["FONTE"] if part["ref"] == "D1")
+    groups["FONTE"].remove(diode)
+    diode["x"], diode["y"], diode["rot"] = 224.0, 250.0, 270
 
-    # Faixas espalhadas até perto dos pinos, com corredor para o fio subir.
-    bands = (
-        (22, (("FONTE", 14, 108), ("U1", 112, 206), ("U2", 210, 288)), 94),
-        (102, (("NAB", 14, 108), ("MIX", 112, 200), ("VCF", 204, 288)), 160),
-        (168, (("CLK", 14, 150), ("ENV", 154, 230), ("TRIM", 234, 288)), 208),
-        (216, (("FITA", 14, 288),), 272),
-    )
-    bottom = 0
-    for y0, columns, limit in bands:
-        bottom = band(y0, columns)
-        if bottom > limit:
-            raise SystemExit(f"faixa em y={y0} desceu até {bottom:.1f}, limite {limit}")
+    bottom = diode["y"]
+    for name, x0, y0, x1, limit in ISLANDS:
+        notes.append((name, x0, y0 - 3.2))
+        items = groups.pop(name)
+        island_bottom = y0
+        if items:
+            island_bottom = pack(items, x0, y0, x1, gap=2.4)
+        print(f"  {name:6} y {y0:.0f}→{island_bottom:.1f}  limite {limit:.0f}  x {x0:.0f}–{x1:.0f}")
+        if island_bottom > limit:
+            raise SystemExit(f"{name} desceu até {island_bottom:.1f}, limite {limit}")
+        bottom = max(bottom, island_bottom)
     if groups:
         raise SystemExit(f"blocos sem lugar: {sorted(groups)}")
+    notes.append(("barramento V9 GND VEE V5 4V5 1V8", 78, 62))
+    notes.append(("canal de audio", 150, 170))
     return bottom
+
+
+def part_box(part):
+    if part["ref"].startswith("J"):
+        count = int(part["fp"].split("1x")[1][:2])
+        left, top, right, bottom = -1.7, -1.7, 1.7, (count - 1) * 2.54 + 1.7
+    elif part["ref"].startswith("H"):
+        left, top, right, bottom = -3.2, -3.2, 3.2, 3.2
+    else:
+        left, top, right, bottom = BOX[part["fp"]]
+    rot = part.get("rot") or 0
+    rad = math.radians(rot)
+    cos_r, sin_r = math.cos(rad), math.sin(rad)
+    corners = []
+    for x, y in ((left, top), (right, top), (right, bottom), (left, bottom)):
+        corners.append(
+            (part["x"] + x * cos_r + y * sin_r, part["y"] - x * sin_r + y * cos_r)
+        )
+    xs = [point[0] for point in corners]
+    ys = [point[1] for point in corners]
+    return min(xs), min(ys), max(xs), max(ys)
+
+
+def check_placement():
+    boxes = [(part["ref"],) + part_box(part) for part in parts]
+    for i, (ref_a, ax0, ay0, ax1, ay1) in enumerate(boxes):
+        if ax0 < 1 or ay0 < 1 or ax1 > W - 1 or ay1 > H - 1:
+            raise SystemExit(f"{ref_a} fora da placa ({ax0:.1f},{ay0:.1f})-({ax1:.1f},{ay1:.1f})")
+        for ref_b, bx0, by0, bx1, by1 in boxes[i + 1 :]:
+            overlap_x = min(ax1, bx1) - max(ax0, bx0)
+            overlap_y = min(ay1, by1) - max(ay0, by0)
+            if overlap_x > 0.4 and overlap_y > 0.4:
+                raise SystemExit(f"sobreposição {ref_a} × {ref_b}")
+    bay_x0, bay_y0, bay_x1, bay_y1 = EQ_BAY
+    for ref, x0, y0, x1, y1 in boxes:
+        if ref == "U9":
+            continue
+        overlap_x = min(x1, bay_x1) - max(x0, bay_x0)
+        overlap_y = min(y1, bay_y1) - max(y0, bay_y0)
+        if overlap_x > 0.4 and overlap_y > 0.4:
+            raise SystemExit(f"{ref} invadiu a baía do EQ")
 
 
 def check_parts():
@@ -514,54 +634,75 @@ def sch_escape(text):
     return text.replace("\\", "\\\\").replace('"', '\\"')
 
 
+def sch_cell(part, pins):
+    """Largura e altura para o símbolo não encostar no vizinho."""
+    ref = part["ref"]
+    if ref.startswith("J"):
+        count = max(len(pins), 2)
+        return 24.0, 10.0 + 2.54 * count
+    if ref.startswith("H"):
+        return 12.0, 12.0
+    fp = part["fp"]
+    if "DIP-16" in fp:
+        return 46.0, 52.0
+    if "TO-220" in fp:
+        return 24.0, 30.0
+    if "DIP-8" in fp or part["sym"].endswith("LM2904") or "MAX1044" in part["sym"]:
+        return 28.0, 22.0
+    if "TO-92" in fp:
+        return 18.0, 20.0
+    if "Potentiometer" in fp:
+        return 18.0, 20.0
+    return 14.0, 16.0
+
+
 def write_schematic(path, embedded, meta):
     cells = []
-    order = []
-    seen = set()
-    for p in parts:
-        if p["block"] not in seen:
-            seen.add(p["block"])
-            order.append(p["block"])
+    order = ["FONTE", "OSC", "MIX", "PRE", "EQ", "MOD", "NAB", "FITA", "CLK", "OUT", "FUROS"]
     by_block = {name: [p for p in parts if p["block"] == name] for name in order}
 
-    page_w, page_h = 1180.0, 420.0
-    x = 25.0
-    row_top = page_h - 28.0
+    row_top = 292.0
+    floor = 24.0
+    x = 30.0
     texts = [
         (
             20,
-            page_h - 12,
-            "VOZ-9 BASE 300×300 mm. Blocos espalhados na placa. "
-            "J1–J9 são pinos 1×N na borda de baixo; o fio entra no pino. "
-            "Numeração 1…N igual à tabela de pcb.md. Ainda sem ligações. "
-            "D6/D7 = MP20. Q7 2N5457: conferir a pinagem do lote.",
+            row_top + 16,
+            "VOZ-9 BASE. Blocos na ordem do sinal, o mesmo agrupamento da placa. "
+            "J1–J9 à esquerda de cada bloco: pino 1×N na borda de baixo da PCB. "
+            "Ainda sem fios. D1 ânodo para J6. D6/D7 = MP20. "
+            "Q7 2N5457: conferir a pinagem do lote. U9: baía livre para a rede do EQ.",
         )
     ]
     for name in order:
-        items = by_block[name]
+        items = by_block.get(name, [])
+        items.sort(key=lambda part: (0 if part["ref"].startswith("J") else 1, part["ref"]))
         expanded = []
         for p in items:
             info = meta[p["sym"]]
             for unit in info["units"]:
                 expanded.append((p, unit, info["pins"].get(unit, [])))
-        cols = (len(expanded) + 15) // 16
-        width = cols * 30.0
-        if x + width > page_w - 15:
-            x = 25.0
-            row_top -= 330.0
-        texts.append((x, row_top + 8, name))
-        y = row_top
-        col = 0
-        n = 0
+        if not expanded:
+            continue
+        texts.append((x, row_top + 6, name))
+        cursor_x = x
+        cursor_y = row_top
+        col_w = 0.0
+        block_right = x
         for p, unit, pins in expanded:
-            if n == 16:
-                col += 1
-                n = 0
-                y = row_top
-            cells.append((p, unit, pins, x + col * 30.0, y))
-            y -= 18.0
-            n += 1
-        x += width + 16.0
+            width, height = sch_cell(p, pins)
+            if cursor_y - height < floor:
+                cursor_x += col_w + 10.0
+                cursor_y = row_top
+                col_w = 0.0
+            cells.append((p, unit, pins, cursor_x, cursor_y))
+            cursor_y -= height + 6.0
+            col_w = max(col_w, width)
+            block_right = max(block_right, cursor_x + width)
+        x = block_right + 22.0
+
+    page_w = max(420.0, x + 16.0)
+    page_h = row_top + 36.0
 
     lines = [
         "(kicad_sch",
@@ -574,7 +715,7 @@ def write_schematic(path, embedded, meta):
         '\t\t(title "VOZ-9 BASE")',
         '\t\t(date "2026-09-27")',
         '\t\t(rev "A")',
-        '\t\t(comment 1 "Placa 300 x 300 mm. Esquema sem fios.")',
+        '\t\t(comment 1 "Placa 300 x 300 mm. Blocos na ordem do sinal, ainda sem fios.")',
         "\t)",
         "\t(lib_symbols",
     ]
@@ -720,7 +861,7 @@ def write_board(path):
     tb.SetDate("2026-09-27")
     tb.SetRevision("A")
     tb.SetComment(0, "300 x 300 mm")
-    tb.SetComment(1, "Pinos 1xN na borda de baixo. Esquema ainda sem nets.")
+    tb.SetComment(1, "Blocos junto do conector. Corredor de alimentacao e de audio.")
 
     add_seg(board, 0, 0, W, 0, pcbnew.Edge_Cuts)
     add_seg(board, W, 0, W, H, pcbnew.Edge_Cuts)
@@ -730,12 +871,21 @@ def write_board(path):
     add_text(board, "VOZ-9 BASE  300 x 300 mm", 150, 8, pcbnew.F_SilkS, 2.2)
     add_text(
         board,
-        "fio na base, pinos 1xN   pino 1 a esquerda de cada grupo   CIs em soquete   cobre no verso",
+        "fio na base, pino 1 a esquerda   cobre no verso   corredores livres para o barramento e o audio",
         150,
         12.5,
         pcbnew.F_SilkS,
         1.15,
     )
+    bay_x0, bay_y0, bay_x1, bay_y1 = EQ_BAY
+    for x1, y1, x2, y2 in (
+        (bay_x0, bay_y0, bay_x1, bay_y0),
+        (bay_x1, bay_y0, bay_x1, bay_y1),
+        (bay_x1, bay_y1, bay_x0, bay_y1),
+        (bay_x0, bay_y1, bay_x0, bay_y0),
+    ):
+        add_seg(board, x1, y1, x2, y2, pcbnew.F_SilkS, 0.12)
+    add_text(board, "EQ 424", bay_x0 + 28, (bay_y0 + bay_y1) / 2, pcbnew.F_SilkS, 1.4)
     for text, x, y in notes:
         add_text(board, text, x, y, pcbnew.F_SilkS, 1.15)
 
@@ -779,9 +929,11 @@ def write_project(path):
 
 def main():
     build_parts()
+    assign_flow()
     check_parts()
     place_pins()
     bottom = place_blocks()
+    check_placement()
     used = {p["sym"] for p in parts}
     embedded, meta = load_symbols(used)
     write_board(os.path.join(ROOT, "voz-9.kicad_pcb"))

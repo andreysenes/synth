@@ -23,7 +23,7 @@ Imprimir o SVG em **escala 100 %**. Para transferência térmica, espelhar o cob
 
 O painel continua **220 × 160 mm**. A BASE é **300 × 300 mm** — maior que a face. O piso da caixa tem de cobrir a placa. A placa parafusa no fundo (M3 nos quatro cantos). Cabos folgados, sem esticar.
 
-Os blocos ficam espalhados na placa, com corredor até os pinos. Projeto para editar: `kicad/voz-9.kicad_pro`. O `pcb.svg` é o desenho anterior, mais apertado.
+Os blocos seguem o sinal e o pino de cada um, com dois corredores livres: alimentação em cima (V9, GND, VEE, V5, 4V5, 1V8) e áudio no meio. O verso roteia em trilha curta, com pouco jumper. Projeto para editar: `kicad/voz-9.kicad_pro`. O `pcb.svg` é o desenho anterior, mais apertado.
 
 ---
 
@@ -38,7 +38,18 @@ Furos em `painel.svg`. Nada de cobre atrás da chapa.
 
 ### BASE (`pcb.svg`)
 
-**J1–J9** na borda inferior, duas fileiras de pinos. O circuito ocupa o resto da placa, por bloco. Gerador do KiCad: `kicad/gen_kicad.py`.
+**J1–J9** na borda inferior, duas fileiras de pinos. O circuito fica em cima do conector de cada bloco, na ordem do sinal. Gerador do KiCad: `kicad/gen_kicad.py`.
+
+```
+topo direito     FONTE (U4 U5) — o 1N5817 desce até J6
+faixa de cima    PRE (J7) · baía EQ (J9, U9)
+meio             MIX, depois MOD (VCF · VCA · LFO, J2 e J4)
+corredor         áudio, livre, entre o mix e o filtro
+junto dos pinos  OSC em cima de J1 · NAB · CLK ao lado da fita (o jack é o J5)
+                 FITA em cima de J3 · OUT (R1 R2) no canto de J8
+```
+
+O corredor de cima é o barramento (V9, GND, VEE, V5, 4V5, 1V8). O do meio é o áudio entre o mix e o filtro. Por baixo de cada bloco sobra espaço até o pino, para o fio do painel subir sem cruzar o vizinho.
 
 - soquetes DIP: U1 5532, U2 osc, U3 NAB, U4 7660, U6–U8 PT2399, **U9 EQ voz** — **não soldar o chip**
 - 1N5817, 78M05 (sem soquete — TO-220)

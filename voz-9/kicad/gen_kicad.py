@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Gera o projeto KiCad da BASE VOZ-9 (placa 300×300 mm).
+"""Gera o projeto KiCad da BASE VOZ-9 (placa 300×140 mm).
 
 Cada bloco fica junto do conector que o alimenta de fio, na ordem do sinal.
-Dois corredores ficam livres: barramento em cima, áudio no meio. O verso
-roteia com trilha curta. J1–J9 são pinos macho 1×N na borda de baixo.
+A fonte, o pré e o mix ocupam a faixa de cima. O miolo (MOD, NAB, fita)
+fica no meio. J1–J9 são pinos macho 1×N na borda de baixo.
 O esquema agrupa os mesmos blocos, ainda sem fios.
 As trilhas não nascem aqui: `route.py` grava as nets e o cobre.
 Rodar este gerador de novo apaga o roteamento.
@@ -22,10 +22,9 @@ SYM = "/usr/share/kicad/symbols"
 FP = "/usr/share/kicad/footprints"
 DEMO_PRO = "/usr/share/kicad/demos/pic_programmer/pic_programmer.kicad_pro"
 
-W, H = 300.0, 300.0
-# A4 (210×297) é menor que a placa. A folha precisa cobrir os 300 mm
-# e ainda deixar o carimbo (110×34 mm, canto inferior direito) fora do cobre.
-PAGE_W, PAGE_H = 430.0, 360.0
+W, H = 300.0, 140.0
+# A folha cobre os 300 mm de largura e deixa o carimbo fora do cobre.
+PAGE_W, PAGE_H = 420.0, 200.0
 
 FP_R = "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal"
 FP_C = "Capacitor_THT:C_Rect_L7.2mm_W2.5mm_P5.00mm"
@@ -371,10 +370,12 @@ def place_pins():
     """Duas fileiras de pinos na borda de baixo. Pino 1 à esquerda."""
     by_ref = {part["ref"]: part for part in parts}
     rows = (
-        (["J1", "J3", "J4", "J5"], 293.0),
-        (["J2", "J7", "J9", "J6", "J8"], 283.5),
+        (["J1", "J3", "J4", "J5"], 132.0),
+        (["J2", "J7", "J9", "J6", "J8"], 121.6),
     )
-    x_left, x_right = 16.0, 280.0
+    x_left, x_right = 16.0, 284.0
+    # A fileira de baixo encosta na borda. A de cima fica 10 mm acima,
+    # ainda abaixo dos blocos.
     for refs, y in rows:
         groups = []
         for ref in refs:
@@ -426,22 +427,23 @@ HEADER_BLOCK = {
     "J9": "EQ",
 }
 
-# (x0, y0, x1, limite_y). O pack para antes do corredor seguinte.
+# (x0, y0, x1, limite_y). Os pinos de cima estão em y=121,6.
+# A faixa de baixo para antes deles.
 ISLANDS = (
-    ("FONTE", 156, 18, 288, 58),
-    ("OSC", 14, 220, 82, 268),
-    ("PRE", 88, 68, 158, 112),
-    ("EQ", 166, 72, 214, 120),
-    ("MIX", 14, 112, 158, 148),
-    ("MOD", 14, 176, 108, 270),
-    ("NAB", 114, 176, 188, 206),
-    ("CLK", 114, 212, 188, 270),
-    ("FITA", 194, 176, 288, 240),
-    ("OUT", 250, 246, 288, 270),
+    ("PRE", 14, 14, 122, 36),
+    ("EQ", 126, 14, 162, 40),
+    ("FONTE", 166, 14, 290, 46),
+    ("MOD", 14, 40, 104, 68),
+    ("FITA", 108, 46, 248, 90),
+    ("OSC", 14, 88, 84, 114),
+    ("NAB", 108, 89, 198, 114),
+    ("CLK", 202, 93, 272, 114),
+    ("MIX", 252, 42, 290, 92),
+    ("OUT", 262, 96, 290, 114),
 )
 
-# Baía do EQ 424: o CI fica no canto; a rede Baxandall ainda não tem ref.
-EQ_BAY = (164, 66, 230, 128)
+# U9 fica neste retângulo. A rede Baxandall ainda não tem peça.
+EQ_BAY = (126, 14, 162, 40)
 
 
 def assign_flow():
@@ -475,26 +477,30 @@ def place_blocks():
     for items in groups.values():
         items.sort(key=rank)
 
-    # D1 entre o pino da fonte e o barramento: ânodo (pino 2) para baixo, rumo a J6.
-    diode = next(part for part in groups["FONTE"] if part["ref"] == "D1")
-    groups["FONTE"].remove(diode)
-    diode["x"], diode["y"], diode["rot"] = 224.0, 250.0, 270
-
-    bottom = diode["y"]
+    # O nome fica acima do bloco quando cabe. NAB e MIX encostam
+    # no bloco de cima, então o texto desce para o vão de 2 mm.
+    label_at = {
+        "NAB": (116, 88.0),
+        "MIX": (258, 40.4),
+    }
+    bottom = 0.0
     for name, x0, y0, x1, limit in ISLANDS:
-        notes.append((name, x0, y0 - 3.2))
+        if name in label_at:
+            notes.append((name, label_at[name][0], label_at[name][1]))
+        else:
+            notes.append((name, x0, y0 - 3.2))
         items = groups.pop(name)
         island_bottom = y0
         if items:
-            island_bottom = pack(items, x0, y0, x1, gap=2.4)
+            island_bottom = pack(items, x0, y0, x1, gap=2.2)
         print(f"  {name:6} y {y0:.0f}→{island_bottom:.1f}  limite {limit:.0f}  x {x0:.0f}–{x1:.0f}")
         if island_bottom > limit:
             raise SystemExit(f"{name} desceu até {island_bottom:.1f}, limite {limit}")
         bottom = max(bottom, island_bottom)
     if groups:
         raise SystemExit(f"blocos sem lugar: {sorted(groups)}")
-    notes.append(("barramento V9 GND VEE V5 4V5 1V8", 78, 62))
-    notes.append(("canal de audio", 150, 170))
+    # Vão entre o MOD e o OSC, longe da fita.
+    notes.append(("V9  GND  VEE  V5  4V5  1V8", 48, 76))
     return bottom
 
 
@@ -720,7 +726,7 @@ def write_schematic(path, embedded, meta):
         '\t\t(title "VOZ-9 BASE")',
         '\t\t(date "2026-09-27")',
         '\t\t(rev "A")',
-        '\t\t(comment 1 "Placa 300 x 300 mm. Blocos na ordem do sinal, ainda sem fios.")',
+        '\t\t(comment 1 "Placa 300 x 140 mm. Blocos na ordem do sinal, ainda sem fios.")',
         "\t)",
         "\t(lib_symbols",
     ]
@@ -865,23 +871,15 @@ def write_board(path):
     tb.SetTitle("VOZ-9 BASE")
     tb.SetDate("2026-09-27")
     tb.SetRevision("A")
-    tb.SetComment(0, "300 x 300 mm")
-    tb.SetComment(1, "Blocos junto do conector. Corredor de alimentacao e de audio.")
+    tb.SetComment(0, "300 x 140 mm")
+    tb.SetComment(1, "Blocos junto do conector. Duas placas cabem numa chapa de 300 x 300.")
 
     add_seg(board, 0, 0, W, 0, pcbnew.Edge_Cuts)
     add_seg(board, W, 0, W, H, pcbnew.Edge_Cuts)
     add_seg(board, W, H, 0, H, pcbnew.Edge_Cuts)
     add_seg(board, 0, H, 0, 0, pcbnew.Edge_Cuts)
 
-    add_text(board, "VOZ-9 BASE  300 x 300 mm", 150, 8, pcbnew.F_SilkS, 2.2)
-    add_text(
-        board,
-        "fio na base, pino 1 a esquerda   cobre no verso   corredores livres para o barramento e o audio",
-        150,
-        12.5,
-        pcbnew.F_SilkS,
-        1.15,
-    )
+    add_text(board, "VOZ-9 BASE  300 x 140 mm", 150, 5.2, pcbnew.F_SilkS, 1.8)
     bay_x0, bay_y0, bay_x1, bay_y1 = EQ_BAY
     for x1, y1, x2, y2 in (
         (bay_x0, bay_y0, bay_x1, bay_y0),
@@ -906,6 +904,10 @@ def write_board(path):
             fp.Value().SetVisible(False)
         else:
             fp.Reference().SetVisible(True)
+        if "TO-92" in p["fp"]:
+            for pad in fp.Pads():
+                if pad.GetNumber() == "1":
+                    pad.SetShape(pcbnew.PAD_SHAPE_CIRCLE)
         if not p["bom"]:
             fp.SetExcludedFromBOM(True)
         board.Add(fp)

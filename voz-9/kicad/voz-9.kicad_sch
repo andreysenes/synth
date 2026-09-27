@@ -8,7 +8,7 @@
 		(title "VOZ-9 BASE")
 		(date "2026-09-27")
 		(rev "A")
-		(comment 1 "Placa 300 x 300 mm. Blocos na ordem do sinal, ainda sem fios.")
+		(comment 1 "Placa 300 x 140 mm. Blocos na ordem do sinal, ainda sem fios.")
 	)
 	(lib_symbols
 		(symbol "Amplifier_Operational:LM2904"

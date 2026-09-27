@@ -578,7 +578,10 @@ def add_ground_zone(board):
     zone.SetIslandRemovalMode(pcbnew.ISLAND_REMOVAL_MODE_ALWAYS)
     outline = zone.Outline()
     outline.NewOutline()
-    for x, y in ((1.5, 1.5), (298.5, 1.5), (298.5, 298.5), (1.5, 298.5)):
+    box = board.GetBoardEdgesBoundingBox()
+    x1 = pcbnew.ToMM(box.GetRight()) - 1.5
+    y1 = pcbnew.ToMM(box.GetBottom()) - 1.5
+    for x, y in ((1.5, 1.5), (x1, 1.5), (x1, y1), (1.5, y1)):
         outline.Append(int(pcbnew.FromMM(x)), int(pcbnew.FromMM(y)))
     board.Add(zone)
     filler = pcbnew.ZONE_FILLER(board)

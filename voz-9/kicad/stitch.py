@@ -92,8 +92,12 @@ def route_pair(board, net_name, ax, ay, bx, by):
                     if (ix * GRID - px) ** 2 + (iy * GRID - py) ** 2 <= rad * rad:
                         via_block.add((ix, iy))
 
+    edge = board.GetBoardEdgesBoundingBox()
+    x_max = pcbnew.ToMM(edge.GetRight()) - 1.5
+    y_max = pcbnew.ToMM(edge.GetBottom()) - 1.5
+
     def open_cell(ix, iy, layer):
-        if not (1.5 <= ix * GRID <= 298.5 and 1.5 <= iy * GRID <= 298.5):
+        if not (1.5 <= ix * GRID <= x_max and 1.5 <= iy * GRID <= y_max):
             return False
         return (ix, iy) not in (front if layer == 0 else back)
 

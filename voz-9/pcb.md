@@ -4,7 +4,7 @@ Uma fenolite no **fundo da caixa**. O painel (`painel.svg`) é só chapa. Na BAS
 
 | Placa | Arquivo | Tamanho | Cobre | O que leva |
 | --- | --- | --- | --- | --- |
-| **BASE** | `pcb.svg` / `kicad/` | **300 × 300 mm** | simples, solda = verso | fonte, oscs, JFETs, NAB, 5532, EQ voz, fita, R/C, pads dos cabos |
+| **BASE** | `pcb.svg` / `kicad/` | **300 × 140 mm** | simples, solda = verso | fonte, oscs, JFETs, NAB, 5532, EQ voz, fita, R/C, pads dos cabos |
 
 Imprimir o SVG em **escala 100 %**. Para transferência térmica, espelhar o cobre.
 
@@ -16,14 +16,14 @@ Imprimir o SVG em **escala 100 %**. Para transferência térmica, espelhar o cob
                          │ cabos folgados
           ┌──────────────┴─────────────────┐
           │  pinos J1–J9 na borda de baixo │
-          │        PCB 300×300 mm          │
+          │        PCB 300×140 mm          │
           └────────────────────────────────┘
-            piso da caixa ≥ 300×300
+            piso da caixa ≥ 300×140
 ```
 
-O painel continua **220 × 160 mm**. A BASE é **300 × 300 mm** — maior que a face. O piso da caixa tem de cobrir a placa. A placa parafusa no fundo (M3 nos quatro cantos). Cabos folgados, sem esticar.
+O painel continua **220 × 160 mm**. A BASE é **300 × 140 mm**: mais larga que a face e mais baixa. O piso cobre a placa. Duas BASE cabem numa chapa de 300 × 300 mm (140 + 140 = 280, sobra ~20 mm para o corte). A placa parafusa no fundo (M3 nos quatro cantos). Cabos folgados, sem esticar.
 
-Os blocos seguem o sinal e o pino de cada um, com dois corredores livres: alimentação em cima (V9, GND, VEE, V5, 4V5, 1V8) e áudio no meio. O cobre está em `kicad/voz-9.kicad_pcb`: trilhas de 0,6 mm nas duas faces (o verso é o cobre da fenolite, a frente é jumper) e um plano de GND no verso. Projeto para editar: `kicad/voz-9.kicad_pro`. O `pcb.svg` é o desenho anterior, mais apertado. O esquema ainda não tem fio; atualizar a placa a partir dele apaga este roteamento.
+Os blocos seguem o sinal e o pino de cada um, apertados na metade de baixo da chapa. O cobre está em `kicad/voz-9.kicad_pcb`: trilhas de 0,6 mm nas duas faces (o verso é o cobre da fenolite, a frente é jumper) e um plano de GND no verso. Projeto para editar: `kicad/voz-9.kicad_pro`. O `pcb.svg` é o desenho anterior, mais apertado. O esquema ainda não tem fio; atualizar a placa a partir dele apaga este roteamento.
 
 ---
 
@@ -41,15 +41,14 @@ Furos em `painel.svg`. Nada de cobre atrás da chapa.
 **J1–J9** na borda inferior, duas fileiras de pinos. O circuito fica em cima do conector de cada bloco, na ordem do sinal. Gerador do KiCad: `kicad/gen_kicad.py`.
 
 ```
-topo direito     FONTE (U4 U5) — o 1N5817 desce até J6
-faixa de cima    PRE (J7) · baía EQ (J9, U9)
-meio             MIX, depois MOD (VCF · VCA · LFO, J2 e J4)
-corredor         áudio, livre, entre o mix e o filtro
-junto dos pinos  OSC em cima de J1 · NAB · CLK ao lado da fita (o jack é o J5)
-                 FITA em cima de J3 · OUT (R1 R2) no canto de J8
+faixa de cima    PRE (J7) · baía EQ (J9, só U9) · FONTE (U4 U5, J6 à direita)
+meio esquerda    MOD (VCF · VCA · LFO), em cima de J2
+miolo            FITA (U6–U8) em cima de J3
+coluna direita   MIX, e embaixo OUT (R1 R2) perto de J8
+junto dos pinos  OSC em cima de J1 · NAB · CLK perto de J5
 ```
 
-O corredor de cima é o barramento (V9, GND, VEE, V5, 4V5, 1V8). O do meio é o áudio entre o mix e o filtro. Por baixo de cada bloco sobra espaço até o pino, para o fio do painel subir sem cruzar o vizinho.
+O vão entre o MOD e o OSC marca o barramento (V9, GND, VEE, V5, 4V5, 1V8). Os blocos param antes dos pinos, para o fio do painel subir sem cruzar o vizinho.
 
 - soquetes DIP: U1 5532, U2 osc, U3 NAB, U4 7660, U6–U8 PT2399, **U9 EQ voz** — **não soldar o chip**
 - 1N5817, 78M05 (sem soquete — TO-220)
@@ -234,7 +233,7 @@ Coordenadas em mm, origem no canto superior esquerdo.
 
 Knobs: OSC A/B, TIME, F-BACK, VOLUME = Ø30 mm. AMOUNT, SHAPE, CUTOFF, RATE, PRE, OSC IN, DEPTH, WET, LOW, MID F, MID G, HIGH = Ø15 mm.
 
-Parafusos da **BASE**: M3 a 6 mm dos cantos da placa 300 × 300 — (6, 6), (294, 6), (6, 294), (294, 294). Origem no canto, como no SVG.
+Parafusos da **BASE**: M3 a 6 mm dos cantos da placa 300 × 140 — (6, 6), (294, 6), (6, 134), (294, 134). Origem no canto, como no SVG.
 
 ---
 

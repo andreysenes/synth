@@ -10,7 +10,7 @@
 	(title_block
 		(title "VOZ-9 BASE")
 		(date "2026-09-27")
-		(rev "A")
+		(rev "v.1")
 		(comment 1 "300 x 140 mm")
 		(comment 2 "Blocos junto do conector. Duas placas cabem numa chapa de 300 x 300.")
 	)
@@ -61846,7 +61846,7 @@
 			)
 		)
 	)
-	(gr_text "VOZ-9 BASE  300 x 140 mm"
+	(gr_text "v.1"
 		(at 150 5.2 0)
 		(layer "F.SilkS")
 		(uuid "d42a7666-7136-41d1-936d-b53b6b884ec0")

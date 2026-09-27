@@ -1046,7 +1046,7 @@ def write_board(path):
     tb = board.GetTitleBlock()
     tb.SetTitle("VOZ-9 BASE")
     tb.SetDate("2026-09-27")
-    tb.SetRevision("A")
+    tb.SetRevision("v.1")
     tb.SetComment(0, "300 x 140 mm")
     tb.SetComment(1, "Blocos junto do conector. Duas placas cabem numa chapa de 300 x 300.")
 
@@ -1055,7 +1055,7 @@ def write_board(path):
     add_seg(board, W, H, 0, H, pcbnew.Edge_Cuts)
     add_seg(board, 0, H, 0, 0, pcbnew.Edge_Cuts)
 
-    add_text(board, "VOZ-9 BASE  300 x 140 mm", 150, 5.2, pcbnew.F_SilkS, 1.8)
+    add_text(board, "v.1", 150, 5.2, pcbnew.F_SilkS, 1.8)
     for text, x, y in notes:
         add_text(board, text, x, y, pcbnew.F_SilkS, 1.15)
 

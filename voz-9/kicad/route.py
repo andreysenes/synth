@@ -125,9 +125,7 @@ def build_nets():
     add(n, "PRE_W", ("J7", "7"), ("J5", "10"))
     two(n, "C41", "PRE_W", "OSCIN_CW")
     add(n, "OSCIN_CW", ("J7", "11"))
-    add(n, "SEND_SW", ("J5", "14"))
-    add(n, "PRE_W", ("SEND_SW", "x")) if False else None
-    # normal do RCV: o jack no painel liga SW em TIP
+    # O normal do jack de SEND fica no wiper do PRE, na placa.
     add(n, "PRE_W", ("J5", "14"))
 
     # --- osciladores, alimentação simples ---
@@ -158,7 +156,6 @@ def build_nets():
     add(n, "SW_B", ("J1", "16"))
     add(n, "SW_B_ON", ("J1", "17"), ("J4", "4"))
     two(n, "R25", "SW_B_ON", "SUM")
-    add(n, "Q1D", ("Q1", "1"), ("U2A_INM", "x")) if False else None
     add(n, "U2A_INM", ("Q1", "1"))
     add(n, "N4V5", ("Q1", "3"), ("Q2", "3"))
     two(n, "R65", "PITCH_CV", "Q1G")
@@ -170,11 +167,7 @@ def build_nets():
     # --- noise + mix + amount ---
     two(n, "R23", "V9", "NOISE_D")
     add(n, "NOISE_D", ("Q3", "1"))
-    add(n, "GND", ("Q3", "3"))
     two(n, "R3", "NOISE_S", "GND")
-    add(n, "NOISE_S", ("Q3", "3"))
-    # Q3 source já está em GND; R3 em série
-    n["GND"] = [p for p in n["GND"] if p != ("Q3", "3")]
     add(n, "NOISE_S", ("Q3", "3"))
     two(n, "R80", "Q3G", "GND")
     add(n, "Q3G", ("Q3", "2"))
@@ -201,16 +194,12 @@ def build_nets():
     add(n, "Q6G", ("Q6", "2"))
     two(n, "R4", "Q6S", "N4V5")
     add(n, "Q6S", ("Q6", "3"))
-    two(n, "R28", "Q6S", "BUF_OUT")
+    two(n, "R28", "Q6S", "SHAPE")
 
     # --- shape ---
     add(n, "GND", ("J1", "10"))
     add(n, "SHAPE_W", ("J1", "9"))
     two(n, "R29", "SHAPE_W", "SHAPE")
-    add(n, "BUF_OUT", ("SHAPE", "x")) if False else None
-    # o buffer soma no nó do shape
-    add(n, "SHAPE", ("R28", "2"))
-    n["BUF_OUT"] = [p for p in n["BUF_OUT"] if p != ("R28", "2")]
     add(n, "SHAPE", ("D6", "2"))  # ânodo
     add(n, "GND", ("D6", "1"))
     two(n, "C28", "SHAPE", "FILT_SW")
@@ -230,7 +219,6 @@ def build_nets():
     add(n, "FCV", ("J4", "13"))
     two(n, "R61", "VCF", "RES_W")
     add(n, "RES_W", ("RV2", "2"))
-    add(n, "VCF_IN", ("RV2", "1"), ("FILT_TIP", "x")) if False else None
     add(n, "FILT_TIP", ("RV2", "1"))
     add(n, "FILT_TIP", ("RV2", "3"))
     two(n, "C50", "VCF", "VCA_D")
@@ -305,7 +293,6 @@ def build_nets():
     two(n, "R52", "U3A_IN", "U3A_OUT")
     two(n, "C4", "U3A_IN", "U3A_OUT")
     two(n, "C20", "U3A_OUT", "HEADS")
-    add(n, "WET_MIX", ("R53_IN", "x")) if False else None
     two(n, "C29", "WET_MIX", "LE_IN")
     two(n, "R53", "LE_IN", "U3B_IN")
     add(n, "U3B_IN", ("U3", "6"))
@@ -362,23 +349,14 @@ def build_nets():
     add(n, "V5", ("J3", "1"))
     add(n, "TIME_W", ("J3", "2"))
     add(n, "GND", ("J3", "3"))
-    two(n, "R11", "TIME_W", "U6_PIN6")
-    add(n, "U6_PIN6", ("U6", "6"))
-    n["PT6_U6"] = [p for p in n["PT6_U6"] if p != ("U6", "6")]
-    add(n, "U6_PIN6", ("R75", "2"))
-    n["PT6_U6"].append(("R75", "2")) if False else None
-    # R75 já liga TIME_CV a PT6_U6; o pino 6 tem de estar em PT6_U6
-    add(n, "PT6_U6", ("U6", "6"))
-    n["U6_PIN6"] = [p for p in n["U6_PIN6"] if p != ("U6", "6")]
+    # U6.6 e R75.2 já estão em PT6_U6. O 2k do tempo entra nesse nó.
+    two(n, "R11", "TIME_W", "PT6_U6")
     two(n, "R7", "TIME_W", "H2A")
     two(n, "R8", "H2A", "H2B")
     two(n, "R56", "H2B", "PT6_U7")
     two(n, "R9", "TIME_W", "H3A")
     two(n, "R10", "H3A", "H3B")
     two(n, "R60", "H3B", "PT6_U8")
-    # H1: o 2k entra no mesmo nó do pino 6
-    add(n, "PT6_U6", ("R11", "2"))
-    n["U6_PIN6"] = [p for p in n.get("U6_PIN6", []) if p != ("R11", "2")]
 
     # WET / VOLUME / OUT
     add(n, "DRY", ("J3", "13"))

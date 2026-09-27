@@ -385,8 +385,6 @@ HEADER_BLOCK = {
     "J9": "EQ",
 }
 
-# U9 fica à esquerda deste retângulo. A rede Baxandall ainda não tem peça.
-EQ_BAY = (0.0, 0.0, 0.0, 0.0)
 
 # Folga entre corpos. Os pinos de cima estão em y=121,6.
 GAP = 1.5
@@ -486,7 +484,6 @@ def place_head(ic_ref, resistors, caps, ox, oy):
 
 def place_blocks():
     """Quatro faixas, cada função num retângulo com o nome na seda."""
-    global EQ_BAY
     placed = []
 
     def mark(name, x, y, right, bottom):
@@ -513,11 +510,9 @@ def place_blocks():
     band1 = bottom
     x = right + 4.0
     right, bottom = place_chip(["U9"], [], x, y)
-    bay_x = right + 2.0
-    EQ_BAY = (bay_x, y, bay_x + 24.0, y + 14.0)
-    _, bottom = mark("EQ", x, y, EQ_BAY[2], max(bottom, EQ_BAY[3]))
+    _, bottom = mark("EQ", x, y, right, bottom)
     band1 = max(band1, bottom)
-    x = EQ_BAY[2] + 4.0
+    x = right + 4.0
     right, bottom = place_chip(
         ["U5"],
         [
@@ -717,14 +712,6 @@ def check_placement():
             overlap_y = min(ay1, by1) - max(ay0, by0)
             if overlap_x > 0.4 and overlap_y > 0.4:
                 raise SystemExit(f"sobreposição {ref_a} × {ref_b}")
-    bay_x0, bay_y0, bay_x1, bay_y1 = EQ_BAY
-    for ref, x0, y0, x1, y1 in boxes:
-        if ref == "U9":
-            continue
-        overlap_x = min(x1, bay_x1) - max(x0, bay_x0)
-        overlap_y = min(y1, bay_y1) - max(y0, bay_y0)
-        if overlap_x > 0.4 and overlap_y > 0.4:
-            raise SystemExit(f"{ref} invadiu a baía do EQ")
 
 
 def check_parts():
@@ -868,7 +855,7 @@ def write_schematic(path, embedded, meta):
             "VOZ-9 BASE. Blocos curtos na ordem do sinal, o mesmo nome da seda. "
             "J1–J9 à esquerda de cada grupo: pino 1×N na borda de baixo da PCB. "
             "Ainda sem fios. D1 ânodo para J6. D6/D7 = MP20. "
-            "Q7 2N5457: conferir a pinagem do lote. U9: baía livre para a rede do EQ.",
+            "Q7 2N5457: conferir a pinagem do lote.",
         )
     ]
     for name in order:
@@ -1069,22 +1056,6 @@ def write_board(path):
     add_seg(board, 0, H, 0, 0, pcbnew.Edge_Cuts)
 
     add_text(board, "VOZ-9 BASE  300 x 140 mm", 150, 5.2, pcbnew.F_SilkS, 1.8)
-    bay_x0, bay_y0, bay_x1, bay_y1 = EQ_BAY
-    for x1, y1, x2, y2 in (
-        (bay_x0, bay_y0, bay_x1, bay_y0),
-        (bay_x1, bay_y0, bay_x1, bay_y1),
-        (bay_x1, bay_y1, bay_x0, bay_y1),
-        (bay_x0, bay_y1, bay_x0, bay_y0),
-    ):
-        add_seg(board, x1, y1, x2, y2, pcbnew.F_SilkS, 0.16)
-    add_text(
-        board,
-        "EQ 424",
-        (bay_x0 + bay_x1) / 2,
-        (bay_y0 + bay_y1) / 2,
-        pcbnew.F_SilkS,
-        1.3,
-    )
     for text, x, y in notes:
         add_text(board, text, x, y, pcbnew.F_SilkS, 1.15)
 
@@ -1125,7 +1096,10 @@ def write_board(path):
         for item in fp.GraphicalItems():
             if item.GetLayer() not in (pcbnew.F_SilkS, pcbnew.B_SilkS):
                 continue
-            if pcbnew.ToMM(item.GetWidth()) < 0.16:
+            get_width = getattr(item, "GetWidth", None)
+            if get_width is None:
+                continue
+            if pcbnew.ToMM(get_width()) < 0.16:
                 item.SetWidth(mm(0.16))
         if not p["bom"]:
             fp.SetExcludedFromBOM(True)

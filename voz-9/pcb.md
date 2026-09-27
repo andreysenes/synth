@@ -41,7 +41,7 @@ Furos em `painel.svg`. Nada de cobre atrás da chapa.
 **J1–J9** na borda inferior, duas fileiras de pinos. O circuito fica em cima do conector de cada bloco, na ordem do sinal. Gerador do KiCad: `kicad/gen_kicad.py`.
 
 ```
-faixa de cima    PRE (J7) · EQ (J9, U9 e a baía 424) · FONTE (J6)
+faixa de cima    PRE (J7) · EQ (J9, U9) · FONTE (J6)
 voz, em ordem    OSC (J1) · NOISE · MIX · SHAPE · VCF (J4)
 fita             NAB · H1 · H2 · H3 (J3) · FB
 em cima dos pinos LFO (J2) · TEMPO · CLK (J5) · OUT (J8) · VCA debaixo do VCF

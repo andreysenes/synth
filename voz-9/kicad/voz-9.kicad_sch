@@ -16318,7 +16318,7 @@
 			)
 		)
 	)
-	(text "VOZ-9 BASE. Blocos curtos na ordem do sinal, o mesmo nome da seda. J1–J9 à esquerda de cada grupo: pino 1×N na borda de baixo da PCB. Ainda sem fios. D1 ânodo para J6. D6/D7 = MP20. Q7 2N5457: conferir a pinagem do lote. U9: baía livre para a rede do EQ."
+	(text "VOZ-9 BASE. Blocos curtos na ordem do sinal, o mesmo nome da seda. J1–J9 à esquerda de cada grupo: pino 1×N na borda de baixo da PCB. Ainda sem fios. D1 ânodo para J6. D6/D7 = MP20. Q7 2N5457: conferir a pinagem do lote."
 		(at 20.00 308.00 0)
 		(effects (font (size 2.0 2.0)))
 		(uuid "50bbf4b4-dde7-5e02-8982-526d2e107cdc")

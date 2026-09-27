@@ -109,7 +109,7 @@ Inventados para o matching. Ainda não há netlist KiCad. Quando existir PCB FR4
 - **U1** 5532 · **U2** osc · **U3** NAB · **U4** ICL7660 · **U5** 78M05 · **U6–U8** PT2399 · **U9** EQ voz 424
 - **Q1–Q6** J201 no circuito · **Q8 Q9** folga · **Q7** LFO
 - **D1** proteção · **D2–D5** 4148 · **LED1** piloto
-- **R1…R81** e **C1…C71** na ordem da `bom.md` (+ passivos EQ em §3b)
+- **R1…R86** e **C1…C75** na ordem da `bom.md` (EQ 424 = R82–R86, C72–C75; R71 = 10 k)
 
 ---
 

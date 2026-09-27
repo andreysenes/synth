@@ -157,9 +157,9 @@ CLK ponta → detector na BASE → mesmo nó do ECV. SEND = PRE (pré-EQ / pré-
 | ---: | --- |
 | 1–2 | LED A · K |
 | 3–4 | P4 TIP · GND |
-| 5–6 | GATE NA · GND |
+| 5–6 | 1V8 · GATE |
 
-P4: centro-negativo. **Confira no jack.** 1N5817 na BASE, no pino 3 (TIP).
+P4: centro-negativo. **Confira no jack.** 1N5817 na BASE, no pino 3 (TIP). O botão GATE fica **entre** o pino 5 (1V8) e o pino 6 (ânodo de D2). O cátodo de D2 vai ao ENV na placa. Não aterre o pino 6: isso grampeia o diodo e o envelope não sobe.
 
 ### J7 combo IN + PRE + OSC IN — 1×12
 
@@ -189,6 +189,8 @@ P4: centro-negativo. **Confira no jack.** 1N5817 na BASE, no pino 3 (TIP).
 | 10–12 | HIGH CCW · W · CW |
 
 Shelf 100 Hz / peaking 250 Hz–5 kHz / shelf 10 kHz — `esquema.md` §3b.
+
+LOW, MID G e HIGH: CCW no buffer de U9A, CW na saída de U9B, cursor no somador. MID F é reostato (CCW unido ao cursor na placa); horário = menos resistência = frequência mais alta. R85 (100 k) segura a entrada do seguidor em GND.
 
 ---
 
@@ -247,11 +249,11 @@ Mesmos designators do `jlcpcb-bom.csv` + bloco EQ. Axial ¼ W, passo **7,62 mm**
 | U2 OSC | R21 R22 10k · R62 R63 100k · R72 220k | C21 C19 100n · C6 10n |
 | MIX SHAPE FM | R23–R29 10k · R3 R4 1k · R64–R66 100k · R80 1M · R73 220k | C26 100n · C51 C52 1µ |
 | VCF VCA LFO | R30–R34 10k · R67–R69 100k · R61 68k · R5 1k · R15 4k7 · R74 220k · R81 1M | C43–C47 220n |
-| CLK TIME | R59 47k · R43 10k · R70 100k · R79 220k · R11 2k · R7–R10 1k · R56 22k · R60 68k | C55 4µ7 |
+| CLK TIME | R59 47k · R43 10k · R70 100k · R79 220k · R11 2k · R7–R10 1k · R56 22k · R60 68k · D5 1N4148 (trava >9 V) | C55 4µ7 |
 | U3 NAB | R51–R54 15k · R16 4k7 · R45 R46 10k | C4 C5 3n3 · C48–C50 220n · C20 C29 C30 100n |
-| **U9 EQ** | 2× 10k Baxandall · 3k3 MID F · 10k mid | 33n LOW · 1n HIGH · 10n MID · 2× 100n acoplo |
+| **U9 EQ** | R82 R83 10k Baxandall · R84 10k mid · R86 3k3 MID F · R85 100k bias | C73 33n LOW · C74 1n HIGH · C75 10n MID · C30 C72 100n acoplo |
 | ENV | | C27 C28 100n · C68 C71 47µ · C53 C54 2µ2 |
-| FITA | R35–R41 R47–R50 10k · R71 100k · R75–R78 220k | C3 2n2 · C7–C17 10n · C18 22n · C31–C42 100n · C69 C70 47µ |
+| FITA | R35–R41 R47–R50 10k · R71 10k (teto WET) · R75–R78 220k | C3 2n2 · C7–C17 10n · C18 22n · C31–C42 100n · C69 C70 47µ |
 
 Trimpots: RV1 teto F-BACK, RV2 ressonância. (PRE no painel substitui o antigo RV3 bias 5532.)
 

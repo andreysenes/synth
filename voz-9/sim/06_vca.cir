@@ -19,11 +19,10 @@ Rout vca_out 0 100k
 * Envelope node
 Cenv env 0 47u
 Rdecay env 0 220k
-* GATE button: 1V8 -- diode -- env when j6_5–j6_6 closed
-* Panel switch shorts j6_5 to j6_6; BASE: j6_5←1V8 via diode path, j6_6=GND
-Dgate j6_5 env D4148
+* GATE button: 1V8 (j6_5) -- NA -- anode (j6_6) -- 1N4148 -- ENV
+* O SPST do painel fecha j6_5 com j6_6. O pino 6 não vai a GND.
 Rfrom18 1V8 j6_5 100
-Rj6gnd j6_6 0 1
+Dgate j6_6 env D4148
 
 * DRONE: when j1_18–j1_19 closed, tie env to 1V8
 Rdrone 1V8 j1_18 100

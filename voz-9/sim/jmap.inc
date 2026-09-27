@@ -38,7 +38,7 @@
 *  1–3 LFO, 4–6 ECV, 7–9 CLK, 10–12 SEND, 13–15 RCV
 *
 * J6 CTRL
-*  1–2 LED A · K, 3–4 P4 TIP · GND, 5–6 GATE NA · GND
+*  1–2 LED A · K, 3–4 P4 TIP · GND, 5–6 1V8 · GATE (ânodo de D2)
 *
 * J7 IN combo + PRE + OSC IN 2x6: 1 X2, 2 X3, 3 X1, 4 TIP, 5 GND, 6–8 PRE, 9–11 OSC IN CCW · W · CW, 12 NC
 * J8 OUT combo: 1 X2, 2 X3, 3 X1, 4 TIP, 5 GND, 6 NC

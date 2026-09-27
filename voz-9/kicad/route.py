@@ -2,8 +2,8 @@
 """Liga a BASE conforme esquema.md / pre-vocal.md / bom.md e roteia.
 
 Cobre no verso (B.Cu). O que cair na frente (F.Cu) é jumper.
-R17 é a 4k7 de folga e fica sem net. Os passivos do EQ 424 (3k3, 33n, 1n)
-não estão na placa: U9 entra como seguidor no lugar da rede.
+R17 é a 4k7 de folga e fica sem net. O EQ 424 está em U9: seguidor,
+Baxandall (LOW/HIGH) e médio (MID G + MID F), com os pots em J9.
 """
 
 import os
@@ -42,11 +42,6 @@ OPEN = {
     ("U8", "5"),
     ("R17", "1"),
     ("R17", "2"),
-    # EQ 424: os C/R da rede (33n, 1n, 10n, 3k3) não estão na placa.
-    ("J9", "1"), ("J9", "2"), ("J9", "3"),
-    ("J9", "4"), ("J9", "5"), ("J9", "6"),
-    ("J9", "7"), ("J9", "8"), ("J9", "9"),
-    ("J9", "10"), ("J9", "11"), ("J9", "12"),
 }
 
 
@@ -177,16 +172,37 @@ def build_nets():
     add(n, "EXT_IN", ("J4", "7"))
     two(n, "C45", "INST_TIP", "EXT_IN")
     add(n, "INST_TIP", ("J7", "4"))
-    add(n, "SUM", ("J1", "5"))
-    add(n, "GND", ("J1", "7"))
+    # AMOUNT: CCW = silêncio, CW = mix no máximo.
+    add(n, "GND", ("J1", "5"))
+    add(n, "SUM", ("J1", "7"))
     add(n, "AMT_W", ("J1", "6"), ("J7", "9"))
     add(n, "MIX", ("J7", "10"))
     two(n, "C30", "MIX", "EQ_IN")
 
-    # U9 seguidor (a rede Baxandall ainda não tem peça na placa)
+    # EQ 424 (esquema §3b). U9A seguidor em ±9 V; U9B soma LOW/HIGH/MID.
+    # Meio dos pots = ponte equilibrada. R85 segura o + em GND.
     add(n, "EQ_IN", ("U9", "3"))
-    add(n, "EQ_A", ("U9", "1"), ("U9", "2"), ("U9", "5"))
-    add(n, "EQ_OUT", ("U9", "6"), ("U9", "7"), ("J1", "8"))
+    two(n, "R85", "EQ_IN", "GND")
+    add(n, "EQ_BUF", ("U9", "1"), ("U9", "2"))
+    add(n, "GND", ("U9", "5"))
+    two(n, "R82", "EQ_BUF", "EQ_SUM")
+    add(n, "EQ_SUM", ("U9", "6"))
+    two(n, "R83", "EQ_B", "EQ_SUM")
+    add(n, "EQ_B", ("U9", "7"))
+    add(n, "EQ_BUF", ("J9", "1"), ("J9", "7"), ("J9", "10"))
+    add(n, "EQ_B", ("J9", "3"), ("J9", "9"), ("J9", "12"))
+    add(n, "LOW_W", ("J9", "2"))
+    two(n, "C73", "LOW_W", "EQ_SUM")
+    add(n, "HIGH_W", ("J9", "11"))
+    two(n, "C74", "HIGH_W", "EQ_SUM")
+    add(n, "MIDG_W", ("J9", "8"))
+    two(n, "R84", "MIDG_W", "MID_C")
+    two(n, "C75", "MID_C", "MIDF_W")
+    # MID F é reostato: CCW unido ao cursor. Horário = menos R = mais agudo.
+    add(n, "MIDF_W", ("J9", "4"), ("J9", "5"))
+    add(n, "MIDF_CW", ("J9", "6"))
+    two(n, "R86", "MIDF_CW", "EQ_SUM")
+    two(n, "C72", "EQ_B", "EQ_OUT")
 
     # buffer pós-EQ
     add(n, "V9", ("Q6", "1"))
@@ -196,8 +212,9 @@ def build_nets():
     add(n, "Q6S", ("Q6", "3"))
     two(n, "R28", "Q6S", "SHAPE")
 
-    # --- shape ---
-    add(n, "GND", ("J1", "10"))
+    # SHAPE: CCW = quase limpo, CW = o áudio do EQ no diodo.
+    add(n, "GND", ("J1", "8"))
+    add(n, "EQ_OUT", ("J1", "10"))
     add(n, "SHAPE_W", ("J1", "9"))
     two(n, "R29", "SHAPE_W", "SHAPE")
     add(n, "SHAPE", ("D6", "2"))  # ânodo
@@ -233,8 +250,9 @@ def build_nets():
     two(n, "R74", "ENV", "GND")
     two(n, "R69", "ENV", "VCV")
     add(n, "VCV", ("J4", "16"))
-    add(n, "GATE", ("J6", "5"), ("D2", "2"))
-    add(n, "GND", ("J6", "6"))
+    # 1V8 ── botão NA ── 1N4148 ── ENV. O pino 6 é o ânodo, não o GND.
+    add(n, "N1V8", ("J6", "5"))
+    add(n, "GATE", ("J6", "6"), ("D2", "2"))
     add(n, "ENV", ("D2", "1"))
     two(n, "C27", "PRE_W", "FALA")
     two(n, "R50", "FALA", "FALA_A")
@@ -264,14 +282,16 @@ def build_nets():
     two(n, "R81", "LFO_G", "GND")
     two(n, "C53", "LFO_D", "LFO_AC")
     two(n, "R79", "LFO_AC", "LFO_OUT")
-    add(n, "LFO_OUT", ("J5", "1"), ("J2", "4"))
-    add(n, "GND", ("J2", "6"))
+    # DEPTH: CCW = sem LFO, CW = LFO no máximo.
+    add(n, "LFO_OUT", ("J5", "1"), ("J2", "6"))
+    add(n, "GND", ("J2", "4"))
     add(n, "DEPTH_W", ("J2", "5"), ("J2", "10"))
     add(n, "PITCH_CV", ("J2", "11"))
     add(n, "TIME_CV", ("J2", "12"))
 
     # --- CLK ---
     add(n, "CLK_TIP", ("J5", "7"))
+    two(n, "D5", "V9", "CLK_TIP")  # K no V9: trava pulso Eurorack acima de 9 V
     two(n, "R59", "CLK_TIP", "CLK_A")
     two(n, "R43", "CLK_A", "GND")
     add(n, "CLK_A", ("D4", "2"))

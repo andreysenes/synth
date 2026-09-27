@@ -47,7 +47,7 @@ Ver `jmap.inc` e `pcb.md`. Exemplos:
 - **J2** LFO: RATE, DEPTH, TREM (−1 flutter / 0 off / +1 tremolo), MODE (−1 pitch / 0 / +1 time)  
 - **J3** DELAY: TIME, H1–H3, F-BACK, WET, STACK, VOLUME  
 - **J4** FILT usa **TIP·SW·GND** — cabo abre o normal do SHAPE→VCF  
-- **J6** GATE NA·GND, P4, LED  
+- **J6** 1V8·GATE (botão em série com D2), P4, LED  
 - **J7** combo IN + **PRE** + **OSC IN**  
 - **J9** EQ voz 424: LOW · MID F · MID G · HIGH  
 

@@ -25,7 +25,7 @@ Preços **estimados**, varejo Brasil, set/2026, **sem frete**. Pré vocal **sem 
 | 1 | MAX1044 | −9 V | 6,00 | **6,00** |
 | 1 | NE5532 DIP-8 | pré de mic | 4,00 | **4,00** |
 | 1 | 1N5817 | proteção da fonte | 0,80 | **0,80** |
-| 4 | 1N4148 | GATE env + **fala→ENV** + CLK + folga | 0,20 | **0,80** |
+| 4 | 1N4148 | GATE env + **fala→ENV** + detector CLK + trava Eurorack (D5) | 0,20 | **0,80** |
 | 1 | LED 3 mm | piloto | 0,40 | **0,40** |
 
 **101,00.** Sem 78L05: o 78M05 já é o regulador certo (~75 mA nos três PT2399). MP20 difícil: AC128, OC75, ou 1N34A / 1N60 se for *só* o diodo.
@@ -108,14 +108,14 @@ Lista do circuito **inteiro**. ~R$ 0,10–0,25 a unidade. Pacote fechado ~**16,0
 | 2k2 **1 %** | 2 | diferencial do 5532 |
 | 4k7 | 4 | LED, série do RATE, teto do shelf NAB GRAVA, folga |
 | 5k6 | 1 | divisor 1V8 |
-| 10 k | 35 | 4V5 (2), pitch (2), mix A/B (2), noise D, EXT, buffer (2), SHAPE, VCF, VCA S, LFO D, LFO fase (2), pin 16 ×3, mix H1–H3 (3), laço / teto WET, 5532-B, CLK, pad, NAB LÊ grave, VCA→GRAVA, **série fala→ENV**, **EQ Baxandall (2)** |
+| 10 k | 36 | 4V5 (2), pitch (2), mix A/B (2), noise D, EXT, buffer (2), SHAPE, VCF, VCA S, LFO D, LFO fase (2), pin 16 ×3, mix H1–H3 (3), laço, **teto WET (R71)**, 5532-B, CLK, pad, NAB LÊ grave, VCA→GRAVA, **série fala→ENV**, **EQ Baxandall (R82 R83)**, **EQ mid (R84)** |
 | 15 k | 4 | NAB GRAVA (Zin + feedback) + NAB LÊ (Zin + feedback) |
 | 22 k | 2 | 1V8, H2 pin 6 |
 | 22 k **1 %** | 2 | diferencial do 5532 |
 | 3k3 | 1 | **EQ MID F** (série no pot) |
 | 47 k | 1 | CLK série |
 | 68 k | 2 | H3 pin 6, ressonância VCF |
-| 100 k | 10 | histerese A (2), noise mix, FM A/B (2), FCV, VCF, VCV, CLK |
+| 100 k | 10 | histerese A (2), noise mix, FM A/B (2), FCV, VCF, VCV, CLK, **bias U9 (R85)** |
 | 220 k | 8 | histerese B (2), decay GATE, pin 6 LFO/ECV (3), sangria CLK |
 | 1 M | 2 | gate noise, gate LFO |
 

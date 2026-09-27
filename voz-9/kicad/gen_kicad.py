@@ -161,6 +161,15 @@ def build_parts():
     cline(128, 36, [("C1", "100p"), ("C2", "100p"), ("C23", "100n"), ("C24", "100n"), ("C25", "100n")])
     eline(128, 45, [("C59", "10µ"), ("C60", "10µ"), ("C61", "10µ"), ("C62", "10µ"), ("C63", "10µ")])
     DIP8("U9", "TL072", SYM_OP, 156, 45)
+    R("R82", "10k", 170, 40)
+    R("R83", "10k", 182, 40)
+    R("R84", "10k", 194, 40)
+    R("R85", "100k", 206, 40)
+    R("R86", "3k3", 218, 40)
+    C("C72", "100n", 170, 48)
+    C("C73", "33n", 182, 48)
+    C("C74", "1n", 194, 48)
+    C("C75", "10n", 206, 48)
 
     block = "U2"
     DIP8("U2", "TL072", SYM_OP, 186, 21)
@@ -197,6 +206,7 @@ def build_parts():
     block = "CLK"
     D("D3", "1N4148", 184, 60)
     D("D4", "1N4148", 196, 60)
+    D("D5", "1N4148", 208, 68)
     R("R59", "47k", 208, 60)
     rline(184, 68, [("R43", "10k"), ("R70", "100k"), ("R79", "220k")])
     rline(184, 74.4, [("R11", "2k"), ("R7", "1k"), ("R8", "1k")])
@@ -246,7 +256,7 @@ def build_parts():
             ("R48", "10k"),
             ("R49", "10k"),
             ("R50", "10k"),
-            ("R71", "100k"),
+            ("R71", "10k"),
             ("R75", "220k"),
             ("R76", "220k"),
             ("R77", "220k"),
@@ -355,7 +365,7 @@ def place_pins():
 FLOW = {
     "FONTE": "D1 U4 U5 C56 C57 C58 C22 R14 R17 R19 R20 C64 C65 R55 R18 C67 C66".split(),
     "PRE": "U1 R12 R13 R57 R58 R6 R42 C59 C60 C1 C2 C25 C42 C41 C23 C24 C61 C62 C40".split(),
-    "EQ": ["U9"],
+    "EQ": "U9 R82 R83 R84 R85 R86 C72 C73 C74 C75".split(),
     "OSC": "U2 Q1 R21 C21 R62 R63 C51 R65 Q2 R22 C6 R72 R73 C52 R66 C19".split(),
     "NOISE": "Q3 R23 R3 R80 C26 R64".split(),
     "MIX": "R24 R25 R26 C45 C30".split(),
@@ -368,7 +378,7 @@ FLOW = {
     "H2": "U7 R36 R47 R39 R76 C32 C38 C35 C8 C11 C14 C17 C69".split(),
     "H3": "U8 R37 R48 R40 R77 C33 C39 C36 C9 C12 C15 C18 C70".split(),
     "TEMPO": "R11 R7 R8 R56 R9 R10 R60".split(),
-    "CLK": "R59 D4 R43 C55 R78 R70".split(),
+    "CLK": "R59 D4 D5 R43 C55 R78 R70".split(),
     "FB": "D7 RV1 R49 C3 R71 C63".split(),
     "OUT": "R44 R1 R2".split(),
 }
@@ -509,7 +519,15 @@ def place_blocks():
     mark("PRE", x, y, right, bottom)
     band1 = bottom
     x = right + 4.0
-    right, bottom = place_chip(["U9"], [], x, y)
+    right, bottom = place_chip(
+        ["U9"],
+        [
+            ["R82", "R83", "R84", "R85", "R86"],
+            ["C72", "C73", "C74", "C75"],
+        ],
+        x,
+        y,
+    )
     _, bottom = mark("EQ", x, y, right, bottom)
     band1 = max(band1, bottom)
     x = right + 4.0
@@ -651,7 +669,7 @@ def place_blocks():
     right, bottom = place_rows(
         [
             ["R59", "D4", "R43"],
-            ["C55", "R78", "R70"],
+            ["C55", "R78", "R70", "D5"],
         ],
         x,
         y,
@@ -719,8 +737,8 @@ def check_parts():
     dup = {r for r in refs if refs.count(r) > 1}
     if dup:
         raise SystemExit(f"refs duplicadas: {sorted(dup)}")
-    missing_r = [f"R{i}" for i in range(1, 82) if f"R{i}" not in refs]
-    missing_c = [f"C{i}" for i in range(1, 72) if f"C{i}" not in refs]
+    missing_r = [f"R{i}" for i in range(1, 87) if f"R{i}" not in refs]
+    missing_c = [f"C{i}" for i in range(1, 76) if f"C{i}" not in refs]
     if missing_r or missing_c:
         raise SystemExit(f"faltando R={missing_r} C={missing_c}")
 

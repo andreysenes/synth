@@ -8,17 +8,15 @@
 
 Xrails V9 V5 VEE 4V5 1V8 rails
 
-* Drive into SHAPE pot: j1_8 CCW, j1_9 W, j1_10 CW
+* SHAPE é divisor: CCW = GND (quase limpo), CW = áudio, cursor → 10k → clip.
 Vin sig 0 SIN(4.5 2 1k)
-Rdrive sig j1_8 10
-* CW to 4V5 reference side of divider feel — SHAPE is series to clipper
+Rdrive sig j1_10 10
+Rj1_8 j1_8 0 1
 * Per esquema: SHAPE wiper -- 10k -- clip node -- MP20 to GND
 Rseries j1_9 clip 10k
 Dge clip 0 D1N34A
 Cout clip filt 100n
 Rfilt filt 0 100k
-* Tie unused pot end
-Rj1_10 j1_10 0 100Meg
 
 .control
 set noaskquit

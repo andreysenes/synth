@@ -1111,8 +1111,16 @@ def write_board(path):
                 layers.AddLayer(pcbnew.B_CrtYd)
                 pad.SetLayerSet(layers)
         # A seda de 0,12 mm cai no aviso do JLCDFM (faixa 0,10–0,15).
+        # O "K" do diodo é texto gráfico, sem GetWidth.
         for item in fp.GraphicalItems():
             if item.GetLayer() not in (pcbnew.F_SilkS, pcbnew.B_SilkS):
+                continue
+            if item.GetClass() == "PCB_TEXT":
+                height = pcbnew.ToMM(item.GetTextHeight())
+                if height < 1.0:
+                    item.SetTextSize(pcbnew.VECTOR2I(mm(1.0), mm(1.0)))
+                    height = 1.0
+                item.SetTextThickness(mm(max(height / 6.0, 0.16)))
                 continue
             get_width = getattr(item, "GetWidth", None)
             if get_width is None:

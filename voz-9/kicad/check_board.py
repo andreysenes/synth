@@ -14,6 +14,7 @@ import pcbnew
 
 import gen_kicad
 import route
+import silk
 
 BOARD = route.BOARD
 
@@ -339,6 +340,7 @@ def main():
     errors += check_pads(board, expect)
     errors += check_two_pin(expect)
     errors += check_copper(board)
+    errors += silk.check(board)
     errors += check_drc(BOARD)
     if errors:
         fail(errors)

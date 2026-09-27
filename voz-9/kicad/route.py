@@ -11,6 +11,8 @@ import subprocess
 
 import pcbnew
 
+import silk
+
 ROOT = os.path.dirname(os.path.abspath(__file__))
 BOARD = os.path.join(ROOT, "voz-9.kicad_pcb")
 DSN = "/tmp/voz9-route/voz-9.dsn"
@@ -607,6 +609,7 @@ def main():
     import_ses(board)
     stitch_open_nets(board)
     add_ground_zone(board)
+    silk.prepare(board)
     pcbnew.SaveBoard(BOARD, board)
     tracks = 0
     for item in board.GetTracks():

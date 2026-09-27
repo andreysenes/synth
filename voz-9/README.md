@@ -18,7 +18,7 @@ Sem XLR, **PRE** escala os oscs. **OSC IN** = mix osc ↔ mic (CCW = só drones,
 
 O pré vocal está em `pre-vocal.md`. Mesmo papel do Echo Master, **sem transformador** (diferencial no NE5532 + pad no XLR).
 
-Leia `esquema.md` para montar. Caderno de estudo: `componentes.md`. Uma fenolite no piso; **onze** grupos de pads J1–J11 (cabo soldado direto) e CIs em soquete: `pcb.md`. Lista de compra: `bom.md`. Simulador: `sim/painel.html`.
+Leia `esquema.md` para montar. Caderno de estudo: `componentes.md`. Uma fenolite no piso; **onze** grupos de pads J1–J11 (cabo soldado direto) e CIs em soquete: `pcb.md`. Lista de compra: `bom.md`. Simulador: `sim/painel.html`. Painel no ar: <https://andreysenes.github.io/synth/voz-9/sim/painel.html> (a raiz do Pages abre o mesmo painel).
 
 Teclado: o VCO cromático está na faixa de baixo do mesmo painel (`vco.md`). SAW, TRI e PUL escolhem a onda. O cabo dele solda no **J10**. Os LEDs indicadores soldam no **J11**.
 

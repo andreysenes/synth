@@ -13,6 +13,7 @@ cd voz-9/sim
 
 * Painel tocável (`painel.html`): Web Audio + osciloscópio + **VU de saída** (pós-VOLUME) + LEDs A/B/RATE/REP/IN. Clique **Tocar**.
   Knobs/chaves alteram o som ao vivo. Export SPICE continua no painel (details).
+  Publicado em <https://andreysenes.github.io/synth/voz-9/sim/painel.html>. O WAV de teste é `audio/twinkle.wav`.
 
 ## Layout
 

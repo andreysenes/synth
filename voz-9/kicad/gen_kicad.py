@@ -1053,6 +1053,9 @@ def write_board(path):
     settings.SetCopperLayerCount(2)
     settings.m_TrackMinWidth = mm(0.25)
     settings.m_MinClearance = mm(0.2)
+    settings.SetBoardThickness(mm(1.6))
+    # JLCPCB avisa seda a menos de 0,18 mm do pad. 0,25 mm fica fora dessa faixa.
+    settings.m_SilkClearance = mm(0.25)
     tb = board.GetTitleBlock()
     tb.SetTitle("VOZ-9 BASE")
     tb.SetDate("2026-09-27")

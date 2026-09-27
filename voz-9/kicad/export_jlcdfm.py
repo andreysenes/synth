@@ -83,8 +83,42 @@ def main():
     names = sorted(
         name
         for name in os.listdir(OUT)
-        if name != os.path.basename(ZIP) and os.path.isfile(os.path.join(OUT, name))
+        if name not in (os.path.basename(ZIP), ".gitignore")
+        and os.path.isfile(os.path.join(OUT, name))
     )
+    readme = os.path.join(OUT, "readme-jlcpcb.txt")
+    with open(readme, "w", encoding="utf-8") as fh:
+        fh.write(
+            "\n".join(
+                [
+                    "VOZ-9 BASE",
+                    "Order this as a bare PCB. Parts are through-hole and are not assembled by JLCPCB.",
+                    "",
+                    "Layers: 2",
+                    "Size: 300 mm x 140 mm",
+                    "Thickness: 1.6 mm",
+                    "Material: FR-4",
+                    "Outer copper: 1 oz",
+                    "Solder mask: green, both sides",
+                    "Silkscreen: white, both sides",
+                    "Surface finish: lead-free HASL",
+                    "Via covering: tented",
+                    "Impedance control: no",
+                    "Gold fingers: no",
+                    "Castellated holes: no",
+                    "",
+                    "Outline: voz-9-Edge_Cuts.gm1",
+                    "Drills: Excellon, millimeters, absolute, decimal zeros",
+                    "PTH: voz-9-PTH.drl",
+                    "NPTH: voz-9-NPTH.drl (four M3 mounting holes, 3.2 mm, no copper)",
+                    "",
+                    "Remove the JLCPCB order number, or place it on the bottom, away from the pin headers.",
+                    "",
+                ]
+            )
+        )
+    names.append("readme-jlcpcb.txt")
+    names.sort()
     with zipfile.ZipFile(ZIP, "w", zipfile.ZIP_DEFLATED) as archive:
         for name in names:
             archive.write(os.path.join(OUT, name), name)

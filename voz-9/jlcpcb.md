@@ -63,24 +63,42 @@ Passivos **0805 1 %** da biblioteca **Basic** (sem taxa extra de peça). CIs em 
 | 1 | fio 24 AWG 10 m | fios do painel até os pinos da BASE |
 | 4 | barra de pinos macho 1×40 2,54 mm | J1–J9 na borda da placa |
 | 8 | soquete DIP | U1–U4, U6–U8, **U9** — some se for SOP |
-| 1 | caixa (piso ≥ 300×300) + face 220×160 | |
+| 1 | caixa (piso ≥ 300×140) + face 220×160 | |
 | 1 | fenolite 300×300 | ou encomenda FR4 na própria JLC, outro fluxo |
 
 Essas linhas **não** estão no CSV de propósito: o tool marcaria unmatched e sujaria o preço.
 
 ---
 
-## JLCDFM — a placa, não o BOM
+## Pedido da placa na JLCPCB
 
-O [JLCDFM](https://jlcdfm.com/) lê **Gerber**, não o CSV. É o jeito de ver se a BASE passa na fábrica (trilha, máscara, furo, seda, contorno) antes de pagar.
+O arquivo para a fábrica é `kicad/jlcdfm/voz-9-jlcdfm.zip`. Ele também serve no [JLCDFM](https://jlcdfm.com/). Gere de novo com `python3 kicad/export_jlcdfm.py`.
 
-1. `python3 kicad/export_jlcdfm.py` gera `kicad/jlcdfm/voz-9-jlcdfm.zip`.
-2. Abra [jlcdfm.com](https://jlcdfm.com/) e suba esse zip (máx. 50 MB).
-3. Regras usadas, as da [capacidade JLCPCB](https://jlcpcb.com/capabilities/pcb-capabilities) para FR4 de 2 camadas e 1 oz: trilha/espaço ≥ 0,10 mm, furo 0,15–6,3 mm, anel do furo metalizado ≥ 0,20 mm, seda ≥ 1,0 mm de altura e 0,15 mm de traço, cobre a 0,2 mm da borda.
+No [pedido de PCB](https://jlcpcb.com/quote) suba esse zip e marque:
 
-A BASE continua com trilha de 0,6 mm e folga de 0,35 mm — mais folgada que o mínimo da fábrica. Os furos M3 são NPTH sem cobre: anel zero em furo não metalizado é erro de DFM. A seda de contorno das peças vai a 0,16 mm, acima da faixa de aviso do JLCDFM (0,10–0,15 mm). O texto fica com altura de pelo menos 1 mm e traço na razão 1:6.
+| Campo | Valor |
+| --- | --- |
+| Base Material | FR-4 |
+| Layers | 2 |
+| Dimensions | 300 × 140 mm |
+| PCB Qty | a quantidade do pedido |
+| Different Design | 1 |
+| Delivery Format | Single PCB |
+| Thickness | 1.6 mm |
+| PCB Color | Green |
+| Silkscreen | White |
+| Surface Finish | LeadFree HASL |
+| Outer Copper Weight | 1 oz |
+| Via Covering | Tented |
+| Impedance | não |
+| Gold Fingers / Castellated | não |
+| Mark on PCB | remover, ou embaixo, longe dos pinos J1–J9 |
 
-O zip descreve a placa como está no KiCad. Sem o roteamento fechado, o JLCDFM não tem trilha para medir — só pad, furo, máscara, seda e contorno.
+Placa nua. A JLCPCB não monta esta BASE: as peças são through-hole e o painel liga por cabo nos pinos. O CSV `jlcpcb-bom.csv` é a lista SMT equivalente, outro fluxo.
+
+A primeira análise no JLCDFM fechou com 0 erros. A seda de contorno está em 0,16 mm. Os quatro M3 são furo não metalizado de 3,2 mm, sem cobre.
+
+O zip descreve a placa como está no KiCad. Sem trilhas gravadas, a fábrica entrega só os pads e os furos.
 
 ---
 

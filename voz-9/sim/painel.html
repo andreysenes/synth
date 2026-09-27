@@ -34,6 +34,14 @@
     background: #111; color: #9c9; border: 1px solid #333; border-radius: 6px; padding: 8px;
   }
   .meter { font-size: 11px; color: #6a8a6a; margin-top: 4px; font-variant-numeric: tabular-nums; }
+  .vu-box {
+    background: #0a0c0a; border: 1px solid #2a3a2a; border-radius: 8px;
+    padding: 8px; margin-bottom: 10px;
+  }
+  .vu-box h2 { font-size: 11px; margin: 0 0 6px; color: #6a8a6a; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+  #vu { display: block; width: 100%; height: auto; border-radius: 4px; }
+  .vu-meta { display: flex; justify-content: space-between; font-size: 11px; color: #8a9a8a; margin-top: 4px; font-variant-numeric: tabular-nums; }
+  .vu-meta .hot { color: #e05a3a; font-weight: 600; }
   .knob-hit { cursor: grab; }
   .sw-hit, .jack-hit, .gate-hit { cursor: pointer; }
   .jack-hit.picking circle { stroke: #fc6; stroke-width: 1.2; }
@@ -204,6 +212,30 @@
       <h2>Osciloscópio — saída</h2>
       <canvas id="scope" width="640" height="160"></canvas>
       <div class="meter" id="meter">parado · clique Tocar</div>
+    </div>
+    <div class="vu-box">
+      <h2>VU — saída</h2>
+      <svg id="vu" viewBox="0 0 320 150" role="img" aria-label="VU analógico da saída">
+        <defs>
+          <linearGradient id="vu-face" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#f7e6b8"/>
+            <stop offset="1" stop-color="#e3bf72"/>
+          </linearGradient>
+        </defs>
+        <rect x="2" y="2" width="316" height="146" rx="7" fill="url(#vu-face)" stroke="#3a2f18" stroke-width="1"/>
+        <g id="vu-scale"></g>
+        <g id="vu-needle" transform="rotate(-50 160 138)">
+          <polygon points="160,20 158.4,138 161.6,138" fill="#181818"/>
+          <polygon points="160,20 159,46 161,46" fill="#c0261c"/>
+        </g>
+        <circle cx="160" cy="138" r="6" fill="#181818"/>
+        <circle cx="160" cy="138" r="2.1" fill="#f7e6b8"/>
+        <text x="160" y="119" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="13" font-weight="700" fill="#3a2f18" letter-spacing="1">VU</text>
+      </svg>
+      <div class="vu-meta">
+        <span>saída · pós-VOLUME</span>
+        <span id="vu-val">parado</span>
+      </div>
     </div>
     <div class="transport">
       <button id="btn-play" type="button">Tocar</button>
@@ -1013,6 +1045,7 @@ function stopAudio() {
   document.getElementById('btn-play').textContent = 'Tocar';
   document.getElementById('btn-stop').disabled = true;
   document.getElementById('meter').textContent = 'parado';
+  resetVU();
   updateXlrStatus('parado');
   const c = document.getElementById('scope');
   const g = c.getContext('2d');
@@ -1052,12 +1085,17 @@ function drawScope() {
   }
   g.stroke();
 
-  // peak meter
+  // peak meter + RMS (VU)
   let peak = 0;
+  let sumSq = 0;
   for (let i = 0; i < buf.length; i++) {
     const a = Math.abs(buf[i]);
-    if (Number.isFinite(a)) peak = Math.max(peak, a);
+    if (Number.isFinite(a)) {
+      peak = Math.max(peak, a);
+      sumSq += buf[i] * buf[i];
+    }
   }
+  updateVU(Math.sqrt(sumSq / buf.length));
   const pct = Math.min(200, peak * 100);
   const fA = logMap(state.pitch_a, 12, 480).toFixed(0);
   const fB = logMap(state.pitch_b, 110, 4800).toFixed(0);
@@ -1073,6 +1111,80 @@ function drawScope() {
 
   applyState();
   scopeAnim = requestAnimationFrame(drawScope);
+}
+
+/* ---------- VU analógico (saída, pós-VOLUME) ---------- */
+// Retificador + movimento de bobina móvel: mede o RMS da saída (dcBlock→limiter),
+// balística ~VU (subida rápida, descida lenta). 0 VU ≈ nível de saída saudável.
+const VU_MIN = -20, VU_MAX = 3, VU_A0 = -50, VU_A1 = 50;
+const VU_REF = 0.09;              // RMS que marca 0 VU (calibração do "trimpot")
+const VU_PIVOT = { x: 160, y: 138 };
+const VU_MARKS = [-20, -10, -7, -5, -3, -1, 0, 1, 2, 3];
+let vuDb = -60;
+
+function vuAngle(v) {
+  const t = (Math.max(VU_MIN, Math.min(VU_MAX, v)) - VU_MIN) / (VU_MAX - VU_MIN);
+  return VU_A0 + t * (VU_A1 - VU_A0);
+}
+function vuPoint(r, angDeg) {
+  const a = angDeg * Math.PI / 180;
+  return { x: VU_PIVOT.x + r * Math.sin(a), y: VU_PIVOT.y - r * Math.cos(a) };
+}
+function vuArc(r, v0, v1) {
+  const p0 = vuPoint(r, vuAngle(v0));
+  const p1 = vuPoint(r, vuAngle(v1));
+  return `M ${p0.x.toFixed(1)} ${p0.y.toFixed(1)} A ${r} ${r} 0 0 1 ${p1.x.toFixed(1)} ${p1.y.toFixed(1)}`;
+}
+function svgEl(tag, attrs) {
+  const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+  for (const k in attrs) el.setAttribute(k, attrs[k]);
+  return el;
+}
+function buildVuScale() {
+  const g = document.getElementById('vu-scale');
+  if (!g) return;
+  g.replaceChildren();
+  g.appendChild(svgEl('path', { d: vuArc(114, VU_MIN, VU_MAX), fill: 'none', stroke: '#2a2a2a', 'stroke-width': 1.4 }));
+  g.appendChild(svgEl('path', { d: vuArc(114, 0, VU_MAX), fill: 'none', stroke: '#c0261c', 'stroke-width': 2.4 }));
+  for (const v of VU_MARKS) {
+    const ang = vuAngle(v);
+    const major = v % 5 === 0 || v === -7 || v === -3;
+    const o = vuPoint(120, ang), i = vuPoint(major ? 108 : 113, ang);
+    const red = v >= 0;
+    g.appendChild(svgEl('line', {
+      x1: o.x.toFixed(1), y1: o.y.toFixed(1), x2: i.x.toFixed(1), y2: i.y.toFixed(1),
+      stroke: red ? '#c0261c' : '#2a2a2a', 'stroke-width': major ? 1.3 : 0.8,
+    }));
+    if (major) {
+      const t = vuPoint(98, ang);
+      const lab = svgEl('text', {
+        x: t.x.toFixed(1), y: (t.y + 2).toFixed(1), 'text-anchor': 'middle',
+        'font-family': 'Helvetica,Arial,sans-serif', 'font-size': 9,
+        'font-weight': 600, fill: red ? '#c0261c' : '#2a2a2a',
+      });
+      lab.textContent = v > 0 ? '+' + v : String(v);
+      g.appendChild(lab);
+    }
+  }
+}
+function updateVU(rms) {
+  const inst = 20 * Math.log10(Math.max(1e-4, rms / VU_REF));
+  const a = inst > vuDb ? 0.32 : 0.10;      // subida rápida, descida lenta (~VU)
+  vuDb += (inst - vuDb) * a;
+  const needle = document.getElementById('vu-needle');
+  if (needle) needle.setAttribute('transform', `rotate(${vuAngle(vuDb).toFixed(1)} ${VU_PIVOT.x} ${VU_PIVOT.y})`);
+  const val = document.getElementById('vu-val');
+  if (val) {
+    val.textContent = vuDb <= VU_MIN - 1.5 ? '−∞ VU' : (vuDb >= 0 ? '+' : '') + vuDb.toFixed(0) + ' VU';
+    val.classList.toggle('hot', vuDb > 0);
+  }
+}
+function resetVU() {
+  vuDb = -60;
+  const needle = document.getElementById('vu-needle');
+  if (needle) needle.setAttribute('transform', `rotate(${VU_A0} ${VU_PIVOT.x} ${VU_PIVOT.y})`);
+  const val = document.getElementById('vu-val');
+  if (val) { val.textContent = 'parado'; val.classList.remove('hot'); }
 }
 
 /* ---------- panel UI ---------- */
@@ -1389,6 +1501,8 @@ document.getElementById('xlr-file').addEventListener('change', async e => {
 
 syncXlrSourceUi();
 updateXlrStatus('pronto');
+buildVuScale();
+resetVU();
 
 document.getElementById('block').addEventListener('change', render);
 document.getElementById('btn-copy').addEventListener('click', async () => {

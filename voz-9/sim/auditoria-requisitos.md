@@ -28,7 +28,7 @@ Nada deve virar hardware apenas por aparecer na interface do navegador. A coluna
 | entrada/saída | XLR/COMBO modelado parcialmente na lateral da UI | dois combos físicos conforme esquema |
 | alimentação | não desenhada na UI | P4 9 V centro-negativo + LED piloto |
 | VU | pico/clip textual pós-saída | VU analógico de ponteiro obrigatório |
-| indicadores | CLIP, GATE/ENV e TREM/FLUT aparecem apenas como texto/cor | definir se virarão LEDs físicos |
+| indicadores | CLIP, GATE/ENV e TREM/FLUT aparecem apenas como texto/cor | adicionar LEDs CLIP, GATE/ENV e LFO, além de OSC A/B, H1–H3 e STACK |
 
 ### Funções sonoras
 
@@ -69,10 +69,11 @@ Nada deve virar hardware apenas por aparecer na interface do navegador. A coluna
 | limiter digital | proteção do áudio do navegador, não estágio do esquema |
 | cabos demo pré-carregados | cenário de teste, não normalização física |
 
-Não há elementos LED de status em `painel.html`. O único LED definido no
-produto atual é o piloto de 9 V em `painel.svg`/J6. `CLIP`, GATE/ENV,
-TREM/FLUT e estado de entrada são textos ou mudanças de cor da interface; criar
-LEDs físicos para eles é uma decisão nova de produto.
+Não há elementos LED de status em `painel.html`. O único LED anteriormente
+definido era o piloto de 9 V em `painel.svg`/J6. A decisão DEC-015 acrescenta
+CLIP, GATE/ENV, LFO pulsante, OSC A/B, H1–H3 e STACK como indicadores físicos.
+São requisitos novos derivados dos estados da interface e das chaves, não
+circuitos já validados pela simulação.
 
 ## 4. Cobertura e lacunas
 
@@ -133,8 +134,8 @@ Requisitos mínimos:
 ## 6. Inconsistências encontradas
 
 - `painel.html` não desenha COMBO IN/OUT, LED ou P4, embora sejam físicos.
-- a interface não contém LEDs de estado; contém apenas textos/cores para CLIP,
-  GATE/ENV, TREM/FLUT e entrada.
+- a interface não contém LEDs de estado; DEC-015 converte estados úteis em nove
+  LEDs físicos novos, ainda sem circuito simulado.
 - Jack IN não percorre o caminho completo para AMOUNT na simulação.
 - SEND não possui tap de áudio observável; RCV é apenas um gate aproximado.
 - CLK, FCV, VCV e ECV não recebem fontes elétricas externas reais.

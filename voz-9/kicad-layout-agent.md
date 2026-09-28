@@ -34,8 +34,8 @@ O agente **não pode iniciar o placement** enquanto não existirem:
 - netlist atualizada no PCB pelo próprio KiCad;
 - contorno `Edge.Cuts` fechado de **220 × 160 mm**;
 - furos M3 em `(4,4)`, `(216,4)`, `(4,156)` e `(216,156)`, coordenadas em mm;
-- J1–J9 com tipo, número de vias e pino 1 conforme `pcb.md`, além de J10 para
-  o VU analógico após definição do mostrador;
+- J1–J9 com tipo, número de vias e pino 1 conforme `pcb.md`, J10 para o VU
+  analógico e J11 para LEDs após definição dos componentes;
 - perfil de fabricação escolhido na seção 2;
 - datasheets disponíveis para pinagem e recomendações de layout.
 
@@ -160,7 +160,7 @@ fabricação artesanal e reparabilidade.
 Travar antes do placement:
 
 - `Edge.Cuts`, furos M3 e keepouts;
-- J1–J9 e o novo J10 na faixa de conectores, acessíveis aos chicotes de
+- J1–J9 e os novos J10/J11 na faixa de conectores, acessíveis aos chicotes de
   8–12 cm;
 - pino 1 visível e coerente com `pcb.md`;
 - margem para inserir/remover conectores e eventuais CIs em soquete;
@@ -189,7 +189,7 @@ blocos funcionais reconhecíveis:
 
 | Zona | Bloco | Prioridade |
 | --- | --- | --- |
-| faixa esquerda | J1–J10 | fixa; chicotes curtos e sem cruzamento |
+| faixa esquerda | J1–J11 | fixa; chicotes curtos e sem cruzamento |
 | superior esquerda/centro | entrada 9 V, proteção, V9/V5/VEE/4V5/1V8 | longe do pré e do áudio de alta impedância |
 | superior centro/direita | U1 pré de mic e U9 EQ | menor caminho XLR→U1; máxima distância de clock/PT2399 |
 | superior direita | U2 osciladores | longe de U1 e dos cabos XLR |
@@ -288,6 +288,22 @@ Após cada etapa, alinhar em grade, verificar courtyard e executar DRC.
   sem compartilhar garganta com `MIC_LOW`.
 - Só definir footprint, pinagem, recorte e posição após validar o VU físico,
   corrente de fundo de escala, resistência interna e fixação.
+
+### 5.7 LEDs indicadores
+
+- POWER permanece em J6; CLIP, GATE/ENV, LFO, OSC A/B, H1–H3 e STACK usam J11.
+- CLIP deriva do detector de saída/VU, com retenção visual, sem limiter no
+  caminho de áudio.
+- GATE/ENV e LFO usam buffers de alta impedância; não estender diretamente os
+  respectivos nós analógicos pelo chicote.
+- OSC A/B, H1–H3 e STACK devem usar segundo polo isolado da chave ou driver
+  equivalente. Nunca inserir LED/resistor no contato que conduz áudio.
+- Dimensionar inicialmente para 1–2 mA por LED e recalcular com Vf, brilho,
+  temperatura e código da peça.
+- Alimentação e retorno de J11 seguem até a distribuição de potência sem usar
+  o retorno do pré, das referências ou dos PT2399.
+- Posicionar drivers junto da origem do sinal ou de J11, conforme produza o
+  menor laço e menor acoplamento.
 
 ## 6. Alimentação, terra e desacoplamento
 
@@ -551,7 +567,7 @@ legível e confirmar que ele abre no KiCad.
 
 - contorno fechado e 220×160 mm;
 - quatro furos e keepouts corretos;
-- J1–J9 e J10 corretos, pino 1 e acesso de cabo validados;
+- J1–J9, J10 e J11 corretos, pino 1 e acesso de cabo validados;
 - nenhum courtyard invade borda, furo ou conector.
 
 ### G2 — placement de blocos
@@ -683,7 +699,7 @@ Audite o projeto e execute somente o próximo gate.
 Mantenha uma matriz requisito→evidência; não aprove a própria conclusão.
 Use o KiCad/MCP como fonte de verdade; não infira nets do SVG.
 Trabalhe em um bloco por lote, leia o estado antes/depois e salve checkpoint.
-Preserve mecânica 220×160, furos, J1–J9 e o J10 dedicado ao VU.
+Preserve mecânica 220×160, furos, J1–J9, J10 do VU e J11 dos LEDs.
 Priorize pré de mic, retornos, desacoplamento e isolamento de clock/PT2399.
 Não altere o circuito para facilitar placement/routing.
 Após uma revisão automática malsucedida, peça placement humano do bloco crítico.

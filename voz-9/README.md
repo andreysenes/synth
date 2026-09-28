@@ -30,11 +30,15 @@ inicial até aproximadamente 45 × 35 mm) no painel e o chicote dedicado J10.
 Modelo, recorte e calibração devem ser fechados antes do esquema final e da
 atualização de `painel.svg`.
 
+Também acrescenta nove indicadores em J11: **CLIP, GATE/ENV, LFO, OSC A/B,
+H1–H3 e STACK**. Com o POWER existente, são 10 LEDs. Cores, brilho e modelos
+serão definidos antes do painel/BOM finais.
+
 ---
 
 ## Painel
 
-**Um módulo só**, caixa de mesa **retangular** (Noise Toaster / MFOS): faceplate paisagem **220 × 160 mm** em `painel.svg`. Caixa de madeira ~240 × 180 × 50 mm. A referência legada possui 9 chicotes J1–J9; o baseline KiCad acrescenta **J10 para o VU analógico**. A BASE fica no fundo da caixa.
+**Um módulo só**, caixa de mesa **retangular** (Noise Toaster / MFOS): faceplate paisagem **220 × 160 mm** em `painel.svg`. Caixa de madeira ~240 × 180 × 50 mm. A referência legada possui 9 chicotes J1–J9; o baseline KiCad acrescenta **J10 para o VU analógico e J11 para indicadores**. A BASE fica no fundo da caixa.
 
 ```
  IN  PRE  OSC IN | LED 9V          OSC A  AMOUNT  OSC B

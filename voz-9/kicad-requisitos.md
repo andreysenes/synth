@@ -111,6 +111,24 @@ no plano de teste e largura de banda registrada.
 | VU-009 | MUST | O VU deve ser compacto, com envelope frontal máximo inicial de aproximadamente 45 × 35 mm. | decisão do produto | datasheet, medidas e impressão 1:1 | APROVADO |
 | VU-010 | MUST | Modelo, corrente de fundo de escala, resistência interna, iluminação, recorte e fixação do VU devem ser aprovados antes do footprint/conector final. | ACT-007 | datasheet, medidas e impressão 1:1 | BLOQUEADO |
 
+## 4.3 Requisitos dos LEDs indicadores
+
+O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
+
+| ID | Pri. | Requisito e critério de aprovação | Fonte | Verificação | Estado |
+| --- | --- | --- | --- | --- | --- |
+| LED-001 | MUST | Incluir POWER, CLIP, GATE/ENV, LFO, OSC A, OSC B, H1, H2, H3 e STACK. | decisão DEC-015 | esquema, painel e teste | APROVADO |
+| LED-002 | MUST | POWER continua indicando presença de V9 após proteção de polaridade. | esquema existente | medição e teste | APROVADO |
+| LED-003 | MUST | CLIP deve usar o detector do VU/saída e permanecer visível tempo suficiente para percepção humana, sem inserir limiter no áudio. | interface digital, VU | simulação e teste de pulso | APROVADO |
+| LED-004 | MUST | GATE/ENV deve indicar o envelope efetivo que controla o VCA, não apenas a posição da chave. | interface digital | injeção, gate e fala | APROVADO |
+| LED-005 | MUST | LFO deve pulsar com sua forma/taxa efetiva e permanecer apagado quando TREM estiver no centro/off. | interface digital | teste em ambas as faixas | APROVADO |
+| LED-006 | MUST | OSC A/B, H1–H3 e STACK devem refletir a posição funcional de suas chaves. | decisão DEC-015 | teste de cada chave | APROVADO |
+| LED-007 | MUST | Indicadores de chaves que comutam áudio devem usar segundo polo eletricamente isolado ou driver de alta impedância; LED/resistor não pode carregar o caminho de áudio. | boa prática de áudio | esquema e teste A/B | APROVADO |
+| LED-008 | MUST | Corrente alvo deve ser baixa, inicialmente 1–2 mA por LED, recalculada para cor/peça escolhida e incluída no orçamento PWR-011. | margem térmica/ruído | cálculo e medição | APROVADO |
+| LED-009 | MUST | Alimentação/retorno dos indicadores deve usar caminho dedicado até a distribuição de potência, sem compartilhar garganta com MIC_LOW, referências ou retornos do PT2399. | playbook | inspeção de retorno e ruído | APROVADO |
+| LED-010 | MUST | Os nove indicadores novos devem usar chicote de status dedicado J11; POWER pode permanecer em J6. Pinagem final depende do circuito e dos polos das chaves. | arquitetura do painel | pinout e continuidade | APROVADO |
+| LED-011 | MUST | Cor, brilho, encapsulamento, lentes e lógica exata dos LEDs devem ser aprovados antes do painel e BOM finais. | ACT-010 | amostras/datasheets | BLOQUEADO |
+
 ## 5. Interfaces e conectores
 
 | ID | Pri. | Requisito e critério de aprovação | Fonte | Verificação | Estado |
@@ -128,6 +146,7 @@ no plano de teste e largura de banda registrada.
 | IF-011 | MUST | O painel deve conter os 11 jacks A, B, IN, FILT, FCV, VCV, LFO, ECV, CLK, SEND e RCV. | auditoria digital §2 | esquema, pinout e inspeção | APROVADO |
 | IF-012 | MUST | COMBO IN/OUT, P4 e LED piloto continuam obrigatórios embora não estejam desenhados no SVG interno de `painel.html`. | auditoria digital §§2/6 | painel, esquema e inspeção | APROVADO |
 | IF-013 | MUST | J1–J9 preservam as interfaces existentes; J10 será acrescentado exclusivamente para o VU analógico e sua iluminação opcional. | VU-006 | esquema, pinout e continuidade | APROVADO |
+| IF-014 | MUST | J11 será dedicado aos nove LEDs novos e aos sinais/alimentação necessários; não misturar essas correntes em J7/J9 ou retornos de áudio. | LED-010 | esquema, pinout e continuidade | APROVADO |
 
 ## 6. Requisitos mecânicos
 
@@ -142,6 +161,7 @@ no plano de teste e largura de banda registrada.
 | MEC-007 | MUST | Footprints devem ser validados com código LCSC, datasheet ou medidas da peça manual; “parecido” não aprova. | decisões DEC-004/005, playbook §10 | comparação dimensional e 1:1 | APROVADO |
 | MEC-008 | SHOULD | CIs manuais devem compartilhar orientação de notch quando isso não prejudicar o layout elétrico. | playbook §3 | inspeção | PROPOSTO |
 | MEC-009 | MUST | O painel deve receber recorte, fixação e área livre para o VU analógico exato, sem colisão com knobs, chicotes ou caixa. | VU-009 | CAD mecânico e impressão 1:1 | BLOQUEADO |
+| MEC-010 | MUST | O painel deve acomodar os 10 LEDs, lentes e identificação legível sem conflito com VU, controles, porcas ou chicotes. | LED-001/011 | CAD mecânico e impressão 1:1 | BLOQUEADO |
 
 ## 7. Requisitos de placement
 
@@ -157,6 +177,7 @@ no plano de teste e largura de banda registrada.
 | PLC-008 | MUST | Placement crítico deve ser revisado por humano e bloqueado antes do roteamento. | playbook §11/G2 | registro de aprovação | PROPOSTO |
 | PLC-009 | SHOULD | O fluxo físico deve ser reconhecível e manter blocos funcionais, sem compactação que piore isolamento ou manutenção. | playbook §§4 e 9 | revisão humana | PROPOSTO |
 | PLC-010 | MUST | Driver e conector do VU devem ficar na zona de saída, afastados de U1/J7; retorno e alimentação não podem contaminar MIC_LOW. | VU-005 | revisão de layout | APROVADO |
+| PLC-011 | MUST | Drivers de CLIP, GATE/ENV e LFO e J11 devem ficar junto de suas fontes/saída de painel, com retorno dedicado; não alongar nós analógicos de alta impedância. | LED-003–010 | revisão de layout | APROVADO |
 
 ## 8. Requisitos de roteamento e terra
 
@@ -246,6 +267,7 @@ no plano de teste e largura de banda registrada.
 | DEC-012 | Protótipo sem ensaio EMC/ESD formal. | RESOLVIDA |
 | DEC-013 | Incluir VU analógico de ponteiro no painel e circuito na BASE. | RESOLVIDA |
 | DEC-014 | Usar VU compacto, com envelope inicial de até aproximadamente 45 × 35 mm. | RESOLVIDA |
+| DEC-015 | Incluir opção C: POWER, CLIP, GATE/ENV, LFO, OSC A/B, H1–H3 e STACK. | RESOLVIDA |
 
 ### Ações técnicas bloqueantes
 
@@ -260,14 +282,14 @@ no plano de teste e largura de banda registrada.
 | ACT-007 | Selecionar o VU analógico exato e definir referência de 0 VU, balística, iluminação, recorte e pinagem J10. | esquema/PCB | responsável do produto + engenharia |
 | ACT-008 | Corrigir ou documentar as lacunas do teste digital listadas em `sim/auditoria-requisitos.md` antes de usá-lo como evidência. | esquema/G0 | engenharia |
 | ACT-009 | Instalar versão registrada do ngspice, corrigir falsos positivos do runner e repetir toda a suíte sem erros. | evidência/G0 | engenharia |
-| ACT-010 | Definir quais estados textuais/visuais da interface devem virar LEDs físicos; o código atual só possui LED piloto. | escopo/esquema/painel | responsável do produto |
+| ACT-010 | Definir cores, brilho, encapsulamentos e lógica/polos dos 10 LEDs; selecionar chaves DPDT quando necessário. | esquema/painel/BOM | responsável do produto + engenharia |
 
 ## 14. Gate R0 — aprovação de requisitos
 
 Checklist de saída:
 
 - [x] Escopo e perfil de fabricação aprovados.
-- [x] Decisões DEC-001–DEC-014 registradas.
+- [x] Decisões DEC-001–DEC-015 registradas.
 - [ ] Todos os requisitos `MUST` têm fonte, critério e método de verificação.
 - [ ] Conflitos com `README.md`, `esquema.md`, `pcb.md`, BOM e datasheets foram
       resolvidos.

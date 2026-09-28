@@ -108,7 +108,8 @@ no plano de teste e largura de banda registrada.
 | VU-006 | MUST | O mostrador analógico deve ficar no painel e usar um novo J10 dedicado; pinagem final deve contemplar movimento e eventual iluminação sem usar retorno sensível. | decisão do produto | esquema, pinout e continuidade | APROVADO |
 | VU-007 | MUST | Prever ajuste de calibração acessível sem desmontar componentes críticos. | boa prática de medição | inspeção e calibração | APROVADO |
 | VU-008 | MUST | Consumo, chaveamento de LEDs ou iluminação do VU devem entrar no orçamento de corrente e no pior caso térmico. | PWR-011 | cálculo e teste | APROVADO |
-| VU-009 | MUST | Modelo, corrente de fundo de escala, resistência interna, iluminação, dimensões, recorte e fixação do VU devem ser aprovados antes do footprint/conector final. | ACT-007 | datasheet, medidas e impressão 1:1 | BLOQUEADO |
+| VU-009 | MUST | O VU deve ser compacto, com envelope frontal máximo inicial de aproximadamente 45 × 35 mm. | decisão do produto | datasheet, medidas e impressão 1:1 | APROVADO |
+| VU-010 | MUST | Modelo, corrente de fundo de escala, resistência interna, iluminação, recorte e fixação do VU devem ser aprovados antes do footprint/conector final. | ACT-007 | datasheet, medidas e impressão 1:1 | BLOQUEADO |
 
 ## 5. Interfaces e conectores
 
@@ -244,6 +245,7 @@ no plano de teste e largura de banda registrada.
 | DEC-011 | Bancada mínima: multímetro, osciloscópio e interface de áudio. | RESOLVIDA |
 | DEC-012 | Protótipo sem ensaio EMC/ESD formal. | RESOLVIDA |
 | DEC-013 | Incluir VU analógico de ponteiro no painel e circuito na BASE. | RESOLVIDA |
+| DEC-014 | Usar VU compacto, com envelope inicial de até aproximadamente 45 × 35 mm. | RESOLVIDA |
 
 ### Ações técnicas bloqueantes
 
@@ -258,13 +260,14 @@ no plano de teste e largura de banda registrada.
 | ACT-007 | Selecionar o VU analógico exato e definir referência de 0 VU, balística, iluminação, recorte e pinagem J10. | esquema/PCB | responsável do produto + engenharia |
 | ACT-008 | Corrigir ou documentar as lacunas do teste digital listadas em `sim/auditoria-requisitos.md` antes de usá-lo como evidência. | esquema/G0 | engenharia |
 | ACT-009 | Instalar versão registrada do ngspice, corrigir falsos positivos do runner e repetir toda a suíte sem erros. | evidência/G0 | engenharia |
+| ACT-010 | Definir quais estados textuais/visuais da interface devem virar LEDs físicos; o código atual só possui LED piloto. | escopo/esquema/painel | responsável do produto |
 
 ## 14. Gate R0 — aprovação de requisitos
 
 Checklist de saída:
 
 - [x] Escopo e perfil de fabricação aprovados.
-- [x] Decisões DEC-001–DEC-013 registradas.
+- [x] Decisões DEC-001–DEC-014 registradas.
 - [ ] Todos os requisitos `MUST` têm fonte, critério e método de verificação.
 - [ ] Conflitos com `README.md`, `esquema.md`, `pcb.md`, BOM e datasheets foram
       resolvidos.

@@ -25,9 +25,10 @@ KiCad via MCP, comece por `kicad-requisitos.md` e depois siga
 `kicad-layout-agent.md`. Lista de compra: `bom.md`. Simulador:
 `sim/painel.html`.
 
-O baseline KiCad acrescenta um **VU analógico de saída** no painel e o chicote
-dedicado J10. Modelo, recorte e calibração devem ser fechados antes do esquema
-final e da atualização de `painel.svg`.
+O baseline KiCad acrescenta um **VU analógico compacto de saída** (envelope
+inicial até aproximadamente 45 × 35 mm) no painel e o chicote dedicado J10.
+Modelo, recorte e calibração devem ser fechados antes do esquema final e da
+atualização de `painel.svg`.
 
 ---
 

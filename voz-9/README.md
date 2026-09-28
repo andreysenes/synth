@@ -18,7 +18,7 @@ Sem XLR, **PRE** escala os oscs. **OSC IN** = mix osc ↔ mic (CCW = só drones,
 
 O pré vocal está em `pre-vocal.md`. Mesmo papel do Echo Master, **sem transformador** (diferencial no NE5532 + pad no XLR).
 
-Leia `esquema.md` para montar. Caderno de estudo: `componentes.md`. Uma fenolite no piso; **nove** chicotes 2×N e CIs em soquete: `pcb.md`. Lista de compra: `bom.md`. Simulador: `sim/painel.html`.
+Leia `esquema.md` para montar. Caderno de estudo: `componentes.md`. Uma fenolite no piso; **nove** chicotes 2×N e CIs em soquete: `pcb.md`. Para placement e routing no KiCad via MCP: `kicad-layout-agent.md`. Lista de compra: `bom.md`. Simulador: `sim/painel.html`.
 
 ---
 

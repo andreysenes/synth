@@ -2,6 +2,11 @@
 
 Uma fenolite no **fundo da caixa**. O painel (`painel.svg`) é só chapa. **Nove** chicotes 2×N (2,54 mm): **fêmea na BASE**, **macho no painel**. CIs só em soquete. Sem FACE, sem flat, sem IDC.
 
+Para criar e trabalhar a placa no KiCad por MCP, siga
+`kicad-layout-agent.md`. Esse documento define pré-requisitos, placement,
+classes de nets, roteamento, gates de DRC e o protocolo de execução do agente.
+O SVG abaixo é referência mecânica/visual e **não é uma netlist**.
+
 | Placa | Arquivo | Tamanho | Cobre | O que leva |
 | --- | --- | --- | --- | --- |
 | **BASE** | `pcb.svg` | **220 × 160 mm** | simples, solda = verso | fonte, oscs, JFETs, NAB, 5532, EQ voz, fita, R/C, pads dos cabos |

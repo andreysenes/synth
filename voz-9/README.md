@@ -135,6 +135,8 @@ Pinos P2: ponta = sinal, anel/sleeve = GND. CV é 0–9 V, sem 1 V/oitava. CLK: 
 
 Tudo novo: `bom.md`. Um instrumento ~R$ **610** (varejo BR, set/2026, sem frete).
 
+Placa SMT 200×100 mm, com a JLCPCB soldando o circuito: `v2.md`. A de 300×140 mm, through-hole, continua em `kicad/`.
+
 J201: marque Vgs(off) nos 8. O mais “vivo” vai no VCF; um par parecido nos FM. MP20 por último — ferro baixo.
 
 ---

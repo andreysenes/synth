@@ -14,6 +14,7 @@ import json
 import math
 import os
 import re
+import sys
 import uuid
 
 import pcbnew
@@ -26,6 +27,15 @@ DEMO_PRO = "/usr/share/kicad/demos/pic_programmer/pic_programmer.kicad_pro"
 W, H = 300.0, 140.0
 # A folha cobre os 300 mm de largura e deixa o carimbo fora do cobre.
 PAGE_W, PAGE_H = 420.0, 200.0
+OUT = ROOT
+V2 = False
+
+# Folgas do posicionador. A v2 aperta estes números; a v1 fica nestes.
+TOP, LEFT = 14.0, 10.0
+GAP, ROW = 1.5, 1.6
+BAND, BAND_LAST = 6.0, 5.5
+COL, HEAD_GAP = 4.0, 3.0
+HOLE_INSET = 6.0
 
 FP_R = "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal"
 FP_C = "Capacitor_THT:C_Rect_L7.2mm_W2.5mm_P5.00mm"
@@ -310,7 +320,7 @@ def build_parts():
     CE("C70", "47µ", 202, 151.8)
 
     block = "FUROS"
-    inset = 6.0
+    inset = HOLE_INSET
     for i, (x, y) in enumerate(
         ((inset, inset), (W - inset, inset), (inset, H - inset), (W - inset, H - inset)),
         start=1,
@@ -335,6 +345,11 @@ BOX = {
 
 def place_pins():
     """Duas fileiras de pinos na borda de baixo. Pino 1 à esquerda."""
+    if V2:
+        import v2
+
+        v2.place_pins()
+        return
     by_ref = {part["ref"]: part for part in parts}
     rows = (
         (["J1", "J3", "J4", "J5"], 132.0),
@@ -396,9 +411,7 @@ HEADER_BLOCK = {
 }
 
 
-# Folga entre corpos. Os pinos de cima estão em y=121,6.
-GAP = 1.5
-ROW = 1.6
+# Folga entre corpos. Os pinos de cima da v1 estão em y=121,6.
 
 
 def assign_flow():
@@ -487,6 +500,9 @@ def place_head(ic_ref, resistors, caps, ox, oy):
     """
     by_ref = {part["ref"]: part for part in parts}
     width, height = _put(by_ref[ic_ref], ox, oy, 0)
+    if V2:
+        flat = [ref for row in caps for ref in row]
+        caps = [flat[i : i + 2] for i in range(0, len(flat), 2)]
     rx, rb = place_rows([resistors], ox + width + GAP, oy, rot=90)
     cx, cb = place_rows(caps, ox + width + GAP, rb + ROW, rot=0)
     return max(ox + width, rx, cx), max(oy + height, cb)
@@ -503,8 +519,8 @@ def place_blocks():
         return right, bottom
 
     # Faixa 1 — entrada e alimentação.
-    y = 14.0
-    x = 10.0
+    y = TOP
+    x = LEFT
     right, bottom = place_chip(
         ["U1"],
         [
@@ -518,7 +534,7 @@ def place_blocks():
     )
     mark("PRE", x, y, right, bottom)
     band1 = bottom
-    x = right + 4.0
+    x = right + COL
     right, bottom = place_chip(
         ["U9"],
         [
@@ -530,7 +546,7 @@ def place_blocks():
     )
     _, bottom = mark("EQ", x, y, right, bottom)
     band1 = max(band1, bottom)
-    x = right + 4.0
+    x = right + COL
     right, bottom = place_chip(
         ["U5"],
         [
@@ -545,8 +561,8 @@ def place_blocks():
     band1 = max(band1, bottom)
 
     # Faixa 2 — voz, da esquerda para a direita.
-    y = band1 + 6.0
-    x = 10.0
+    y = band1 + BAND
+    x = LEFT
     right, bottom = place_chip(
         ["U2"],
         [
@@ -559,7 +575,7 @@ def place_blocks():
     )
     _, bottom = mark("OSC", x, y, right, bottom)
     band2 = bottom
-    x = right + 4.0
+    x = right + COL
     right, bottom = place_rows(
         [
             ["Q3", "R23", "R3"],
@@ -570,7 +586,7 @@ def place_blocks():
     )
     _, bottom = mark("NOISE", x, y, right, bottom)
     band2 = max(band2, bottom)
-    x = right + 4.0
+    x = right + COL
     right, bottom = place_rows(
         [
             ["R24", "R25", "R26"],
@@ -581,7 +597,7 @@ def place_blocks():
     )
     _, bottom = mark("MIX", x, y, right, bottom)
     band2 = max(band2, bottom)
-    x = right + 4.0
+    x = right + COL
     right, bottom = place_rows(
         [
             ["Q6", "R27", "R4", "R28"],
@@ -592,7 +608,7 @@ def place_blocks():
     )
     _, bottom = mark("SHAPE", x, y, right, bottom)
     band2 = max(band2, bottom)
-    x = right + 4.0
+    x = right + COL
     right, bottom = place_rows(
         [
             ["Q4", "R30", "C47", "R68", "R67"],
@@ -605,8 +621,8 @@ def place_blocks():
     band2 = max(band2, bottom)
 
     # Faixa 3 — fita. As três heads são cópias, na mesma rotação.
-    y = band2 + 6.0
-    x = 10.0
+    y = band2 + BAND
+    x = LEFT
     right, bottom = place_chip(
         ["U3"],
         [
@@ -620,7 +636,7 @@ def place_blocks():
     )
     _, bottom = mark("NAB", x, y, right, bottom)
     band3 = bottom
-    x = right + 4.0
+    x = right + COL
     for name, ic_ref, resistors, caps in (
         ("H1", "U6", ["R35", "R41", "R38", "R75"], [["C31", "C37", "C34", "C7"], ["C10", "C13", "C16"]]),
         ("H2", "U7", ["R36", "R47", "R39", "R76"], [["C32", "C38", "C35", "C8"], ["C11", "C14", "C17", "C69"]]),
@@ -629,7 +645,7 @@ def place_blocks():
         right, bottom = place_head(ic_ref, resistors, caps, x, y)
         _, bottom = mark(name, x, y, right, bottom)
         band3 = max(band3, bottom)
-        x = right + 3.0
+        x = right + HEAD_GAP
     right, bottom = place_rows(
         [
             ["D7", "RV1", "R49", "C3"],
@@ -642,8 +658,8 @@ def place_blocks():
     band3 = max(band3, bottom)
 
     # Faixa 4 — LFO junto do J2. VCA fecha a voz, embaixo do VCF.
-    y = band3 + 5.5
-    x = 10.0
+    y = band3 + BAND_LAST
+    x = LEFT
     right, bottom = place_rows(
         [
             ["Q7", "R31", "R5", "C43", "R32", "C44", "R33"],
@@ -654,7 +670,7 @@ def place_blocks():
     )
     _, bottom = mark("LFO", x, y, right, bottom)
     band4 = bottom
-    x = right + 4.0
+    x = right + COL
     right, bottom = place_rows(
         [
             ["R11", "R7", "R8", "R56"],
@@ -665,7 +681,7 @@ def place_blocks():
     )
     _, bottom = mark("TEMPO", x, y, right, bottom)
     band4 = max(band4, bottom)
-    x = right + 4.0
+    x = right + COL
     right, bottom = place_rows(
         [
             ["R59", "D4", "R43"],
@@ -676,11 +692,11 @@ def place_blocks():
     )
     _, bottom = mark("CLK", x, y, right, bottom)
     band4 = max(band4, bottom)
-    x = right + 4.0
+    x = right + COL
     right, bottom = place_rows([["R44", "R1", "R2"]], x, y)
     _, bottom = mark("OUT", x, y, right, bottom)
     band4 = max(band4, bottom)
-    x = right + 4.0
+    x = right + COL
     right, bottom = place_rows(
         [
             ["Q5", "R34", "C54", "C68", "R74"],
@@ -702,7 +718,9 @@ def place_blocks():
 def part_box(part):
     if part["ref"].startswith("J"):
         count = int(part["fp"].split("1x")[1][:2])
-        left, top, right, bottom = -1.7, -1.7, 1.7, (count - 1) * 2.54 + 1.7
+        pitch = 3.96 if "P3.96" in part["fp"] else 2.54
+        pad = 1.35 if pitch > 3 else 1.7
+        left, top, right, bottom = -pad, -pad, pad, (count - 1) * pitch + pad
     elif part["ref"].startswith("H"):
         left, top, right, bottom = -3.2, -3.2, 3.2, 3.2
     else:
@@ -841,13 +859,15 @@ def sch_cell(part, pins):
     if ref.startswith("H"):
         return 12.0, 12.0
     fp = part["fp"]
+    if "SOP-16" in fp:
+        return 36.0, 40.0
     if "DIP-16" in fp:
         return 46.0, 52.0
-    if "TO-220" in fp:
+    if "TO-252" in fp or "TO-220" in fp:
         return 24.0, 30.0
-    if "DIP-8" in fp or part["sym"].endswith("LM2904") or "MAX1044" in part["sym"]:
+    if "SOIC-8" in fp or "DIP-8" in fp or part["sym"].endswith("LM2904") or "MAX1044" in part["sym"]:
         return 28.0, 22.0
-    if "TO-92" in fp:
+    if "SOT-23" in fp or "TO-92" in fp:
         return 18.0, 20.0
     if "Potentiometer" in fp:
         return 18.0, 20.0
@@ -870,10 +890,17 @@ def write_schematic(path, embedded, meta):
         (
             20,
             row_top + 16,
-            "VOZ-9 BASE. Blocos curtos na ordem do sinal, o mesmo nome da seda. "
-            "J1–J9 à esquerda de cada grupo: pino 1×N na borda de baixo da PCB. "
-            "Ainda sem fios. D1 ânodo para J6. D6/D7 = MP20. "
-            "Q7 2N5457: conferir a pinagem do lote.",
+            (
+                "VOZ-9 v2 SMT, 200×100 mm. J1–J9 são furos de fio 3,96 mm, furo 1,6 mm, à mão. "
+                "D6/D7 = MP20, também à mão. Q1–Q6 MMBFJ201 e Q7 MMBF5457: "
+                "pino físico 1=D, 2=S, 3=G; o símbolo é D,G,S."
+                if V2
+                else
+                "VOZ-9 BASE. Blocos curtos na ordem do sinal, o mesmo nome da seda. "
+                "J1–J9 à esquerda de cada grupo: pino 1×N na borda de baixo da PCB. "
+                "Ainda sem fios. D1 ânodo para J6. D6/D7 = MP20. "
+                "Q7 2N5457: conferir a pinagem do lote."
+            ),
         )
     ]
     for name in order:
@@ -914,10 +941,10 @@ def write_schematic(path, embedded, meta):
         f'\t(uuid "{SHEET_UUID}")',
         f'\t(paper "User" {page_w:.0f} {page_h:.0f})',
         "\t(title_block",
-        '\t\t(title "VOZ-9 BASE")',
-        '\t\t(date "2026-09-27")',
-        '\t\t(rev "A")',
-        '\t\t(comment 1 "Placa 300 x 140 mm. Blocos na ordem do sinal, ainda sem fios.")',
+        '\t\t(title "VOZ-9 v2 SMT" if V2 else "VOZ-9 BASE")',
+        '\t\t(date "2026-09-28" if V2 else "2026-09-27")',
+        '\t\t(rev "v.2" if V2 else "A")',
+        '\t\t(comment 1 "Placa 200 x 100 mm, SMT. Furos de fio J1–J9 à mão." if V2 else "Placa 300 x 140 mm. Blocos na ordem do sinal, ainda sem fios.")',
         "\t)",
         "\t(lib_symbols",
     ]
@@ -1044,7 +1071,10 @@ def add_text(board, text, x, y, layer, size=1.6):
 
 def load_fp(fp_id):
     nick, name = fp_id.split(":", 1)
-    directory = os.path.join(FP, nick + ".pretty")
+    if nick == "VOZ9_Wire":
+        directory = os.path.join(ROOT, "footprints", nick + ".pretty")
+    else:
+        directory = os.path.join(FP, nick + ".pretty")
     fp = pcbnew.FootprintLoad(directory, name)
     if fp is None:
         raise SystemExit(f"footprint ausente: {fp_id}")
@@ -1062,18 +1092,28 @@ def write_board(path):
     # JLCPCB avisa seda a menos de 0,18 mm do pad. 0,25 mm fica fora dessa faixa.
     settings.m_SilkClearance = mm(0.25)
     tb = board.GetTitleBlock()
-    tb.SetTitle("VOZ-9 BASE")
-    tb.SetDate("2026-09-27")
-    tb.SetRevision("v.1")
-    tb.SetComment(0, "300 x 140 mm")
-    tb.SetComment(1, "Blocos junto do conector. Duas placas cabem numa chapa de 300 x 300.")
+    if V2:
+        tb.SetTitle("VOZ-9 v2 SMT")
+        tb.SetDate("2026-09-28")
+        tb.SetRevision("v.2")
+        tb.SetComment(0, "200 x 100 mm")
+        tb.SetComment(1, "SMT para montagem JLCPCB. Furos de fio J1–J9 e MP20 à mão.")
+        import v2
+
+        v2.apply_rules(board)
+    else:
+        tb.SetTitle("VOZ-9 BASE")
+        tb.SetDate("2026-09-27")
+        tb.SetRevision("v.1")
+        tb.SetComment(0, "300 x 140 mm")
+        tb.SetComment(1, "Blocos junto do conector. Duas placas cabem numa chapa de 300 x 300.")
 
     add_seg(board, 0, 0, W, 0, pcbnew.Edge_Cuts)
     add_seg(board, W, 0, W, H, pcbnew.Edge_Cuts)
     add_seg(board, W, H, 0, H, pcbnew.Edge_Cuts)
     add_seg(board, 0, H, 0, 0, pcbnew.Edge_Cuts)
 
-    add_text(board, "v.1", 150, 5.2, pcbnew.F_SilkS, 1.8)
+    add_text(board, "v.2" if V2 else "v.1", W / 2, 4.2 if V2 else 5.2, pcbnew.F_SilkS, 1.8)
     for text, x, y in notes:
         add_text(board, text, x, y, pcbnew.F_SilkS, 1.15)
 
@@ -1098,6 +1138,13 @@ def write_board(path):
                     height = 1.0
                 # JLCPCB: altura ≥ 1,0 mm, traço ≥ 0,15 mm, razão 1:6.
                 txt.SetTextThickness(mm(max(height / 6.0, 0.15)))
+        if p.get("swap_gs"):
+            # MMBFJ201 / MMBF5457: físico 1=D, 2=S, 3=G. Símbolo Q_NJFET_DGS é 1=D, 2=G, 3=S.
+            numbered = {pad.GetNumber(): pad for pad in fp.Pads() if pad.GetNumber()}
+            source = numbered["2"]
+            gate = numbered["3"]
+            source.SetNumber("3")
+            gate.SetNumber("2")
         if "TO-92" in p["fp"]:
             for pad in fp.Pads():
                 if pad.GetNumber() == "1":
@@ -1155,15 +1202,40 @@ def write_project(path):
     paths["netlist"] = "voz-9.net"
     paths["step"] = "voz-9.step"
     default = pro["net_settings"]["classes"][0]
-    default["track_width"] = 0.6
-    default["clearance"] = 0.35
+    if V2:
+        default["track_width"] = 0.2
+        default["clearance"] = 0.16
+        default["via_diameter"] = 0.6
+        default["via_drill"] = 0.3
+        for item in pro["net_settings"]["classes"]:
+            if item.get("name") == "POWER":
+                # A v1 pedia 0,28 mm no GND. Na v2 a trilha é 0,2 mm e a folga é 0,16.
+                item["clearance"] = 0.16
+                item["track_width"] = 0.3
+                item["via_diameter"] = 0.6
+                item["via_drill"] = 0.3
+        rules = pro["board"]["design_settings"]["rules"]
+        rules["min_track_width"] = 0.15
+        rules["min_via_diameter"] = 0.55
+        rules["min_through_hole_diameter"] = 0.25
+    else:
+        default["track_width"] = 0.6
+        default["clearance"] = 0.35
     with open(path, "w", encoding="utf-8") as fh:
         json.dump(pro, fh, indent=2)
         fh.write("\n")
 
 
 def main():
+    if "--v2" in sys.argv:
+        import v2
+
+        v2.activate(sys.modules[__name__])
     build_parts()
+    if V2:
+        import v2
+
+        v2.tune()
     assign_flow()
     check_parts()
     place_pins()
@@ -1171,9 +1243,14 @@ def main():
     check_placement()
     used = {p["sym"] for p in parts}
     embedded, meta = load_symbols(used)
-    write_board(os.path.join(ROOT, "voz-9.kicad_pcb"))
-    write_schematic(os.path.join(ROOT, "voz-9.kicad_sch"), embedded, meta)
-    write_project(os.path.join(ROOT, "voz-9.kicad_pro"))
+    os.makedirs(OUT, exist_ok=True)
+    write_board(os.path.join(OUT, "voz-9.kicad_pcb"))
+    write_schematic(os.path.join(OUT, "voz-9.kicad_sch"), embedded, meta)
+    write_project(os.path.join(OUT, "voz-9.kicad_pro"))
+    if V2:
+        import v2
+
+        v2.write_bom(os.path.join(OUT, "bom.csv"))
     print(f"ok  peças={len(parts)}  placa={W:.0f}x{H:.0f}  circuito até y={bottom:.1f}")
 
 

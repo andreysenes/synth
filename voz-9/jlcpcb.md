@@ -4,7 +4,9 @@ Arquivo para subir no [BOM Tool](https://jlcpcb.com/parts/bom-tool): **`jlcpcb-b
 
 Formato do [guia da JLCPCB](https://jlcpcb.com/help/article/bill-of-materials-for-pcb-assembly): `Comment`, `Designator`, `Footprint`, `LCSC Part #`.
 
-Lista de rua (Brasil, THT, fenolite): `bom.md`. Esta aqui é a **equivalente SMT / LCSC**, para ver preço e estoque e, no futuro, montar FR4.
+Lista de rua (Brasil, THT, fenolite): `bom.md`. Esta aqui é a **equivalente SMT / LCSC** da placa through-hole.
+
+A placa que a JLCPCB solda é outra: `v2.md`, 200×100 mm, arquivos em `kicad-v2/`. Não misture este CSV com o gerber da v2 — o BOM da montagem é `kicad-v2/bom.csv`.
 
 ---
 

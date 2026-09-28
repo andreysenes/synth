@@ -19,6 +19,14 @@ DSN = "/tmp/voz9-route/voz-9.dsn"
 SES = "/tmp/voz9-route/voz-9.ses"
 JAR = "/tmp/freerouting/freerouting.jar"
 
+
+def use_v2():
+    """Aponta o roteador para a placa SMT, sem mexer na v1."""
+    global BOARD, DSN, SES
+    BOARD = os.path.join(os.path.dirname(ROOT), "kicad-v2", "voz-9.kicad_pcb")
+    DSN = "/tmp/voz9-route-v2/voz-9.dsn"
+    SES = "/tmp/voz9-route-v2/voz-9.ses"
+
 # Pinos de propósito sem trilha.
 OPEN = {
     ("J1", "20"),
@@ -504,11 +512,12 @@ def run_router():
     cfg.setdefault("gui", {})["enabled"] = False
     cfg.setdefault("usage_and_diagnostic_data", {})["disable_analytics"] = True
     router = cfg.setdefault("router", {})
-    router["max_passes"] = 40
+    # O campo real é maxPasses. max_passes é ignorado e o padrão fica em 9999.
+    router["maxPasses"] = 30
     router["max_threads"] = 4
-    router["job_timeout"] = "01:00:00"
+    router["jobTimeoutString"] = "00:25:00"
     opt = router.setdefault("optimizer", {})
-    opt["max_passes"] = 15
+    opt["maxPasses"] = 8
     opt["max_threads"] = 4
     json_dump = __import__("json")
     with open(settings, "w", encoding="utf-8") as fh:
@@ -535,6 +544,8 @@ def stitch_open_nets(board):
 
     import stitch
 
+    if "kicad-v2" in BOARD:
+        stitch.use_smt()
     tmp = tempfile.NamedTemporaryFile(suffix=".kicad_pcb", delete=False)
     tmp.close()
     rpt = tempfile.NamedTemporaryFile(suffix=".rpt", delete=False)
@@ -549,7 +560,7 @@ def stitch_open_nets(board):
     done = 0
     for block in blocks:
         hits = re.findall(
-            r"@\(([0-9.]+) mm, ([0-9.]+) mm\): (?:Track|PTH pad|Via)[^\[]*\[([^\]]+)\]",
+            r"@\(([0-9.]+) mm, ([0-9.]+) mm\): (?:Track|PTH pad|SMD pad|Via)[^\[]*\[([^\]]+)\]",
             block,
         )
         if len(hits) < 2 or hits[0][2] != hits[1][2]:
@@ -593,6 +604,10 @@ def main():
     nets = collapse_aliases(raw)
     print(f"nets {len(nets)}  pins {sum(len(v) for v in nets.values())}")
     board = pcbnew.LoadBoard(BOARD)
+    if "kicad-v2" in BOARD:
+        import v2
+
+        v2.apply_rules(board)
     apply_nets(board, nets)
     missing = unconnected(board)
     print(f"pinos sem net: {len(missing)}")
@@ -618,4 +633,8 @@ def main():
 
 
 if __name__ == "__main__":
+    import sys
+
+    if "--v2" in sys.argv:
+        use_v2()
     main()

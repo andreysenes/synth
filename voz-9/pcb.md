@@ -1,5 +1,7 @@
 # VOZ-9 — uma placa no piso
 
+A versão SMT de 200×100 mm, para a JLCPCB montar, está em `v2.md`. Nela os J1–J9 são furos de 1,6 mm, não esta barra de 2,54 mm. O texto abaixo é a BASE through-hole de 300×140 mm.
+
 Uma fenolite no **fundo da caixa**. O painel (`painel.svg`) é só chapa. Na BASE, **J1–J9** são **pinos macho 1×N** (2,54 mm) na **borda de baixo**: o fio do painel entra direto no pino. CIs só em soquete. Sem FACE, sem flat, sem IDC, sem soquete fêmea.
 
 | Placa | Arquivo | Tamanho | Cobre | O que leva |

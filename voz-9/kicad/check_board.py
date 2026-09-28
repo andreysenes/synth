@@ -231,6 +231,8 @@ def check_pads(board, expect):
             continue
         for pad in fp.Pads():
             pin = pad.GetNumber()
+            if not pin:
+                continue
             key = (ref, pin)
             got = pad.GetNetname() or ""
             board_net[key] = got
@@ -331,8 +333,20 @@ def check_drc(path):
 
 
 def main():
+    import sys
+
+    if "--v2" in sys.argv:
+        route.use_v2()
+        import v2
+
+        v2.activate(gen_kicad)
+        gen_kicad.parts.clear()
+        gen_kicad.notes.clear()
+        gen_kicad.build_parts()
+        v2.tune()
+        gen_kicad.assign_flow()
     expect = expected_nets()
-    board = pcbnew.LoadBoard(BOARD)
+    board = pcbnew.LoadBoard(route.BOARD)
     errors = []
     errors += check_symbols()
     errors += check_required(expect)
@@ -341,7 +355,7 @@ def main():
     errors += check_two_pin(expect)
     errors += check_copper(board)
     errors += silk.check(board)
-    errors += check_drc(BOARD)
+    errors += check_drc(route.BOARD)
     if errors:
         fail(errors)
     parts = len({fp.GetReference() for fp in board.GetFootprints()})

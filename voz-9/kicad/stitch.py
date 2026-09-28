@@ -13,6 +13,20 @@ WIDTH = 0.5
 CLEAR = 0.35
 NEED = WIDTH / 2 + CLEAR
 VIA_R = 0.8
+VIA_W = 1.6
+VIA_D = 0.6
+
+
+def use_smt():
+    """Trilha e furo no tamanho da v2. A v1 continua com os valores de cima."""
+    global GRID, WIDTH, CLEAR, NEED, VIA_R, VIA_W, VIA_D
+    GRID = 0.25
+    WIDTH = 0.2
+    CLEAR = 0.16
+    NEED = WIDTH / 2 + CLEAR
+    VIA_R = 0.3
+    VIA_W = 0.6
+    VIA_D = 0.3
 
 
 def mm(value):
@@ -84,11 +98,10 @@ def route_pair(board, net_name, ax, ay, bx, by):
                             via_block.add((ix, iy))
             if pad.GetNetname() == net_name:
                 continue
-            block_both(
-                px,
-                py,
-                max(mm(pad.GetSize().x), mm(pad.GetSize().y)) / 2,
-            )
+            sx = mm(pad.GetSize().x)
+            sy = mm(pad.GetSize().y)
+            # O canto do pad fica fora do círculo do lado maior. Cobre o canto.
+            block_both(px, py, (sx * sx + sy * sy) ** 0.5 / 2)
     for item in board.GetTracks():
         if item.GetNetname() == net_name:
             continue
@@ -190,8 +203,8 @@ def route_pair(board, net_name, ax, ay, bx, by):
         if left[2] != right[2]:
             via = pcbnew.PCB_VIA(board)
             via.SetPosition(pcbnew.VECTOR2I(iu(right[0]), iu(right[1])))
-            via.SetWidth(iu(1.6))
-            via.SetDrill(iu(0.6))
+            via.SetWidth(iu(VIA_W))
+            via.SetDrill(iu(VIA_D))
             via.SetNet(net)
             board.Add(via)
             continue

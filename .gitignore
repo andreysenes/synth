@@ -1,2 +1,4 @@
-.DS_Store
-.cursor/
+# Ignore large local tool binaries (reinstall from Konnect releases)
+/tools/konnect/konnect
+*.kicad_sch.bak
+/voz-9/kicad/*.bak

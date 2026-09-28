@@ -8,7 +8,8 @@ Antes de posicionar, mover, rotacionar ou rotear qualquer item:
    `kicad-layout-agent.md`; para funções vindas do teste digital, leia também
    `sim/auditoria-requisitos.md`;
 2. trabalhe o esquema em `kicad/` (folhas hierárquicas `01-fonte` …
-   `12-conectores`); **não criar PCB** até validação humana (DEC-001/038);
+   `12-conectores`) com Konnect MCP quando disponível (`kicad/KONNECT.md`);
+   **não criar PCB** até validação humana (DEC-001/038);
 3. feche e obtenha aprovação humana do gate R0 de requisitos;
 4. execute o gate G0 de `kicad-layout-agent.md`;
 5. confirme o perfil de fabricação;

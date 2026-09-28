@@ -1,0 +1,2 @@
+kicad_cli = "/usr/bin/kicad-cli"
+# Schematic editing does not require IPC; PCB realtime needs KiCad 10 API.

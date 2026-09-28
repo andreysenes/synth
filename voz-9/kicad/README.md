@@ -3,6 +3,8 @@
 **Sem PCB nesta revisão.** PCB só após validação humana do esquema/netlist
 (DEC-001 / DEC-038).
 
+Edição em tempo real: ver `KONNECT.md` ([Konnect](https://github.com/mixelpixx/Konnect) v0.12.1).
+
 ## Abrir
 
 1. Abrir `voz-9.kicad_pro` no KiCad 7+.

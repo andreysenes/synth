@@ -1,5 +1,6 @@
 {
   "board": {
+    "3dviewports": [],
     "design_settings": {
       "defaults": {},
       "diff_pair_dimensions": [],
@@ -7,11 +8,224 @@
       "rules": {},
       "track_widths": [],
       "via_dimensions": []
-    }
+    },
+    "layer_presets": [],
+    "viewports": []
   },
   "boards": [],
   "cvpcb": {
     "equivalence_files": []
+  },
+  "erc": {
+    "erc_exclusions": [],
+    "meta": {
+      "version": 0
+    },
+    "pin_map": [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        2
+      ],
+      [
+        0,
+        2,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        2
+      ],
+      [
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        2,
+        1,
+        1,
+        2
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        2
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2
+      ],
+      [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        2
+      ],
+      [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        2
+      ],
+      [
+        0,
+        2,
+        1,
+        2,
+        0,
+        0,
+        1,
+        0,
+        2,
+        2,
+        2,
+        2
+      ],
+      [
+        0,
+        2,
+        0,
+        1,
+        0,
+        0,
+        1,
+        0,
+        2,
+        0,
+        0,
+        2
+      ],
+      [
+        0,
+        2,
+        1,
+        1,
+        0,
+        0,
+        1,
+        0,
+        2,
+        0,
+        0,
+        2
+      ],
+      [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ]
+    ],
+    "rule_severities": {
+      "bus_definition_conflict": "error",
+      "bus_entry_needed": "error",
+      "bus_to_bus_conflict": "error",
+      "bus_to_net_conflict": "error",
+      "conflicting_netclasses": "error",
+      "different_unit_footprint": "error",
+      "different_unit_net": "error",
+      "duplicate_reference": "error",
+      "duplicate_sheet_names": "error",
+      "endpoint_off_grid": "warning",
+      "extra_units": "error",
+      "global_label_dangling": "warning",
+      "hier_label_mismatch": "error",
+      "label_dangling": "error",
+      "lib_symbol_issues": "warning",
+      "missing_bidi_pin": "warning",
+      "missing_input_pin": "warning",
+      "missing_power_pin": "error",
+      "missing_unit": "warning",
+      "multiple_net_names": "warning",
+      "net_not_bus_member": "warning",
+      "no_connect_connected": "warning",
+      "no_connect_dangling": "warning",
+      "pin_not_connected": "error",
+      "pin_not_driven": "error",
+      "pin_to_pin": "warning",
+      "power_pin_not_driven": "error",
+      "similar_labels": "warning",
+      "simulation_model_issue": "ignore",
+      "unannotated": "error",
+      "unit_value_mismatch": "error",
+      "unresolved_variable": "error",
+      "wire_dangling": "error"
+    }
   },
   "libraries": {
     "pinned_footprint_libs": [],
@@ -49,29 +263,29 @@
         "line_style": 0,
         "microvia_diameter": 0.3,
         "microvia_drill": 0.1,
-        "name": "PWR_MAIN",
+        "name": "AUDIO",
         "pcb_color": "rgba(0, 0, 0, 0.000)",
         "schematic_color": "rgba(0, 0, 0, 0.000)",
-        "track_width": 1.0,
-        "via_diameter": 0.8,
-        "via_drill": 0.4,
+        "track_width": 0.3,
+        "via_diameter": 0.6,
+        "via_drill": 0.3,
         "wire_width": 6
       },
       {
         "bus_width": 12,
-        "clearance": 0.25,
+        "clearance": 0.4,
         "diff_pair_gap": 0.25,
         "diff_pair_via_gap": 0.25,
         "diff_pair_width": 0.2,
         "line_style": 0,
         "microvia_diameter": 0.3,
         "microvia_drill": 0.1,
-        "name": "PWR_LOCAL",
+        "name": "CONTROL_HIZ",
         "pcb_color": "rgba(0, 0, 0, 0.000)",
         "schematic_color": "rgba(0, 0, 0, 0.000)",
-        "track_width": 0.6,
-        "via_diameter": 0.7,
-        "via_drill": 0.35,
+        "track_width": 0.3,
+        "via_diameter": 0.6,
+        "via_drill": 0.3,
         "wire_width": 6
       },
       {
@@ -100,12 +314,29 @@
         "line_style": 0,
         "microvia_diameter": 0.3,
         "microvia_drill": 0.1,
-        "name": "AUDIO",
+        "name": "PWR_LOCAL",
         "pcb_color": "rgba(0, 0, 0, 0.000)",
         "schematic_color": "rgba(0, 0, 0, 0.000)",
-        "track_width": 0.3,
-        "via_diameter": 0.6,
-        "via_drill": 0.3,
+        "track_width": 0.6,
+        "via_diameter": 0.7,
+        "via_drill": 0.35,
+        "wire_width": 6
+      },
+      {
+        "bus_width": 12,
+        "clearance": 0.25,
+        "diff_pair_gap": 0.25,
+        "diff_pair_via_gap": 0.25,
+        "diff_pair_width": 0.2,
+        "line_style": 0,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "name": "PWR_MAIN",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 1.0,
+        "via_diameter": 0.8,
+        "via_drill": 0.4,
         "wire_width": 6
       },
       {
@@ -124,28 +355,14 @@
         "via_diameter": 0.6,
         "via_drill": 0.3,
         "wire_width": 6
-      },
-      {
-        "bus_width": 12,
-        "clearance": 0.4,
-        "diff_pair_gap": 0.25,
-        "diff_pair_via_gap": 0.25,
-        "diff_pair_width": 0.2,
-        "line_style": 0,
-        "microvia_diameter": 0.3,
-        "microvia_drill": 0.1,
-        "name": "CONTROL_HIZ",
-        "pcb_color": "rgba(0, 0, 0, 0.000)",
-        "schematic_color": "rgba(0, 0, 0, 0.000)",
-        "track_width": 0.3,
-        "via_diameter": 0.6,
-        "via_drill": 0.3,
-        "wire_width": 6
       }
     ],
     "meta": {
-      "version": 2
-    }
+      "version": 3
+    },
+    "net_colors": null,
+    "netclass_assignments": null,
+    "netclass_patterns": []
   },
   "pcbnew": {
     "last_paths": {
@@ -154,6 +371,7 @@
       "netlist": "",
       "specctra_dsn": "",
       "spread_fritzing": "",
+      "step": "",
       "svg": "",
       "vrml": ""
     },
@@ -190,59 +408,61 @@
     "spice_model_current_sheet_as_root": true,
     "spice_save_all_currents": false,
     "spice_save_all_voltages": false,
+    "subpart_first_id": 65,
+    "subpart_id_separator": 0,
     "subsheet_field_names": []
   },
   "sheets": [
     [
-      "Indice",
+      "68b46703-1752-47e9-a4b3-149be27e5dad",
       "voz-9.kicad_sch"
     ],
     [
-      "Fonte",
+      "43604576-ea97-474a-823f-feca06a810e9",
       "01-fonte.kicad_sch"
     ],
     [
-      "Osciladores",
+      "6152e65b-7b47-4ade-9514-b246f6be29dc",
       "02-osc.kicad_sch"
     ],
     [
-      "Noise",
+      "a44015de-b6de-4e73-adfe-4d59ea5c3532",
       "03-noise.kicad_sch"
     ],
     [
-      "Mix + EQ",
+      "a6c304eb-ce3c-4d8b-8df9-519f1de50bed",
       "04-mix-eq.kicad_sch"
     ],
     [
-      "Shape",
+      "f582f279-ccf4-4246-83e1-5a82ef2afacf",
       "05-shape.kicad_sch"
     ],
     [
-      "VCF",
+      "00c0d582-fea7-4836-bc5c-551f20025825",
       "06-vcf.kicad_sch"
     ],
     [
-      "VCA",
+      "ac3635dc-e017-4076-b32d-f608a75d3c1a",
       "07-vca.kicad_sch"
     ],
     [
-      "LFO",
+      "cb9fbb5f-eec5-488b-aaf2-16b79045b79c",
       "08-lfo.kicad_sch"
     ],
     [
-      "Echo",
+      "d57f593a-ccda-41e2-b18b-4e190980b5f3",
       "09-echo.kicad_sch"
     ],
     [
-      "Sa\u00edda + VU",
+      "2f5ec6c8-43c9-440e-8fb7-74c8c5021f6a",
       "10-saida.kicad_sch"
     ],
     [
-      "Indicadores",
+      "3a00b3a5-8ff9-4514-b510-fa5f31f5f425",
       "11-indicadores.kicad_sch"
     ],
     [
-      "Conectores",
+      "70eec94a-f0e7-4d8c-9e4b-87883373a8b5",
       "12-conectores.kicad_sch"
     ]
   ],

@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "konnect": {
+      "command": "/workspace/tools/konnect/konnect",
+      "args": ["--config", "/workspace/konnect.toml"],
+      "env": {
+        "RUST_LOG": "info"
+      }
+    }
+  }
+}

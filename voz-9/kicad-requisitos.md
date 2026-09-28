@@ -163,7 +163,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 | IF-002 | MUST | A pinagem de J1–J9 deve corresponder integralmente às tabelas de `pcb.md`; NC deve permanecer sem conexão. | `pcb.md` §§J1–J9 | comparação pin a pin | PROPOSTO |
 | IF-003 | MUST | Pino 1 deve ter pad quadrado, marca visível e orientação coerente em todos os headers. | `pcb.md` | inspeção 2D/1:1 | PROPOSTO |
 | IF-004 | MUST | Fêmea fica na BASE, macho no painel, passo 2,54 mm, sem troca entre chicotes. | `pcb.md` | inspeção e encaixe físico | PROPOSTO |
-| IF-005 | MUST | J6/P4-GND deve ter continuidade com malha; P4-TIP não pode apresentar curto com GND. | `pcb.md` | ohmímetro antes de energizar | PROPOSTO |
+| IF-005 | MUST | J6/P4-GND deve ter continuidade com a malha/sleeve dos jacks pelo chicote; P4-TIP não pode apresentar curto com GND. | `pcb.md` | ohmímetro antes de energizar | PROPOSTO |
 | IF-006 | MUST | Entrada XLR não suporta phantom 48 V; aviso deve permanecer na documentação do produto. | `componentes.md` | revisão documental | PROPOSTO |
 | IF-007 | MUST | Knobs, botões, jacks e demais interfaces de painel aprovadas devem ligar à BASE por chicotes; não fazem parte da PCBA SMD. | decisão do produto | esquema, pinout e inspeção | APROVADO |
 | IF-008 | MUST | Cada peça de interface/manual deve ter fabricante/modelo ou desenho dimensional aprovado antes do footprint final. | decisões DEC-004/005 | datasheet, medidas e impressão 1:1 | APROVADO |
@@ -174,6 +174,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 | IF-013 | MUST | J1–J9 preservam as interfaces existentes; J10 será acrescentado exclusivamente para o VU analógico e sua iluminação opcional. | VU-006 | esquema, pinout e continuidade | APROVADO |
 | IF-014 | MUST | J11 será dedicado aos nove LEDs novos e aos sinais/alimentação necessários; não misturar essas correntes em J7/J9 ou retornos de áudio. | LED-010 | esquema, pinout e continuidade | APROVADO |
 | IF-015 | MUST | P4 (9 V) e os combos IN/OUT ficam no faceplate de alumínio, junto com pots, alavancas, patches, VU e LEDs; a caixa não recebe conectores de áudio/alimentação na traseira neste baseline. | decisão DEC-032 | desenho de painel e inspeção | APROVADO |
+| IF-016 | MUST | O faceplate de alumínio fica ligado ao GND da BASE por **dois caminhos**: (1) contato condutivo das **porcas/bushings** dos jacks com a chapa; (2) **fio isolado dedicado** de bonding do alumínio a um ponto GND da BASE. Sleeves/malhas continuam pelos pinouts dos chicotes. | decisão DEC-033 | ohmímetro faceplate↔GND e continuidade sleeve→GND | APROVADO |
 
 ## 6. Requisitos mecânicos
 
@@ -185,6 +186,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 | MEC-012 | MUST | Altura interna provisória da caixa de **60,00 mm**, dimensionada para ~35 mm de VU, peças altas da BASE e folga mínima de 5 mm; revisar após ACT-007 se a pilha medida ultrapassar o orçamento. | VU-014, DEC-029 | mockup 3D/físico e medição da amostra | APROVADO |
 | MEC-013 | MUST | Paredes da caixa com **15–18 mm**; envelope externo provisório **336,00 × 336,00 mm** (parede nominal 18 mm), aceitando **330–336 mm** conforme a madeira escolhida; o faceplate de 300 × 300 mm encaixa no topo. | decisão DEC-030 | desenho mecânico e mockup | APROVADO |
 | MEC-014 | MUST | O faceplate de alumínio deve ser rígido o bastante para porcas de pots/jacks sem flexão excessiva; bushings e comprimento de rosca devem ser escolhidos para a espessura final (1,5–2,0 mm). | decisão DEC-031 | inspeção mecânica e mockup | APROVADO |
+| MEC-015 | MUST | Porcas/bushings dos jacks devem fazer contato elétrico confiável com o alumínio (arruela dentada/estrela ou equivalente limpo de óxido); prever olhal/parafuso para o fio isolado de bonding. | decisão DEC-033 | ohmímetro e inspeção 1:1 | APROVADO |
 | MEC-003 | MUST | Manter cobre a 3,0 mm da borda dos furos M3, salvo aterramento deliberado aprovado. | playbook §2 | DRC/inspeção | PROPOSTO |
 | MEC-004 | MUST | J1–J9 devem permanecer acessíveis na faixa esquerda, com ao menos 10 mm livres na direção de saída dos cabos. | `pcb.md`, playbook §3 | medida/inspeção 3D | PROPOSTO |
 | MEC-005 | MUST | Nenhum corpo/courtyard pode invadir borda, arruela, espaçador ou impedir remoção de CI em soquete. | playbook §3 | DRC, 3D e 1:1 | PROPOSTO |
@@ -225,6 +227,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 | RTE-009 | MUST | Nets OSC timing, LFO, CLK e PT2399 pino 6 devem ser curtas e separadas de MIC_LOW; meta de 3 mm quando possível. | playbook §7 | inspeção/medição | PROPOSTO |
 | RTE-010 | MUST | Zonas devem ter net explícita, thermal adequado a solda manual e zero ilha não conectada. | playbook §8 | DRC/inspeção | PROPOSTO |
 | RTE-011 | MUST | Zero net não roteada no G5; qualquer jumper deliberado deve existir no esquema, BOM e PCB. | playbook G5 | DRC/ratsnest | PROPOSTO |
+| RTE-012 | MUST | Incluir fio isolado dedicado de bonding do faceplate ao plano GND da BASE, além do contato pelas porcas; o retorno de áudio dos sleeves continua pelos pinouts J1–J11 e não deve depender só do chassi. | decisão DEC-033 | esquema, netlist, ohmímetro e inspeção | APROVADO |
 
 ## 9. Requisitos de fabricação, montagem e manutenção
 
@@ -316,6 +319,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 | DEC-030 | Paredes 15–18 mm; envelope externo provisório 336 × 336 mm (faixa 330–336). | RESOLVIDA |
 | DEC-031 | Faceplate de alumínio 1,5–2,0 mm (nominal provisório 2,00 mm). | RESOLVIDA |
 | DEC-032 | P4 e combos IN/OUT no faceplate (sem conectores de áudio/alimentação na traseira). | RESOLVIDA |
+| DEC-033 | Faceplate ligado ao GND pelas porcas/bushings e por fio isolado dedicado. | RESOLVIDA |
 
 ### Ações técnicas bloqueantes
 
@@ -337,7 +341,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 Checklist de saída:
 
 - [x] Escopo e perfil de fabricação aprovados.
-- [x] Decisões DEC-001–DEC-032 registradas.
+- [x] Decisões DEC-001–DEC-033 registradas.
 - [ ] Todos os requisitos `MUST` têm fonte, critério e método de verificação.
 - [ ] Conflitos com `README.md`, `esquema.md`, `pcb.md`, BOM e datasheets foram
       resolvidos.

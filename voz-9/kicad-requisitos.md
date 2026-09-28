@@ -187,7 +187,8 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 | MEC-013 | MUST | Paredes da caixa com **15–18 mm**; envelope externo provisório **336,00 × 336,00 mm** (parede nominal 18 mm), aceitando **330–336 mm** conforme a madeira escolhida; o faceplate de 300 × 300 mm encaixa no topo. | decisão DEC-030 | desenho mecânico e mockup | APROVADO |
 | MEC-014 | MUST | O faceplate de alumínio deve ser rígido o bastante para porcas de pots/jacks sem flexão excessiva; bushings e comprimento de rosca devem ser escolhidos para a espessura final (1,5–2,0 mm). | decisão DEC-031 | inspeção mecânica e mockup | APROVADO |
 | MEC-015 | MUST | Porcas/bushings dos jacks devem fazer contato elétrico confiável com o alumínio (arruela dentada/estrela ou equivalente limpo de óxido); prever olhal/parafuso para o fio isolado de bonding. | decisão DEC-033 | ohmímetro e inspeção 1:1 | APROVADO |
-| MEC-016 | SHOULD | Acabamento superficial do faceplate (anodização, pintura ou cru) fica **adiado**; não bloqueia esquema nem PCB BASE; fecha antes do desenho final de painel/arte. | decisão DEC-034 | revisão de produto | ADIADO |
+| MEC-016 | SHOULD | Acabamento base do faceplate (anodização, escovado, pintura) permanece **adiado** quando não conflitar com a silk; a arte silk (DEC-036) fecha independentemente. | decisão DEC-034 | revisão de produto | ADIADO |
+| MEC-017 | MUST | Legendas e diagramação do faceplate usam **silkscreen direto no alumínio** (tinta de alto contraste); referência visual de densidade/blocos em `refs/faceplate-silk-reference.png` — não copiar arte de terceiros. | decisão DEC-036 | arte de painel e protótipo impresso | APROVADO |
 | MEC-003 | MUST | Manter cobre a 3,0 mm da borda dos furos M3, salvo aterramento deliberado aprovado. | playbook §2 | DRC/inspeção | PROPOSTO |
 | MEC-004 | MUST | J1–J11 ficam na **borda inferior** da BASE (lado dos furos em y≈146 mm), com ao menos **10 mm** livres na direção de saída dos cabos. | decisão DEC-035 | medida/inspeção 3D | APROVADO |
 | MEC-005 | MUST | Nenhum corpo/courtyard pode invadir borda, arruela, espaçador ou impedir remoção de CI em soquete. | playbook §3 | DRC, 3D e 1:1 | PROPOSTO |
@@ -324,6 +325,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 | DEC-033 | Faceplate ligado ao GND pelas porcas/bushings e por fio isolado dedicado. | RESOLVIDA |
 | DEC-034 | Acabamento do faceplate adiado para depois do baseline elétrico/mecânico. | ADIADA |
 | DEC-035 | Headers J1–J11 na borda inferior da PCB, ordenados pela lógica do sinal. | RESOLVIDA |
+| DEC-036 | Legendas do faceplate em silkscreen direto no alumínio; referência visual em refs/faceplate-silk-reference.png. | RESOLVIDA |
 
 ### Ações técnicas bloqueantes
 
@@ -345,7 +347,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 Checklist de saída:
 
 - [x] Escopo e perfil de fabricação aprovados.
-- [x] Decisões DEC-001–DEC-035 registradas (DEC-034 adiada).
+- [x] Decisões DEC-001–DEC-036 registradas (DEC-034 adiada).
 - [ ] Todos os requisitos `MUST` têm fonte, critério e método de verificação.
 - [ ] Conflitos com `README.md`, `esquema.md`, `pcb.md`, BOM e datasheets foram
       resolvidos.

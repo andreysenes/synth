@@ -134,6 +134,10 @@ Requisitos mínimos:
 - falha ou desconexão do VU não pode interromper nem degradar a saída;
 - referência de 0 VU, balística, modo da iluminação, consumo, profundidade e
   recorte devem ser aprovados/medidos antes do esquema final.
+- o manual classifica o medidor como frágil e exige ambiente seco; fixação,
+  alívio de tração, embalagem e comissionamento devem refletir isso.
+- a instrução genérica de conexão ao áudio não substitui o driver/retificador
+  protegido requerido pelo projeto.
 
 ## 6. Inconsistências encontradas
 

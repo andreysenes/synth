@@ -236,11 +236,35 @@ No VOZ-9 **não amplifica**. Base e coletor juntos = um diodo de duas pernas.
 
 **Ideia.** Diodo que emite luz. Sempre com resistor (aqui 4k7): senão puxa corrente até queimar. Vf ~2 V; o 4k7 em 9 V limita a uns 1,5 mA — visível, não ofusca.
 
-**No VOZ-9.** No painel. Ânodo e cátodo saem no **J6** pinos 1–2 (4k7 já na placa).
+**No VOZ-9.** O POWER sai no **J6** pinos 1–2. O baseline KiCad acrescenta
+nove indicadores no J11: CLIP, GATE/ENV, LFO, OSC A/B, H1–H3 e STACK. Todos
+são vermelhos difusos de 3 mm, alvo de 1,5 mA; os estados de chaves usam polo
+isolado e os três estados dinâmicos usam drivers discretos.
 
 **Banco.** Fonte boa + 1N5817 no sentido certo = acende. Apagado: fonte, jack P4 ou o 4k7.
 
 **Datasheet.** Qualquer 3 mm, ex. [Kingbright L-7104](https://www.kingbrightusa.com/images/catalog/SPEC/L-7104ID.pdf)
+
+---
+
+### VU analógico — nível de saída
+
+**Ideia.** Galvanômetro de painel que mostra o nível médio do áudio. O modelo
+escolhido tem frente nominal de **35 × 35 mm**, movimento de **500 µA**,
+resistência de **630 Ω** e escala −20…+5 VU. Fundo de escala elétrico:
+`0,0005 A × 630 Ω ≈ 0,315 V DC`.
+
+**No VOZ-9.** Mede pós-VOLUME, antes dos pads de saída, por driver/retificador
+de alta impedância na BASE. J10 leva `M+`, `M−`, `L+` e `L−`. A luz quente é
+filamento de 6–12 V; a corrente real deve ser medida antes de ligar em V9.
+
+**Banco.** Nunca ligue o movimento diretamente à saída. Injete nível conhecido,
+ajuste o trim, confira repetibilidade e impeça que sobrecarga mantenha o ponteiro
+batendo no fim. Meça também corrente e temperatura da lâmpada.
+
+**Mecânica.** É frágil. Comprar uma amostra antes do painel final, medir corpo,
+profundidade, furos e recorte com paquímetro, usar alívio de tração e manter
+seco.
 
 ---
 

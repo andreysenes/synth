@@ -114,6 +114,10 @@ no plano de teste e largura de banda registrada.
 | VU-012 | MUST | J10 deve fornecer quatro circuitos identificados: movimento `M+`/`M−` e iluminação `L+`/`L−`, sem usar retorno de áudio como condutor de potência. | arquitetura VU | esquema, pinout e continuidade | APROVADO |
 | VU-013 | MUST | O driver deve limitar/proteger o movimento de 500 µA e oferecer trim de calibração; sobrecarga de entrada não pode bater o ponteiro continuamente no fim de escala. | boa prática de instrumento | cálculo, simulação e teste | APROVADO |
 | VU-014 | MUST | Corpo, profundidade, furos, recorte, corrente real da lâmpada e tolerâncias de 1–3 mm da listagem devem ser medidos numa amostra antes do painel final. | listagem sem desenho técnico | paquímetro e mockup 1:1 | BLOQUEADO |
+| VU-015 | MUST | O medidor é frágil: painel, fixação e embalagem devem impedir esforço no corpo, terminais, ponteiro e lente; chicote precisa de alívio de tração. | manual do produto | inspeção mecânica e transporte | APROVADO |
+| VU-016 | MUST | Manter seco; operação e armazenamento seguem DEC-010, sem umidade ou condensação. | manual do produto | revisão ambiental | APROVADO |
+| VU-017 | MUST | Comissionamento deve verificar alimentação da luz entre 6–12 V, aplicar nível de áudio conhecido, ajustar calibração e observar estabilidade/repetibilidade. | manual do produto | procedimento de bancada | APROVADO |
+| VU-018 | MUST | A instrução genérica “conectar ao equipamento de áudio” não autoriza ligação direta do movimento; o sinal deve passar pelo driver/retificador protegido da BASE. | análise de engenharia | esquema e teste de sobrecarga | APROVADO |
 
 ## 4.3 Requisitos dos LEDs indicadores
 

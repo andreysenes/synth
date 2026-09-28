@@ -68,7 +68,7 @@ Passivos **0805 1 %** da biblioteca **Basic** (sem taxa extra de peça). CIs em 
 | 1 | fio 24 AWG 10 m | chicotes painel → BASE |
 | 9 | fêmea/macho 2×N (3 / 6 / 8 / 10) | J1–J9, passo 2,54 mm |
 | 8 | soquete DIP | U1–U4, U6–U8, **U9** — some se for SOP |
-| 1 | caixa + face 220×160 | legado; baseline KiCad: face 300×300, caixa ~336×336 / altura 60 mm, PCB 200×150 |
+| 1 | caixa + face 220×160 | legado; baseline KiCad: face Al 300×300×~2, caixa ~336×336 / altura 60 mm, PCB 200×150 |
 | 1 | fenolite 220×160 | legado; baseline KiCad é FR-4 JLCPCB 200×150 |
 
 Essas linhas **não** estão no CSV de propósito: o tool marcaria unmatched e sujaria o preço.

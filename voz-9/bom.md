@@ -171,7 +171,7 @@ Lista do circuito **inteiro**. ~R$ 0,10–0,25 a unidade. Pacote fechado ~**16,0
 | 1 | fenolite simples 250×200 mm | PCB BASE (cortar 220×160) | 12,00 | **12,00** |
 | 5 | soquete DIP-8 | U1 5532 · U2 osc · U3 NAB · U4 7660 · **U9 EQ voz** | 1,50 | **7,50** |
 | 3 | soquete DIP-16 | PT2399 H1, H2 e H3 | 1,50 | **4,50** |
-| 1 | caixa + face 220×160 | referência legada; baseline KiCad é face 300×300, caixa ~336×336×60, PCB 200×150 | 80,00 | **80,00** |
+| 1 | caixa + face 220×160 | referência legada; baseline KiCad é face Al 300×300×~2, caixa ~336×336×60, PCB 200×150 | 80,00 | **80,00** |
 
 **104,00.** Uma placa no piso. CIs nos soquetes. Sem FACE, sem IDC, sem flat. O pré é o NE5532 em diferencial; a saída XLR é pad + quase-balanceado (`pre-vocal.md`).
 

@@ -6,8 +6,9 @@
 > interfaces, dimensões e intenção funcional; não copie tecnologia, footprints
 > ou regras de fabricação sem reconciliar com o baseline. A versão KiCad
 > também usa faceplate de alumínio 300 × 300 × ~2 mm, caixa ~336 × 336 mm /
-> altura interna 60 mm, PCB 200 × 150 mm, VU analógico/J10 e indicadores/J11,
-> ausentes neste desenho legado.
+> altura interna 60 mm, PCB 200 × 150 mm, headers J1–J11 na borda inferior por
+> lógica do sinal, VU analógico/J10 e indicadores/J11, ausentes neste desenho
+> legado. A coluna esquerda de chicotes deste SVG é **legado**.
 
 Uma fenolite no **fundo da caixa**. O painel (`painel.svg`) é só chapa. **Nove** chicotes 2×N (2,54 mm): **fêmea na BASE**, **macho no painel**. CIs só em soquete. Sem FACE, sem flat, sem IDC.
 

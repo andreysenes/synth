@@ -189,7 +189,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 | MEC-015 | MUST | Porcas/bushings dos jacks devem fazer contato elétrico confiável com o alumínio (arruela dentada/estrela ou equivalente limpo de óxido); prever olhal/parafuso para o fio isolado de bonding. | decisão DEC-033 | ohmímetro e inspeção 1:1 | APROVADO |
 | MEC-016 | SHOULD | Acabamento superficial do faceplate (anodização, pintura ou cru) fica **adiado**; não bloqueia esquema nem PCB BASE; fecha antes do desenho final de painel/arte. | decisão DEC-034 | revisão de produto | ADIADO |
 | MEC-003 | MUST | Manter cobre a 3,0 mm da borda dos furos M3, salvo aterramento deliberado aprovado. | playbook §2 | DRC/inspeção | PROPOSTO |
-| MEC-004 | MUST | J1–J9 devem permanecer acessíveis na faixa esquerda, com ao menos 10 mm livres na direção de saída dos cabos. | `pcb.md`, playbook §3 | medida/inspeção 3D | PROPOSTO |
+| MEC-004 | MUST | J1–J11 ficam na **borda inferior** da BASE (lado dos furos em y≈146 mm), com ao menos **10 mm** livres na direção de saída dos cabos. | decisão DEC-035 | medida/inspeção 3D | APROVADO |
 | MEC-005 | MUST | Nenhum corpo/courtyard pode invadir borda, arruela, espaçador ou impedir remoção de CI em soquete. | playbook §3 | DRC, 3D e 1:1 | PROPOSTO |
 | MEC-006 | MUST | Trimpots, testpoints e conectores devem ser acessíveis com a placa instalada. | `pcb.md`, playbook | inspeção mecânica | PROPOSTO |
 | MEC-007 | MUST | Footprints devem ser validados com código LCSC, datasheet ou medidas da peça manual; “parecido” não aprova. | decisões DEC-004/005, playbook §10 | comparação dimensional e 1:1 | APROVADO |
@@ -212,6 +212,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 | PLC-009 | SHOULD | O fluxo físico deve ser reconhecível e manter blocos funcionais, sem compactação que piore isolamento ou manutenção. | playbook §§4 e 9 | revisão humana | PROPOSTO |
 | PLC-010 | MUST | Driver e conector do VU devem ficar na zona de saída, afastados de U1/J7; retorno e alimentação não podem contaminar MIC_LOW. | VU-005 | revisão de layout | APROVADO |
 | PLC-011 | MUST | Drivers de CLIP, GATE/ENV e LFO e J11 devem ficar junto de suas fontes/saída de painel, com retorno dedicado; não alongar nós analógicos de alta impedância. | LED-003–010 | revisão de layout | APROVADO |
+| PLC-012 | MUST | Ao longo da borda inferior, J1–J11 devem ser ordenados pela **lógica do sinal** (blocos funcionais / cadeia de áudio), evitando cruzamento desnecessário de chicotes e mantendo pré/mic afastados de clock/PT2399/VU. | decisão DEC-035 | inspeção e revisão humana | APROVADO |
 
 ## 8. Requisitos de roteamento e terra
 
@@ -322,6 +323,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 | DEC-032 | P4 e combos IN/OUT no faceplate (sem conectores de áudio/alimentação na traseira). | RESOLVIDA |
 | DEC-033 | Faceplate ligado ao GND pelas porcas/bushings e por fio isolado dedicado. | RESOLVIDA |
 | DEC-034 | Acabamento do faceplate adiado para depois do baseline elétrico/mecânico. | ADIADA |
+| DEC-035 | Headers J1–J11 na borda inferior da PCB, ordenados pela lógica do sinal. | RESOLVIDA |
 
 ### Ações técnicas bloqueantes
 
@@ -343,7 +345,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 Checklist de saída:
 
 - [x] Escopo e perfil de fabricação aprovados.
-- [x] Decisões DEC-001–DEC-034 registradas (DEC-034 adiada).
+- [x] Decisões DEC-001–DEC-035 registradas (DEC-034 adiada).
 - [ ] Todos os requisitos `MUST` têm fonte, critério e método de verificação.
 - [ ] Conflitos com `README.md`, `esquema.md`, `pcb.md`, BOM e datasheets foram
       resolvidos.

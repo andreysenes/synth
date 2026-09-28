@@ -45,7 +45,7 @@ decay do envelope; LFO pisca de forma binária e apaga com TREM no centro/OFF.
 
 ## Painel
 
-**Um módulo só**, caixa de mesa. A referência legada usa faceplate **220 × 160 mm**; o baseline KiCad usa faceplate de alumínio **300 × 300 × ~2 mm** e caixa externa a ela (envelope provisório **336 × 336 mm**, paredes 15–18 mm, altura interna **60 mm**). A BASE mede **200 × 150 mm** e fica no fundo. **P4 e combos IN/OUT ficam no faceplate**, com o restante dos controles. O alumínio liga-se ao GND pelas **porcas** e por **fio isolado dedicado**. J1–J9 são a referência legada; o baseline acrescenta **J10 para o VU analógico e J11 para indicadores**.
+**Um módulo só**, caixa de mesa. A referência legada usa faceplate **220 × 160 mm**; o baseline KiCad usa faceplate de alumínio **300 × 300 × ~2 mm** e caixa externa a ela (envelope provisório **336 × 336 mm**, paredes 15–18 mm, altura interna **60 mm**). A BASE mede **200 × 150 mm** e fica no fundo. **P4 e combos IN/OUT ficam no faceplate**, com o restante dos controles. O alumínio liga-se ao GND pelas **porcas** e por **fio isolado dedicado**. Headers **J1–J11 na borda inferior**, ordenados pela lógica do sinal. J1–J9 são a referência de pinagem legada; o baseline acrescenta **J10 para o VU analógico e J11 para indicadores**.
 
 ```
  IN  PRE  OSC IN | LED 9V          OSC A  AMOUNT  OSC B

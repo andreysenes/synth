@@ -160,8 +160,8 @@ fabricação artesanal e reparabilidade.
 Travar antes do placement:
 
 - `Edge.Cuts`, furos M3 e keepouts;
-- J1–J9 e os novos J10/J11 na faixa de conectores, acessíveis aos chicotes de
-  8–12 cm;
+- J1–J11 na **borda inferior** da PCB, ordenados pela lógica do sinal, com
+  chicotes de 8–12 cm acessíveis;
 - pino 1 visível e coerente com `pcb.md`;
 - margem para inserir/remover conectores e eventuais CIs em soquete;
 - área para alicate, ponta de prova e chave nos trimpots;

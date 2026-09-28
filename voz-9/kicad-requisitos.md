@@ -15,7 +15,7 @@ Texto gerado pelo agente não aprova requisito: a decisão final é humana.
 | Campo | Valores |
 | --- | --- |
 | Prioridade | `MUST` obrigatório · `SHOULD` desejável · `MAY` opcional |
-| Estado | `PROPOSTO` · `APROVADO` · `BLOQUEADO` · `FALHOU` · `VERIFICADO` |
+| Estado | `PROPOSTO` · `APROVADO` · `BLOQUEADO` · `ADIADO` · `FALHOU` · `VERIFICADO` |
 | Verificação | inspeção · ERC/DRC · cálculo · simulação · medição · teste funcional |
 
 Regras:

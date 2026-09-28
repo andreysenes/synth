@@ -4,7 +4,7 @@ Alimentação simples, 9 V centro-negativo. Referência de áudio em 4,5 V. O MA
 
 Quantidades e compra: `bom.md`. Tudo novo — um instrumento = uma lista.
 
-A mecânica legada descrita em `pcb.md` usa 220 × 160 mm. O baseline KiCad usa faceplate de alumínio 300 × 300 × ~2 mm, caixa externa ~336 × 336 mm (paredes 15–18 mm, altura interna provisória 60 mm) e BASE de 200 × 150 mm (`kicad-requisitos.md`). O painel só fura; chicotes ligam a BASE. **Um módulo** de mesa.
+A mecânica legada descrita em `pcb.md` usa 220 × 160 mm. O baseline KiCad usa faceplate de alumínio 300 × 300 × ~2 mm (com P4 e combos no topo), caixa externa ~336 × 336 mm (paredes 15–18 mm, altura interna provisória 60 mm) e BASE de 200 × 150 mm (`kicad-requisitos.md`). O painel só fura; chicotes ligam a BASE. **Um módulo** de mesa.
 
 ---
 

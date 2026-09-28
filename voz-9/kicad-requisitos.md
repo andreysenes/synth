@@ -173,6 +173,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 | IF-012 | MUST | COMBO IN/OUT, P4 e LED piloto continuam obrigatórios embora não estejam desenhados no SVG interno de `painel.html`. | auditoria digital §§2/6 | painel, esquema e inspeção | APROVADO |
 | IF-013 | MUST | J1–J9 preservam as interfaces existentes; J10 será acrescentado exclusivamente para o VU analógico e sua iluminação opcional. | VU-006 | esquema, pinout e continuidade | APROVADO |
 | IF-014 | MUST | J11 será dedicado aos nove LEDs novos e aos sinais/alimentação necessários; não misturar essas correntes em J7/J9 ou retornos de áudio. | LED-010 | esquema, pinout e continuidade | APROVADO |
+| IF-015 | MUST | P4 (9 V) e os combos IN/OUT ficam no faceplate de alumínio, junto com pots, alavancas, patches, VU e LEDs; a caixa não recebe conectores de áudio/alimentação na traseira neste baseline. | decisão DEC-032 | desenho de painel e inspeção | APROVADO |
 
 ## 6. Requisitos mecânicos
 
@@ -314,6 +315,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 | DEC-029 | Altura interna provisória da caixa de 60 mm. | RESOLVIDA |
 | DEC-030 | Paredes 15–18 mm; envelope externo provisório 336 × 336 mm (faixa 330–336). | RESOLVIDA |
 | DEC-031 | Faceplate de alumínio 1,5–2,0 mm (nominal provisório 2,00 mm). | RESOLVIDA |
+| DEC-032 | P4 e combos IN/OUT no faceplate (sem conectores de áudio/alimentação na traseira). | RESOLVIDA |
 
 ### Ações técnicas bloqueantes
 
@@ -335,7 +337,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 Checklist de saída:
 
 - [x] Escopo e perfil de fabricação aprovados.
-- [x] Decisões DEC-001–DEC-031 registradas.
+- [x] Decisões DEC-001–DEC-032 registradas.
 - [ ] Todos os requisitos `MUST` têm fonte, critério e método de verificação.
 - [ ] Conflitos com `README.md`, `esquema.md`, `pcb.md`, BOM e datasheets foram
       resolvidos.

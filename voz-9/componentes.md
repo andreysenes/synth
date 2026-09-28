@@ -396,6 +396,11 @@ Todos os pots saem da `bom.md`. Nada de recuperar de outro pedal.
 
 ## Chaves — o que cada alavanca *é*
 
+> **Baseline KiCad com LEDs:** OSC A/B passam a **DPST ON–OFF** e
+> H1/H2/H3/STACK a **DPDT ON–ON**. O segundo polo é exclusivo do LED vermelho
+> e fica eletricamente isolado do áudio. Os tipos SPST/SPDT abaixo descrevem a
+> referência legada sem indicadores.
+
 Pólo = quantos circuitos. Direção = quantos lugares o contato pode ir.
 
 - **SPST**: um circuito, liga/desliga. O botão GATE é SPST **NA** (fecha *só* enquanto aperta). As chaves **OSC A** e **OSC B** são SPST **ON–OFF** (MTS-101): ficam no que você deixou.

@@ -70,6 +70,12 @@ J201: 6 no circuito; os 2 extra casam Vgs(off). O mais “vivo” (conduz com ga
 
 ## Chaves
 
+> **Atualização do baseline KiCad:** substituir as duas MTS-101 de OSC A/B por
+> **DPST ON–OFF** e quatro das MTS-102 (H1–H3/STACK) por **DPDT ON–ON**, usando
+> o segundo polo exclusivamente para LED. DRONE/GATE permanece SPDT ON–ON.
+> Modelos e preços exatos serão selecionados antes da compra; a tabela abaixo é
+> a cotação legada sem LEDs.
+
 | Qtd | Peça | Vai para | Unit. | Sub |
 | --- | --- | --- | ---: | ---: |
 | 5 | SPDT ON–ON MTS-102 | H1, H2, H3, STACK, DRONE/GATE | 3,50 | **17,50** |

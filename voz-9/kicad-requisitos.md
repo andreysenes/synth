@@ -130,7 +130,8 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 | LED-011 | MUST | Todos os 10 LEDs indicadores devem ser vermelhos; a iluminação integrada do VU, se existir, é tratada separadamente. | decisão DEC-016 | BOM e inspeção visual | APROVADO |
 | LED-012 | MUST | Usar LEDs vermelhos difusos de 3 mm e baixo consumo, montados manualmente no painel. | decisão DEC-017 | amostras, datasheet e encaixe | APROVADO |
 | LED-013 | MUST | Corrente nominal alvo deve ser 1,5 mA por LED; resistor inicial de 4,7 kΩ em V9 deve ser recalculado com Vf e queda do driver da peça exata. | decisão DEC-018 | cálculo e medição | APROVADO |
-| LED-014 | MUST | Lógica/polaridade, drivers e polos de chave exatos devem ser aprovados antes do esquema e BOM finais. | ACT-010 | esquema e teste | BLOQUEADO |
+| LED-014 | MUST | OSC A/B devem usar DPST ON–OFF e H1–H3/STACK devem usar DPDT ON–ON; o segundo polo fica exclusivo para indicação, isolado do áudio. | decisão DEC-019 | esquema, continuidade e teste A/B | APROVADO |
+| LED-015 | MUST | Lógica/polaridade e drivers de CLIP, GATE/ENV e LFO devem ser aprovados antes do esquema e BOM finais. | ACT-010 | esquema e teste | BLOQUEADO |
 
 ## 5. Interfaces e conectores
 
@@ -145,7 +146,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 | IF-007 | MUST | Knobs, botões, jacks e demais interfaces de painel aprovadas devem ligar à BASE por chicotes; não fazem parte da PCBA SMD. | decisão do produto | esquema, pinout e inspeção | APROVADO |
 | IF-008 | MUST | Cada peça de interface/manual deve ter fabricante/modelo ou desenho dimensional aprovado antes do footprint final. | decisões DEC-004/005 | datasheet, medidas e impressão 1:1 | APROVADO |
 | IF-009 | MUST | O painel deve conter exatamente 17 pots: OSC A/B, AMOUNT, PRE, OSC IN, LOW, MID F, MID G, HIGH, RATE, DEPTH, SHAPE, CUTOFF, TIME, WET, F-BACK e VOLUME. | auditoria digital §2 | esquema, pinout e inspeção | APROVADO |
-| IF-010 | MUST | O painel deve conter 9 alavancas: OSC A/B, TREM, MODE, DRONE/GATE, H1/H2/H3 e STACK, além do botão GATE momentâneo. | auditoria digital §2 | esquema, pinout e inspeção | APROVADO |
+| IF-010 | MUST | O painel deve conter 9 alavancas: OSC A/B em DPST ON–OFF; H1/H2/H3/STACK em DPDT ON–ON; DRONE/GATE em SPDT ON–ON; TREM/MODE em SPDT ON–OFF–ON; além do botão GATE momentâneo. | auditoria digital §2, DEC-019 | esquema, pinout e inspeção | APROVADO |
 | IF-011 | MUST | O painel deve conter os 11 jacks A, B, IN, FILT, FCV, VCV, LFO, ECV, CLK, SEND e RCV. | auditoria digital §2 | esquema, pinout e inspeção | APROVADO |
 | IF-012 | MUST | COMBO IN/OUT, P4 e LED piloto continuam obrigatórios embora não estejam desenhados no SVG interno de `painel.html`. | auditoria digital §§2/6 | painel, esquema e inspeção | APROVADO |
 | IF-013 | MUST | J1–J9 preservam as interfaces existentes; J10 será acrescentado exclusivamente para o VU analógico e sua iluminação opcional. | VU-006 | esquema, pinout e continuidade | APROVADO |
@@ -274,6 +275,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 | DEC-016 | Usar vermelho em todos os 10 LEDs indicadores. | RESOLVIDA |
 | DEC-017 | Usar LED vermelho difuso de 3 mm e baixo consumo. | RESOLVIDA |
 | DEC-018 | Usar corrente nominal alvo de 1,5 mA por LED. | RESOLVIDA |
+| DEC-019 | Usar segundo polo isolado: DPST em OSC A/B e DPDT em H1–H3/STACK. | RESOLVIDA |
 
 ### Ações técnicas bloqueantes
 
@@ -288,14 +290,14 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 | ACT-007 | Selecionar o VU analógico exato e definir referência de 0 VU, balística, iluminação, recorte e pinagem J10. | esquema/PCB | responsável do produto + engenharia |
 | ACT-008 | Corrigir ou documentar as lacunas do teste digital listadas em `sim/auditoria-requisitos.md` antes de usá-lo como evidência. | esquema/G0 | engenharia |
 | ACT-009 | Instalar versão registrada do ngspice, corrigir falsos positivos do runner e repetir toda a suíte sem erros. | evidência/G0 | engenharia |
-| ACT-010 | Definir lógica/polos dos 10 LEDs vermelhos de 3 mm e selecionar chaves/driver sem carregar áudio. | esquema/painel/BOM | responsável do produto + engenharia |
+| ACT-010 | Definir lógica e drivers de CLIP, GATE/ENV e LFO sem carregar áudio; selecionar modelos exatos das chaves aprovadas. | esquema/painel/BOM | responsável do produto + engenharia |
 
 ## 14. Gate R0 — aprovação de requisitos
 
 Checklist de saída:
 
 - [x] Escopo e perfil de fabricação aprovados.
-- [x] Decisões DEC-001–DEC-018 registradas.
+- [x] Decisões DEC-001–DEC-019 registradas.
 - [ ] Todos os requisitos `MUST` têm fonte, critério e método de verificação.
 - [ ] Conflitos com `README.md`, `esquema.md`, `pcb.md`, BOM e datasheets foram
       resolvidos.

@@ -108,8 +108,12 @@ no plano de teste e largura de banda registrada.
 | VU-006 | MUST | O mostrador analógico deve ficar no painel e usar um novo J10 dedicado; pinagem final deve contemplar movimento e eventual iluminação sem usar retorno sensível. | decisão do produto | esquema, pinout e continuidade | APROVADO |
 | VU-007 | MUST | Prever ajuste de calibração acessível sem desmontar componentes críticos. | boa prática de medição | inspeção e calibração | APROVADO |
 | VU-008 | MUST | Consumo, chaveamento de LEDs ou iluminação do VU devem entrar no orçamento de corrente e no pior caso térmico. | PWR-011 | cálculo e teste | APROVADO |
-| VU-009 | MUST | O VU deve ser compacto, com envelope frontal máximo inicial de aproximadamente 45 × 35 mm. | decisão do produto | datasheet, medidas e impressão 1:1 | APROVADO |
-| VU-010 | MUST | Modelo, corrente de fundo de escala, resistência interna, iluminação, recorte e fixação do VU devem ser aprovados antes do footprint/conector final. | ACT-007 | datasheet, medidas e impressão 1:1 | BLOQUEADO |
+| VU-009 | MUST | Usar VU analógico genérico tipo AliExpress, frontal nominal de 35 × 35 mm, plástico preto e escala −20…+5 VU. | decisão do produto/listagem | amostra, medidas e impressão 1:1 | APROVADO |
+| VU-010 | MUST | O movimento deve ser de 500 µA com resistência DC nominal de 630 Ω; fundo de escala elétrico calculado ≈0,315 V DC. | especificação da listagem | medição da amostra e calibração | APROVADO |
+| VU-011 | MUST | A iluminação quente por filamento aceita 6–12 V e será alimentada pelo trilho de 9 V via J10; corrente e inrush devem ser medidos na amostra e incluídos em PWR-011. | especificação da listagem | medição de corrente/temperatura | BLOQUEADO |
+| VU-012 | MUST | J10 deve fornecer quatro circuitos identificados: movimento `M+`/`M−` e iluminação `L+`/`L−`, sem usar retorno de áudio como condutor de potência. | arquitetura VU | esquema, pinout e continuidade | APROVADO |
+| VU-013 | MUST | O driver deve limitar/proteger o movimento de 500 µA e oferecer trim de calibração; sobrecarga de entrada não pode bater o ponteiro continuamente no fim de escala. | boa prática de instrumento | cálculo, simulação e teste | APROVADO |
+| VU-014 | MUST | Corpo, profundidade, furos, recorte, corrente real da lâmpada e tolerâncias de 1–3 mm da listagem devem ser medidos numa amostra antes do painel final. | listagem sem desenho técnico | paquímetro e mockup 1:1 | BLOQUEADO |
 
 ## 4.3 Requisitos dos LEDs indicadores
 
@@ -278,6 +282,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 | DEC-018 | Usar corrente nominal alvo de 1,5 mA por LED. | RESOLVIDA |
 | DEC-019 | Usar segundo polo isolado: DPST em OSC A/B e DPDT em H1–H3/STACK. | RESOLVIDA |
 | DEC-020 | Usar transistores discretos para os indicadores CLIP, GATE/ENV e LFO. | RESOLVIDA |
+| DEC-021 | Usar VU analógico 35 × 35 mm, 500 µA/630 Ω, com iluminação quente 6–12 V. | RESOLVIDA |
 
 ### Ações técnicas bloqueantes
 
@@ -289,7 +294,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 | ACT-004 | Calcular consumo, dissipação e tolerâncias, verificando margem 2× a 40 °C. | esquema/G6 | engenharia |
 | ACT-005 | Executar pior caso/Monte Carlo e gerar limites dos testpoints. | G6/G7 | engenharia |
 | ACT-006 | Resolver conflitos da documentação legada THT/fenolite com o baseline híbrido. | R0 | documentação |
-| ACT-007 | Selecionar o VU analógico exato e definir referência de 0 VU, balística, iluminação, recorte e pinagem J10. | esquema/PCB | responsável do produto + engenharia |
+| ACT-007 | Comprar/medir uma amostra do VU selecionado e definir referência de 0 VU, balística e modo da iluminação. | esquema/PCB | responsável do produto + engenharia |
 | ACT-008 | Corrigir ou documentar as lacunas do teste digital listadas em `sim/auditoria-requisitos.md` antes de usá-lo como evidência. | esquema/G0 | engenharia |
 | ACT-009 | Instalar versão registrada do ngspice, corrigir falsos positivos do runner e repetir toda a suíte sem erros. | evidência/G0 | engenharia |
 | ACT-010 | Dimensionar transistores discretos, limiares/retenção e resistores sem carregar áudio; selecionar modelos exatos das chaves aprovadas. | esquema/painel/BOM | engenharia |
@@ -299,7 +304,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 Checklist de saída:
 
 - [x] Escopo e perfil de fabricação aprovados.
-- [x] Decisões DEC-001–DEC-020 registradas.
+- [x] Decisões DEC-001–DEC-021 registradas.
 - [ ] Todos os requisitos `MUST` têm fonte, critério e método de verificação.
 - [ ] Conflitos com `README.md`, `esquema.md`, `pcb.md`, BOM e datasheets foram
       resolvidos.

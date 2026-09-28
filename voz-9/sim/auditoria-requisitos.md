@@ -122,15 +122,18 @@ o sinal mono **pós-VOLUME e antes dos pads/saídas**, sem carregar o áudio.
 Requisitos mínimos:
 
 - movimento analógico de ponteiro, com escala VU e zona de sobrecarga;
+- tipo compacto de 35 × 35 mm, movimento 500 µA/630 Ω e fundo de escala
+  elétrico aproximado de 0,315 V DC;
 - entrada do medidor com impedância mínima de 100 kΩ;
 - driver/retificador de precisão e ajuste na BASE, desacoplados e afastados do
   pré de microfone;
 - retorno de corrente do mostrador separado do retorno sensível do pré;
-- mostrador no painel ligado por conector dedicado;
+- mostrador no painel ligado por J10, com pares separados para movimento e
+  iluminação quente por filamento 6–12 V;
 - ajuste/calibração acessível;
 - falha ou desconexão do VU não pode interromper nem degradar a saída;
-- referência de 0 VU, balística, corrente do movimento, iluminação, recorte e
-  modelo exato devem ser aprovados antes do esquema final.
+- referência de 0 VU, balística, modo da iluminação, consumo, profundidade e
+  recorte devem ser aprovados/medidos antes do esquema final.
 
 ## 6. Inconsistências encontradas
 

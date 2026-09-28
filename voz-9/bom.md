@@ -89,6 +89,11 @@ J201: 6 no circuito; os 2 extra casam Vgs(off). O mais “vivo” (conduz com ga
 
 ## Conectores e cabos
 
+> **Itens adicionais do baseline KiCad:** 1 VU analógico 35 × 35 mm,
+> 500 µA/630 Ω, filamento 6–12 V; 10 LEDs vermelhos difusos de 3 mm; J10 de
+> quatro vias para movimento/lâmpada; J11 para indicadores. Quantidades de
+> terminais e fio devem ser recalculadas após fechar as pinagens.
+
 | Qtd | Peça | Vai para | Unit. | Sub |
 | --- | --- | --- | ---: | ---: |
 | 11 | jack P2 3,5 mm estéreo chaveado | patch + CLK (A B IN FILT FCV VCV LFO ECV CLK SEND RCV) | 3,00 | **33,00** |

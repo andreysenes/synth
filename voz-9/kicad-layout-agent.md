@@ -279,15 +279,17 @@ Após cada etapa, alinhar em grade, verificar courtyard e executar DRC.
 ### 5.6 VU analógico
 
 - Medir o nó mono pós-VOLUME e antes dos pads/saídas.
+- Projetar para movimento de 500 µA/630 Ω (≈0,315 V DC no fundo de escala),
+  validado na amostra física.
 - Buffer/retificador e ajuste ficam na BASE, próximos da saída, mas afastados
   de U1/J7 e das entradas de baixo nível.
 - A entrada do medidor deve ser ≥100 kΩ e sua falha não pode abrir o áudio.
-- J10 é dedicado ao movimento e à eventual iluminação; não reutilizar pinos de
-  alimentação, GND sensível ou chicotes existentes.
+- J10 é dedicado a `M+`/`M−` do movimento e `L+`/`L−` do filamento 6–12 V; não
+  reutilizar pinos, GND sensível ou chicotes existentes.
 - Retorno do movimento/iluminação deve chegar à distribuição de alimentação
   sem compartilhar garganta com `MIC_LOW`.
-- Só definir footprint, pinagem, recorte e posição após validar o VU físico,
-  corrente de fundo de escala, resistência interna e fixação.
+- Só definir footprint, recorte e posição após medir corpo, profundidade,
+  fixação, tolerâncias e corrente da iluminação na amostra física.
 
 ### 5.7 LEDs indicadores
 

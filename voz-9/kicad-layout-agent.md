@@ -14,6 +14,12 @@ fluxo do áudio. “Caber” não é critério suficiente. Toda decisão deve pr
 4. acesso mecânico, montagem e manutenção;
 5. regras de fabricação verificadas por DRC.
 
+Conectividade completa, DRC limpo e aparência plausível são condições
+necessárias, mas **não provam** que o layout está bom. O agente produz proposta
+e evidências; a aprovação de engenharia continua humana. Simulação, ERC, DRC e
+inspeção 3D verificam aspectos diferentes e nenhum substitui teste da placa
+física.
+
 ## 1. Condição de entrada
 
 O agente **não pode iniciar o placement** enquanto não existirem:
@@ -48,10 +54,36 @@ Antes de mover qualquer footprint, produzir e salvar:
 - lista de nets sem classe;
 - contagem de pads, vias e ratsnest;
 - resultado inicial de ERC/DRC;
-- divergências entre esquema, BOM e `pcb.md`.
+- divergências entre esquema, BOM e `pcb.md`;
+- matriz inicial de requisitos e verificação;
+- checklist extraído dos datasheets para os blocos críticos.
 
 Se um item crítico estiver ausente, o estado é `BLOQUEADO`, não “aprovado com
 ressalvas”.
+
+### Rastreabilidade requisito → evidência
+
+Antes do placement, converter requisitos em uma matriz versionada:
+
+| ID | Requisito | Origem | Método de verificação | Critério de aprovação | Responsável | Estado/evidência |
+| --- | --- | --- | --- | --- | --- | --- |
+| MEC-01 | placa 220 × 160 mm | `pcb.md` | medida no KiCad | valor exato | agente + humano | pendente |
+| PWR-01 | PT2399 somente em V5 | esquema/datasheet | ERC + inspeção de net | nenhum pad em V9 | agente + humano | pendente |
+| LAY-01 | pré afastado de clock/PT2399 | este documento | inspeção/medição | regras das seções 4–7 | humano | pendente |
+
+Cada requisito deve apontar para uma evidência reproduzível: leitura do KiCad,
+relatório ERC/DRC, captura, cálculo, datasheet, inspeção 1:1 ou medição em
+hardware. “Parece certo” e texto gerado pelo próprio agente não são evidência.
+
+Se um critério falhar:
+
+1. manter o estado `FALHOU`;
+2. investigar causa e impacto;
+3. corrigir e repetir o teste; ou
+4. abrir uma exceção formal com evidência, risco, compensação, responsável e
+   aprovação humana.
+
+O agente nunca transforma falha em aprovação manual por conveniência.
 
 ## 2. Perfil de fabricação
 
@@ -102,6 +134,12 @@ As regras finais são o máximo entre:
 1. limites elétricos e mecânicos deste documento;
 2. recomendações do datasheet;
 3. capacidades da fábrica/processo escolhido.
+
+Para cada CI crítico, o agente deve transcrever as recomendações aplicáveis do
+datasheet para um checklist com página/figura e demonstrar onde cada uma foi
+atendida. Apenas escrever “seguir o datasheet” não é suficiente. Se a
+recomendação não couber ou conflitar com outra regra, encaminhar para decisão
+humana.
 
 IPC-2221/2222 e IPC-7351 são referências de engenharia, não números a copiar
 sem contexto. Para esta placa de baixa tensão, as margens acima priorizam
@@ -368,6 +406,17 @@ Silkscreen mínimo:
 Executar inspeção de impressão 1:1 para DIP, headers, TO-92, regulador,
 trimpots, eletrolíticos e furos. Footprint “parecido” não é validado.
 
+### Evidência não é aprovação automática
+
+- Uma equação, tabela ou captura produzida pelo agente precisa ser recalculada
+  ou conferida por fonte independente.
+- Um relatório deve conter condições, unidades, revisão do circuito e limites;
+  gráfico sem configuração reproduzível não vale como teste.
+- Resultado “passou” deve ser calculado contra o critério original, não
+  classificado pela narrativa do agente.
+- Warnings e picos ocasionais não podem ser descartados sem análise.
+- Mudança feita para resolver um teste exige regressão dos testes já aprovados.
+
 ## 11. Protocolo de execução via MCP
 
 O agente deve tratar o KiCad como fonte de verdade e usar o MCP em ciclos
@@ -401,6 +450,43 @@ Para cada lote de no máximo um bloco funcional:
 Nunca executar movimento global, autoplace, autoroute, delete-all, refill
 destrutivo ou renumeração sem checkpoint e autorização específica.
 
+### Divisão de responsabilidade
+
+O agente pode executar autonomamente tarefas determinísticas:
+
+- inventário, medições, aplicação de regras, alinhamento e organização;
+- placement inicial de passivos locais após os componentes críticos estarem
+  travados;
+- roteamento de nets não críticas conforme plano aprovado;
+- DRC, comparações, capturas e documentação.
+
+Exigem aprovação humana:
+
+- requisitos e perfil de fabricação;
+- seleção ou troca de componente/footprint;
+- placement de U1/U4/U5/U6–U9, conectores, retornos e componentes de timing;
+- aceitação dos gates G2, G3 e G6;
+- qualquer exceção, waiver ou liberação para fabricar.
+
+Fluxo preferido: o agente propõe o placement crítico e sua evidência; o
+engenheiro ajusta/aprova e bloqueia essas peças; o agente conclui passivos,
+rotas não críticas, acabamento e relatórios. Se o humano posicionar uma peça,
+isso não autoriza o agente a movê-la depois.
+
+### Limite de tentativas
+
+Não repetir placement completo “até parecer bom”. Para um mesmo bloco:
+
+1. fazer uma proposta inicial;
+2. fazer no máximo uma revisão automática baseada em feedback objetivo;
+3. se ainda falhar, restaurar o último checkpoint íntegro, preservar evidências
+   e solicitar placement humano dos elementos críticos;
+4. retomar somente as tarefas delegadas após as peças serem bloqueadas.
+
+Registrar número de ações, duração e motivo de cada repetição. Volume de
+tokens, tempo de execução ou número de iterações não mede qualidade. Evitar
+reanálise integral quando uma leitura incremental resolve.
+
 ### Concorrência em tempo real
 
 Quando humano e agente operarem simultaneamente:
@@ -423,9 +509,12 @@ Salvar/commit somente em estados coerentes:
 - `G3-placement-final`;
 - `G4-rotas-criticas`;
 - `G5-roteamento-completo`;
-- `G6-fabricacao`.
+- `G6-fabricacao`;
+- `G7-hardware-validado`.
 
 Não fazer commit de autosave, lock file, backup transitório ou cache.
+Antes de mudança de footprint ou revisão estrutural autorizada, criar backup
+legível e confirmar que ele abre no KiCad.
 
 ## 12. Gates de aprovação
 
@@ -443,14 +532,18 @@ Não fazer commit de autosave, lock file, backup transitório ou cache.
 - caminho do áudio reconhecível;
 - pré separado de clock/PT2399;
 - power entry e reguladores corretamente localizados.
+- placement crítico revisado e aprovado por humano antes de rotear.
 
 ### G3 — placement final
 
 - zero courtyard overlap não justificado;
+- distância pad–pad e fabricabilidade inspecionadas, não apenas courtyards;
 - desacoplamentos e redes críticas junto aos pinos;
 - polaridades/orientações conferidas com datasheet;
 - trimpots, soquetes e testpoints acessíveis;
 - ratsnest sem cruzamentos evitáveis dentro dos blocos.
+- silkscreen sem invadir pads/furos e legível após montagem;
+- aprovação humana registrada e peças críticas bloqueadas.
 
 ### G4 — rotas críticas
 
@@ -476,7 +569,25 @@ Não fazer commit de autosave, lock file, backup transitório ou cache.
   independente;
 - BOM, refs e footprints consistentes;
 - revisão humana de polaridade, pinagem, conectores e trilhos;
+- matriz de requisitos sem falha ou exceção não aprovada;
 - relatório final conforme seção 13.
+
+### G7 — validação em hardware
+
+G6 libera arquivos, não comprova desempenho físico. Depois da montagem:
+
+- executar a ordem de teste de `pcb.md`, com limites e instrumentos registrados;
+- medir todos os trilhos antes de inserir CIs;
+- verificar ruído, crosstalk, estabilidade, aquecimento e comportamento nos
+  extremos dos controles;
+- testar variação de alimentação e componentes dentro dos limites seguros;
+- testar temperatura quando aplicável ao uso real;
+- comparar medições com simulação/requisitos e investigar discrepâncias;
+- registrar retrabalho e alimentar as regras da próxima revisão.
+
+Somente após revisão humana das medições o estado pode ser
+`HARDWARE_VALIDADO`. Uma placa que liga ou produz áudio não necessariamente
+atendeu aos requisitos.
 
 ## 13. Relatório obrigatório do agente
 
@@ -493,6 +604,9 @@ DRC antes/depois:
 Ratsnest antes/depois:
 Exceções e justificativas:
 Decisões humanas pendentes:
+Requisitos verificados/falhos:
+Aprovação humana registrada:
+Número de ações/tentativas:
 Próxima ação segura:
 ```
 
@@ -505,6 +619,8 @@ O relatório final também deve listar:
 - erros e warnings de DRC;
 - footprints não validados fisicamente;
 - arquivos de fabricação gerados;
+- matriz requisito→evidência e exceções;
+- checklist de datasheet com página/figura;
 - checklist de revisão humana.
 
 ## 14. Proibições absolutas
@@ -522,18 +638,25 @@ O agente não pode:
 - esconder unrouted com zona;
 - remover desacoplamento;
 - fabricar ou liberar arquivos com ERC/DRC bloqueante;
-- declarar o layout pronto apenas porque o ratsnest chegou a zero.
+- declarar o layout pronto apenas porque o ratsnest chegou a zero;
+- marcar teste falho como aprovado sem waiver humano rastreável;
+- usar relatório, equação, simulação ou DRC gerado pelo agente como
+  autovalidação;
+- refazer placement completo repetidamente sem limite e sem novo diagnóstico;
+- mover componente crítico já aprovado/bloqueado pelo engenheiro.
 
 ## 15. Checklist resumido para prompt do agente
 
 ```text
 Leia esquema.md, pcb.md e kicad-layout-agent.md.
 Audite o projeto e execute somente o próximo gate.
+Mantenha uma matriz requisito→evidência; não aprove a própria conclusão.
 Use o KiCad/MCP como fonte de verdade; não infira nets do SVG.
 Trabalhe em um bloco por lote, leia o estado antes/depois e salve checkpoint.
 Preserve mecânica 220×160, furos e J1–J9.
 Priorize pré de mic, retornos, desacoplamento e isolamento de clock/PT2399.
 Não altere o circuito para facilitar placement/routing.
+Após uma revisão automática malsucedida, peça placement humano do bloco crítico.
 Rode DRC após cada lote e pare em qualquer conflito de pinagem ou netlist.
 Entregue o relatório padronizado da seção 13.
 ```

@@ -131,7 +131,8 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 | LED-012 | MUST | Usar LEDs vermelhos difusos de 3 mm e baixo consumo, montados manualmente no painel. | decisão DEC-017 | amostras, datasheet e encaixe | APROVADO |
 | LED-013 | MUST | Corrente nominal alvo deve ser 1,5 mA por LED; resistor inicial de 4,7 kΩ em V9 deve ser recalculado com Vf e queda do driver da peça exata. | decisão DEC-018 | cálculo e medição | APROVADO |
 | LED-014 | MUST | OSC A/B devem usar DPST ON–OFF e H1–H3/STACK devem usar DPDT ON–ON; o segundo polo fica exclusivo para indicação, isolado do áudio. | decisão DEC-019 | esquema, continuidade e teste A/B | APROVADO |
-| LED-015 | MUST | Lógica/polaridade e drivers de CLIP, GATE/ENV e LFO devem ser aprovados antes do esquema e BOM finais. | ACT-010 | esquema e teste | BLOQUEADO |
+| LED-015 | MUST | CLIP, GATE/ENV e LFO devem usar drivers com transistores discretos SMD, sem firmware e sem comparador integrado compartilhado. | decisão DEC-020 | esquema e teste | APROVADO |
+| LED-016 | MUST | Transistor, polaridade, limiar, histerese/retenção e resistores exatos devem garantir alta impedância e ser aprovados antes do esquema final. | ACT-010 | cálculo, simulação e teste | BLOQUEADO |
 
 ## 5. Interfaces e conectores
 
@@ -276,6 +277,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 | DEC-017 | Usar LED vermelho difuso de 3 mm e baixo consumo. | RESOLVIDA |
 | DEC-018 | Usar corrente nominal alvo de 1,5 mA por LED. | RESOLVIDA |
 | DEC-019 | Usar segundo polo isolado: DPST em OSC A/B e DPDT em H1–H3/STACK. | RESOLVIDA |
+| DEC-020 | Usar transistores discretos para os indicadores CLIP, GATE/ENV e LFO. | RESOLVIDA |
 
 ### Ações técnicas bloqueantes
 
@@ -290,14 +292,14 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 | ACT-007 | Selecionar o VU analógico exato e definir referência de 0 VU, balística, iluminação, recorte e pinagem J10. | esquema/PCB | responsável do produto + engenharia |
 | ACT-008 | Corrigir ou documentar as lacunas do teste digital listadas em `sim/auditoria-requisitos.md` antes de usá-lo como evidência. | esquema/G0 | engenharia |
 | ACT-009 | Instalar versão registrada do ngspice, corrigir falsos positivos do runner e repetir toda a suíte sem erros. | evidência/G0 | engenharia |
-| ACT-010 | Definir lógica e drivers de CLIP, GATE/ENV e LFO sem carregar áudio; selecionar modelos exatos das chaves aprovadas. | esquema/painel/BOM | responsável do produto + engenharia |
+| ACT-010 | Dimensionar transistores discretos, limiares/retenção e resistores sem carregar áudio; selecionar modelos exatos das chaves aprovadas. | esquema/painel/BOM | engenharia |
 
 ## 14. Gate R0 — aprovação de requisitos
 
 Checklist de saída:
 
 - [x] Escopo e perfil de fabricação aprovados.
-- [x] Decisões DEC-001–DEC-019 registradas.
+- [x] Decisões DEC-001–DEC-020 registradas.
 - [ ] Todos os requisitos `MUST` têm fonte, critério e método de verificação.
 - [ ] Conflitos com `README.md`, `esquema.md`, `pcb.md`, BOM e datasheets foram
       resolvidos.

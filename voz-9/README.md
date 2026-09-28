@@ -33,7 +33,8 @@ atualização de `painel.svg`.
 Também acrescenta nove indicadores em J11: **CLIP, GATE/ENV, LFO, OSC A/B,
 H1–H3 e STACK**. Com o POWER existente, são **10 LEDs vermelhos difusos de
 3 mm e baixo consumo**, com alvo de **1,5 mA por LED**. Lógica e polos das
-chaves serão definidos antes do painel/BOM finais.
+chaves serão definidos antes do painel/BOM finais; CLIP, GATE/ENV e LFO usam
+drivers discretos SMD, sem firmware.
 
 ---
 

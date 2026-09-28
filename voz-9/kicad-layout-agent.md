@@ -294,8 +294,8 @@ Após cada etapa, alinhar em grade, verificar courtyard e executar DRC.
 - POWER permanece em J6; CLIP, GATE/ENV, LFO, OSC A/B, H1–H3 e STACK usam J11.
 - CLIP deriva do detector de saída/VU, com retenção visual, sem limiter no
   caminho de áudio.
-- GATE/ENV e LFO usam buffers de alta impedância; não estender diretamente os
-  respectivos nós analógicos pelo chicote.
+- CLIP, GATE/ENV e LFO usam drivers discretos SMD de alta impedância; não
+  estender diretamente os respectivos nós analógicos pelo chicote.
 - OSC A/B, H1–H3 e STACK devem usar segundo polo isolado da chave ou driver
   equivalente. Nunca inserir LED/resistor no contato que conduz áudio.
 - Usar LED vermelho difuso de 3 mm/baixo consumo; dimensionar inicialmente para

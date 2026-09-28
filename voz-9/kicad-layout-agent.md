@@ -304,6 +304,8 @@ Após cada etapa, alinhar em grade, verificar courtyard e executar DRC.
   e retenção de aproximadamente 150 ms, sem limiter no caminho de áudio.
 - CLIP, GATE/ENV e LFO usam drivers discretos SMD de alta impedância; não
   estender diretamente os respectivos nós analógicos pelo chicote.
+- GATE/ENV deve apresentar carga ≥1 MΩ no nó ENV e converter sua faixa em
+  brilho contínuo de 0–1,5 mA, preservando ataque/decay.
 - OSC A/B, H1–H3 e STACK devem usar segundo polo isolado da chave ou driver
   equivalente. Nunca inserir LED/resistor no contato que conduz áudio.
 - Usar LED vermelho difuso de 3 mm/baixo consumo; dimensionar inicialmente para

@@ -133,7 +133,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 | LED-001 | MUST | Incluir POWER, CLIP, GATE/ENV, LFO, OSC A, OSC B, H1, H2, H3 e STACK. | decisão DEC-015 | esquema, painel e teste | APROVADO |
 | LED-002 | MUST | POWER continua indicando presença de V9 após proteção de polaridade. | esquema existente | medição e teste | APROVADO |
 | LED-003 | MUST | CLIP deve usar o detector da saída, acender 1 dB antes do clipping real medido e reter por aproximadamente 150 ms, sem inserir limiter no áudio. | decisão DEC-025 | sweep de nível/carga e teste de pulso | APROVADO |
-| LED-004 | MUST | GATE/ENV deve indicar o envelope efetivo que controla o VCA, não apenas a posição da chave. | interface digital | injeção, gate e fala | APROVADO |
+| LED-004 | MUST | O brilho de GATE/ENV deve acompanhar continuamente o envelope efetivo do VCA, incluindo ataque e decay, e não apenas a posição da chave. | decisão DEC-026 | injeção, gate, fala e captura óptica | APROVADO |
 | LED-005 | MUST | LFO deve pulsar com sua forma/taxa efetiva e permanecer apagado quando TREM estiver no centro/off. | interface digital | teste em ambas as faixas | APROVADO |
 | LED-006 | MUST | OSC A/B, H1–H3 e STACK devem refletir a posição funcional de suas chaves. | decisão DEC-015 | teste de cada chave | APROVADO |
 | LED-007 | MUST | Indicadores de chaves que comutam áudio devem usar segundo polo eletricamente isolado ou driver de alta impedância; LED/resistor não pode carregar o caminho de áudio. | boa prática de áudio | esquema e teste A/B | APROVADO |
@@ -147,6 +147,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 | LED-015 | MUST | CLIP, GATE/ENV e LFO devem usar drivers com transistores discretos SMD, sem firmware e sem comparador integrado compartilhado. | decisão DEC-020 | esquema e teste | APROVADO |
 | LED-016 | MUST | Transistor, polaridade, limiar, histerese/retenção e resistores exatos devem garantir alta impedância e ser aprovados antes do esquema final. | ACT-010 | cálculo, simulação e teste | BLOQUEADO |
 | LED-017 | MUST | Definir clipping do estágio final pelo menor nível entre cargas/cantos aprovados que apresente compressão de ganho ≥1 dB ou THD+N ≥1 %; limiar CLIP fica 1 dB abaixo. | decisão DEC-025 | sweep a 1 kHz e análise de distorção | APROVADO |
+| LED-018 | MUST | Driver GATE/ENV deve converter a faixa real de ENV em 0–1,5 mA de forma monotônica, apagar no repouso e apresentar impedância de entrada ≥1 MΩ. | decisão DEC-026 | sweep DC/transiente e medição de carga | APROVADO |
 
 ## 5. Interfaces e conectores
 
@@ -297,6 +298,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 | DEC-023 | Calibrar 0 VU em 0 dBV, equivalente a 1,000 Vrms pós-VOLUME/pré-pads. | RESOLVIDA |
 | DEC-024 | Usar balística clássica aproximada de 300 ms, sem peak-hold no ponteiro. | RESOLVIDA |
 | DEC-025 | Acender CLIP 1 dB antes do clipping real medido, com retenção de 150 ms. | RESOLVIDA |
+| DEC-026 | Fazer o brilho do LED GATE/ENV acompanhar continuamente ataque e decay do envelope. | RESOLVIDA |
 
 ### Ações técnicas bloqueantes
 
@@ -318,7 +320,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 Checklist de saída:
 
 - [x] Escopo e perfil de fabricação aprovados.
-- [x] Decisões DEC-001–DEC-025 registradas.
+- [x] Decisões DEC-001–DEC-026 registradas.
 - [ ] Todos os requisitos `MUST` têm fonte, critério e método de verificação.
 - [ ] Conflitos com `README.md`, `esquema.md`, `pcb.md`, BOM e datasheets foram
       resolvidos.

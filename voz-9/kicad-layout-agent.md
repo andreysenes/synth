@@ -299,7 +299,8 @@ Após cada etapa, alinhar em grade, verificar courtyard e executar DRC.
 - OSC A/B, H1–H3 e STACK devem usar segundo polo isolado da chave ou driver
   equivalente. Nunca inserir LED/resistor no contato que conduz áudio.
 - Usar LED vermelho difuso de 3 mm/baixo consumo; dimensionar inicialmente para
-  1–2 mA por LED e recalcular com Vf, brilho, temperatura e peça exata.
+  1,5 mA por LED (4,7 kΩ inicial em V9) e recalcular com Vf, queda do driver,
+  brilho, temperatura e peça exata.
 - Alimentação e retorno de J11 seguem até a distribuição de potência sem usar
   o retorno do pré, das referências ou dos PT2399.
 - Posicionar drivers junto da origem do sinal ou de J11, conforme produza o

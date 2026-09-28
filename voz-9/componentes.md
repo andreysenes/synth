@@ -257,7 +257,8 @@ corpo anunciado de **37 × 35 × 35 mm**, massa de **21 g**, resistência de
 
 **No VOZ-9.** Mede pós-VOLUME, antes dos pads de saída, por driver/retificador
 de alta impedância na BASE. J10 leva `M+`, `M−`, `L+` e `L−`. A luz quente é
-filamento de 6–12 V; a corrente real deve ser medida antes de ligar em V9.
+filamento de 6–12 V, sempre ligado com o equipamento em V9 protegido. Corrente,
+inrush e temperatura devem ser medidos; deixar opção de limitador em série.
 
 **Banco.** Nunca ligue o movimento diretamente à saída. Injete nível conhecido,
 ajuste o trim, confira repetibilidade e impeça que sobrecarga mantenha o ponteiro

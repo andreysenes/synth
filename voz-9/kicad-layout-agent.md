@@ -286,6 +286,8 @@ Após cada etapa, alinhar em grade, verificar courtyard e executar DRC.
 - A entrada do medidor deve ser ≥100 kΩ e sua falha não pode abrir o áudio.
 - J10 é dedicado a `M+`/`M−` do movimento e `L+`/`L−` do filamento 6–12 V; não
   reutilizar pinos, GND sensível ou chicotes existentes.
+- `L+` recebe V9 protegido e fica sempre ativo; medir corrente/inrush e reservar
+  opção de resistor/limitador em série antes de fechar o layout.
 - Retorno do movimento/iluminação deve chegar à distribuição de alimentação
   sem compartilhar garganta com `MIC_LOW`.
 - Só definir footprint, recorte e posição após medir corpo, profundidade,

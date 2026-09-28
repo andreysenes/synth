@@ -260,7 +260,8 @@ de alta impedância na BASE. J10 leva `M+`, `M−`, `L+` e `L−`. A luz quente 
 filamento de 6–12 V, sempre ligado com o equipamento em V9 protegido. Corrente,
 inrush e temperatura devem ser medidos; deixar opção de limitador em série.
 Calibração: **0 VU = 0 dBV = 1,000 Vrms** nesse nó. Assim, −20 VU ≈100 mVrms
-e +5 VU ≈1,78 Vrms, sujeitos à linearidade real do movimento.
+e +5 VU ≈1,78 Vrms, sujeitos à linearidade real do movimento. Balística alvo:
+VU clássico em aproximadamente 300 ms, sem peak-hold; o LED CLIP mede picos.
 
 **Banco.** Nunca ligue o movimento diretamente à saída. Injete nível conhecido,
 use seno de 1 kHz/1,000 Vrms para ajustar o trim em 0 VU, confira

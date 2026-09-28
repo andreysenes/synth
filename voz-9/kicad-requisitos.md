@@ -122,6 +122,7 @@ no plano de teste e largura de banda registrada.
 | VU-020 | MUST | Corrente nominal, inrush e temperatura do filamento em 9 V devem ser medidos e incluídos em PWR-011; prever opção de resistor/limitador sem comprometer legibilidade. | especificação incompleta | medição e teste térmico | BLOQUEADO |
 | VU-021 | MUST | Calibrar **0 VU = 0 dBV = 1,000 Vrms** no nó mono pós-VOLUME/pré-pads. | decisão DEC-023 | seno de 1 kHz, multímetro/interface e trim | APROVADO |
 | VU-022 | MUST | A escala nominal implica aproximadamente −20 VU = 0,100 Vrms e +5 VU = 1,778 Vrms; confirmar linearidade real da amostra. | cálculo a partir de VU-021 | varredura de nível | APROVADO |
+| VU-023 | MUST | Usar balística clássica de VU, alvo aproximado de 300 ms, sem peak-hold no ponteiro; o LED CLIP trata picos rápidos. | decisão DEC-024 | burst de 1 kHz e filmagem/medição | APROVADO |
 
 ## 4.3 Requisitos dos LEDs indicadores
 
@@ -293,6 +294,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 | DEC-021 | Usar VU analógico nominal 37 × 35 × 35 mm, 500 µA/630 Ω, 21 g, com iluminação quente 6–12 V. | RESOLVIDA |
 | DEC-022 | Manter a iluminação quente do VU sempre ligada enquanto o equipamento estiver ligado. | RESOLVIDA |
 | DEC-023 | Calibrar 0 VU em 0 dBV, equivalente a 1,000 Vrms pós-VOLUME/pré-pads. | RESOLVIDA |
+| DEC-024 | Usar balística clássica aproximada de 300 ms, sem peak-hold no ponteiro. | RESOLVIDA |
 
 ### Ações técnicas bloqueantes
 
@@ -304,7 +306,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 | ACT-004 | Calcular consumo, dissipação e tolerâncias, verificando margem 2× a 40 °C. | esquema/G6 | engenharia |
 | ACT-005 | Executar pior caso/Monte Carlo e gerar limites dos testpoints. | G6/G7 | engenharia |
 | ACT-006 | Resolver conflitos da documentação legada THT/fenolite com o baseline híbrido. | R0 | documentação |
-| ACT-007 | Comprar/medir uma amostra do VU selecionado e definir sua balística. | esquema/PCB | responsável do produto + engenharia |
+| ACT-007 | Comprar e medir uma amostra do VU selecionado: geometria, linearidade, balística real, corrente/inrush e temperatura da luz. | esquema/PCB | engenharia |
 | ACT-008 | Corrigir ou documentar as lacunas do teste digital listadas em `sim/auditoria-requisitos.md` antes de usá-lo como evidência. | esquema/G0 | engenharia |
 | ACT-009 | Instalar versão registrada do ngspice, corrigir falsos positivos do runner e repetir toda a suíte sem erros. | evidência/G0 | engenharia |
 | ACT-010 | Dimensionar transistores discretos, limiares/retenção e resistores sem carregar áudio; selecionar modelos exatos das chaves aprovadas. | esquema/painel/BOM | engenharia |
@@ -314,7 +316,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 Checklist de saída:
 
 - [x] Escopo e perfil de fabricação aprovados.
-- [x] Decisões DEC-001–DEC-023 registradas.
+- [x] Decisões DEC-001–DEC-024 registradas.
 - [ ] Todos os requisitos `MUST` têm fonte, critério e método de verificação.
 - [ ] Conflitos com `README.md`, `esquema.md`, `pcb.md`, BOM e datasheets foram
       resolvidos.

@@ -14,6 +14,10 @@ cd voz-9/sim
 * Painel tocável (`painel.html`): Web Audio + osciloscópio. Clique **Tocar**.
   Knobs/chaves alteram o som ao vivo. Export SPICE continua no painel (details).
 
+Inventário, cobertura e diferenças entre simulador e produto:
+`auditoria-requisitos.md`. O scope e o medidor textual do navegador são
+instrumentação de teste; o baseline KiCad exige um VU analógico físico separado.
+
 ## Layout
 
 | Arquivo | Função |

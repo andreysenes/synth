@@ -25,11 +25,15 @@ KiCad via MCP, comece por `kicad-requisitos.md` e depois siga
 `kicad-layout-agent.md`. Lista de compra: `bom.md`. Simulador:
 `sim/painel.html`.
 
+O baseline KiCad acrescenta um **VU analógico de saída** no painel e o chicote
+dedicado J10. Modelo, recorte e calibração devem ser fechados antes do esquema
+final e da atualização de `painel.svg`.
+
 ---
 
 ## Painel
 
-**Um módulo só**, caixa de mesa **retangular** (Noise Toaster / MFOS): faceplate paisagem **220 × 160 mm** em `painel.svg`. Caixa de madeira ~240 × 180 × 50 mm. Uma placa no fundo (`pcb.svg`); **9 chicotes** J1–J9 (fêmea na BASE, macho no painel). CIs em soquete.
+**Um módulo só**, caixa de mesa **retangular** (Noise Toaster / MFOS): faceplate paisagem **220 × 160 mm** em `painel.svg`. Caixa de madeira ~240 × 180 × 50 mm. A referência legada possui 9 chicotes J1–J9; o baseline KiCad acrescenta **J10 para o VU analógico**. A BASE fica no fundo da caixa.
 
 ```
  IN  PRE  OSC IN | LED 9V          OSC A  AMOUNT  OSC B

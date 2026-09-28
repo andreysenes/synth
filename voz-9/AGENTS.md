@@ -5,7 +5,8 @@
 Antes de posicionar, mover, rotacionar ou rotear qualquer item:
 
 1. leia `esquema.md`, `pcb.md`, `kicad-requisitos.md` e
-   `kicad-layout-agent.md`;
+   `kicad-layout-agent.md`; para funções vindas do teste digital, leia também
+   `sim/auditoria-requisitos.md`;
 2. feche e obtenha aprovação humana do gate R0 de requisitos;
 3. execute o gate G0 de `kicad-layout-agent.md`;
 4. confirme o perfil de fabricação;

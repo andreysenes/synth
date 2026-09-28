@@ -49,6 +49,8 @@ Estas premissas foram escolhidas pelo responsável do produto:
 9. `esquema.md` define a intenção elétrica, mas ainda precisa virar um esquema
    KiCad validado;
 10. `pcb.svg` é referência visual/mecânica legada, nunca fonte de conectividade.
+11. funções do teste digital são classificadas em
+    `sim/auditoria-requisitos.md`; instrumentos de depuração não viram hardware.
 
 ## 3. Requisitos funcionais e de conectividade
 
@@ -60,6 +62,9 @@ Estas premissas foram escolhidas pelo responsável do produto:
 | FUN-004 | MUST | Preservar OSC A/B, noise, FM, LFO, VCF, VCA, DRONE/GATE e envelope da fala. | `esquema.md` §§1–7 | ERC e testes por bloco | PROPOSTO |
 | FUN-005 | MUST | FILT e RCV devem manter os contatos normalizados previstos; inserir plug deve abrir apenas o caminho especificado. | `componentes.md`, `esquema.md` | continuidade com/sem plug | PROPOSTO |
 | FUN-006 | MUST | Nenhuma conectividade pode ser inferida do SVG, proximidade física ou texto quando divergir da netlist KiCad aprovada. | `pcb.md` | auditoria G0 | PROPOSTO |
+| FUN-007 | MUST | Todas as funções DIG-001–DIG-019 classificadas como produto em `sim/auditoria-requisitos.md` devem ser rastreadas para esquema, teste e hardware. | auditoria digital | matriz de cobertura | APROVADO |
+| FUN-008 | MUST | WAV/USB, solo de entrada, transporte, scope, telemetria, export SPICE, stereo Web Audio e limiter digital são instrumentos de teste, não funções da placa. | auditoria digital §3 | revisão de escopo | APROVADO |
+| FUN-009 | MUST | Função documentada mas incompleta na simulação — incluindo IN→AMOUNT, SEND/RCV, CVs externos, CLK e saídas físicas — deve seguir o esquema aprovado, não a aproximação Web Audio. | auditoria digital §4 | esquema e testes dedicados | APROVADO |
 
 ## 4. Requisitos elétricos e de alimentação
 
@@ -91,6 +96,20 @@ no plano de teste e largura de banda registrada.
 | AUD-004 | MUST | Crosstalk entre fontes/blocos isoláveis deve permanecer ≤−50 dB a 1 kHz. | decisão DEC-007 | injeção e medição por canal | APROVADO |
 | AUD-005 | MUST | Limites de amplitude, frequência e tensão por testpoint devem vir de análise de tolerância dos componentes exatos, não de uma porcentagem arbitrária. | decisão DEC-008 | pior caso/Monte Carlo e correlação de protótipo | APROVADO |
 
+## 4.2 Requisitos do VU físico
+
+| ID | Pri. | Requisito e critério de aprovação | Fonte | Verificação | Estado |
+| --- | --- | --- | --- | --- | --- |
+| VU-001 | MUST | Incluir medidor físico de nível da saída mono. | decisão do produto, `sim/auditoria-requisitos.md` | esquema, PCB e teste | APROVADO |
+| VU-002 | MUST | O tap deve medir o sinal pós-VOLUME e antes dos pads/saídas, equivalente ao ponto funcional do medidor digital sem copiar seu limiter. | auditoria digital §5 | inspeção de net e injeção de sinal | APROVADO |
+| VU-003 | MUST | A entrada do VU deve ter impedância ≥100 kΩ e sua desconexão/falha não pode interromper ou degradar a saída. | boa prática de áudio | cálculo e teste A/B | APROVADO |
+| VU-004 | MUST | Usar VU analógico de ponteiro, com escala VU e zona visual de sobrecarga; referência de 0 VU e balística ainda serão definidas. | decisão do produto, ACT-007 | calibração e teste dinâmico | APROVADO |
+| VU-005 | MUST | Driver/retificador deve ficar na BASE, desacoplado e afastado do pré; retorno do mostrador não deve compartilhar garganta com MIC_LOW. | playbook, auditoria digital | revisão de placement/retorno | APROVADO |
+| VU-006 | MUST | O mostrador analógico deve ficar no painel e usar um novo J10 dedicado; pinagem final deve contemplar movimento e eventual iluminação sem usar retorno sensível. | decisão do produto | esquema, pinout e continuidade | APROVADO |
+| VU-007 | MUST | Prever ajuste de calibração acessível sem desmontar componentes críticos. | boa prática de medição | inspeção e calibração | APROVADO |
+| VU-008 | MUST | Consumo, chaveamento de LEDs ou iluminação do VU devem entrar no orçamento de corrente e no pior caso térmico. | PWR-011 | cálculo e teste | APROVADO |
+| VU-009 | MUST | Modelo, corrente de fundo de escala, resistência interna, iluminação, dimensões, recorte e fixação do VU devem ser aprovados antes do footprint/conector final. | ACT-007 | datasheet, medidas e impressão 1:1 | BLOQUEADO |
+
 ## 5. Interfaces e conectores
 
 | ID | Pri. | Requisito e critério de aprovação | Fonte | Verificação | Estado |
@@ -103,6 +122,11 @@ no plano de teste e largura de banda registrada.
 | IF-006 | MUST | Entrada XLR não suporta phantom 48 V; aviso deve permanecer na documentação do produto. | `componentes.md` | revisão documental | PROPOSTO |
 | IF-007 | MUST | Knobs, botões, jacks e demais interfaces de painel aprovadas devem ligar à BASE por chicotes; não fazem parte da PCBA SMD. | decisão do produto | esquema, pinout e inspeção | APROVADO |
 | IF-008 | MUST | Cada peça de interface/manual deve ter fabricante/modelo ou desenho dimensional aprovado antes do footprint final. | decisões DEC-004/005 | datasheet, medidas e impressão 1:1 | APROVADO |
+| IF-009 | MUST | O painel deve conter exatamente 17 pots: OSC A/B, AMOUNT, PRE, OSC IN, LOW, MID F, MID G, HIGH, RATE, DEPTH, SHAPE, CUTOFF, TIME, WET, F-BACK e VOLUME. | auditoria digital §2 | esquema, pinout e inspeção | APROVADO |
+| IF-010 | MUST | O painel deve conter 9 alavancas: OSC A/B, TREM, MODE, DRONE/GATE, H1/H2/H3 e STACK, além do botão GATE momentâneo. | auditoria digital §2 | esquema, pinout e inspeção | APROVADO |
+| IF-011 | MUST | O painel deve conter os 11 jacks A, B, IN, FILT, FCV, VCV, LFO, ECV, CLK, SEND e RCV. | auditoria digital §2 | esquema, pinout e inspeção | APROVADO |
+| IF-012 | MUST | COMBO IN/OUT, P4 e LED piloto continuam obrigatórios embora não estejam desenhados no SVG interno de `painel.html`. | auditoria digital §§2/6 | painel, esquema e inspeção | APROVADO |
+| IF-013 | MUST | J1–J9 preservam as interfaces existentes; J10 será acrescentado exclusivamente para o VU analógico e sua iluminação opcional. | VU-006 | esquema, pinout e continuidade | APROVADO |
 
 ## 6. Requisitos mecânicos
 
@@ -116,6 +140,7 @@ no plano de teste e largura de banda registrada.
 | MEC-006 | MUST | Trimpots, testpoints e conectores devem ser acessíveis com a placa instalada. | `pcb.md`, playbook | inspeção mecânica | PROPOSTO |
 | MEC-007 | MUST | Footprints devem ser validados com código LCSC, datasheet ou medidas da peça manual; “parecido” não aprova. | decisões DEC-004/005, playbook §10 | comparação dimensional e 1:1 | APROVADO |
 | MEC-008 | SHOULD | CIs manuais devem compartilhar orientação de notch quando isso não prejudicar o layout elétrico. | playbook §3 | inspeção | PROPOSTO |
+| MEC-009 | MUST | O painel deve receber recorte, fixação e área livre para o VU analógico exato, sem colisão com knobs, chicotes ou caixa. | VU-009 | CAD mecânico e impressão 1:1 | BLOQUEADO |
 
 ## 7. Requisitos de placement
 
@@ -130,6 +155,7 @@ no plano de teste e largura de banda registrada.
 | PLC-007 | MUST | ENV, gates JFET e outros nós de alta impedância devem permanecer curtos e afastados de sinais periódicos. | playbook §§5.3–5.4 | inspeção | PROPOSTO |
 | PLC-008 | MUST | Placement crítico deve ser revisado por humano e bloqueado antes do roteamento. | playbook §11/G2 | registro de aprovação | PROPOSTO |
 | PLC-009 | SHOULD | O fluxo físico deve ser reconhecível e manter blocos funcionais, sem compactação que piore isolamento ou manutenção. | playbook §§4 e 9 | revisão humana | PROPOSTO |
+| PLC-010 | MUST | Driver e conector do VU devem ficar na zona de saída, afastados de U1/J7; retorno e alimentação não podem contaminar MIC_LOW. | VU-005 | revisão de layout | APROVADO |
 
 ## 8. Requisitos de roteamento e terra
 
@@ -175,6 +201,7 @@ no plano de teste e largura de banda registrada.
 | VER-008 | MUST | G7 deve medir placa física; ligar ou produzir áudio não basta para `HARDWARE_VALIDADO`. | playbook G7 | relatório de bancada | PROPOSTO |
 | VER-009 | MUST | A bancada mínima é multímetro, osciloscópio e interface de áudio; testes que precisarem de outro instrumento ficam bloqueados ou usam equipamento externo documentado. | decisão DEC-011 | inventário e plano de teste | APROVADO |
 | VER-010 | MUST | O primeiro protótipo não exige ensaio EMC/ESD formal; ainda deve aplicar boas práticas de proteção/layout e testes funcionais. | decisão DEC-012 | revisão de projeto | APROVADO |
+| VER-011 | MUST | Simulação só passa se não houver erro de solver, convergência, vetor ausente ou medida inválida; marcador `*_DONE` isolado não é evidência. | auditoria digital §4 | parser de log + revisão | APROVADO |
 
 ## 11. Requisitos para execução pelo agente/MCP
 
@@ -216,6 +243,7 @@ no plano de teste e largura de banda registrada.
 | DEC-010 | Operação 0–40 °C; armazenamento −10–60 °C; interno/seco. | RESOLVIDA |
 | DEC-011 | Bancada mínima: multímetro, osciloscópio e interface de áudio. | RESOLVIDA |
 | DEC-012 | Protótipo sem ensaio EMC/ESD formal. | RESOLVIDA |
+| DEC-013 | Incluir VU analógico de ponteiro no painel e circuito na BASE. | RESOLVIDA |
 
 ### Ações técnicas bloqueantes
 
@@ -227,14 +255,16 @@ no plano de teste e largura de banda registrada.
 | ACT-004 | Calcular consumo, dissipação e tolerâncias, verificando margem 2× a 40 °C. | esquema/G6 | engenharia |
 | ACT-005 | Executar pior caso/Monte Carlo e gerar limites dos testpoints. | G6/G7 | engenharia |
 | ACT-006 | Resolver conflitos da documentação legada THT/fenolite com o baseline híbrido. | R0 | documentação |
-| ACT-007 | Confirmar se “VU” significa adicionar um medidor ao painel ou foi apenas exemplo de interface. | escopo/esquema | responsável do produto |
+| ACT-007 | Selecionar o VU analógico exato e definir referência de 0 VU, balística, iluminação, recorte e pinagem J10. | esquema/PCB | responsável do produto + engenharia |
+| ACT-008 | Corrigir ou documentar as lacunas do teste digital listadas em `sim/auditoria-requisitos.md` antes de usá-lo como evidência. | esquema/G0 | engenharia |
+| ACT-009 | Instalar versão registrada do ngspice, corrigir falsos positivos do runner e repetir toda a suíte sem erros. | evidência/G0 | engenharia |
 
 ## 14. Gate R0 — aprovação de requisitos
 
 Checklist de saída:
 
 - [x] Escopo e perfil de fabricação aprovados.
-- [x] Decisões DEC-001–DEC-012 registradas.
+- [x] Decisões DEC-001–DEC-013 registradas.
 - [ ] Todos os requisitos `MUST` têm fonte, critério e método de verificação.
 - [ ] Conflitos com `README.md`, `esquema.md`, `pcb.md`, BOM e datasheets foram
       resolvidos.

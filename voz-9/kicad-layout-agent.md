@@ -34,7 +34,8 @@ O agente **não pode iniciar o placement** enquanto não existirem:
 - netlist atualizada no PCB pelo próprio KiCad;
 - contorno `Edge.Cuts` fechado de **220 × 160 mm**;
 - furos M3 em `(4,4)`, `(216,4)`, `(4,156)` e `(216,156)`, coordenadas em mm;
-- J1–J9 com tipo, número de vias e pino 1 conforme `pcb.md`;
+- J1–J9 com tipo, número de vias e pino 1 conforme `pcb.md`, além de J10 para
+  o VU analógico após definição do mostrador;
 - perfil de fabricação escolhido na seção 2;
 - datasheets disponíveis para pinagem e recomendações de layout.
 
@@ -159,7 +160,8 @@ fabricação artesanal e reparabilidade.
 Travar antes do placement:
 
 - `Edge.Cuts`, furos M3 e keepouts;
-- J1–J9 na faixa esquerda, acessíveis aos chicotes de 8–12 cm;
+- J1–J9 e o novo J10 na faixa de conectores, acessíveis aos chicotes de
+  8–12 cm;
 - pino 1 visível e coerente com `pcb.md`;
 - margem para inserir/remover conectores e eventuais CIs em soquete;
 - área para alicate, ponta de prova e chave nos trimpots;
@@ -187,7 +189,7 @@ blocos funcionais reconhecíveis:
 
 | Zona | Bloco | Prioridade |
 | --- | --- | --- |
-| faixa esquerda | J1–J9 | fixa; chicotes curtos e sem cruzamento |
+| faixa esquerda | J1–J10 | fixa; chicotes curtos e sem cruzamento |
 | superior esquerda/centro | entrada 9 V, proteção, V9/V5/VEE/4V5/1V8 | longe do pré e do áudio de alta impedância |
 | superior centro/direita | U1 pré de mic e U9 EQ | menor caminho XLR→U1; máxima distância de clock/PT2399 |
 | superior direita | U2 osciladores | longe de U1 e dos cabos XLR |
@@ -273,6 +275,19 @@ Após cada etapa, alinhar em grade, verificar courtyard e executar DRC.
 - Mix H1/H2/H3 e entrada de U3 LÊ devem ser curtos e afastados das trilhas de
   clock/time.
 - RV1 e MP20-2 precisam de acesso e distância térmica para manutenção.
+
+### 5.6 VU analógico
+
+- Medir o nó mono pós-VOLUME e antes dos pads/saídas.
+- Buffer/retificador e ajuste ficam na BASE, próximos da saída, mas afastados
+  de U1/J7 e das entradas de baixo nível.
+- A entrada do medidor deve ser ≥100 kΩ e sua falha não pode abrir o áudio.
+- J10 é dedicado ao movimento e à eventual iluminação; não reutilizar pinos de
+  alimentação, GND sensível ou chicotes existentes.
+- Retorno do movimento/iluminação deve chegar à distribuição de alimentação
+  sem compartilhar garganta com `MIC_LOW`.
+- Só definir footprint, pinagem, recorte e posição após validar o VU físico,
+  corrente de fundo de escala, resistência interna e fixação.
 
 ## 6. Alimentação, terra e desacoplamento
 
@@ -536,7 +551,7 @@ legível e confirmar que ele abre no KiCad.
 
 - contorno fechado e 220×160 mm;
 - quatro furos e keepouts corretos;
-- J1–J9 corretos, pino 1 e acesso de cabo validados;
+- J1–J9 e J10 corretos, pino 1 e acesso de cabo validados;
 - nenhum courtyard invade borda, furo ou conector.
 
 ### G2 — placement de blocos
@@ -668,7 +683,7 @@ Audite o projeto e execute somente o próximo gate.
 Mantenha uma matriz requisito→evidência; não aprove a própria conclusão.
 Use o KiCad/MCP como fonte de verdade; não infira nets do SVG.
 Trabalhe em um bloco por lote, leia o estado antes/depois e salve checkpoint.
-Preserve mecânica 220×160, furos e J1–J9.
+Preserve mecânica 220×160, furos, J1–J9 e o J10 dedicado ao VU.
 Priorize pré de mic, retornos, desacoplamento e isolamento de clock/PT2399.
 Não altere o circuito para facilitar placement/routing.
 Após uma revisão automática malsucedida, peça placement humano do bloco crítico.

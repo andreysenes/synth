@@ -32,8 +32,8 @@ O agente **não pode iniciar o placement** enquanto não existirem:
 - ERC sem erro bloqueante;
 - footprints associados e validados contra a peça real;
 - netlist atualizada no PCB pelo próprio KiCad;
-- contorno `Edge.Cuts` fechado de **220 × 160 mm**;
-- furos M3 em `(4,4)`, `(216,4)`, `(4,156)` e `(216,156)`, coordenadas em mm;
+- contorno `Edge.Cuts` fechado de **200 × 150 mm**;
+- furos M3 em `(4,4)`, `(196,4)`, `(4,146)` e `(196,146)`, coordenadas em mm;
 - J1–J9 com tipo, número de vias e pino 1 conforme `pcb.md`, J10 para o VU
   analógico e J11 para LEDs após definição dos componentes;
 - perfil de fabricação escolhido na seção 2;
@@ -72,7 +72,7 @@ Antes do placement, converter requisitos em uma matriz versionada:
 
 | ID | Requisito | Origem | Método de verificação | Critério de aprovação | Responsável | Estado/evidência |
 | --- | --- | --- | --- | --- | --- | --- |
-| MEC-01 | placa 220 × 160 mm | `pcb.md` | medida no KiCad | valor exato | agente + humano | pendente |
+| MEC-001 | placa 200 × 150 mm | requisitos | medida no KiCad | valor exato | agente + humano | aprovado |
 | PWR-01 | PT2399 somente em V5 | esquema/datasheet | ERC + inspeção de net | nenhum pad em V9 | agente + humano | pendente |
 | LAY-01 | pré afastado de clock/PT2399 | este documento | inspeção/medição | regras das seções 4–7 | humano | pendente |
 
@@ -578,7 +578,7 @@ legível e confirmar que ele abre no KiCad.
 
 ### G1 — mecânica
 
-- contorno fechado e 220×160 mm;
+- contorno fechado e 200×150 mm;
 - quatro furos e keepouts corretos;
 - J1–J9, J10 e J11 corretos, pino 1 e acesso de cabo validados;
 - nenhum courtyard invade borda, furo ou conector.
@@ -712,7 +712,7 @@ Audite o projeto e execute somente o próximo gate.
 Mantenha uma matriz requisito→evidência; não aprove a própria conclusão.
 Use o KiCad/MCP como fonte de verdade; não infira nets do SVG.
 Trabalhe em um bloco por lote, leia o estado antes/depois e salve checkpoint.
-Preserve mecânica 220×160, furos, J1–J9, J10 do VU e J11 dos LEDs.
+Preserve faceplate 300×300, PCB 200×150, furos, J1–J9, J10 do VU e J11 dos LEDs.
 Priorize pré de mic, retornos, desacoplamento e isolamento de clock/PT2399.
 Não altere o circuito para facilitar placement/routing.
 Após uma revisão automática malsucedida, peça placement humano do bloco crítico.

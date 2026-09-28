@@ -4,7 +4,7 @@ Alimentação simples, 9 V centro-negativo. Referência de áudio em 4,5 V. O MA
 
 Quantidades e compra: `bom.md`. Tudo novo — um instrumento = uma lista.
 
-Uma fenolite no piso da caixa (220 × 160 mm): `pcb.md`. O painel só fura; **nove** chicotes 2×N J1–J9 (fêmea na BASE, macho no painel). CIs em soquete. **Um módulo** retangular de mesa.
+A mecânica legada descrita em `pcb.md` usa 220 × 160 mm. O baseline KiCad usa faceplate de 300 × 300 mm, caixa externa e BASE de 200 × 150 mm (`kicad-requisitos.md`). O painel só fura; chicotes ligam a BASE. **Um módulo** de mesa.
 
 ---
 

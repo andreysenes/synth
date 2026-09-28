@@ -45,7 +45,7 @@ decay do envelope; LFO pisca de forma binária e apaga com TREM no centro/OFF.
 
 ## Painel
 
-**Um módulo só**, caixa de mesa **retangular** (Noise Toaster / MFOS): faceplate paisagem **220 × 160 mm** em `painel.svg`. Caixa de madeira ~240 × 180 × 50 mm. A referência legada possui 9 chicotes J1–J9; o baseline KiCad acrescenta **J10 para o VU analógico e J11 para indicadores**. A BASE fica no fundo da caixa.
+**Um módulo só**, caixa de mesa. A referência legada usa faceplate **220 × 160 mm**; o baseline KiCad usa faceplate **300 × 300 mm** e caixa externa a ela. A BASE mede **200 × 150 mm** e fica no fundo. J1–J9 são a referência legada; o baseline acrescenta **J10 para o VU analógico e J11 para indicadores**.
 
 ```
  IN  PRE  OSC IN | LED 9V          OSC A  AMOUNT  OSC B

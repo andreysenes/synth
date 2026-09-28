@@ -5,8 +5,8 @@
 > híbrida JLCPCB/manual, definido em `kicad-requisitos.md`. Preserve daqui as
 > interfaces, dimensões e intenção funcional; não copie tecnologia, footprints
 > ou regras de fabricação sem reconciliar com o baseline. A versão KiCad
-> também acrescenta um VU analógico/J10 e nove indicadores/J11, ausentes neste
-> desenho legado.
+> também usa faceplate 300 × 300 mm, PCB 200 × 150 mm, VU analógico/J10 e
+> indicadores/J11, ausentes neste desenho legado.
 
 Uma fenolite no **fundo da caixa**. O painel (`painel.svg`) é só chapa. **Nove** chicotes 2×N (2,54 mm): **fêmea na BASE**, **macho no painel**. CIs só em soquete. Sem FACE, sem flat, sem IDC.
 

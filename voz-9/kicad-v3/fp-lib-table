@@ -1,0 +1,4 @@
+(fp_lib_table
+	(version 7)
+	(lib (name "VOZ9_Wire")(type "KiCad")(uri "${KIPRJMOD}/../kicad/footprints/VOZ9_Wire.pretty")(options "")(descr "Furos de fio 3,96 mm, furo 1,6 mm"))
+)

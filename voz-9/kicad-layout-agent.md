@@ -306,6 +306,8 @@ Após cada etapa, alinhar em grade, verificar courtyard e executar DRC.
   estender diretamente os respectivos nós analógicos pelo chicote.
 - GATE/ENV deve apresentar carga ≥1 MΩ no nó ENV e converter sua faixa em
   brilho contínuo de 0–1,5 mA, preservando ataque/decay.
+- LFO deve apresentar carga ≥1 MΩ, piscar por comutação binária com histerese
+  e permanecer apagado quando TREM estiver no centro/OFF.
 - OSC A/B, H1–H3 e STACK devem usar segundo polo isolado da chave ou driver
   equivalente. Nunca inserir LED/resistor no contato que conduz áudio.
 - Usar LED vermelho difuso de 3 mm/baixo consumo; dimensionar inicialmente para

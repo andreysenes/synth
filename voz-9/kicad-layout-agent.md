@@ -281,6 +281,8 @@ Após cada etapa, alinhar em grade, verificar courtyard e executar DRC.
 - Medir o nó mono pós-VOLUME e antes dos pads/saídas.
 - Projetar para movimento de 500 µA/630 Ω (≈0,315 V DC no fundo de escala),
   validado na amostra física.
+- Calibrar 0 VU para seno de 1 kHz a 1,000 Vrms (0 dBV) no nó pós-VOLUME e
+  pré-pads; o trim deve acomodar tolerâncias do movimento/retificador.
 - Buffer/retificador e ajuste ficam na BASE, próximos da saída, mas afastados
   de U1/J7 e das entradas de baixo nível.
 - A entrada do medidor deve ser ≥100 kΩ e sua falha não pode abrir o áudio.

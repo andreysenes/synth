@@ -259,10 +259,13 @@ corpo anunciado de **37 × 35 × 35 mm**, massa de **21 g**, resistência de
 de alta impedância na BASE. J10 leva `M+`, `M−`, `L+` e `L−`. A luz quente é
 filamento de 6–12 V, sempre ligado com o equipamento em V9 protegido. Corrente,
 inrush e temperatura devem ser medidos; deixar opção de limitador em série.
+Calibração: **0 VU = 0 dBV = 1,000 Vrms** nesse nó. Assim, −20 VU ≈100 mVrms
+e +5 VU ≈1,78 Vrms, sujeitos à linearidade real do movimento.
 
 **Banco.** Nunca ligue o movimento diretamente à saída. Injete nível conhecido,
-ajuste o trim, confira repetibilidade e impeça que sobrecarga mantenha o ponteiro
-batendo no fim. Meça também corrente e temperatura da lâmpada.
+use seno de 1 kHz/1,000 Vrms para ajustar o trim em 0 VU, confira
+repetibilidade e impeça que sobrecarga mantenha o ponteiro batendo no fim. Meça
+também corrente e temperatura da lâmpada.
 
 **Mecânica.** É frágil. Comprar uma amostra antes do painel final, medir corpo,
 profundidade, furos e recorte com paquímetro, usar alívio de tração e manter

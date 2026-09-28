@@ -31,8 +31,8 @@ Modelo, recorte e calibração devem ser fechados antes do esquema final e da
 atualização de `painel.svg`.
 
 Também acrescenta nove indicadores em J11: **CLIP, GATE/ENV, LFO, OSC A/B,
-H1–H3 e STACK**. Com o POWER existente, são 10 LEDs. Cores, brilho e modelos
-serão definidos antes do painel/BOM finais.
+H1–H3 e STACK**. Com o POWER existente, são **10 LEDs vermelhos**. Brilho e
+encapsulamento serão definidos antes do painel/BOM finais.
 
 ---
 

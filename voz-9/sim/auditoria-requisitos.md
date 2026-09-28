@@ -72,8 +72,9 @@ Nada deve virar hardware apenas por aparecer na interface do navegador. A coluna
 Não há elementos LED de status em `painel.html`. O único LED anteriormente
 definido era o piloto de 9 V em `painel.svg`/J6. A decisão DEC-015 acrescenta
 CLIP, GATE/ENV, LFO pulsante, OSC A/B, H1–H3 e STACK como indicadores físicos.
-São requisitos novos derivados dos estados da interface e das chaves, não
-circuitos já validados pela simulação.
+DEC-016 define vermelho para todos os 10 indicadores. São requisitos novos
+derivados dos estados da interface e das chaves, não circuitos já validados
+pela simulação.
 
 ## 4. Cobertura e lacunas
 

@@ -127,7 +127,8 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 | LED-008 | MUST | Corrente alvo deve ser baixa, inicialmente 1–2 mA por LED, recalculada para cor/peça escolhida e incluída no orçamento PWR-011. | margem térmica/ruído | cálculo e medição | APROVADO |
 | LED-009 | MUST | Alimentação/retorno dos indicadores deve usar caminho dedicado até a distribuição de potência, sem compartilhar garganta com MIC_LOW, referências ou retornos do PT2399. | playbook | inspeção de retorno e ruído | APROVADO |
 | LED-010 | MUST | Os nove indicadores novos devem usar chicote de status dedicado J11; POWER pode permanecer em J6. Pinagem final depende do circuito e dos polos das chaves. | arquitetura do painel | pinout e continuidade | APROVADO |
-| LED-011 | MUST | Cor, brilho, encapsulamento, lentes e lógica exata dos LEDs devem ser aprovados antes do painel e BOM finais. | ACT-010 | amostras/datasheets | BLOQUEADO |
+| LED-011 | MUST | Todos os 10 LEDs indicadores devem ser vermelhos; a iluminação integrada do VU, se existir, é tratada separadamente. | decisão DEC-016 | BOM e inspeção visual | APROVADO |
+| LED-012 | MUST | Brilho, encapsulamento, lentes e lógica/polaridade exata dos LEDs devem ser aprovados antes do painel e BOM finais. | ACT-010 | amostras/datasheets | BLOQUEADO |
 
 ## 5. Interfaces e conectores
 
@@ -268,6 +269,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 | DEC-013 | Incluir VU analógico de ponteiro no painel e circuito na BASE. | RESOLVIDA |
 | DEC-014 | Usar VU compacto, com envelope inicial de até aproximadamente 45 × 35 mm. | RESOLVIDA |
 | DEC-015 | Incluir opção C: POWER, CLIP, GATE/ENV, LFO, OSC A/B, H1–H3 e STACK. | RESOLVIDA |
+| DEC-016 | Usar vermelho em todos os 10 LEDs indicadores. | RESOLVIDA |
 
 ### Ações técnicas bloqueantes
 
@@ -282,14 +284,14 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 | ACT-007 | Selecionar o VU analógico exato e definir referência de 0 VU, balística, iluminação, recorte e pinagem J10. | esquema/PCB | responsável do produto + engenharia |
 | ACT-008 | Corrigir ou documentar as lacunas do teste digital listadas em `sim/auditoria-requisitos.md` antes de usá-lo como evidência. | esquema/G0 | engenharia |
 | ACT-009 | Instalar versão registrada do ngspice, corrigir falsos positivos do runner e repetir toda a suíte sem erros. | evidência/G0 | engenharia |
-| ACT-010 | Definir cores, brilho, encapsulamentos e lógica/polos dos 10 LEDs; selecionar chaves DPDT quando necessário. | esquema/painel/BOM | responsável do produto + engenharia |
+| ACT-010 | Definir brilho, encapsulamentos e lógica/polos dos 10 LEDs vermelhos; selecionar chaves DPDT quando necessário. | esquema/painel/BOM | responsável do produto + engenharia |
 
 ## 14. Gate R0 — aprovação de requisitos
 
 Checklist de saída:
 
 - [x] Escopo e perfil de fabricação aprovados.
-- [x] Decisões DEC-001–DEC-015 registradas.
+- [x] Decisões DEC-001–DEC-016 registradas.
 - [ ] Todos os requisitos `MUST` têm fonte, critério e método de verificação.
 - [ ] Conflitos com `README.md`, `esquema.md`, `pcb.md`, BOM e datasheets foram
       resolvidos.

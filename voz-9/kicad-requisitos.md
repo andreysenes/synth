@@ -335,7 +335,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 
 | ID | Ação/evidência necessária | Bloqueia | Responsável |
 | --- | --- | --- | --- |
-| ACT-001 | Criar `.kicad_pro` e `.kicad_sch` hierárquico (folhas por bloco), anotar e validar ERC/netlist. Não criar PCB antes da aprovação. | G0 | engenharia — esqueleto iniciado em `kicad/` |
+| ACT-001 | Criar `.kicad_pro` e `.kicad_sch` hierárquico (folhas por bloco), anotar e validar ERC/netlist. Não criar PCB antes da aprovação. Folha `01-fonte` iniciada via Konnect. | G0 | engenharia — em andamento em `kicad/` |
 | ACT-002 | Selecionar códigos LCSC e recalcular a BOM SMD conforme estoque/ciclo de vida. | esquema/PCBA | engenharia |
 | ACT-003 | Selecionar modelos exatos das peças manuais e validar pinagem/dimensões. | footprint/G1 | engenharia + bancada |
 | ACT-004 | Calcular consumo, dissipação e tolerâncias, verificando margem 2× a 40 °C. | esquema/G6 | engenharia |

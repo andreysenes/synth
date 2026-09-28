@@ -31,7 +31,8 @@ filamento 6–12 V, sempre ligada com o equipamento. O chicote J10 separa
 movimento e lâmpada. **0 VU = 0 dBV = 1,000 Vrms** pós-VOLUME/pré-pads.
 Balística alvo de VU clássico: aproximadamente 300 ms, sem peak-hold. Recorte,
 dimensões, consumo e resposta reais serão confirmados numa amostra antes de
-atualizar `painel.svg`.
+atualizar `painel.svg`. O LED CLIP acende 1 dB antes do clipping real medido e
+retém a indicação por aproximadamente 150 ms.
 
 Também acrescenta nove indicadores em J11: **CLIP, GATE/ENV, LFO, OSC A/B,
 H1–H3 e STACK**. Com o POWER existente, são **10 LEDs vermelhos difusos de

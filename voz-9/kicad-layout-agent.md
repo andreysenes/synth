@@ -300,8 +300,8 @@ Após cada etapa, alinhar em grade, verificar courtyard e executar DRC.
 ### 5.7 LEDs indicadores
 
 - POWER permanece em J6; CLIP, GATE/ENV, LFO, OSC A/B, H1–H3 e STACK usam J11.
-- CLIP deriva do detector de saída/VU, com retenção visual, sem limiter no
-  caminho de áudio.
+- CLIP deriva do detector de saída/VU, com limiar 1 dB abaixo do clipping real
+  e retenção de aproximadamente 150 ms, sem limiter no caminho de áudio.
 - CLIP, GATE/ENV e LFO usam drivers discretos SMD de alta impedância; não
   estender diretamente os respectivos nós analógicos pelo chicote.
 - OSC A/B, H1–H3 e STACK devem usar segundo polo isolado da chave ou driver

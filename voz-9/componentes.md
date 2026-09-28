@@ -262,6 +262,8 @@ inrush e temperatura devem ser medidos; deixar opção de limitador em série.
 Calibração: **0 VU = 0 dBV = 1,000 Vrms** nesse nó. Assim, −20 VU ≈100 mVrms
 e +5 VU ≈1,78 Vrms, sujeitos à linearidade real do movimento. Balística alvo:
 VU clássico em aproximadamente 300 ms, sem peak-hold; o LED CLIP mede picos.
+CLIP acende 1 dB antes do menor limiar real de clipping sob as cargas previstas
+e permanece visível por aproximadamente 150 ms.
 
 **Banco.** Nunca ligue o movimento diretamente à saída. Injete nível conhecido,
 use seno de 1 kHz/1,000 Vrms para ajustar o trim em 0 VU, confira

@@ -132,7 +132,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 | --- | --- | --- | --- | --- | --- |
 | LED-001 | MUST | Incluir POWER, CLIP, GATE/ENV, LFO, OSC A, OSC B, H1, H2, H3 e STACK. | decisão DEC-015 | esquema, painel e teste | APROVADO |
 | LED-002 | MUST | POWER continua indicando presença de V9 após proteção de polaridade. | esquema existente | medição e teste | APROVADO |
-| LED-003 | MUST | CLIP deve usar o detector do VU/saída e permanecer visível tempo suficiente para percepção humana, sem inserir limiter no áudio. | interface digital, VU | simulação e teste de pulso | APROVADO |
+| LED-003 | MUST | CLIP deve usar o detector da saída, acender 1 dB antes do clipping real medido e reter por aproximadamente 150 ms, sem inserir limiter no áudio. | decisão DEC-025 | sweep de nível/carga e teste de pulso | APROVADO |
 | LED-004 | MUST | GATE/ENV deve indicar o envelope efetivo que controla o VCA, não apenas a posição da chave. | interface digital | injeção, gate e fala | APROVADO |
 | LED-005 | MUST | LFO deve pulsar com sua forma/taxa efetiva e permanecer apagado quando TREM estiver no centro/off. | interface digital | teste em ambas as faixas | APROVADO |
 | LED-006 | MUST | OSC A/B, H1–H3 e STACK devem refletir a posição funcional de suas chaves. | decisão DEC-015 | teste de cada chave | APROVADO |
@@ -146,6 +146,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 | LED-014 | MUST | OSC A/B devem usar DPST ON–OFF e H1–H3/STACK devem usar DPDT ON–ON; o segundo polo fica exclusivo para indicação, isolado do áudio. | decisão DEC-019 | esquema, continuidade e teste A/B | APROVADO |
 | LED-015 | MUST | CLIP, GATE/ENV e LFO devem usar drivers com transistores discretos SMD, sem firmware e sem comparador integrado compartilhado. | decisão DEC-020 | esquema e teste | APROVADO |
 | LED-016 | MUST | Transistor, polaridade, limiar, histerese/retenção e resistores exatos devem garantir alta impedância e ser aprovados antes do esquema final. | ACT-010 | cálculo, simulação e teste | BLOQUEADO |
+| LED-017 | MUST | Definir clipping do estágio final pelo menor nível entre cargas/cantos aprovados que apresente compressão de ganho ≥1 dB ou THD+N ≥1 %; limiar CLIP fica 1 dB abaixo. | decisão DEC-025 | sweep a 1 kHz e análise de distorção | APROVADO |
 
 ## 5. Interfaces e conectores
 
@@ -295,6 +296,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 | DEC-022 | Manter a iluminação quente do VU sempre ligada enquanto o equipamento estiver ligado. | RESOLVIDA |
 | DEC-023 | Calibrar 0 VU em 0 dBV, equivalente a 1,000 Vrms pós-VOLUME/pré-pads. | RESOLVIDA |
 | DEC-024 | Usar balística clássica aproximada de 300 ms, sem peak-hold no ponteiro. | RESOLVIDA |
+| DEC-025 | Acender CLIP 1 dB antes do clipping real medido, com retenção de 150 ms. | RESOLVIDA |
 
 ### Ações técnicas bloqueantes
 
@@ -316,7 +318,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 Checklist de saída:
 
 - [x] Escopo e perfil de fabricação aprovados.
-- [x] Decisões DEC-001–DEC-024 registradas.
+- [x] Decisões DEC-001–DEC-025 registradas.
 - [ ] Todos os requisitos `MUST` têm fonte, critério e método de verificação.
 - [ ] Conflitos com `README.md`, `esquema.md`, `pcb.md`, BOM e datasheets foram
       resolvidos.

@@ -5,10 +5,10 @@
 	(uuid "3ae7b931-7462-5ac7-9f6e-8509608176f0")
 	(paper "User" 1266 328)
 	(title_block
-		(title "VOZ-9 v2 SMT" if V2 else "VOZ-9 BASE")
-		(date "2026-09-28" if V2 else "2026-09-27")
-		(rev "v.2" if V2 else "A")
-		(comment 1 "Placa 200 x 100 mm, SMT. Furos de fio J1–J9 à mão." if V2 else "Placa 300 x 140 mm. Blocos na ordem do sinal, ainda sem fios.")
+		(title "VOZ-9 v2 SMT")
+		(date "2026-09-28")
+		(rev "v.2")
+		(comment 1 "Placa 200 x 100 mm, SMT. Furos de fio J1–J9 à mão.")
 	)
 	(lib_symbols
 		(symbol "Amplifier_Operational:LM2904"

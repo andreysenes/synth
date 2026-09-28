@@ -189,13 +189,13 @@ blocos funcionais reconhecíveis:
 
 | Zona | Bloco | Prioridade |
 | --- | --- | --- |
-| faixa esquerda | J1–J11 | fixa; chicotes curtos e sem cruzamento |
+| borda inferior | J1–J11 | fixa; ordem pela lógica do sinal; chicotes curtos e sem cruzamento |
 | superior esquerda/centro | entrada 9 V, proteção, V9/V5/VEE/4V5/1V8 | longe do pré e do áudio de alta impedância |
 | superior centro/direita | U1 pré de mic e U9 EQ | menor caminho XLR→U1; máxima distância de clock/PT2399 |
 | superior direita | U2 osciladores | longe de U1 e dos cabos XLR |
 | centro | mix, shape, VCF, VCA, ENV | segue a cadeia de áudio |
 | centro distante de U1 | LFO e detector CLK/TIME | conter sinais periódicos |
-| inferior/uma extremidade | U3 NAB e U6–U8 PT2399 | fluxo grava→heads→lê; V5 local |
+| junto aos headers / zona de fita | U3 NAB e U6–U8 PT2399 | fluxo grava→heads→lê; V5 local |
 
 As coordenadas do SVG atual são apenas ponto de partida. O agente pode
 compactar blocos, mas não deve misturá-los para eliminar espaço vazio. Espaço
@@ -712,7 +712,7 @@ Audite o projeto e execute somente o próximo gate.
 Mantenha uma matriz requisito→evidência; não aprove a própria conclusão.
 Use o KiCad/MCP como fonte de verdade; não infira nets do SVG.
 Trabalhe em um bloco por lote, leia o estado antes/depois e salve checkpoint.
-Preserve faceplate alumínio 300×300×~2 mm com P4/combos no topo, bonding GND por porcas + fio isolado, caixa ~336×336 (altura interna 60), PCB 200×150, furos, J1–J9, J10 do VU e J11 dos LEDs.
+Preserve faceplate alumínio 300×300×~2 mm com P4/combos no topo, bonding GND por porcas + fio isolado, caixa ~336×336 (altura interna 60), PCB 200×150, J1–J11 na borda inferior por lógica do sinal, furos, J10 do VU e J11 dos LEDs.
 Priorize pré de mic, retornos, desacoplamento e isolamento de clock/PT2399.
 Não altere o circuito para facilitar placement/routing.
 Após uma revisão automática malsucedida, peça placement humano do bloco crítico.

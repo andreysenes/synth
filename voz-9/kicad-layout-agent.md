@@ -5,6 +5,9 @@ placa **BASE** do VOZ-9 no KiCad por MCP. Ele complementa `esquema.md` e
 `pcb.md`; não substitui esquema elétrico, netlist, datasheets nem regras do
 fabricante.
 
+Os requisitos e critérios de aceite ficam em `kicad-requisitos.md`. O gate R0
+desse documento deve ser aprovado antes do G0 deste playbook.
+
 O objetivo é obter uma placa fabricável, silenciosa, reparável e coerente com o
 fluxo do áudio. “Caber” não é critério suficiente. Toda decisão deve preservar:
 
@@ -24,6 +27,7 @@ física.
 
 O agente **não pode iniciar o placement** enquanto não existirem:
 
+- baseline de requisitos R0 aprovado;
 - projeto `.kicad_pro`, esquema `.kicad_sch` anotado e PCB `.kicad_pcb`;
 - ERC sem erro bloqueante;
 - footprints associados e validados contra a peça real;
@@ -55,7 +59,7 @@ Antes de mover qualquer footprint, produzir e salvar:
 - contagem de pads, vias e ratsnest;
 - resultado inicial de ERC/DRC;
 - divergências entre esquema, BOM e `pcb.md`;
-- matriz inicial de requisitos e verificação;
+- matriz de `kicad-requisitos.md` atualizada;
 - checklist extraído dos datasheets para os blocos críticos.
 
 Se um item crítico estiver ausente, o estado é `BLOQUEADO`, não “aprovado com
@@ -503,6 +507,7 @@ Quando humano e agente operarem simultaneamente:
 
 Salvar/commit somente em estados coerentes:
 
+- `R0-requisitos`;
 - `G0-auditoria`;
 - `G1-mecanica`;
 - `G2-placement-blocos`;
@@ -648,7 +653,8 @@ O agente não pode:
 ## 15. Checklist resumido para prompt do agente
 
 ```text
-Leia esquema.md, pcb.md e kicad-layout-agent.md.
+Leia esquema.md, pcb.md, kicad-requisitos.md e kicad-layout-agent.md.
+Não inicie G0 sem aprovação humana do baseline R0.
 Audite o projeto e execute somente o próximo gate.
 Mantenha uma matriz requisito→evidência; não aprove a própria conclusão.
 Use o KiCad/MCP como fonte de verdade; não infira nets do SVG.

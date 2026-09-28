@@ -4,12 +4,14 @@
 
 Antes de posicionar, mover, rotacionar ou rotear qualquer item:
 
-1. leia `esquema.md`, `pcb.md` e `kicad-layout-agent.md`;
-2. execute o gate G0 de `kicad-layout-agent.md`;
-3. confirme o perfil de fabricação;
-4. trate o projeto KiCad e sua netlist como fonte de verdade;
-5. crie a matriz requisito→evidência e o checklist dos datasheets;
-6. pare se houver conflito entre esquema, BOM, footprint e documentação.
+1. leia `esquema.md`, `pcb.md`, `kicad-requisitos.md` e
+   `kicad-layout-agent.md`;
+2. feche e obtenha aprovação humana do gate R0 de requisitos;
+3. execute o gate G0 de `kicad-layout-agent.md`;
+4. confirme o perfil de fabricação;
+5. trate o projeto KiCad e sua netlist como fonte de verdade;
+6. mantenha a matriz requisito→evidência e o checklist dos datasheets;
+7. pare se houver conflito entre esquema, BOM, footprint e documentação.
 
 Execute somente um bloco funcional por lote via MCP. Leia o estado antes e
 depois de cada mutação, rode DRC, salve um checkpoint coerente e entregue o

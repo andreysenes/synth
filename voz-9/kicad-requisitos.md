@@ -34,7 +34,8 @@ Regras:
 Estas premissas foram escolhidas pelo responsável do produto:
 
 1. faceplate quadrada de **300 × 300 mm**, montada numa caixa maior; PCB BASE
-   de **200,00 × 150,00 mm** no fundo;
+   de **200,00 × 150,00 mm** no fundo; altura interna provisória da caixa de
+   **60,00 mm**;
 2. FR-4 de duas camadas, 1,6 mm, cobre 1 oz, HASL sem chumbo, máscara verde e
    silk branca;
 3. fabricação e PCBA pela JLCPCB;
@@ -177,7 +178,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 | MEC-001 | MUST | Contorno fechado da BASE de **200,00 × 150,00 mm** em `Edge.Cuts`. | decisão DEC-028 | medida no KiCad/DRC | APROVADO |
 | MEC-002 | MUST | Quatro furos NPTH M3 de 3,20 mm nos centros `(4,4)`, `(196,4)`, `(4,146)`, `(196,146)` mm, origem no canto superior esquerdo da PCB. | decisão DEC-028 | medida no KiCad e impressão 1:1 | APROVADO |
 | MEC-011 | MUST | Faceplate de **300,00 × 300,00 mm**; a caixa de madeira é externa a ela e deve fixá-la e conter a BASE. | decisão DEC-028 | desenho mecânico e mockup | APROVADO |
-| MEC-012 | MUST | A altura interna da caixa deve acomodar o VU de ~35 mm, os componentes da BASE e folga mínima de 5 mm entre eles; a altura final só fecha após medir a amostra. | VU-014, DEC-028 | mockup 3D/físico | BLOQUEADO |
+| MEC-012 | MUST | Altura interna provisória da caixa de **60,00 mm**, dimensionada para ~35 mm de VU, peças altas da BASE e folga mínima de 5 mm; revisar após ACT-007 se a pilha medida ultrapassar o orçamento. | VU-014, DEC-029 | mockup 3D/físico e medição da amostra | APROVADO |
 | MEC-003 | MUST | Manter cobre a 3,0 mm da borda dos furos M3, salvo aterramento deliberado aprovado. | playbook §2 | DRC/inspeção | PROPOSTO |
 | MEC-004 | MUST | J1–J9 devem permanecer acessíveis na faixa esquerda, com ao menos 10 mm livres na direção de saída dos cabos. | `pcb.md`, playbook §3 | medida/inspeção 3D | PROPOSTO |
 | MEC-005 | MUST | Nenhum corpo/courtyard pode invadir borda, arruela, espaçador ou impedir remoção de CI em soquete. | playbook §3 | DRC, 3D e 1:1 | PROPOSTO |
@@ -305,6 +306,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 | DEC-026 | Fazer o brilho do LED GATE/ENV acompanhar continuamente ataque e decay do envelope. | RESOLVIDA |
 | DEC-027 | Fazer o LED LFO piscar de forma binária e apagar com TREM no centro/OFF. | RESOLVIDA |
 | DEC-028 | Faceplate 300 × 300 mm mais caixa; PCB BASE 200 × 150 mm. | RESOLVIDA |
+| DEC-029 | Altura interna provisória da caixa de 60 mm. | RESOLVIDA |
 
 ### Ações técnicas bloqueantes
 
@@ -316,7 +318,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 | ACT-004 | Calcular consumo, dissipação e tolerâncias, verificando margem 2× a 40 °C. | esquema/G6 | engenharia |
 | ACT-005 | Executar pior caso/Monte Carlo e gerar limites dos testpoints. | G6/G7 | engenharia |
 | ACT-006 | Resolver conflitos da documentação legada THT/fenolite com o baseline híbrido. | R0 | documentação |
-| ACT-007 | Comprar e medir uma amostra do VU selecionado: geometria, linearidade, balística real, corrente/inrush e temperatura da luz. | esquema/PCB | engenharia |
+| ACT-007 | Comprar e medir uma amostra do VU selecionado: geometria, linearidade, balística real, corrente/inrush e temperatura da luz; confirmar se a pilha cabe na altura interna de 60 mm. | esquema/PCB/MEC-012 | engenharia |
 | ACT-008 | Corrigir ou documentar as lacunas do teste digital listadas em `sim/auditoria-requisitos.md` antes de usá-lo como evidência. | esquema/G0 | engenharia |
 | ACT-009 | Instalar versão registrada do ngspice, corrigir falsos positivos do runner e repetir toda a suíte sem erros. | evidência/G0 | engenharia |
 | ACT-010 | Dimensionar transistores discretos, limiares/retenção e resistores sem carregar áudio; selecionar modelos exatos das chaves aprovadas. | esquema/painel/BOM | engenharia |
@@ -326,7 +328,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 Checklist de saída:
 
 - [x] Escopo e perfil de fabricação aprovados.
-- [x] Decisões DEC-001–DEC-028 registradas.
+- [x] Decisões DEC-001–DEC-029 registradas.
 - [ ] Todos os requisitos `MUST` têm fonte, critério e método de verificação.
 - [ ] Conflitos com `README.md`, `esquema.md`, `pcb.md`, BOM e datasheets foram
       resolvidos.

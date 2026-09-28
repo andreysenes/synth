@@ -712,7 +712,7 @@ Audite o projeto e execute somente o próximo gate.
 Mantenha uma matriz requisito→evidência; não aprove a própria conclusão.
 Use o KiCad/MCP como fonte de verdade; não infira nets do SVG.
 Trabalhe em um bloco por lote, leia o estado antes/depois e salve checkpoint.
-Preserve faceplate 300×300, PCB 200×150, furos, J1–J9, J10 do VU e J11 dos LEDs.
+Preserve faceplate 300×300, PCB 200×150, altura interna 60 mm, furos, J1–J9, J10 do VU e J11 dos LEDs.
 Priorize pré de mic, retornos, desacoplamento e isolamento de clock/PT2399.
 Não altere o circuito para facilitar placement/routing.
 Após uma revisão automática malsucedida, peça placement humano do bloco crítico.

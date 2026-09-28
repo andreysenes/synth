@@ -22,8 +22,9 @@ Leia `esquema.md` para montar. Caderno de estudo: `componentes.md`. A referênci
 artesanal THT/fenolite está em `pcb.md`; o baseline KiCad atual é FR-4 de duas
 camadas com PCBA SMD JLCPCB e montagem manual do restante. Para trabalhar no
 KiCad via MCP, comece por `kicad-requisitos.md` e depois siga
-`kicad-layout-agent.md`. Lista de compra: `bom.md`. Simulador:
-`sim/painel.html`.
+`kicad-layout-agent.md`. O projeto KiCad (somente esquema, folhas picadas)
+está em `kicad/voz-9.kicad_pro` — **sem PCB** até validação. Lista de compra:
+`bom.md`. Simulador: `sim/painel.html`.
 
 O baseline KiCad acrescenta um **VU analógico compacto de saída**: frontal
 nominal 37 × 35 × 35 mm, 21 g, movimento 500 µA/630 Ω e iluminação quente por

@@ -47,8 +47,9 @@ Estas premissas foram escolhidas pelo responsável do produto:
 5. painel separado, com knobs, botões, VU, jacks e demais interfaces ligados à
    BASE por chicotes;
 6. alimentação externa regulada **9 V ±5 %, centro-negativo, mínimo 1 A**;
-7. criar primeiro projeto e esquema KiCad; iniciar PCB somente após validação
-   humana do esquema e da netlist;
+7. criar primeiro projeto e esquema KiCad hierárquico (folhas por bloco em
+   `kicad/`); iniciar PCB somente após validação humana do esquema e da
+   netlist;
 8. selecionar modelos exatos para montagem manual, priorizando peças
    disponíveis no AliExpress com datasheet ou medidas verificáveis;
 9. `esquema.md` define a intenção elétrica, mas ainda precisa virar um esquema
@@ -328,12 +329,13 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 | DEC-035 | Headers J1–J11 na borda inferior da PCB, ordenados pela lógica do sinal. | RESOLVIDA |
 | DEC-036 | Legendas do faceplate em silkscreen direto no alumínio; referência visual em refs/faceplate-silk-reference.png. | RESOLVIDA |
 | DEC-037 | Posição dos itens da interface no faceplate adiada com o acabamento. | ADIADA |
+| DEC-038 | Autorizar projeto KiCad com esquema hierárquico picado; sem PCB até validação. | RESOLVIDA |
 
 ### Ações técnicas bloqueantes
 
 | ID | Ação/evidência necessária | Bloqueia | Responsável |
 | --- | --- | --- | --- |
-| ACT-001 | Criar `.kicad_pro` e `.kicad_sch`, anotar e validar ERC/netlist. Não criar PCB antes da aprovação. | G0 | engenharia |
+| ACT-001 | Criar `.kicad_pro` e `.kicad_sch` hierárquico (folhas por bloco), anotar e validar ERC/netlist. Não criar PCB antes da aprovação. | G0 | engenharia — esqueleto iniciado em `kicad/` |
 | ACT-002 | Selecionar códigos LCSC e recalcular a BOM SMD conforme estoque/ciclo de vida. | esquema/PCBA | engenharia |
 | ACT-003 | Selecionar modelos exatos das peças manuais e validar pinagem/dimensões. | footprint/G1 | engenharia + bancada |
 | ACT-004 | Calcular consumo, dissipação e tolerâncias, verificando margem 2× a 40 °C. | esquema/G6 | engenharia |
@@ -349,7 +351,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 Checklist de saída:
 
 - [x] Escopo e perfil de fabricação aprovados.
-- [x] Decisões DEC-001–DEC-037 registradas (DEC-034 e DEC-037 adiadas).
+- [x] Decisões DEC-001–DEC-038 registradas (DEC-034 e DEC-037 adiadas).
 - [ ] Todos os requisitos `MUST` têm fonte, critério e método de verificação.
 - [ ] Conflitos com `README.md`, `esquema.md`, `pcb.md`, BOM e datasheets foram
       resolvidos.

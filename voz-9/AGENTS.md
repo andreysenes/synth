@@ -7,10 +7,12 @@ Antes de posicionar, mover, rotacionar ou rotear qualquer item:
 1. leia `esquema.md`, `pcb.md`, `kicad-requisitos.md` e
    `kicad-layout-agent.md`; para funções vindas do teste digital, leia também
    `sim/auditoria-requisitos.md`;
-2. feche e obtenha aprovação humana do gate R0 de requisitos;
-3. execute o gate G0 de `kicad-layout-agent.md`;
-4. confirme o perfil de fabricação;
-5. trate o projeto KiCad e sua netlist como fonte de verdade;
+2. trabalhe o esquema em `kicad/` (folhas hierárquicas `01-fonte` …
+   `12-conectores`); **não criar PCB** até validação humana (DEC-001/038);
+3. feche e obtenha aprovação humana do gate R0 de requisitos;
+4. execute o gate G0 de `kicad-layout-agent.md`;
+5. confirme o perfil de fabricação;
+6. trate o projeto KiCad e sua netlist como fonte de verdade;
 6. mantenha a matriz requisito→evidência e o checklist dos datasheets;
 7. pare se houver conflito entre esquema, BOM, footprint e documentação.
 

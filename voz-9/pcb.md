@@ -1,5 +1,11 @@
 # VOZ-9 — uma placa no piso
 
+> **Referência legada:** este arquivo e `pcb.svg` descrevem a versão artesanal
+> THT em fenolite. O baseline KiCad aprovado é FR-4 de duas camadas com montagem
+> híbrida JLCPCB/manual, definido em `kicad-requisitos.md`. Preserve daqui as
+> interfaces, dimensões e intenção funcional; não copie tecnologia, footprints
+> ou regras de fabricação sem reconciliar com o baseline.
+
 Uma fenolite no **fundo da caixa**. O painel (`painel.svg`) é só chapa. **Nove** chicotes 2×N (2,54 mm): **fêmea na BASE**, **macho no painel**. CIs só em soquete. Sem FACE, sem flat, sem IDC.
 
 Para criar e trabalhar a placa no KiCad por MCP, aprove primeiro o baseline R0

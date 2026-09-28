@@ -18,7 +18,12 @@ Sem XLR, **PRE** escala os oscs. **OSC IN** = mix osc ↔ mic (CCW = só drones,
 
 O pré vocal está em `pre-vocal.md`. Mesmo papel do Echo Master, **sem transformador** (diferencial no NE5532 + pad no XLR).
 
-Leia `esquema.md` para montar. Caderno de estudo: `componentes.md`. Uma fenolite no piso; **nove** chicotes 2×N e CIs em soquete: `pcb.md`. Para trabalhar no KiCad via MCP, comece por `kicad-requisitos.md` e depois siga `kicad-layout-agent.md`. Lista de compra: `bom.md`. Simulador: `sim/painel.html`.
+Leia `esquema.md` para montar. Caderno de estudo: `componentes.md`. A referência
+artesanal THT/fenolite está em `pcb.md`; o baseline KiCad atual é FR-4 de duas
+camadas com PCBA SMD JLCPCB e montagem manual do restante. Para trabalhar no
+KiCad via MCP, comece por `kicad-requisitos.md` e depois siga
+`kicad-layout-agent.md`. Lista de compra: `bom.md`. Simulador:
+`sim/painel.html`.
 
 ---
 

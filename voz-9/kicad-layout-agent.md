@@ -95,7 +95,7 @@ Escolher **um** perfil e não misturar regras.
 
 ### Perfil A — BASE legada, fenolite de uma face
 
-É o padrão atual de `pcb.md`.
+É apenas a referência legada de `pcb.md`; não é o baseline do projeto KiCad.
 
 - placa THT, cobre somente em `B.Cu`;
 - componentes e jumpers no lado superior;
@@ -119,9 +119,10 @@ conservador.
 
 ### Perfil B — FR-4 de duas camadas
 
-Só usar após decisão humana explícita.
+É o baseline aprovado em `kicad-requisitos.md`.
 
-- FR-4, 1,6 mm, cobre 1 oz, PTH;
+- JLCPCB, FR-4, 1,6 mm, cobre 1 oz, HASL sem chumbo, máscara verde e silk
+  branca;
 - `F.Cu` e `B.Cu`;
 - trilha mínima recomendada: **0,25 mm**, ainda que a fábrica aceite menos;
 - alimentação: **0,60 mm** ou maior;
@@ -129,7 +130,11 @@ Só usar após decisão humana explícita.
 - via padrão: **0,80/0,40 mm** (diâmetro/furo), validada na fábrica;
 - plano GND contínuo, preferencialmente em `B.Cu`;
 - sinais no plano oposto devem evitar fendas no retorno;
-- não converter a placa para SMD nem adotar a BOM JLC sem revisão específica.
+- montagem híbrida: SMD/LCSC por PCBA JLCPCB e componentes indisponíveis
+  soldados manualmente;
+- todo item montado pela JLCPCB exige código LCSC, footprint, BOM e CPL
+  conferidos na prévia do portal;
+- peças manuais exigem modelo exato e impressão 1:1 antes da liberação.
 
 ### Regra de precedência
 
@@ -156,10 +161,11 @@ Travar antes do placement:
 - `Edge.Cuts`, furos M3 e keepouts;
 - J1–J9 na faixa esquerda, acessíveis aos chicotes de 8–12 cm;
 - pino 1 visível e coerente com `pcb.md`;
-- margem para inserir/remover conectores e CIs em soquete;
+- margem para inserir/remover conectores e eventuais CIs em soquete;
 - área para alicate, ponta de prova e chave nos trimpots;
 - polaridade legível em eletrolíticos, diodos, regulador e CIs;
-- orientação dos DIP preferencialmente única, com notch para o mesmo lado;
+- orientação dos eventuais DIPs preferencialmente única, com notch para o mesmo
+  lado;
 - altura livre sob o painel e sob knobs/chaves.
 
 Não colocar componentes:
@@ -171,7 +177,8 @@ Não colocar componentes:
 - com texto sobre pad, furo ou corpo vizinho.
 
 Reservar ao menos **10 mm** livres à frente dos headers na direção do cabo e
-**5 mm** em torno de trimpots e soquetes, ajustando para a peça física.
+**5 mm** em torno de trimpots e eventuais soquetes, ajustando para a peça
+física.
 
 ## 4. Arquitetura física da BASE
 
@@ -295,17 +302,17 @@ Após cada etapa, alinhar em grade, verificar courtyard e executar DRC.
 
 ## 7. Classes de nets
 
-Criar classes explícitas. Valores abaixo são mínimos do **Perfil A**; no Perfil
-B podem ser reduzidos apenas conforme seção 2.
+Criar classes explícitas. Valores abaixo são do **Perfil B aprovado** e já
+mantêm margem sobre os mínimos usuais da fábrica.
 
 | Classe | Nets típicas | Largura | Clearance | Regras adicionais |
 | --- | --- | ---: | ---: | --- |
-| `PWR_MAIN` | entrada, V9, GND tronco | 1,00 mm | 0,30 mm | sem neck-down evitável |
-| `PWR_LOCAL` | V5, VEE, 4V5, 1V8 | 0,80 mm | 0,30 mm | 4V5/1V8 não são terra |
-| `MIC_LOW` | X2, X3, entradas U1 | 0,40 mm | 0,40 mm | curta, simétrica, keepout de clocks |
-| `AUDIO` | cadeia principal, SEND/RCV | 0,40 mm | 0,30 mm | evitar paralelismo entrada/saída |
-| `TIME_CLOCK` | OSC timing, LFO, CLK, PT p6 | 0,40 mm | 0,40 mm | manter ≥3 mm de `MIC_LOW` quando possível |
-| `CONTROL_HIZ` | gates, ENV, CV somado | 0,40 mm | 0,40 mm | curta; sem ilhas e testpoints grandes |
+| `PWR_MAIN` | entrada, V9, GND tronco | 1,00 mm | 0,25 mm | sem neck-down evitável |
+| `PWR_LOCAL` | V5, VEE, 4V5, 1V8 | 0,60 mm | 0,25 mm | 4V5/1V8 não são terra |
+| `MIC_LOW` | X2, X3, entradas U1 | 0,30 mm | 0,40 mm | curta, simétrica, keepout de clocks |
+| `AUDIO` | cadeia principal, SEND/RCV | 0,30 mm | 0,25 mm | evitar paralelismo entrada/saída |
+| `TIME_CLOCK` | OSC timing, LFO, CLK, PT p6 | 0,30 mm | 0,40 mm | manter ≥3 mm de `MIC_LOW` quando possível |
+| `CONTROL_HIZ` | gates, ENV, CV somado | 0,30 mm | 0,40 mm | curta; sem ilhas e testpoints grandes |
 
 Nomes reais devem vir do esquema. Não renomear net para “encaixar” nesta
 tabela; atribuir a net existente à classe apropriada.
@@ -333,7 +340,8 @@ Ordem obrigatória:
 - entrar em pads de forma limpa, sem tangenciar furos;
 - manter trilhas paralelas sensíveis separadas; aproximá-las somente pelo
   trecho mínimo;
-- não passar entre pads DIP se o processo artesanal não garantir clearance;
+- em componente manual, não passar entre pads se isso prejudicar solda ou
+  retrabalho;
 - não rotear sob cristal inexistente nem criar blindagem fictícia;
 - vias/jumpers não são “falha”: no Perfil A, jumper explícito e testável é
   melhor que trilha impossível.
@@ -374,7 +382,7 @@ Não usar:
 
 - footprint menor que a peça comprada;
 - montagem diagonal para “ganhar” milímetros sem benefício elétrico;
-- passivo sob CI em soquete;
+- passivo sob eventual CI em soquete;
 - capacitor eletrolítico encostado em regulador quente;
 - trilha fina como solução de congestionamento;
 - courtyard sobreposto aceito por conveniência;
@@ -405,10 +413,11 @@ Silkscreen mínimo:
 - orientação de diodos e transistores;
 - nomes de trilhos nos testpoints;
 - aviso `PT2399 = 5 V`;
-- indicação do lado dos componentes e do cobre no Perfil A.
+- indicação do lado dos componentes e, somente no Perfil A legado, do cobre.
 
-Executar inspeção de impressão 1:1 para DIP, headers, TO-92, regulador,
-trimpots, eletrolíticos e furos. Footprint “parecido” não é validado.
+Executar inspeção de impressão 1:1 para todo componente manual: DIP quando
+usado, headers, TO-92, regulador, trimpots, eletrolíticos e furos. Footprint
+“parecido” não é validado.
 
 ### Evidência não é aprovação automática
 
@@ -545,7 +554,7 @@ legível e confirmar que ele abre no KiCad.
 - distância pad–pad e fabricabilidade inspecionadas, não apenas courtyards;
 - desacoplamentos e redes críticas junto aos pinos;
 - polaridades/orientações conferidas com datasheet;
-- trimpots, soquetes e testpoints acessíveis;
+- trimpots, eventuais soquetes e testpoints acessíveis;
 - ratsnest sem cruzamentos evitáveis dentro dos blocos.
 - silkscreen sem invadir pads/furos e legível após montagem;
 - aprovação humana registrada e peças críticas bloqueadas.

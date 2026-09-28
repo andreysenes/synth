@@ -1,5 +1,10 @@
 # VOZ-9 — BOM para a JLCPCB
 
+> **Status:** JLCPCB/PCBA SMD foi escolhida para o baseline KiCad. Este arquivo e
+> `jlcpcb-bom.csv` são ponto de partida, não BOM liberada. Estoque, códigos
+> LCSC, footprints, encapsulamentos, substitutos, BOM e CPL devem ser
+> revalidados após o esquema KiCad, conforme `kicad-requisitos.md`.
+
 Arquivo para subir no [BOM Tool](https://jlcpcb.com/parts/bom-tool): **`jlcpcb-bom.csv`**.
 
 Formato do [guia da JLCPCB](https://jlcpcb.com/help/article/bill-of-materials-for-pcb-assembly): `Comment`, `Designator`, `Footprint`, `LCSC Part #`.

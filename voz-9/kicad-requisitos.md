@@ -1,6 +1,6 @@
 # VOZ-9 — requisitos da placa BASE no KiCad
 
-Baseline inicial: **R0 — rascunho para aprovação humana**
+Baseline inicial: **R0.1 — decisões de produto registradas**
 
 Escopo: placa BASE, interfaces com painel, fabricação, montagem e validação.
 
@@ -31,21 +31,24 @@ Regras:
 
 ## 2. Premissas do baseline R0
 
-Estas premissas vêm da documentação atual e serão tratadas como propostas até a
-assinatura da seção 14:
+Estas premissas foram escolhidas pelo responsável do produto:
 
-1. uma única placa BASE THT de **220 × 160 mm**;
-2. fenolite de uma face, cobre em `B.Cu`, componentes no lado frontal;
-3. painel separado, ligado por nove chicotes J1–J9;
-4. alimentação externa **9 V centro-negativo**;
-5. CIs em soquetes;
-6. fabricação e solda manuais;
-7. `esquema.md` define a intenção elétrica, mas ainda precisa virar um esquema
+1. uma única placa BASE de **220 × 160 mm**;
+2. FR-4 de duas camadas, 1,6 mm, cobre 1 oz, HASL sem chumbo, máscara verde e
+   silk branca;
+3. fabricação e PCBA pela JLCPCB;
+4. montagem híbrida: SMD/LCSC montado pela JLCPCB e peças indisponíveis
+   montadas manualmente;
+5. painel separado, com knobs, botões, VU, jacks e demais interfaces ligados à
+   BASE por chicotes;
+6. alimentação externa regulada **9 V ±5 %, centro-negativo, mínimo 1 A**;
+7. criar primeiro projeto e esquema KiCad; iniciar PCB somente após validação
+   humana do esquema e da netlist;
+8. selecionar modelos exatos para montagem manual, priorizando peças
+   disponíveis no AliExpress com datasheet ou medidas verificáveis;
+9. `esquema.md` define a intenção elétrica, mas ainda precisa virar um esquema
    KiCad validado;
-8. `pcb.svg` é referência visual/mecânica, nunca fonte de conectividade.
-
-Uma migração para FR-4 de duas camadas é uma nova revisão de requisitos, não uma
-otimização silenciosa.
+10. `pcb.svg` é referência visual/mecânica legada, nunca fonte de conectividade.
 
 ## 3. Requisitos funcionais e de conectividade
 
@@ -62,7 +65,7 @@ otimização silenciosa.
 
 | ID | Pri. | Requisito e critério de aprovação | Fonte | Verificação | Estado |
 | --- | --- | --- | --- | --- | --- |
-| PWR-001 | MUST | Entrada nominal de 9 V centro-negativo pelo P4; polaridade conferida na peça física. | `esquema.md` §0 | inspeção e medição | PROPOSTO |
+| PWR-001 | MUST | Entrada regulada de 9 V ±5 %, centro-negativo, por fonte com capacidade mínima de 1 A; polaridade conferida na peça física. | decisão DEC-009, `esquema.md` §0 | inspeção e medição | APROVADO |
 | PWR-002 | MUST | D1/1N5817 deve bloquear alimentação invertida e alimentar toda a placa antes das derivações. | `esquema.md` §0 | ERC, inspeção e teste limitado | PROPOSTO |
 | PWR-003 | MUST | V5 deve medir **5,0 V ±0,2 V** em operação; nenhum PT2399 pode receber V9. | `componentes.md` §78M05/PT2399 | ERC e medição sob carga | PROPOSTO |
 | PWR-004 | MUST | VEE deve ficar aproximadamente entre **−8 e −9 V** com entrada nominal e carga normal. | `componentes.md` §MAX1044 | medição | PROPOSTO |
@@ -72,8 +75,21 @@ otimização silenciosa.
 | PWR-008 | MUST | Cada CI deve possuir desacoplamento local conforme esquema/datasheet; 100 nF deve ficar com caminho curto, meta de corpo a até 5 mm do pino. | playbook §6 | inspeção e medição no PCB | PROPOSTO |
 | PWR-009 | MUST | Cada PT2399 deve possuir 100 nF e reserva local em V5; retorno pulsante não pode compartilhar garganta estreita com o pré. | datasheet/PT2399, playbook | inspeção de layout | PROPOSTO |
 | PWR-010 | MUST | MAX1044 e capacitores de voo devem formar laço compacto, afastado do pré de mic e nós de alta impedância. | datasheet, playbook | inspeção de layout | PROPOSTO |
-| PWR-011 | MUST | Corrente e potência térmica de D1, U4 e U5 devem ter margem para a carga total calculada. | datasheets | cálculo e teste térmico | BLOQUEADO |
+| PWR-011 | MUST | Corrente e potência térmica de D1, U4, U5, trilhas e vias devem suportar ao menos 2× a carga máxima calculada, em ambiente de 40 °C. | decisão DEC-006, datasheets | pior caso e teste térmico | APROVADO |
 | PWR-012 | SHOULD | Incluir testpoints identificados para GND, V9, V5, VEE, 4V5 e 1V8. | playbook §10 | inspeção | PROPOSTO |
+
+## 4.1 Requisitos de desempenho de áudio
+
+Medir com osciladores e gerador de noise desligados, níveis nominais definidos
+no plano de teste e largura de banda registrada.
+
+| ID | Pri. | Requisito e critério de aprovação | Fonte | Verificação | Estado |
+| --- | --- | --- | --- | --- | --- |
+| AUD-001 | MUST | Caminho dry deve apresentar SNR ≥60 dB. | decisão DEC-007 | interface de áudio 24-bit/96 kHz ou melhor | APROVADO |
+| AUD-002 | MUST | Caminho wet deve apresentar SNR ≥45 dB. | decisão DEC-007 | interface de áudio 24-bit/96 kHz ou melhor | APROVADO |
+| AUD-003 | MUST | Hum de rede deve permanecer ≤−60 dBV na saída, nas condições nominais documentadas. | decisão DEC-007 | FFT/captura de áudio | APROVADO |
+| AUD-004 | MUST | Crosstalk entre fontes/blocos isoláveis deve permanecer ≤−50 dB a 1 kHz. | decisão DEC-007 | injeção e medição por canal | APROVADO |
+| AUD-005 | MUST | Limites de amplitude, frequência e tensão por testpoint devem vir de análise de tolerância dos componentes exatos, não de uma porcentagem arbitrária. | decisão DEC-008 | pior caso/Monte Carlo e correlação de protótipo | APROVADO |
 
 ## 5. Interfaces e conectores
 
@@ -85,6 +101,8 @@ otimização silenciosa.
 | IF-004 | MUST | Fêmea fica na BASE, macho no painel, passo 2,54 mm, sem troca entre chicotes. | `pcb.md` | inspeção e encaixe físico | PROPOSTO |
 | IF-005 | MUST | J6/P4-GND deve ter continuidade com malha; P4-TIP não pode apresentar curto com GND. | `pcb.md` | ohmímetro antes de energizar | PROPOSTO |
 | IF-006 | MUST | Entrada XLR não suporta phantom 48 V; aviso deve permanecer na documentação do produto. | `componentes.md` | revisão documental | PROPOSTO |
+| IF-007 | MUST | Knobs, botões, jacks e demais interfaces de painel aprovadas devem ligar à BASE por chicotes; não fazem parte da PCBA SMD. | decisão do produto | esquema, pinout e inspeção | APROVADO |
+| IF-008 | MUST | Cada peça de interface/manual deve ter fabricante/modelo ou desenho dimensional aprovado antes do footprint final. | decisões DEC-004/005 | datasheet, medidas e impressão 1:1 | APROVADO |
 
 ## 6. Requisitos mecânicos
 
@@ -96,8 +114,8 @@ otimização silenciosa.
 | MEC-004 | MUST | J1–J9 devem permanecer acessíveis na faixa esquerda, com ao menos 10 mm livres na direção de saída dos cabos. | `pcb.md`, playbook §3 | medida/inspeção 3D | PROPOSTO |
 | MEC-005 | MUST | Nenhum corpo/courtyard pode invadir borda, arruela, espaçador ou impedir remoção de CI em soquete. | playbook §3 | DRC, 3D e 1:1 | PROPOSTO |
 | MEC-006 | MUST | Trimpots, testpoints e conectores devem ser acessíveis com a placa instalada. | `pcb.md`, playbook | inspeção mecânica | PROPOSTO |
-| MEC-007 | MUST | Footprints devem ser validados com medidas/datasheets das peças compradas; “parecido” não aprova. | playbook §10 | comparação dimensional e 1:1 | BLOQUEADO |
-| MEC-008 | SHOULD | DIPs devem compartilhar orientação de notch quando isso não prejudicar o layout elétrico. | playbook §3 | inspeção | PROPOSTO |
+| MEC-007 | MUST | Footprints devem ser validados com código LCSC, datasheet ou medidas da peça manual; “parecido” não aprova. | decisões DEC-004/005, playbook §10 | comparação dimensional e 1:1 | APROVADO |
+| MEC-008 | SHOULD | CIs manuais devem compartilhar orientação de notch quando isso não prejudicar o layout elétrico. | playbook §3 | inspeção | PROPOSTO |
 
 ## 7. Requisitos de placement
 
@@ -117,9 +135,9 @@ otimização silenciosa.
 
 | ID | Pri. | Requisito e critério de aprovação | Fonte | Verificação | Estado |
 | --- | --- | --- | --- | --- | --- |
-| RTE-001 | MUST | No baseline de uma face, cobre somente em `B.Cu`; troca de caminho deve usar jumper THT explícito com referência. | `pcb.md`, playbook §2 | DRC e inspeção | PROPOSTO |
-| RTE-002 | MUST | Larguras mínimas: PWR_MAIN 1,00 mm; PWR_LOCAL 0,80 mm; sinais 0,40 mm. | playbook §7 | regras do KiCad/DRC | PROPOSTO |
-| RTE-003 | MUST | Clearance mínimo geral 0,30 mm; MIC_LOW/TIME_CLOCK/CONTROL_HIZ 0,40 mm entre classes quando aplicável. | playbook §7 | regras do KiCad/DRC | PROPOSTO |
+| RTE-001 | MUST | Usar `F.Cu` e `B.Cu`; `B.Cu` deve preservar plano GND tão contínuo quanto possível e sinais não devem cruzar fendas de retorno. | decisão DEC-002, playbook §2 | DRC e inspeção de retorno | APROVADO |
+| RTE-002 | MUST | Larguras mínimas: PWR_MAIN 1,00 mm; PWR_LOCAL 0,60 mm; sinais 0,25 mm. Usar valores maiores sempre que o espaço permitir. | perfil JLCPCB, playbook §7 | regras do KiCad/DRC | APROVADO |
+| RTE-003 | MUST | Clearance mínimo geral 0,25 mm; MIC_LOW/TIME_CLOCK/CONTROL_HIZ 0,40 mm entre classes quando aplicável. | perfil JLCPCB, playbook §7 | regras do KiCad/DRC | APROVADO |
 | RTE-004 | MUST | Cobre deve ficar a pelo menos 1,00 mm da borda da placa. | playbook §2 | DRC | PROPOSTO |
 | RTE-005 | MUST | GND deve ser uma net única; não criar planos AGND/DGND isolados. | playbook §6 | ERC/inspeção de zonas | PROPOSTO |
 | RTE-006 | MUST | Retorno do pré não pode compartilhar trecho estreito com PT2399, LED, regulador ou charge pump. | playbook §6 | inspeção de corrente de retorno | PROPOSTO |
@@ -127,19 +145,21 @@ otimização silenciosa.
 | RTE-008 | MUST | Entrada e saída de um mesmo estágio não devem correr paralelas; cruzamento inevitável deve ser curto. | playbook §5.2/§8 | inspeção | PROPOSTO |
 | RTE-009 | MUST | Nets OSC timing, LFO, CLK e PT2399 pino 6 devem ser curtas e separadas de MIC_LOW; meta de 3 mm quando possível. | playbook §7 | inspeção/medição | PROPOSTO |
 | RTE-010 | MUST | Zonas devem ter net explícita, thermal adequado a solda manual e zero ilha não conectada. | playbook §8 | DRC/inspeção | PROPOSTO |
-| RTE-011 | MUST | Zero net não roteada no G5, exceto conexão deliberadamente implementada por jumper documentado. | playbook G5 | DRC/ratsnest | PROPOSTO |
+| RTE-011 | MUST | Zero net não roteada no G5; qualquer jumper deliberado deve existir no esquema, BOM e PCB. | playbook G5 | DRC/ratsnest | PROPOSTO |
 
 ## 9. Requisitos de fabricação, montagem e manutenção
 
 | ID | Pri. | Requisito e critério de aprovação | Fonte | Verificação | Estado |
 | --- | --- | --- | --- | --- | --- |
-| DFM-001 | MUST | Processo deve fabricar 0,40 mm de trilha, 0,30 mm de clearance e anel anular de 0,30 mm com margem. | playbook §2 | cupom/capacidade do processo | BLOQUEADO |
-| DFM-002 | MUST | Furos devem ser validados: R/C/header 0,80 mm típico; DIP/terminais 0,90–1,00 mm conforme peça real. | `pcb.md`, playbook | medidas e impressão 1:1 | BLOQUEADO |
+| DFM-001 | MUST | Fabricar na JLCPCB em FR-4, duas camadas, 1,6 mm, 1 oz, HASL sem chumbo, máscara verde e silk branca. | decisões DEC-002/003 | parâmetros do pedido e Gerbers | APROVADO |
+| DFM-002 | MUST | Furos, anéis e slots devem seguir o datasheet da peça e as capacidades vigentes da JLCPCB, com impressão 1:1 para peças manuais. | decisão DEC-003, playbook | DRC, datasheet e 1:1 | APROVADO |
 | DFM-003 | MUST | Silkscreen não pode invadir pads/furos e deve indicar refs, pin 1, polaridade, trilhos e lado de montagem. | playbook §10/G3 | DRC/inspeção | PROPOSTO |
 | DFM-004 | MUST | Nenhum passivo deve ficar sob CI em soquete; eletrolítico não deve encostar no regulador quente. | playbook §9 | inspeção 3D | PROPOSTO |
 | DFM-005 | MUST | Gerbers/drill ou arte de transferência devem ser verificados em visualizador independente e em impressão 1:1. | playbook G6 | revisão de arquivos | PROPOSTO |
 | DFM-006 | MUST | BOM, designators, footprints e polaridades devem corresponder à revisão liberada. | `bom.md`, `jlcpcb.md` | comparação automatizada + humana | PROPOSTO |
 | DFM-007 | SHOULD | Incluir testpoints de áudio para PRE/SEND, OSC A/B, ENV, VCF/VCA, GRAVA/LÊ e heads quando houver espaço seguro. | playbook §10 | inspeção | PROPOSTO |
+| DFM-008 | MUST | Todo componente disponível e aprovado na biblioteca JLCPCB deve usar código LCSC e footprint compatível para PCBA SMD. | decisão DEC-004 | BOM/CPL e conferência no portal | APROVADO |
+| DFM-009 | MUST | Componente sem opção LCSC aprovada deve usar footprint de montagem manual e aparecer separado na BOM. | decisão DEC-004 | BOM e inspeção | APROVADO |
 
 ## 10. Requisitos de verificação e qualidade
 
@@ -153,6 +173,8 @@ otimização silenciosa.
 | VER-006 | MUST | Mudança após teste aprovado exige regressão dos requisitos impactados. | playbook §10 | matriz de impacto/reteste | PROPOSTO |
 | VER-007 | MUST | G2, G3 e G6 exigem aprovação humana registrada. | playbook §11 | registro de aprovação | PROPOSTO |
 | VER-008 | MUST | G7 deve medir placa física; ligar ou produzir áudio não basta para `HARDWARE_VALIDADO`. | playbook G7 | relatório de bancada | PROPOSTO |
+| VER-009 | MUST | A bancada mínima é multímetro, osciloscópio e interface de áudio; testes que precisarem de outro instrumento ficam bloqueados ou usam equipamento externo documentado. | decisão DEC-011 | inventário e plano de teste | APROVADO |
+| VER-010 | MUST | O primeiro protótipo não exige ensaio EMC/ESD formal; ainda deve aplicar boas práticas de proteção/layout e testes funcionais. | decisão DEC-012 | revisão de projeto | APROVADO |
 
 ## 11. Requisitos para execução pelo agente/MCP
 
@@ -174,40 +196,45 @@ otimização silenciosa.
 | HW-002 | MUST | Testar blocos na ordem de `pcb.md`: fonte, osciladores, shape/VCF/VCA, LFO, pré/EQ, NAB e PT2399. | `pcb.md` | checklist de bancada | PROPOSTO |
 | HW-003 | MUST | Verificar ruído, crosstalk, estabilidade, aquecimento e extremos dos controles. | playbook G7 | medições e teste auditivo documentado | PROPOSTO |
 | HW-004 | MUST | Comparar hardware com requisitos/simulação e investigar toda discrepância relevante. | playbook G7 | relatório de correlação | PROPOSTO |
-| HW-005 | SHOULD | Testar variação segura de alimentação, peças e temperatura conforme limites aprovados. | playbook G7 | plano de teste | BLOQUEADO |
+| HW-005 | SHOULD | Testar variação segura de alimentação e peças; operação deve ser validada entre 0–40 °C e armazenamento especificado entre −10–60 °C, em ambiente interno e seco. | decisão DEC-010, playbook G7 | plano de teste | APROVADO |
 
-## 13. Pendências para fechar o baseline R0
+## 13. Decisões registradas e ações abertas
 
-### Bloqueantes para G0/G1
+### Decisões do responsável do produto
 
-| ID | Decisão/evidência necessária | Responsável sugerido |
+| ID | Decisão | Estado |
 | --- | --- | --- |
-| DEC-001 | Criar `.kicad_pro`, `.kicad_sch` e `.kicad_pcb` com esquema anotado e netlist validada. | engenharia |
-| DEC-002 | Confirmar que o baseline de fabricação é realmente fenolite de uma face. | responsável do produto |
-| DEC-003 | Identificar fabricante/processo e suas tolerâncias reais. | fabricação |
-| DEC-004 | Medir ou obter datasheets das peças físicas e validar todos os footprints. | montagem/engenharia |
-| DEC-005 | Confirmar pinagem dos combos, P4, chaves, pots, JFETs, MP20 e headers comprados. | bancada |
-| DEC-006 | Calcular consumo máximo e temperatura de D1/U4/U5, incluindo tolerâncias. | engenharia |
+| DEC-001 | Criar projeto e esquema KiCad primeiro; PCB somente após validação. | RESOLVIDA |
+| DEC-002 | FR-4 de duas camadas com PCBA JLCPCB. | RESOLVIDA |
+| DEC-003 | Processo padrão: 1,6 mm, 1 oz, HASL sem chumbo, verde/branco. | RESOLVIDA |
+| DEC-004 | SMD/LCSC via JLCPCB; restante com footprint manual validado. | RESOLVIDA |
+| DEC-005 | Agente seleciona modelos manuais, priorizando AliExpress. | RESOLVIDA |
+| DEC-006 | Margem de corrente 2× e ambiente máximo de projeto de 40 °C. | RESOLVIDA |
+| DEC-007 | Dry 60 dB, wet 45 dB, hum −60 dBV, crosstalk −50 dB. | RESOLVIDA |
+| DEC-008 | Limites derivados das tolerâncias dos componentes selecionados. | RESOLVIDA |
+| DEC-009 | Fonte 9 V ±5 %, centro-negativo, mínimo 1 A. | RESOLVIDA |
+| DEC-010 | Operação 0–40 °C; armazenamento −10–60 °C; interno/seco. | RESOLVIDA |
+| DEC-011 | Bancada mínima: multímetro, osciloscópio e interface de áudio. | RESOLVIDA |
+| DEC-012 | Protótipo sem ensaio EMC/ESD formal. | RESOLVIDA |
 
-### Bloqueantes para G6/G7
+### Ações técnicas bloqueantes
 
-| ID | Decisão/evidência necessária | Responsável sugerido |
-| --- | --- | --- |
-| DEC-007 | Definir limites quantitativos de ruído, hum e crosstalk aceitáveis. | áudio/ produto |
-| DEC-008 | Definir níveis esperados nos testpoints e tolerâncias por bloco. | engenharia |
-| DEC-009 | Definir faixa de entrada 9 V e corrente mínima da fonte externa. | produto/engenharia |
-| DEC-010 | Definir faixa de temperatura e ambiente de operação. | produto |
-| DEC-011 | Definir instrumentos, carga de saída e procedimento de teste final. | bancada |
-| DEC-012 | Definir se haverá teste EMC/ESD ou apenas avaliação funcional artesanal. | produto |
-
-Até essas decisões existirem, o agente pode preparar inventário e estrutura,
-mas não pode declarar os gates correspondentes aprovados.
+| ID | Ação/evidência necessária | Bloqueia | Responsável |
+| --- | --- | --- | --- |
+| ACT-001 | Criar `.kicad_pro` e `.kicad_sch`, anotar e validar ERC/netlist. Não criar PCB antes da aprovação. | G0 | engenharia |
+| ACT-002 | Selecionar códigos LCSC e recalcular a BOM SMD conforme estoque/ciclo de vida. | esquema/PCBA | engenharia |
+| ACT-003 | Selecionar modelos exatos das peças manuais e validar pinagem/dimensões. | footprint/G1 | engenharia + bancada |
+| ACT-004 | Calcular consumo, dissipação e tolerâncias, verificando margem 2× a 40 °C. | esquema/G6 | engenharia |
+| ACT-005 | Executar pior caso/Monte Carlo e gerar limites dos testpoints. | G6/G7 | engenharia |
+| ACT-006 | Resolver conflitos da documentação legada THT/fenolite com o baseline híbrido. | R0 | documentação |
+| ACT-007 | Confirmar se “VU” significa adicionar um medidor ao painel ou foi apenas exemplo de interface. | escopo/esquema | responsável do produto |
 
 ## 14. Gate R0 — aprovação de requisitos
 
 Checklist de saída:
 
-- [ ] Escopo e perfil de fabricação aprovados.
+- [x] Escopo e perfil de fabricação aprovados.
+- [x] Decisões DEC-001–DEC-012 registradas.
 - [ ] Todos os requisitos `MUST` têm fonte, critério e método de verificação.
 - [ ] Conflitos com `README.md`, `esquema.md`, `pcb.md`, BOM e datasheets foram
       resolvidos.
@@ -218,13 +245,13 @@ Checklist de saída:
 - [ ] Aprovação humana registrada abaixo.
 
 ```text
-Baseline: R0
+Baseline: R0.1
 Revisão Git:
-Perfil de fabricação:
-Aprovado por:
-Data:
+Perfil de fabricação: JLCPCB FR-4 2L, 1,6 mm, 1 oz, LF HASL, verde/branco
+Aprovado por: decisões individuais registradas pelo responsável do produto
+Data: 2026-09-28
 Restrições/waivers:
-Próximo gate autorizado:
+Próximo gate autorizado: concluir R0; depois criar e validar somente o esquema
 ```
 
 Sem essa aprovação, o próximo estado é `REQUISITOS_PENDENTES`, não G0.

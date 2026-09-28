@@ -33,8 +33,10 @@ Regras:
 
 Estas premissas foram escolhidas pelo responsável do produto:
 
-1. faceplate quadrada de **300 × 300 mm**, montada numa caixa maior; PCB BASE
-   de **200,00 × 150,00 mm** no fundo; altura interna provisória da caixa de
+1. faceplate quadrada de **300 × 300 mm**, montada numa caixa maior de paredes
+   **15–18 mm** e envelope externo provisório **336,00 × 336,00 mm** (parede
+   nominal 18 mm; faixa aceitável 330–336 mm conforme a madeira); PCB BASE de
+   **200,00 × 150,00 mm** no fundo; altura interna provisória da caixa de
    **60,00 mm**;
 2. FR-4 de duas camadas, 1,6 mm, cobre 1 oz, HASL sem chumbo, máscara verde e
    silk branca;
@@ -179,6 +181,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 | MEC-002 | MUST | Quatro furos NPTH M3 de 3,20 mm nos centros `(4,4)`, `(196,4)`, `(4,146)`, `(196,146)` mm, origem no canto superior esquerdo da PCB. | decisão DEC-028 | medida no KiCad e impressão 1:1 | APROVADO |
 | MEC-011 | MUST | Faceplate de **300,00 × 300,00 mm**; a caixa de madeira é externa a ela e deve fixá-la e conter a BASE. | decisão DEC-028 | desenho mecânico e mockup | APROVADO |
 | MEC-012 | MUST | Altura interna provisória da caixa de **60,00 mm**, dimensionada para ~35 mm de VU, peças altas da BASE e folga mínima de 5 mm; revisar após ACT-007 se a pilha medida ultrapassar o orçamento. | VU-014, DEC-029 | mockup 3D/físico e medição da amostra | APROVADO |
+| MEC-013 | MUST | Paredes da caixa com **15–18 mm**; envelope externo provisório **336,00 × 336,00 mm** (parede nominal 18 mm), aceitando **330–336 mm** conforme a madeira escolhida; o faceplate de 300 × 300 mm encaixa no topo. | decisão DEC-030 | desenho mecânico e mockup | APROVADO |
 | MEC-003 | MUST | Manter cobre a 3,0 mm da borda dos furos M3, salvo aterramento deliberado aprovado. | playbook §2 | DRC/inspeção | PROPOSTO |
 | MEC-004 | MUST | J1–J9 devem permanecer acessíveis na faixa esquerda, com ao menos 10 mm livres na direção de saída dos cabos. | `pcb.md`, playbook §3 | medida/inspeção 3D | PROPOSTO |
 | MEC-005 | MUST | Nenhum corpo/courtyard pode invadir borda, arruela, espaçador ou impedir remoção de CI em soquete. | playbook §3 | DRC, 3D e 1:1 | PROPOSTO |
@@ -307,6 +310,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 | DEC-027 | Fazer o LED LFO piscar de forma binária e apagar com TREM no centro/OFF. | RESOLVIDA |
 | DEC-028 | Faceplate 300 × 300 mm mais caixa; PCB BASE 200 × 150 mm. | RESOLVIDA |
 | DEC-029 | Altura interna provisória da caixa de 60 mm. | RESOLVIDA |
+| DEC-030 | Paredes 15–18 mm; envelope externo provisório 336 × 336 mm (faixa 330–336). | RESOLVIDA |
 
 ### Ações técnicas bloqueantes
 
@@ -328,7 +332,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 Checklist de saída:
 
 - [x] Escopo e perfil de fabricação aprovados.
-- [x] Decisões DEC-001–DEC-029 registradas.
+- [x] Decisões DEC-001–DEC-030 registradas.
 - [ ] Todos os requisitos `MUST` têm fonte, critério e método de verificação.
 - [ ] Conflitos com `README.md`, `esquema.md`, `pcb.md`, BOM e datasheets foram
       resolvidos.

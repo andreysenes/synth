@@ -189,14 +189,15 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 | MEC-015 | MUST | Porcas/bushings dos jacks devem fazer contato elétrico confiável com o alumínio (arruela dentada/estrela ou equivalente limpo de óxido); prever olhal/parafuso para o fio isolado de bonding. | decisão DEC-033 | ohmímetro e inspeção 1:1 | APROVADO |
 | MEC-016 | SHOULD | Acabamento base do faceplate (anodização, escovado, pintura) permanece **adiado** quando não conflitar com a silk; a arte silk (DEC-036) fecha independentemente. | decisão DEC-034 | revisão de produto | ADIADO |
 | MEC-017 | MUST | Legendas e diagramação do faceplate usam **silkscreen direto no alumínio** (tinta de alto contraste); referência visual de densidade/blocos em `refs/faceplate-silk-reference.png` — não copiar arte de terceiros. | decisão DEC-036 | arte de painel e protótipo impresso | APROVADO |
+| MEC-018 | SHOULD | Posicionamento fino de pots, alavancas, jacks, VU, LEDs e blocos visuais no faceplate fica **adiado** com o acabamento; não bloqueia esquema nem PCB BASE. Controles obrigatórios (IF-009–IF-015) permanecem no escopo. | decisão DEC-037 | desenho de painel | ADIADO |
 | MEC-003 | MUST | Manter cobre a 3,0 mm da borda dos furos M3, salvo aterramento deliberado aprovado. | playbook §2 | DRC/inspeção | PROPOSTO |
 | MEC-004 | MUST | J1–J11 ficam na **borda inferior** da BASE (lado dos furos em y≈146 mm), com ao menos **10 mm** livres na direção de saída dos cabos. | decisão DEC-035 | medida/inspeção 3D | APROVADO |
 | MEC-005 | MUST | Nenhum corpo/courtyard pode invadir borda, arruela, espaçador ou impedir remoção de CI em soquete. | playbook §3 | DRC, 3D e 1:1 | PROPOSTO |
 | MEC-006 | MUST | Trimpots, testpoints e conectores devem ser acessíveis com a placa instalada. | `pcb.md`, playbook | inspeção mecânica | PROPOSTO |
 | MEC-007 | MUST | Footprints devem ser validados com código LCSC, datasheet ou medidas da peça manual; “parecido” não aprova. | decisões DEC-004/005, playbook §10 | comparação dimensional e 1:1 | APROVADO |
 | MEC-008 | SHOULD | CIs manuais devem compartilhar orientação de notch quando isso não prejudicar o layout elétrico. | playbook §3 | inspeção | PROPOSTO |
-| MEC-009 | MUST | O painel deve receber recorte, fixação e área livre para o VU analógico exato, sem colisão com knobs, chicotes ou caixa. | VU-009 | CAD mecânico e impressão 1:1 | BLOQUEADO |
-| MEC-010 | MUST | O painel deve acomodar os 10 LEDs, lentes e identificação legível sem conflito com VU, controles, porcas ou chicotes. | LED-001/011 | CAD mecânico e impressão 1:1 | BLOQUEADO |
+| MEC-009 | MUST | O painel deve receber recorte, fixação e área livre para o VU analógico exato, sem colisão com knobs, chicotes ou caixa. | VU-009, DEC-037 | CAD mecânico e impressão 1:1 | ADIADO |
+| MEC-010 | MUST | O painel deve acomodar os 10 LEDs, lentes e identificação legível sem conflito com VU, controles, porcas ou chicotes. | LED-001/011, DEC-037 | CAD mecânico e impressão 1:1 | ADIADO |
 
 ## 7. Requisitos de placement
 
@@ -326,6 +327,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 | DEC-034 | Acabamento do faceplate adiado para depois do baseline elétrico/mecânico. | ADIADA |
 | DEC-035 | Headers J1–J11 na borda inferior da PCB, ordenados pela lógica do sinal. | RESOLVIDA |
 | DEC-036 | Legendas do faceplate em silkscreen direto no alumínio; referência visual em refs/faceplate-silk-reference.png. | RESOLVIDA |
+| DEC-037 | Posição dos itens da interface no faceplate adiada com o acabamento. | ADIADA |
 
 ### Ações técnicas bloqueantes
 
@@ -347,7 +349,7 @@ O painel terá 10 LEDs no total: POWER existente e nove novos indicadores.
 Checklist de saída:
 
 - [x] Escopo e perfil de fabricação aprovados.
-- [x] Decisões DEC-001–DEC-036 registradas (DEC-034 adiada).
+- [x] Decisões DEC-001–DEC-037 registradas (DEC-034 e DEC-037 adiadas).
 - [ ] Todos os requisitos `MUST` têm fonte, critério e método de verificação.
 - [ ] Conflitos com `README.md`, `esquema.md`, `pcb.md`, BOM e datasheets foram
       resolvidos.

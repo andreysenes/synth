@@ -122,8 +122,8 @@ o sinal mono **pós-VOLUME e antes dos pads/saídas**, sem carregar o áudio.
 Requisitos mínimos:
 
 - movimento analógico de ponteiro, com escala VU e zona de sobrecarga;
-- tipo compacto de 35 × 35 mm, movimento 500 µA/630 Ω e fundo de escala
-  elétrico aproximado de 0,315 V DC;
+- tipo compacto nominal de 37 × 35 × 35 mm/21 g, movimento 500 µA/630 Ω e
+  fundo de escala elétrico aproximado de 0,315 V DC;
 - entrada do medidor com impedância mínima de 100 kΩ;
 - driver/retificador de precisão e ajuste na BASE, desacoplados e afastados do
   pré de microfone;
@@ -138,6 +138,8 @@ Requisitos mínimos:
   alívio de tração, embalagem e comissionamento devem refletir isso.
 - a instrução genérica de conexão ao áudio não substitui o driver/retificador
   protegido requerido pelo projeto.
+- alegações comerciais de precisão/estabilidade e tolerância dimensional de
+  1–2 cm não são evidência; amostra e lote precisam de medição/calibração.
 
 ## 6. Inconsistências encontradas
 

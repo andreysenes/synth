@@ -26,9 +26,10 @@ KiCad via MCP, comece por `kicad-requisitos.md` e depois siga
 `sim/painel.html`.
 
 O baseline KiCad acrescenta um **VU analógico compacto de saída**: frontal
-35 × 35 mm, movimento 500 µA/630 Ω e iluminação quente por filamento 6–12 V.
-O chicote J10 separa movimento e lâmpada. Recorte, profundidade, consumo real e
-calibração serão confirmados numa amostra antes de atualizar `painel.svg`.
+nominal 37 × 35 × 35 mm, 21 g, movimento 500 µA/630 Ω e iluminação quente por
+filamento 6–12 V. O chicote J10 separa movimento e lâmpada. Recorte, dimensões,
+consumo real e calibração serão confirmados numa amostra antes de atualizar
+`painel.svg`.
 
 Também acrescenta nove indicadores em J11: **CLIP, GATE/ENV, LFO, OSC A/B,
 H1–H3 e STACK**. Com o POWER existente, são **10 LEDs vermelhos difusos de

@@ -251,7 +251,8 @@ isolado e os três estados dinâmicos usam drivers discretos.
 
 **Ideia.** Galvanômetro de painel que mostra o nível médio do áudio. O modelo
 escolhido tem frente nominal de **35 × 35 mm**, movimento de **500 µA**,
-resistência de **630 Ω** e escala −20…+5 VU. Fundo de escala elétrico:
+corpo anunciado de **37 × 35 × 35 mm**, massa de **21 g**, resistência de
+**630 Ω** e escala −20…+5 VU. Fundo de escala elétrico:
 `0,0005 A × 630 Ω ≈ 0,315 V DC`.
 
 **No VOZ-9.** Mede pós-VOLUME, antes dos pads de saída, por driver/retificador
@@ -264,7 +265,8 @@ batendo no fim. Meça também corrente e temperatura da lâmpada.
 
 **Mecânica.** É frágil. Comprar uma amostra antes do painel final, medir corpo,
 profundidade, furos e recorte com paquímetro, usar alívio de tração e manter
-seco.
+seco. A tolerância de 1–2 cm anunciada por uma listagem é inutilizável para CAD;
+não confiar nas dimensões até medir.
 
 ---
 

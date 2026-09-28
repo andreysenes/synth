@@ -1,7 +1,9 @@
 # VOZ-9 — requisitos da placa BASE no KiCad
 
-Baseline inicial: **R0 — rascunho para aprovação humana**  
-Escopo: placa BASE, interfaces com painel, fabricação, montagem e validação.  
+Baseline inicial: **R0 — rascunho para aprovação humana**
+
+Escopo: placa BASE, interfaces com painel, fabricação, montagem e validação.
+
 Processo de layout: `kicad-layout-agent.md`.
 
 Este documento deve ser aprovado antes do gate G0. Ele define **o que** a placa

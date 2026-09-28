@@ -1,6 +1,7 @@
 # VOZ-9 — auditoria do teste digital para requisitos
 
-Revisão: 2026-09-28  
+Revisão: 2026-09-28
+
 Escopo: `painel.html`, testes SPICE, painel físico e baseline KiCad.
 
 ## 1. Regra de interpretação

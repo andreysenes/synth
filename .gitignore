@@ -1,5 +1,6 @@
-# Ignore large local tool binaries (reinstall from Konnect releases)
+# Ignore large local tool binaries (reinstall from releases / AppImage)
 /tools/konnect/konnect
+/tools/kicad10/
 /tools/__pycache__/
 *.kicad_sch.bak
 /voz-9/kicad/*.bak

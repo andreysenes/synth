@@ -5,7 +5,24 @@ editar o esquema em tempo real.
 
 ## Neste ambiente (Cloud Agent)
 
-Binário instalado em:
+### KiCad
+
+| Ferramenta | Caminho | Versão |
+| --- | --- | --- |
+| KiCad 10 (preferido) | `/workspace/tools/kicad10/squashfs-root/usr/bin/kicad` | **10.0.6** AppImage lite |
+| `kicad-cli` 10 | `/workspace/tools/kicad10/squashfs-root/usr/bin/kicad-cli` | **10.0.6** |
+| Wrappers PATH | `~/.local/bin/kicad` e `kicad-cli` | apontam para o 10 |
+| KiCad 7 (apt) | `/usr/bin/kicad` | 7.0.11 — legado; não use para este projeto |
+
+Abrir o projeto:
+
+```bash
+kicad /workspace/voz-9/kicad/voz-9.kicad_pro
+```
+
+### Konnect
+
+Binário:
 
 ```text
 /workspace/tools/konnect/konnect
@@ -24,18 +41,24 @@ Skills instaladas via `konnect init` em `~/.claude/skills/`.
 
 ### Realtime
 
-1. **Edição de esquema** — Konnect grava `.kicad_sch` direto (não precisa do GUI).
-2. **Acompanhar ao vivo** — no desktop com **KiCad 10**:
-   - abrir `voz-9/kicad/voz-9.kicad_pro`;
-   - habilitar *Preferences → Plugins → Enable KiCad API*;
-   - instalar o PCM `konnect-pcm-*-linux.zip` ou apontar o MCP para o binário;
-   - opcional: `open_schematic_viewer` / `schematic-viewer` no root sheet.
-3. Este VM tem **KiCad 7** via apt: `kicad-cli` local **não** abre folhas
-   escritas pelo Konnect (falha de load). Use KiCad **10** no desktop para GUI/ERC
-   oficial. A validação de conectividade do Konnect (`validate_component_connections`,
-   `export_netlist_summary`) funciona aqui.
+1. **Edição de esquema** — Konnect grava `.kicad_sch` direto.
+2. **GUI ao vivo** — abra o projeto com **KiCad 10** (`kicad` no PATH / atalho “KiCad 10”).
+3. Habilite *Preferences → Plugins → Enable KiCad API* e, se quiser IPC no
+   Konnect, preencha `ipc_address` em `konnect.toml`.
+4. O `kicad-cli` 10 abre as folhas do Konnect (verificado com `01-fonte`).
 
-## Reinstalar binário
+## Reinstalar KiCad 10
+
+```bash
+curl -sL -o /tmp/kicad10-lite.AppImage.tar \
+  https://downloads.kicad.org/kicad/linux/explore/stable/download/kicad-10.0.6-x86_64-lite.AppImage.tar
+mkdir -p /workspace/tools/kicad10
+tar xf /tmp/kicad10-lite.AppImage.tar -C /workspace/tools/kicad10
+chmod +x /workspace/tools/kicad10/*.AppImage
+cd /workspace/tools/kicad10 && ./*.AppImage --appimage-extract
+```
+
+## Reinstalar binário Konnect
 
 ```bash
 curl -sL -o /tmp/konnect.tgz \
@@ -47,5 +70,5 @@ chmod +x /workspace/tools/konnect/konnect
 
 ## Folha atual
 
-`01-fonte.kicad_sch` — alimentaçao alinhada a `esquema.md` §0 (D1, LED, 78M05,
-MAX1044 via simbolo LMC7660, 4V5; 1V8 com valores TODO).
+`01-fonte.kicad_sch` — alimentação alinhada a `esquema.md` §0 (D1, LED, 78M05,
+MAX1044 via símbolo LMC7660, 4V5, 1V8).

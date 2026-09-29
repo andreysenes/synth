@@ -1,2 +1,4 @@
-kicad_cli = "/usr/bin/kicad-cli"
-# Schematic editing does not require IPC; PCB realtime needs KiCad 10 API.
+kicad_cli = "/workspace/tools/kicad10/squashfs-root/usr/bin/kicad-cli"
+kicad_binary = "/workspace/tools/kicad10/squashfs-root/usr/bin/kicad"
+# Enable IPC in KiCad 10: Preferences → Plugins → Enable KiCad API
+# ipc_address = "ipc:///tmp/kicad/api.sock"
